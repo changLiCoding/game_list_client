@@ -1,4 +1,4 @@
-// import gql from "graphql-tag";
+import gql from "graphql-tag";
 
 // export const GET_ALL_USERS = gql`
 //   query GetAllUsers {
@@ -9,14 +9,14 @@
 //   }
 // `;
 
-// export const LOGIN = gql`
-//   mutation Login($email: String!, $password: String!) {
-//     login(input: { email: $email, password: $password }) {
-//       user {
-//         name
-//         id
-//       }
-//       errors
-//     }
-//   }
-// `;
+export const LOGIN = gql`
+  mutation Login($email: String!, $password: String!) {
+    login(input: { email: $email, password: $password }) {
+      user {
+        username
+      }
+      token
+      errors
+    }
+  }
+`;
