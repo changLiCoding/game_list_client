@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { InitialStateType } from "../types/user";
 
-const initialState: any = {
+const initialState: InitialStateType = {
   username: "",
   bannerPicture: "",
-  createdAt: "",
+  createdAt: new Date(),
   email: "",
   games: [],
   isActive: false,
@@ -16,15 +17,9 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action) => {
-      console.log("first");
-      console.log(action.payload);
       delete action.payload.__typename;
-      console.log("first");
 
       state.username = action.payload["username"];
-      console.log("state");
-      console.log(state);
-      console.log("state");
     },
   },
 });
