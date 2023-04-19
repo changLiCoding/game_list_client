@@ -1,7 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useAppSelector } from "../../app/hooks";
+import { useSelector } from "react-redux";
+import { RootState } from "../../app/store";
 
 const Hero = () => {
-  return <div>Hero</div>;
+  const user = useAppSelector((state) => state.user);
+
+  return <div>{user?.username ? user.username : "HHH"}</div>;
 };
 
 export default Hero;

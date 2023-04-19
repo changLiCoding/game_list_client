@@ -12,7 +12,7 @@ class UserService {
 
       if (!response || !response.data) throw new Error("Cannot sign user in!");
 
-      return response.data;
+      return response.data.login.user;
     } catch (err) {
       throw err;
     }
