@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "compile": "graphql-codegen",
     "watch": "graphql-codegen -w",
-    "test": "vitest"
+    "test": "vitest",
+    "coverage": "vitest run --coverage"
   },
   "dependencies": {
     "@apollo/client": "^3.7.12",
@@ -30,6 +31,7 @@
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "@vitejs/plugin-react": "^3.1.0",
+    "@vitest/coverage-c8": "^0.30.1",
     "jsdom": "^21.1.1",
     "typescript": "^4.9.3",
     "vite": "^4.2.0",
