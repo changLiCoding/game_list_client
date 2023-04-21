@@ -18,7 +18,6 @@ export const userSlice = createSlice({
   reducers: {
     setUser: (state, action) => {
       delete action.payload.__typename;
-
       state.username = action.payload["username"];
     },
   },
