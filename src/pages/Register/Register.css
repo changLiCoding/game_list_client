@@ -59,6 +59,9 @@
 #login-form_username {
   height: 48px;
 }
+#login-form_email {
+  height: 48px;
+}
 #login-form .ant-btn {
   height: 42px;
   letter-spacing: 1px;
@@ -80,13 +83,15 @@
 }
 @media screen and (max-width: 1023px) {
   .login-box {
-    flex-direction: column;
+    flex-direction: column-reverse;
     box-shadow: none;
   }
+
   .illustration-wrapper {
     max-width: 100%;
     min-height: auto;
   }
+  
   #login-form {
     max-width: 100%;
   }

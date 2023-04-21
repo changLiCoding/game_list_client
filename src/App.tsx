@@ -9,12 +9,8 @@ import Register from "./pages/Register/Register";
 function App() {
   return (
     <ContextWrapper>
-      {/* <div className="App">
-        <p>Hello World</p>
-        <Home />
-      </div> */}
       <Routes>
-        <Route path="/job" element={<Home />} />
+        <Route path="/home" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="*" element={<Home />} />

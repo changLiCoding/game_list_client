@@ -1,5 +1,5 @@
 import { Button, Form, Input } from "antd";
-import LoginImage from "../../assets/images/games_login.webp";
+import WelcomeImage from "../../assets/images/register_welcome.webp";
 import "./Register.css";
 
 const Register = () => {
@@ -19,7 +19,7 @@ const Register = () => {
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
         >
-          <p className="form-title">Welcome</p>
+          <p className="form-title">Register</p>
           <p>Please fill in the form below</p>
           <Form.Item
             name="username"
@@ -29,10 +29,26 @@ const Register = () => {
           </Form.Item>
 
           <Form.Item
+            name="email"
+            rules={[{ required: true, message: "Please input your email!" }]}
+          >
+            <Input placeholder="Email" />
+          </Form.Item>
+
+          <Form.Item
             name="password"
             rules={[{ required: true, message: "Please input your password!" }]}
           >
             <Input.Password placeholder="Password" />
+          </Form.Item>
+
+          <Form.Item
+            name="password_confirmation"
+            rules={[
+              { required: true, message: "Please re-enter your password!" },
+            ]}
+          >
+            <Input.Password placeholder="Password Confirmation" />
           </Form.Item>
 
           <Form.Item>
@@ -46,7 +62,7 @@ const Register = () => {
           </Form.Item>
         </Form>
         <div className="illustration-wrapper">
-          <img src={LoginImage} alt="Login" />
+          <img src={WelcomeImage} alt="Login" />
         </div>
       </div>
     </div>
