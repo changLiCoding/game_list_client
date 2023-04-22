@@ -1,6 +1,7 @@
 import { Button, Form, Input } from "antd";
 import LoginImage from "../../assets/images/games_login.webp";
 import "./Login.css";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const onFinish = (values: any) => {
@@ -47,6 +48,7 @@ const Login = () => {
               LOGIN
             </Button>
           </Form.Item>
+          <Link to={"/register"}>Need an account?</Link>
         </Form>
       </div>
     </div>

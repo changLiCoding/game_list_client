@@ -1,6 +1,7 @@
 import { Button, Form, Input } from "antd";
 import WelcomeImage from "../../assets/images/register_welcome.webp";
 import "./Register.css";
+import { Link } from "react-router-dom";
 
 const Register = () => {
   const onFinish = (values: any) => {
@@ -60,6 +61,7 @@ const Register = () => {
               Register
             </Button>
           </Form.Item>
+          <Link to={"/login"}>Already have an account!</Link>
         </Form>
         <div className="illustration-wrapper">
           <img src={WelcomeImage} alt="Register" />
