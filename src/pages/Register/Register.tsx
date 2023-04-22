@@ -45,7 +45,7 @@ const Register = () => {
               },
             ]}
           >
-            <Input placeholder="Username" />
+            <Input placeholder="Username" data-testid="user-test" />
           </Form.Item>
 
           <Form.Item
@@ -55,7 +55,7 @@ const Register = () => {
               { type: "email", message: "Please enter valid email!" },
             ]}
           >
-            <Input placeholder="Email" />
+            <Input placeholder="Email" data-testid="email-test" />
           </Form.Item>
 
           <Form.Item
@@ -68,7 +68,10 @@ const Register = () => {
               },
             ]}
           >
-            <Input.Password placeholder="Password" />
+            <Input.Password
+              placeholder="Password"
+              data-testid="password-test"
+            />
           </Form.Item>
 
           <Form.Item
@@ -89,7 +92,10 @@ const Register = () => {
               }),
             ]}
           >
-            <Input.Password placeholder="Password Confirmation" />
+            <Input.Password
+              placeholder="Password Confirmation"
+              data-testid="password-confirmation-test"
+            />
           </Form.Item>
 
           <Form.Item>
@@ -98,7 +104,7 @@ const Register = () => {
               htmlType="submit"
               className="register-form-button"
             >
-              Register
+              REGISTER
             </Button>
           </Form.Item>
           <Link to={"/login"}>Already have an account!</Link>
