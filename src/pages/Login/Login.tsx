@@ -9,9 +9,9 @@ const Login = () => {
   const navigate = useNavigate();
 
   const onFinish = async (values: LoginType) => {
-    const loginPage = await authentication.login(values.email, values.password);
-    if (loginPage.token) {
-      localStorage.setItem("token", loginPage.token);
+    const loginData = await authentication.login(values.email, values.password);
+    if (loginData.token) {
+      localStorage.setItem("token", loginData.token);
       navigate("/dashboard");
     }
   };

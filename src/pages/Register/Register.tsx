@@ -1,12 +1,22 @@
 import { Button, Form, Input } from "antd";
 import WelcomeImage from "../../assets/images/register_welcome.webp";
 import "./Register.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { RegisterType } from "../../types/authentication";
+import authentication from "../../services/authentication";
 
 const Register = () => {
-  const onFinish = (values: RegisterType) => {
-    console.log("Success:", values);
+  const navigate = useNavigate();
+  const onFinish = async (values: RegisterType) => {
+    const registerData = await authentication.register(
+      values.username,
+      values.email,
+      values.password
+    );
+    if (registerData.token) {
+      localStorage.setItem("token", registerData.token);
+      navigate("/dashboard");
+    }
   };
 
   // const onFinishFailed = (errorInfo: any) => {
