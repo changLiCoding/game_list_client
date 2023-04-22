@@ -16,8 +16,9 @@ class AuthService {
       if (!response || !response.data) throw new Error("Cannot sign user in!");
 
       return response.data.login;
-    } catch (err) {
-      throw err;
+    } catch (err: any) {
+      return err && err.message;
+      // throw err;
     }
   }
 
