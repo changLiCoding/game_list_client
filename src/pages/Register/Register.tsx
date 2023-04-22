@@ -3,13 +3,15 @@ import WelcomeImage from "../../assets/images/register_welcome.webp";
 import "./Register.css";
 import { Link, useNavigate } from "react-router-dom";
 import { RegisterType } from "../../types/authentication";
-import authentication from "../../services/authentication";
+// import authentication from "../../services/authentication";
+import useAuth from "../../services/authentication/useAuth";
 
 const Register = () => {
   const navigate = useNavigate();
+  const { register } = useAuth();
 
   const onFinish = async (values: RegisterType) => {
-    const registerData = await authentication.register(
+    const registerData = await register(
       values.username,
       values.email,
       values.password

@@ -18,11 +18,11 @@ describe("Login Service", () => {
 
     expect(userData.user).toEqual({
       __typename: "User",
-      username: "Viet",
+      username: "Vv",
     });
   });
 
-  it.only("Fail login credentials request", async () => {
+  it("Fail login credentials request", async () => {
     const userData = await authentication.login("v@gmail.com", "password2");
 
     expect(userData).toEqual("Invalid email or password");
