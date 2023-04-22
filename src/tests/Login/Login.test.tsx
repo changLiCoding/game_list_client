@@ -79,6 +79,12 @@ describe("Login", () => {
     await userEvent.type(password, import.meta.env.VITE_PASSWORD_TEST);
     await userEvent.click(button);
 
+    const textEmail = screen.queryByText("Please input your email!");
+    expect(textEmail).toBeNull();
+
+    const textPassword = screen.queryByText("Please input your password!");
+    expect(textPassword).toBeNull();
+
     expect(navigate("/dashboard")).toBe("/dashboard");
   });
 });

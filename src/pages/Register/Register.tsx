@@ -3,7 +3,6 @@ import WelcomeImage from "../../assets/images/register_welcome.webp";
 import "./Register.css";
 import { Link, useNavigate } from "react-router-dom";
 import { RegisterType } from "../../types/authentication";
-// import authentication from "../../services/authentication";
 import useAuth from "../../services/authentication/useAuth";
 
 const Register = () => {
@@ -11,13 +10,12 @@ const Register = () => {
   const { register, contextHolder, info } = useAuth();
 
   const onFinish = async (values: RegisterType) => {
-    console.log("Before request");
     const registerData = await register(
       values.username,
       values.email,
       values.password
     );
-    console.log("After request");
+
     if (registerData.token) {
       localStorage.setItem("token", registerData.token);
       navigate("/dashboard");

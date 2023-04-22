@@ -46,7 +46,7 @@ describe("Register", () => {
 
     // Expect the following texts to be present when ONLY email is given
     const email = screen.getByTestId("email-test");
-    await userEvent.type(email, "v@gmail.com");
+    await userEvent.type(email, import.meta.env.VITE_USER_EMAIL_TEST);
     await userEvent.click(button);
 
     const textEmail = screen.queryByText("Please input your email!");
