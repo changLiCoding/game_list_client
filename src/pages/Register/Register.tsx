@@ -7,6 +7,7 @@ import authentication from "../../services/authentication";
 
 const Register = () => {
   const navigate = useNavigate();
+
   const onFinish = async (values: RegisterType) => {
     const registerData = await authentication.register(
       values.username,
