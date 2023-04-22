@@ -12,6 +12,7 @@ const Login = () => {
     const loginData = await authentication.login(values.email, values.password);
     if (loginData.token) {
       localStorage.setItem("token", loginData.token);
+
       navigate("/dashboard");
     }
   };
@@ -47,7 +48,10 @@ const Login = () => {
             name="password"
             rules={[{ required: true, message: "Please input your password!" }]}
           >
-            <Input.Password placeholder="Password" />
+            <Input.Password
+              placeholder="Password"
+              data-testid="password-test"
+            />
           </Form.Item>
 
           <Form.Item>

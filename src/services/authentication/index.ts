@@ -13,7 +13,6 @@ class AuthService {
         mutation: LOGIN,
         variables: { email, password },
       });
-
       if (!response || !response.data) throw new Error("Cannot sign user in!");
 
       return response.data.login;
