@@ -1,7 +1,7 @@
 export type InitialStateType = {
   username: string;
   bannerPicture: string;
-  createdAt: Date;
+  createdAt: string;
   email: string;
   games: string[];
   isActive: boolean;
