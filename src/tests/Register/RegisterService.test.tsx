@@ -1,22 +1,18 @@
-import authentication from "../../services/authentication";
+// import authentication from "../../services/authentication";
+
+import { renderHook } from "@testing-library/react";
+import useAuth from "../../services/authentication/useAuth";
 
 describe("Register Service", () => {
-  it("Successful send register request", async () => {
-    // const userData = await authentication.login("v@gmail.com", "password");
-    // expect(userData).toMatchInlineSnapshot(`
-    //   {
-    //     "__typename": "LoginUserPayload",
-    //     "errors": [],
-    //     "token": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyNiwiZXhwIjoxNjg0NzY4MzY3fQ.6uVvI-_rsmhLdHcP86LNjiVHziBwb_uyUCcejfcEk6k",
-    //     "user": {
-    //       "__typename": "User",
-    //       "username": "Viet",
-    //     },
-    //   }
-    // `);
-    // expect(userData.user).toEqual({
-    //   __typename: "User",
-    //   username: "Viet",
-    // });
+  it("Successful send register request", async () => {});
+
+  it("Fail login credentials request", async () => {
+    const { result } = renderHook(() => useAuth());
+    const userData = await result.current.register(
+      "Meee",
+      import.meta.env.VITE_USER_EMAIL_TEST,
+      "password2"
+    );
+    expect(userData.errors[0]).toEqual("Email is already taken");
   });
 });

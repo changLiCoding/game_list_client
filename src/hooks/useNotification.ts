@@ -1,10 +1,11 @@
 import { message } from "antd";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const useNotification = () => {
   const [messageApi, contextHolder] = message.useMessage();
-  const info = (data: string) => {
-    messageApi.info(data);
+
+  const info = (value: string) => {
+    messageApi.info(value);
   };
 
   return {

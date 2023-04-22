@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { apolloClient } from "../../graphql";
 import {
   LoginUserPayload,
@@ -19,12 +20,12 @@ const useAuth = () => {
         mutation: LOGIN,
         variables: { email, password },
       });
+
       if (!response || !response.data) throw new Error("Cannot sign user in!");
 
       return response.data.login;
     } catch (err: any) {
-      info(err.message);
-      return err && err.message;
+      return err && { errors: [err.message] };
       // throw err;
     }
   };
@@ -44,14 +45,14 @@ const useAuth = () => {
 
       return response.data.register;
     } catch (err: any) {
-      info(err.message);
-      return err && err.message;
+      return err && { errors: [err.message] };
     }
   };
   return {
     login,
     register,
     contextHolder,
+    info,
   };
 };
 

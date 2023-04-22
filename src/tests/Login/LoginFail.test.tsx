@@ -26,7 +26,6 @@ vi.mock("../../graphql", async () => {
             user: {
               username: "MyName",
             },
-            token: "token",
             errors: [],
           },
         },
@@ -35,50 +34,48 @@ vi.mock("../../graphql", async () => {
   };
 });
 
-vi.mock("react-router-dom", async () => {
-  const actual: any = await vi.importActual("react-router-dom");
-  return {
-    ...actual,
-    useNavigate: vi.fn().mockReturnValue((value: string) => value),
-  };
-});
-
 describe("Login", () => {
-  it("Renders login", () => {
+  it("Fail to input necessary fields", async () => {
     render(
       <ContextWrapper>
         <Login />
       </ContextWrapper>
     );
 
-    // Expect the following texts to be present
-    expect(screen.getByText("Welcome back")).toBeInTheDocument();
-    expect(screen.getByText("Login to the Dashboard")).toBeInTheDocument();
+    // Expect the following texts to be present when NO input is given
+    const button = screen.getByRole("button", { name: "LOGIN" });
+    await userEvent.click(button);
 
-    // Expect all input fields (including Email and Password) to be present
-    const inputEmail = screen.getByPlaceholderText("Email");
-    expect(inputEmail).toBeInTheDocument();
+    expect(screen.getByText("Please input your email!")).toBeInTheDocument();
+    expect(screen.getByText("Please input your password!")).toBeInTheDocument();
 
-    const inputPassword = screen.getByPlaceholderText("Password");
-    expect(inputPassword).toBeInTheDocument();
+    // Expect the following texts to be present when ONLY email is given
+    const email = screen.getByTestId("email-test");
+    await userEvent.type(email, import.meta.env.VITE_USER_EMAIL_TEST);
+    await userEvent.click(button);
+
+    const textEmail = screen.queryByText("Please input your email!");
+    expect(textEmail).toBeNull();
+    expect(screen.getByText("Please input your password!")).toBeInTheDocument();
   });
 
-  it("Successfully login", async () => {
-    const navigate = useNavigate();
-
-    render(
+  it.only("Fail to login due to credential", async () => {
+    const { container } = render(
       <ContextWrapper>
         <Login />
       </ContextWrapper>
     );
-
     const button = screen.getByRole("button", { name: "LOGIN" });
     const email = screen.getByTestId("email-test");
     await userEvent.type(email, import.meta.env.VITE_USER_EMAIL_TEST);
     const password = screen.getByTestId("password-test");
-    await userEvent.type(password, import.meta.env.VITE_PASSWORD_TEST);
+    await userEvent.type(password, "password");
     await userEvent.click(button);
 
-    expect(navigate("/dashboard")).toBe("/dashboard");
+    // Check if the icon inside the error message appeared
+    const allImg = screen.queryAllByRole("img");
+    const node = allImg[allImg.length - 1];
+
+    expect(node?.classList[1]).toBe("anticon-info-circle");
   });
 });

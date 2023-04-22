@@ -8,7 +8,7 @@ import useAuth from "../../services/authentication/useAuth";
 
 const Register = () => {
   const navigate = useNavigate();
-  const { register, contextHolder } = useAuth();
+  const { register, contextHolder, info } = useAuth();
 
   const onFinish = async (values: RegisterType) => {
     const registerData = await register(
@@ -19,6 +19,8 @@ const Register = () => {
     if (registerData.token) {
       localStorage.setItem("token", registerData.token);
       navigate("/dashboard");
+    } else {
+      info(registerData.errors[0]);
     }
   };
 
@@ -28,7 +30,6 @@ const Register = () => {
 
   return (
     <>
-      {contextHolder}
       <div className="register-page">
         <div className="register-box">
           <Form
@@ -118,6 +119,7 @@ const Register = () => {
           </div>
         </div>
       </div>
+      {contextHolder}
     </>
   );
 };

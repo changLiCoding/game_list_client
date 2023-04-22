@@ -1,8 +1,13 @@
-import authentication from "../../services/authentication";
+import { renderHook } from "@testing-library/react";
+import useAuth from "../../services/authentication/useAuth";
 
 describe("Login Service", () => {
   it("Successful send login request", async () => {
-    const userData = await authentication.login("v@gmail.com", "password");
+    const { result } = renderHook(() => useAuth());
+    const userData = await result.current.login(
+      import.meta.env.VITE_USER_EMAIL_TEST,
+      import.meta.env.VITE_PASSWORD_TEST
+    );
 
     // expect(userData).toMatchInlineSnapshot(`
     //   {
@@ -23,8 +28,11 @@ describe("Login Service", () => {
   });
 
   it("Fail login credentials request", async () => {
-    const userData = await authentication.login("v@gmail.com", "password2");
-
-    expect(userData).toEqual("Invalid email or password");
+    const { result } = renderHook(() => useAuth());
+    const userData = await result.current.login(
+      import.meta.env.VITE_USER_EMAIL_TEST,
+      "password2"
+    );
+    expect(userData.errors[0]).toEqual("Invalid email or password");
   });
 });

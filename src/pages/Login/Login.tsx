@@ -3,19 +3,20 @@ import LoginImage from "../../assets/images/games_login.webp";
 import "./Login.css";
 import { Link, useNavigate } from "react-router-dom";
 import { LoginType } from "../../types/authentication";
-// import authentication from "../../services/authentication";
 import useAuth from "../../services/authentication/useAuth";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { login, contextHolder } = useAuth();
+  const { login, contextHolder, info } = useAuth();
 
   const onFinish = async (values: LoginType) => {
-    // const loginData = await authentication.login(values.email, values.password);
     const loginData = await login(values.email, values.password);
+
     if (loginData.token) {
       localStorage.setItem("token", loginData.token);
       navigate("/dashboard");
+    } else {
+      info(loginData.errors[0]);
     }
   };
 
@@ -24,7 +25,6 @@ const Login = () => {
   // };
   return (
     <>
-      {contextHolder}
       <div className="login-page">
         <div className="login-box">
           <div className="illustration-wrapper">
@@ -73,6 +73,7 @@ const Login = () => {
           </Form>
         </div>
       </div>
+      {contextHolder}
     </>
   );
 };
