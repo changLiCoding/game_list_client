@@ -36,11 +36,12 @@ const useAuth = () => {
     password: String
   ): Promise<RegisterUserPayload> => {
     try {
+      console.log("first");
       const response = await apolloClient.mutate({
         mutation: REGISTER,
         variables: { username, email, password },
       });
-
+      console.log("second");
       if (!response || !response.data) throw new Error("Cannot sign user in!");
 
       return response.data.register;

@@ -3,16 +3,6 @@ import { render, screen, waitFor } from "@testing-library/react";
 import Login from "../../pages/Login/Login";
 import ContextWrapper from "../../ContextWrapper";
 import userEvent from "@testing-library/user-event";
-import { useNavigate } from "react-router-dom";
-
-// Mock function to run Login
-// vi.mock("../../services/authentication", async () => {
-//   const actual: any = await vi.importActual("../../services/authentication");
-//   return {
-//     ...actual,
-//     login: vi.fn(),
-//   };
-// });
 
 vi.mock("../../graphql", async () => {
   const actual: any = await vi.importActual("../../graphql");
@@ -59,17 +49,19 @@ describe("Login", () => {
     expect(screen.getByText("Please input your password!")).toBeInTheDocument();
   });
 
-  it.only("Fail to login due to credential", async () => {
-    const { container } = render(
+  it("Fail to login due to credential", async () => {
+    render(
       <ContextWrapper>
         <Login />
       </ContextWrapper>
     );
+
+    // Just need to get through the minimum requirement to send request -> request is mock to fail
     const button = screen.getByRole("button", { name: "LOGIN" });
     const email = screen.getByTestId("email-test");
     await userEvent.type(email, import.meta.env.VITE_USER_EMAIL_TEST);
     const password = screen.getByTestId("password-test");
-    await userEvent.type(password, "password");
+    await userEvent.type(password, "password2");
     await userEvent.click(button);
 
     // Check if the icon inside the error message appeared

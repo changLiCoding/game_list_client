@@ -6,6 +6,26 @@ import userEvent from "@testing-library/user-event";
 
 const registerButtonName = "REGISTER";
 
+vi.mock("../../graphql", async () => {
+  const actual: any = await vi.importActual("../../graphql");
+  return {
+    ...actual,
+    apolloClient: {
+      query: vi.fn(),
+      mutate: vi.fn().mockReturnValue({
+        data: {
+          register: {
+            user: {
+              username: "MyName",
+            },
+            errors: [],
+          },
+        },
+      }),
+    },
+  };
+});
+
 describe("Register", () => {
   it("Fail to input necessary fields", async () => {
     render(
@@ -63,7 +83,7 @@ describe("Register", () => {
     const passwordConfirmation = screen.getByTestId(
       "password-confirmation-test"
     );
-    await userEvent.type(passwordConfirmation, "passwor");
+    await userEvent.type(passwordConfirmation, "pass");
     await userEvent.click(button);
 
     expect(
@@ -71,11 +91,30 @@ describe("Register", () => {
     ).toBeInTheDocument();
   });
 
-  it("Fail to register a new user", () => {
+  it("Fail to register a new user with existing email in database", async () => {
     render(
       <ContextWrapper>
         <Register />
       </ContextWrapper>
     );
+    const button = screen.getByRole("button", { name: "REGISTER" });
+    const username = screen.getByTestId("user-test");
+    await userEvent.type(username, "Vv");
+    const email = screen.getByTestId("email-test");
+    await userEvent.type(email, import.meta.env.VITE_USER_EMAIL_TEST);
+    const password = screen.getByTestId("password-test");
+    await userEvent.type(password, "password2");
+    const passwordConfirmation = screen.getByTestId(
+      "password-confirmation-test"
+    );
+    await userEvent.type(passwordConfirmation, "password2");
+
+    await userEvent.click(button);
+
+    // Check if the icon inside the error message appeared
+    const allImg = screen.queryAllByRole("img");
+    const node = allImg[allImg.length - 1];
+
+    expect(node?.classList[1]).toBe("anticon-info-circle");
   });
 });
