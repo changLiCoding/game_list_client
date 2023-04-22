@@ -40,7 +40,7 @@ const Login = () => {
               { type: "email", message: "Please enter valid email!" },
             ]}
           >
-            <Input placeholder="Email" />
+            <Input placeholder="Email" data-testid="email-test" />
           </Form.Item>
 
           <Form.Item

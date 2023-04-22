@@ -41,6 +41,22 @@ describe("Register", () => {
     ).toBeInTheDocument();
   });
 
+  it("Fail to input necessary fields", () => {
+    render(
+      <ContextWrapper>
+        <Register />
+      </ContextWrapper>
+    );
+  });
+
+  it("Fail to register a new user", () => {
+    render(
+      <ContextWrapper>
+        <Register />
+      </ContextWrapper>
+    );
+  });
+
   it("Register a new user", () => {
     render(
       <ContextWrapper>
