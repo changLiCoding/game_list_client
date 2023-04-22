@@ -1,16 +1,24 @@
 import { Button, Form, Input } from "antd";
 import LoginImage from "../../assets/images/games_login.webp";
 import "./Login.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { LoginType } from "../../types/authentication";
+import authentication from "../../services/authentication";
 
 const Login = () => {
-  const onFinish = (values: any) => {
-    console.log("Success:", values);
+  const navigate = useNavigate();
+
+  const onFinish = async (values: LoginType) => {
+    const loginPage = await authentication.login(values.email, values.password);
+    if (loginPage.token) {
+      localStorage.setItem("token", loginPage.token);
+      navigate("/dashboard");
+    }
   };
 
-  const onFinishFailed = (errorInfo: any) => {
-    console.log("Failed:", errorInfo);
-  };
+  // const onFinishFailed = (errorInfo: any) => {
+  //   console.log("Failed:", errorInfo);
+  // };
   return (
     <div className="login-page">
       <div className="login-box">
@@ -21,15 +29,18 @@ const Login = () => {
           name="login-form"
           initialValues={{ remember: true }}
           onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
+          // onFinishFailed={onFinishFailed}
         >
           <p className="form-title">Welcome back</p>
           <p>Login to the Dashboard</p>
           <Form.Item
-            name="username"
-            rules={[{ required: true, message: "Please input your username!" }]}
+            name="email"
+            rules={[
+              { required: true, message: "Please input your email!" },
+              { type: "email", message: "Please enter valid email!" },
+            ]}
           >
-            <Input placeholder="Username" />
+            <Input placeholder="email" />
           </Form.Item>
 
           <Form.Item

@@ -1,9 +1,9 @@
 import { apolloClient } from "../../graphql";
-import { User } from "../../graphql/__generated__/graphql";
+import { LoginUserPayload, User } from "../../graphql/__generated__/graphql";
 import { LOGIN } from "./queries";
 
-class UserService {
-  async login(email: String, password: String): Promise<User> {
+class AuthService {
+  async login(email: String, password: String): Promise<LoginUserPayload> {
     try {
       const response = await apolloClient.mutate({
         mutation: LOGIN,
@@ -12,11 +12,11 @@ class UserService {
 
       if (!response || !response.data) throw new Error("Cannot sign user in!");
 
-      return response.data.login.user;
+      return response.data.login;
     } catch (err) {
       throw err;
     }
   }
 }
 
-export default new UserService();
+export default new AuthService();
