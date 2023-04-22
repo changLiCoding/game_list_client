@@ -11,14 +11,14 @@
   border-radius: 8px;
 }
 
-.login-page {
+.register-page {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
   background: #d9edff;
 }
-.login-box {
+.register-box {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -30,16 +30,16 @@
   margin: 0 auto;
   border-radius: 12px;
 }
-#login-form {
+#register-form {
   flex: 1 0 100%;
   max-width: 480px;
   width: 100%;
   padding: 60px;
 }
-#login-form p {
+#register-form p {
   margin-bottom: 30px;
 }
-#login-form p.form-title {
+#register-form p.form-title {
   color: #333333;
   font-family: 'Josefin Sans', sans-serif;
   font-size: 42px;
@@ -47,27 +47,27 @@
   line-height: 1;
   margin-bottom: 0;
 }
-#login-form .ant-form-item-label > label.ant-form-item-required::before {
+#register-form .ant-form-item-label > label.ant-form-item-required::before {
   display: none;
 }
 .ant-form-item-control-input-content {
   text-align: left;
 }
-#login-form .ant-input-affix-wrapper {
+#register-form .ant-input-affix-wrapper {
   padding: 12px 15px;
 }
-#login-form_username {
+#register-form_username {
   height: 48px;
 }
-#login-form_email {
+#register-form_email {
   height: 48px;
 }
-#login-form .ant-btn {
+#register-form .ant-btn {
   height: 42px;
   letter-spacing: 1px;
   border-radius: 6px;
 }
-.login-form-button {
+.register-form-button {
   width: 100%;
 }
 .illustration-wrapper {
@@ -82,7 +82,7 @@
   width: 100%;
 }
 @media screen and (max-width: 1023px) {
-  .login-box {
+  .register-box {
     flex-direction: column-reverse;
     box-shadow: none;
   }
@@ -92,7 +92,7 @@
     min-height: auto;
   }
   
-  #login-form {
+  #register-form {
     max-width: 100%;
   }
 }

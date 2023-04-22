@@ -13,7 +13,7 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="*" element={<Home />} />
+        <Route path="*" element={<Navigate to={"/home"} />} />
       </Routes>
     </ContextWrapper>
   );

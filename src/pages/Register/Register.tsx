@@ -11,10 +11,10 @@ const Register = () => {
     console.log("Failed:", errorInfo);
   };
   return (
-    <div className="login-page">
-      <div className="login-box">
+    <div className="register-page">
+      <div className="register-box">
         <Form
-          name="login-form"
+          name="register-form"
           initialValues={{ remember: true }}
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
@@ -55,14 +55,14 @@ const Register = () => {
             <Button
               type="primary"
               htmlType="submit"
-              className="login-form-button"
+              className="register-form-button"
             >
               Register
             </Button>
           </Form.Item>
         </Form>
         <div className="illustration-wrapper">
-          <img src={WelcomeImage} alt="Login" />
+          <img src={WelcomeImage} alt="Register" />
         </div>
       </div>
     </div>
