@@ -4,28 +4,50 @@ import ContextWrapper from "../../ContextWrapper";
 import Register from "../../pages/Register/Register";
 import userEvent from "@testing-library/user-event";
 import { useNavigate } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
 
 const registerButtonName = "REGISTER";
 
-vi.mock("../../graphql", async () => {
-  const actual: any = await vi.importActual("../../graphql");
+// vi.mock("../../graphql", async () => {
+//   const actual: any = await vi.importActual("../../graphql");
+//   return {
+//     ...actual,
+//     apolloClient: {
+//       query: vi.fn(),
+//       mutate: vi.fn().mockReturnValue({
+//         data: {
+//           register: {
+//             user: {
+//               username: "MyName",
+//             },
+//             token: "token",
+//             errors: [],
+//           },
+//         },
+//       }),
+//     },
+//   };
+// });
+
+vi.mock("@apollo/client", async () => {
+  const actual: any = await vi.importActual("@apollo/client");
   return {
     ...actual,
-    apolloClient: {
-      query: vi.fn(),
-      mutate: vi.fn().mockReturnValue({
-        data: {
-          register: {
-            user: {
-              username: "MyName",
+    useMutation: vi.fn(() => {
+      return [
+        vi.fn(() => ({
+          data: {
+            register: {
+              user: {
+                username: "Vv",
+              },
+              token: "token",
+              errors: [],
             },
-            token: "token",
-            errors: [],
           },
-        },
-      }),
-    },
+        })),
+        { loading: false, error: false },
+      ];
+    }),
   };
 });
 
@@ -37,7 +59,7 @@ vi.mock("react-router-dom", async () => {
   };
 });
 
-describe("Register", () => {
+describe("Register Input Fields", () => {
   it("Renders registration", () => {
     render(
       <ContextWrapper>

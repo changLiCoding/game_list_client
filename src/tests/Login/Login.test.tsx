@@ -5,35 +5,49 @@ import ContextWrapper from "../../ContextWrapper";
 import userEvent from "@testing-library/user-event";
 import { useNavigate } from "react-router-dom";
 
-// Mock function to run Login
-// vi.mock("../../services/authentication", async () => {
-//   const actual: any = await vi.importActual("../../services/authentication");
-//   return {
-//     ...actual,
-//     login: vi.fn(),
-//   };
-// });
-
-vi.mock("../../graphql", async () => {
-  const actual: any = await vi.importActual("../../graphql");
+// This is a mock of useAuth (useAuth will not be running)
+vi.mock("../../services/authentication/useAuth", async () => {
+  const actual: any = await vi.importActual(
+    "../../services/authentication/useAuth"
+  );
   return {
     ...actual,
-    apolloClient: {
-      query: vi.fn(),
-      mutate: vi.fn().mockReturnValue({
-        data: {
-          login: {
-            user: {
-              username: "MyName",
-            },
-            token: "token",
-            errors: [],
-          },
+    default: () => ({
+      login: vi.fn().mockReturnValue({
+        user: {
+          username: "Vv",
         },
+        token: "token",
+        errors: [],
       }),
-    },
+      info: vi.fn(),
+    }),
   };
 });
+
+// If use this, useAuth will run and require to mock useMutation inside useAuth
+// vi.mock("@apollo/client", async () => {
+//   const actual: any = await vi.importActual("@apollo/client");
+//   return {
+//     ...actual,
+//     useMutation: vi.fn(() => {
+//       return [
+//         vi.fn(() => ({
+//           data: {
+//             login: {
+//               user: {
+//                 username: "Vv",
+//               },
+//               token: "token",
+//               errors: [],
+//             },
+//           },
+//         })),
+//         { loading: false, error: false },
+//       ];
+//     }),
+//   };
+// });
 
 vi.mock("react-router-dom", async () => {
   const actual: any = await vi.importActual("react-router-dom");
@@ -65,7 +79,6 @@ describe("Login", () => {
 
   it("Successfully login", async () => {
     const navigate = useNavigate();
-
     render(
       <ContextWrapper>
         <Login />
