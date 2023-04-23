@@ -4,26 +4,27 @@ import Login from "../../pages/Login/Login";
 import ContextWrapper from "../../ContextWrapper";
 import userEvent from "@testing-library/user-event";
 
-// vi.mock("../../graphql", async () => {
-//   const actual: any = await vi.importActual("../../graphql");
+// This is a mock of useAuth (useAuth will not be running)
+// vi.mock("../../services/authentication/useAuth", async () => {
+//   const actual: any = await vi.importActual(
+//     "../../services/authentication/useAuth"
+//   );
 //   return {
 //     ...actual,
-//     apolloClient: {
-//       query: vi.fn(),
-//       mutate: vi.fn().mockReturnValue({
-//         data: {
-//           login: {
-//             user: {
-//               username: null,
-//             },
-//             errors: [],
-//           },
+//     default: () => ({
+//       login: vi.fn().mockReturnValue({
+//         user: {
+//           username: "Vv",
 //         },
+//         errors: [],
 //       }),
-//     },
+//       info: vi.fn(),
+//     }),
 //   };
 // });
 
+// If use this, useAuth will run and require to mock useMutation inside useAuth
+// Let useAuth run due to the fact that it contains the useMessage hook
 vi.mock("@apollo/client", async () => {
   const actual: any = await vi.importActual("@apollo/client");
   return {
