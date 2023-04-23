@@ -12,11 +12,11 @@ vi.mock("@apollo/client", async () => {
       return [
         vi.fn(() => ({
           data: {
-            register: {
+            login: {
               user: {
                 username: null,
               },
-              errors: ["Email is already taken"],
+              errors: ["Invalid email or password"],
             },
           },
         })),
@@ -26,16 +26,15 @@ vi.mock("@apollo/client", async () => {
   };
 });
 
-describe("Register logic in useAuth", () => {
-  it("Fail to register with these credentials", async () => {
+describe("Login logic in useAuth", () => {
+  it("Fail to login with these credentials", async () => {
     const { result } = renderHook(() => useAuth());
 
-    const userData = await result.current.register(
-      "Meee",
+    const userData = await result.current.login(
       import.meta.env.VITE_USER_EMAIL_TEST,
       "password2"
     );
 
-    expect(userData.errors[0]).toEqual("Email is already taken");
+    expect(userData.errors[0]).toEqual("Invalid email or password");
   });
 });

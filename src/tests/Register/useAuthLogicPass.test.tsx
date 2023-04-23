@@ -29,7 +29,7 @@ vi.mock("@apollo/client", async () => {
   };
 });
 
-describe("Register Service", () => {
+describe("Register logic in useAuth", () => {
   it("Successful send register request", async () => {
     const { result } = renderHook(() => useAuth());
 

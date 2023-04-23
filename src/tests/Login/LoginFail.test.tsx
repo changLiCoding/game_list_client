@@ -14,7 +14,7 @@ vi.mock("../../graphql", async () => {
         data: {
           login: {
             user: {
-              username: "MyName",
+              username: null,
             },
             errors: [],
           },

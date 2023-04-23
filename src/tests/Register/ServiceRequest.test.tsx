@@ -1,5 +1,3 @@
-// import authentication from "../../services/authentication";
-
 import { act, renderHook } from "@testing-library/react";
 import { v4 as uuidv4 } from "uuid";
 import {

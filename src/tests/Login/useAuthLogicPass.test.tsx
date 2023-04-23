@@ -2,6 +2,7 @@
 
 import { renderHook } from "@testing-library/react";
 import useAuth from "../../services/authentication/useAuth";
+import { v4 as uuidv4 } from "uuid";
 import { vi } from "vitest";
 
 vi.mock("@apollo/client", async () => {
@@ -12,11 +13,12 @@ vi.mock("@apollo/client", async () => {
       return [
         vi.fn(() => ({
           data: {
-            register: {
+            login: {
               user: {
-                username: null,
+                username: "Vv",
               },
-              errors: ["Email is already taken"],
+              token: "token",
+              errors: [],
             },
           },
         })),
@@ -26,16 +28,15 @@ vi.mock("@apollo/client", async () => {
   };
 });
 
-describe("Register logic in useAuth", () => {
-  it("Fail to register with these credentials", async () => {
+describe("Login logic in useAuth", () => {
+  it("Successful send login request", async () => {
     const { result } = renderHook(() => useAuth());
 
-    const userData = await result.current.register(
-      "Meee",
+    const userData = await result.current.login(
       import.meta.env.VITE_USER_EMAIL_TEST,
-      "password2"
+      import.meta.env.VITE_PASSWORD_TEST
     );
 
-    expect(userData.errors[0]).toEqual("Email is already taken");
+    expect(userData?.user?.username).toEqual("Vv");
   });
 });
