@@ -5,24 +5,36 @@ import ContextWrapper from "../../ContextWrapper";
 import userEvent from "@testing-library/user-event";
 import { useNavigate } from "react-router-dom";
 
-vi.mock("../../graphql", async () => {
-  const actual: any = await vi.importActual("../../graphql");
+// vi.mock("../../services/authentication/useAuth", async () => {
+//   const actual: any = await vi.importActual(
+//     "../../services/authentication/useAuth"
+//   );
+//   return {
+//     ...actual,
+//     useAuth: vi.fn(),
+//   };
+// });
+
+vi.mock("@apollo/client", async () => {
+  const actual: any = await vi.importActual("@apollo/client");
   return {
     ...actual,
-    apolloClient: {
-      query: vi.fn(),
-      mutate: vi.fn().mockReturnValue({
-        data: {
-          login: {
-            user: {
-              username: "MyName",
+    useMutation: vi.fn(() => {
+      return [
+        vi.fn(() => ({
+          data: {
+            login: {
+              user: {
+                username: "Vv",
+              },
+              token: "token",
+              errors: [],
             },
-            token: "token",
-            errors: [],
           },
-        },
-      }),
-    },
+        })),
+        { loading: false, error: false },
+      ];
+    }),
   };
 });
 

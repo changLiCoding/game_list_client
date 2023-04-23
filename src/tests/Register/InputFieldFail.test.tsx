@@ -6,23 +6,45 @@ import userEvent from "@testing-library/user-event";
 
 const registerButtonName = "REGISTER";
 
-vi.mock("../../graphql", async () => {
-  const actual: any = await vi.importActual("../../graphql");
+// vi.mock("../../graphql", async () => {
+//   const actual: any = await vi.importActual("../../graphql");
+//   return {
+//     ...actual,
+//     apolloClient: {
+//       query: vi.fn(),
+//       mutate: vi.fn().mockReturnValue({
+//         data: {
+//           register: {
+//             user: {
+//               username: "MyName",
+//             },
+//             errors: [],
+//           },
+//         },
+//       }),
+//     },
+//   };
+// });
+
+vi.mock("@apollo/client", async () => {
+  const actual: any = await vi.importActual("@apollo/client");
   return {
     ...actual,
-    apolloClient: {
-      query: vi.fn(),
-      mutate: vi.fn().mockReturnValue({
-        data: {
-          register: {
-            user: {
-              username: "MyName",
+    useMutation: vi.fn(() => {
+      return [
+        vi.fn(() => ({
+          data: {
+            register: {
+              user: {
+                username: null,
+              },
+              errors: [],
             },
-            errors: [],
           },
-        },
-      }),
-    },
+        })),
+        { loading: false, error: false },
+      ];
+    }),
   };
 });
 

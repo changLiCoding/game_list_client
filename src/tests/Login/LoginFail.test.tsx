@@ -4,23 +4,45 @@ import Login from "../../pages/Login/Login";
 import ContextWrapper from "../../ContextWrapper";
 import userEvent from "@testing-library/user-event";
 
-vi.mock("../../graphql", async () => {
-  const actual: any = await vi.importActual("../../graphql");
+// vi.mock("../../graphql", async () => {
+//   const actual: any = await vi.importActual("../../graphql");
+//   return {
+//     ...actual,
+//     apolloClient: {
+//       query: vi.fn(),
+//       mutate: vi.fn().mockReturnValue({
+//         data: {
+//           login: {
+//             user: {
+//               username: null,
+//             },
+//             errors: [],
+//           },
+//         },
+//       }),
+//     },
+//   };
+// });
+
+vi.mock("@apollo/client", async () => {
+  const actual: any = await vi.importActual("@apollo/client");
   return {
     ...actual,
-    apolloClient: {
-      query: vi.fn(),
-      mutate: vi.fn().mockReturnValue({
-        data: {
-          login: {
-            user: {
-              username: null,
+    useMutation: vi.fn(() => {
+      return [
+        vi.fn(() => ({
+          data: {
+            login: {
+              user: {
+                username: null,
+              },
+              errors: [],
             },
-            errors: [],
           },
-        },
-      }),
-    },
+        })),
+        { loading: false, error: false },
+      ];
+    }),
   };
 });
 

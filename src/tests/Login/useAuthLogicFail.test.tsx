@@ -1,5 +1,3 @@
-// import authentication from "../../services/authentication";
-
 import { renderHook } from "@testing-library/react";
 import useAuth from "../../services/authentication/useAuth";
 import { vi } from "vitest";

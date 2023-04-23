@@ -11,7 +11,6 @@ const Login = () => {
 
   const onFinish = async (values: LoginType) => {
     const loginData = await login(values.email, values.password);
-
     if (loginData.token) {
       localStorage.setItem("token", loginData.token);
       navigate("/dashboard");

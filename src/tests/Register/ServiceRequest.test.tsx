@@ -61,7 +61,6 @@ describe("Register Service", () => {
         });
       });
     } catch (e: any) {
-      console.log(e.message);
       expect(e.message).toEqual("Email is already taken");
     }
   });
