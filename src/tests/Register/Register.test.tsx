@@ -37,7 +37,7 @@ vi.mock("react-router-dom", async () => {
   };
 });
 
-describe("Register", () => {
+describe("Register Input Fields", () => {
   it("Renders registration", () => {
     render(
       <ContextWrapper>

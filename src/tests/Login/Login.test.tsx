@@ -5,15 +5,6 @@ import ContextWrapper from "../../ContextWrapper";
 import userEvent from "@testing-library/user-event";
 import { useNavigate } from "react-router-dom";
 
-// Mock function to run Login
-// vi.mock("../../services/authentication", async () => {
-//   const actual: any = await vi.importActual("../../services/authentication");
-//   return {
-//     ...actual,
-//     login: vi.fn(),
-//   };
-// });
-
 vi.mock("../../graphql", async () => {
   const actual: any = await vi.importActual("../../graphql");
   return {

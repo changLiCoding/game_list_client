@@ -26,7 +26,7 @@ vi.mock("../../graphql", async () => {
   };
 });
 
-describe("Register", () => {
+describe("Register Input Fields", () => {
   it("Fail to input necessary fields", async () => {
     render(
       <ContextWrapper>
