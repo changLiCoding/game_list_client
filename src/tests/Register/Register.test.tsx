@@ -75,7 +75,7 @@ describe("Register", () => {
     ).toBeInTheDocument();
   });
 
-  it.only("Register a new user", async () => {
+  it("Register a new user", async () => {
     const navigate = useNavigate();
 
     render(
