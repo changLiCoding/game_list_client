@@ -1,8 +1,8 @@
 import gql from "graphql-tag";
 
-export const ADD_USER_GAME = gql`
-	mutation AddUserGame($gameId: Int!) {
-		addUserGame(input: { gameId: $gameId }) {
+export const ADD_USER_GAMES = gql`
+	mutation AddUserGames($gameId: ID!) {
+		addUserGames(input: { gameId: $gameId }) {
 			userGame {
 				id
 				game {
@@ -11,7 +11,7 @@ export const ADD_USER_GAME = gql`
 					description
 					imageURL
 					releaseDate
-					avg_score
+					avgScore
 					genres
 					platforms
 					tags
