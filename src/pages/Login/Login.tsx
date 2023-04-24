@@ -4,15 +4,21 @@ import "./Login.css";
 import { Link, useNavigate } from "react-router-dom";
 import { LoginType } from "../../types/authentication";
 import useAuth from "../../services/authentication/useAuth";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../features/userSlice";
+import { setLoading } from "../../features/userSlice";
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { login, contextHolder, info } = useAuth();
 
   const onFinish = async (values: LoginType) => {
+    dispatch(setLoading(true));
     const loginData = await login(values.email, values.password);
     if (loginData.token) {
       localStorage.setItem("token", loginData.token);
+      dispatch(setUser(loginData.user));
       navigate("/dashboard");
     } else {
       info(loginData.errors[0]);

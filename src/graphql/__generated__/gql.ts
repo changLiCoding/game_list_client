@@ -15,6 +15,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
 const documents = {
     "\n  mutation Login($email: String!, $password: String!) {\n    login(input: { email: $email, password: $password }) {\n      user {\n        username\n      }\n      token\n      errors\n    }\n  }\n": types.LoginDocument,
     "\n  mutation Register($username: String!, $email: String!, $password: String!) {\n    register(\n      input: { username: $username, email: $email, password: $password }\n    ) {\n      user {\n        username\n      }\n      token\n      errors\n    }\n  }\n": types.RegisterDocument,
+    "\n  query User {\n    getUserById {\n      username\n      email\n      bannerPicture\n      userPicture\n    }\n  }\n": types.UserDocument,
 };
 
 /**
@@ -39,6 +40,10 @@ export function gql(source: "\n  mutation Login($email: String!, $password: Stri
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\n  mutation Register($username: String!, $email: String!, $password: String!) {\n    register(\n      input: { username: $username, email: $email, password: $password }\n    ) {\n      user {\n        username\n      }\n      token\n      errors\n    }\n  }\n"): (typeof documents)["\n  mutation Register($username: String!, $email: String!, $password: String!) {\n    register(\n      input: { username: $username, email: $email, password: $password }\n    ) {\n      user {\n        username\n      }\n      token\n      errors\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  query User {\n    getUserById {\n      username\n      email\n      bannerPicture\n      userPicture\n    }\n  }\n"): (typeof documents)["\n  query User {\n    getUserById {\n      username\n      email\n      bannerPicture\n      userPicture\n    }\n  }\n"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};

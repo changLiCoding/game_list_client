@@ -1,36 +1,39 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Dashboard from "./pages/Dashboard/Dashboard";
-import { isExpired, decodeToken } from "react-jwt";
+import useTokenAuth from "./hooks/useTokenAuth";
 
 const Router = () => {
-  // const authToken = localStorage.getItem("token");
+  const { loading, userState } = useTokenAuth();
 
-  // useEffect(() => {
-  //   if (authToken) {
-  //     console.log("token exists");
-  //     console.log(authToken);
-  //     const date = new Date(decodeToken(authToken)?.exp * 1000);
-  //     console.log(date);
-  //     console.log(decodeToken(authToken)?.exp * 1000 > Date.now());
-  //     console.log(decodeToken(authToken)?.exp * 1000);
-  //     console.log(Date.now());
-  //     console.log(new Date(Date.now()));
-  //   } else {
-  //     console.log("token does not exist");
-  //   }
-  // }, []);
+  if (loading || userState.loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <Routes>
+      {userState?.user?.username ? (
+        <Route path="/dashboard" element={<Dashboard />} />
+      ) : (
+        <>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </>
+      )}
       <Route path="/home" element={<Home />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
-      <Route path="/dashboard" element={<Dashboard />} />
-      <Route path="*" element={<Navigate to={"/home"} />} />
+      <Route
+        path="*"
+        element={
+          userState?.user?.username ? (
+            <Navigate to={"/dashboard"} />
+          ) : (
+            <Navigate to={"/home"} />
+          )
+        }
+      />
     </Routes>
   );
 };

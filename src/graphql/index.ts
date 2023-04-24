@@ -7,15 +7,8 @@ const httpLink = new HttpLink({
 });
 
 // create an auth link
-const authLink = setContext((_, { headers }) => {
-  const token = localStorage.getItem("token");
-
-  return token
-    ? { headers: { ...headers, authorization: `Bearer ${token}` } }
-    : headers;
-});
 
 export const apolloClient = new ApolloClient({
-  link: authLink.concat(httpLink),
+  link: httpLink,
   cache: new InMemoryCache(),
 });
