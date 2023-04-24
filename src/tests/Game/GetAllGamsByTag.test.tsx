@@ -43,7 +43,7 @@ describe("Get All Games By Tag Query", () => {
 
   it("Throws an error if no variables are provided", async () => {
     await expect(apolloClient.query({ query: GET_ALL_GAMES_BY_TAG })).rejects
-      .toThrow('Variable $tag of type TagAttributes! was provided invalid value');
+      .toThrow('Variable $tag of type EntityIdNameAttributes! was provided invalid value');
   });
 
 });
