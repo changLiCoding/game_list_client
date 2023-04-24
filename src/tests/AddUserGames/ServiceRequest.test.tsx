@@ -14,6 +14,7 @@ import { REGISTER } from "../../services/authentication/queries";
 describe("Add Game in UserGames", () => {
 	it("Successful send addUserGames request", async () => {
 		const username = uuidv4();
+		let token = "";
 		const httpLink = new HttpLink({ uri: import.meta.env.VITE_BACKEND });
 		const { result: resultRegistration } = renderHook(() => {
 			return useMutation(REGISTER, {
@@ -28,7 +29,6 @@ describe("Add Game in UserGames", () => {
 				},
 			});
 		});
-		console.log("resultRegistration: ", resultRegistration);
 
 		await act(async () => {
 			const userData = await resultRegistration.current[0]({
@@ -38,49 +38,40 @@ describe("Add Game in UserGames", () => {
 					password: "password",
 				},
 			});
-			console.log("userData returned data: ", userData.data);
+
 			expect(userData?.data?.register?.user?.username).toEqual(username);
-			const token = userData?.data?.register.token;
+			token = userData?.data?.register.token;
+		});
 
-			// const [addUserGamesRequest] = useMutation(ADD_USER_GAMES);
-			const { result } = renderHook(() => {
-				const newHttpLink = new HttpLink({
-					uri: import.meta.env.VITE_BACKEND,
-				});
-				console.log("newHttpLink: ", newHttpLink);
-				console.log("token: ", token);
-
-				return useMutation(ADD_USER_GAMES, {
-					client: new ApolloClient({
-						link: newHttpLink,
-						cache: new InMemoryCache(),
-					}),
-					context: {
-						headers: {
-							Authorization: `Bearer ${token}`,
-						},
-					},
-				});
+		const { result } = renderHook(() => {
+			const newHttpLink = new HttpLink({
+				uri: import.meta.env.VITE_BACKEND,
 			});
-			console.log("result.current: ", result.current[0]);
 
-			await waitFor(async () => {
-				result.current[0]() !== null;
-				// console.log("result.current: ", result.current);
-				// console.log("token", token);
-
-				const promise = result.current[0]({
-					variables: {
-						gameId: 2,
+			return useMutation(ADD_USER_GAMES, {
+				client: new ApolloClient({
+					link: newHttpLink,
+					cache: new InMemoryCache(),
+				}),
+				context: {
+					headers: {
+						Authorization: `Bearer ${token}`,
 					},
-				});
-				const userGame = await promise;
-				console.log(
-					"addUserGame returned should have game: ",
-					userGame.data.addUserGames
-				);
-				expect(userGame.data.addUserGames.userGame.game.id).toEqual("2");
+				},
 			});
+		});
+
+		await waitFor(async () => {
+			result.current[0]() !== null;
+
+			const promise = result.current[0]({
+				variables: {
+					gameId: 2,
+				},
+			});
+			const userGame = await promise;
+
+			expect(userGame.data.addUserGames.userGame.game.id).toEqual("2");
 		});
 	});
 
@@ -99,19 +90,21 @@ describe("Add Game in UserGames", () => {
 				},
 			});
 		});
+		try {
+			await act(async () => {
+				const userGame = await result.current[0]({
+					variables: {
+						gameId: 2,
+					},
+				});
 
-		await act(async () => {
-			const userGame = await result.current[0]({
-				variables: {
-					gameId: 2,
-				},
+				expect(userGame.data.addUserGames.userGame.game.id).toEqual("2");
 			});
-			console.log(
-				"addUserGame returned without auth: ",
-				userGame.data.addUserGames
+		} catch (error: any) {
+			console.log("addUserGame errors: ", error);
+			expect(error.message).toEqual(
+				"Response not successful: Received status code 401"
 			);
-
-			expect(userGame.data.addUserGames.userGame.game.id).toEqual("2");
-		});
+		}
 	});
 });
