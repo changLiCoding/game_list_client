@@ -43,7 +43,7 @@ describe("Get All Games By Genres Query", () => {
 
   it("Throws an error if no variables are provided", async () => {
     await expect(apolloClient.query({ query: GET_ALL_GAMES_BY_GENRE })).rejects
-      .toThrow('Variable $genre of type GenreAttributes! was provided invalid value');
+      .toThrow('Variable $genre of type EntityIdNameAttributes! was provided invalid value');
   });
 
 });

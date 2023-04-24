@@ -43,7 +43,7 @@ describe("Get All Games By Platforms Query", () => {
 
   it("Throws an error if no variables are provided", async () => {
     await expect(apolloClient.query({ query: GET_ALL_GAMES_BY_PLATFORM })).rejects
-      .toThrow('Variable $platform of type PlatformAttributes! was provided invalid value');
+      .toThrow('Variable $platform of type EntityIdNameAttributes! was provided invalid value');
   });
 
 });
