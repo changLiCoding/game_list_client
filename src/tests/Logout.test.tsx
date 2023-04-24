@@ -1,23 +1,17 @@
 import { describe, it } from "vitest";
 import { render, screen } from "@testing-library/react";
-import App from "../App";
 import Dashboard from "../pages/Dashboard/Dashboard";
-import Navbar from "../components/Navbar/Navbar";
-import Router from "../Router";
 import ContextWrapper from "../ContextWrapper";
+import userEvent from "@testing-library/user-event";
 
 describe("App", () => {
-  it("Renders App", () => {
-    render(<App />);
-  });
-  it("Renders Router", () => {
+  it("Renders Dashboard", async () => {
     render(
       <ContextWrapper>
-        <Router />
+        <Dashboard />
       </ContextWrapper>
     );
-  });
-  it("Renders Navbar", () => {
-    render(<Navbar />);
+
+    await userEvent.click(screen.getByRole("button", { name: "Logout" }));
   });
 });
