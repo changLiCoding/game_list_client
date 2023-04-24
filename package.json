@@ -28,6 +28,7 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
+    "@faker-js/faker": "^7.6.0",
     "@graphql-codegen/cli": "^3.3.0",
     "@graphql-codegen/client-preset": "^3.0.0",
     "@testing-library/jest-dom": "^5.16.5",

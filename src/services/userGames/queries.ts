@@ -3,7 +3,7 @@ import gql from "graphql-tag";
 export const DELETE_USER_GAMES = gql`
 	mutation DeleteUserGames($gameId: ID!) {
 		deleteUserGames(input: { gameId: $gameId }) {
-			userGames {
+			userGame {
 				id
 				game {
 					id
