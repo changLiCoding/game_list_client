@@ -62,8 +62,6 @@ describe("Add Game in UserGames", () => {
 		});
 
 		await waitFor(async () => {
-			result.current[0]() !== null;
-
 			const promise = result.current[0]({
 				variables: {
 					gameId: 2,
