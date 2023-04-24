@@ -7,7 +7,6 @@ import {
 import { v4 as uuidv4 } from "uuid";
 
 import { renderHook, act, waitFor } from "@testing-library/react";
-import useUserGames from "../../services/userGames/useUserGames";
 import { ADD_USER_GAMES } from "../../services/userGames/queries";
 import { REGISTER } from "../../services/authentication/queries";
 
