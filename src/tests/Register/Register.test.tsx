@@ -7,49 +7,49 @@ import { useNavigate } from "react-router-dom";
 
 const registerButtonName = "REGISTER";
 
-// vi.mock("../../graphql", async () => {
-//   const actual: any = await vi.importActual("../../graphql");
-//   return {
-//     ...actual,
-//     apolloClient: {
-//       query: vi.fn(),
-//       mutate: vi.fn().mockReturnValue({
-//         data: {
-//           register: {
-//             user: {
-//               username: "MyName",
-//             },
-//             token: "token",
-//             errors: [],
-//           },
-//         },
-//       }),
-//     },
-//   };
-// });
-
-vi.mock("@apollo/client", async () => {
-  const actual: any = await vi.importActual("@apollo/client");
+// This is a mock of useAuth (useAuth will not be running)
+vi.mock("../../services/authentication/useAuth", async () => {
+  const actual: any = await vi.importActual(
+    "../../services/authentication/useAuth"
+  );
   return {
     ...actual,
-    useMutation: vi.fn(() => {
-      return [
-        vi.fn(() => ({
-          data: {
-            register: {
-              user: {
-                username: "Vv",
-              },
-              token: "token",
-              errors: [],
-            },
-          },
-        })),
-        { loading: false, error: false },
-      ];
+    default: () => ({
+      register: vi.fn().mockReturnValue({
+        user: {
+          username: "Vv",
+        },
+        token: "token",
+        errors: [],
+      }),
+      info: vi.fn(),
     }),
   };
 });
+
+// If use this, useAuth will run and require to mock useMutation inside useAuth
+// vi.mock("@apollo/client", async () => {
+//   const actual: any = await vi.importActual("@apollo/client");
+//   return {
+//     ...actual,
+//     useMutation: vi.fn(() => {
+//       return [
+//         vi.fn(() => ({
+//           data: {
+//             register: {
+//               user: {
+//                 username: "Vv",
+//               },
+//               token: "token",
+//               errors: [],
+//             },
+//           },
+//         })),
+//         { loading: false, error: false },
+//       ];
+//     }),
+//   };
+// });
 
 vi.mock("react-router-dom", async () => {
   const actual: any = await vi.importActual("react-router-dom");
