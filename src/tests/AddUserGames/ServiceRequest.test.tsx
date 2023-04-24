@@ -10,11 +10,11 @@ import { renderHook, act } from "@testing-library/react";
 import { ADD_USER_GAMES } from "../../services/userGames/queries";
 import { REGISTER } from "../../services/authentication/queries";
 
-describe.skip("Add Game in UserGames", () => {
+describe("Add Game in UserGames", () => {
 	const httpLink = new HttpLink({ uri: import.meta.env.VITE_BACKEND });
+	let token = "";
 	it("Successful send addUserGames request", async () => {
 		const username = uuidv4();
-		let token = "";
 		const { result: resultRegistration } = renderHook(() => {
 			return useMutation(REGISTER, {
 				client: new ApolloClient({
@@ -63,6 +63,34 @@ describe.skip("Add Game in UserGames", () => {
 			});
 
 			expect(userGame.data.addUserGames.userGame.game.id).toEqual("2");
+		});
+	});
+
+	it("should not add game in the list if the game has already been added", async () => {
+		const { result } = renderHook(() => {
+			return useMutation(ADD_USER_GAMES, {
+				client: new ApolloClient({
+					link: httpLink,
+					cache: new InMemoryCache(),
+				}),
+				context: {
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				},
+			});
+		});
+		await act(async () => {
+			const userGame = await result.current[0]({
+				variables: {
+					gameId: 2,
+				},
+			});
+
+			expect(userGame.data.addUserGames.userGame).toBeNull();
+			expect(userGame.data.addUserGames.errors[0]).toEqual(
+				"User Game already exists"
+			);
 		});
 	});
 

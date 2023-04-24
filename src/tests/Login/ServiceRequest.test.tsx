@@ -12,8 +12,8 @@ const httpLink = new HttpLink({
 	uri: import.meta.env.VITE_BACKEND,
 });
 
-describe.skip("Login Service", () => {
-	it.skip("Successful send login request", async () => {
+describe("Login Service", () => {
+	it("Successful send login request", async () => {
 		const { result: resultLogin } = renderHook(() =>
 			useMutation(LOGIN, {
 				client: new ApolloClient({
@@ -40,7 +40,7 @@ describe.skip("Login Service", () => {
 		}
 	});
 
-	it.skip("Fail login credentials request", async () => {
+	it("Fail login credentials request", async () => {
 		const { result: resultLogin } = renderHook(() =>
 			useMutation(LOGIN, {
 				client: new ApolloClient({

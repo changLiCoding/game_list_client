@@ -12,8 +12,8 @@ const httpLink = new HttpLink({
 	uri: import.meta.env.VITE_BACKEND,
 });
 
-describe.skip("Register Service", () => {
-	it.skip("Successful send register request", async () => {
+describe("Register Service", () => {
+	it("Successful send register request", async () => {
 		const username = uuidv4();
 		const { result: resultRegistration } = renderHook(() =>
 			useMutation(REGISTER, {
@@ -40,7 +40,7 @@ describe.skip("Register Service", () => {
 		}
 	});
 
-	it.skip("Fail to register with invalid credentials", async () => {
+	it("Fail to register with invalid credentials", async () => {
 		const { result: resultRegistration } = renderHook(() =>
 			useMutation(REGISTER, {
 				client: new ApolloClient({
