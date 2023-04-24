@@ -21,7 +21,7 @@ const useUserGames = () => {
 			) {
 				throw new Error(response.data.addUserGames.errors[0]);
 			}
-			console.log(response);
+			console.log("addUserGames response: ", response);
 			return response.data.addUserGames;
 		} catch (error: any) {
 			return error && { errors: [error.message] };
@@ -31,19 +31,19 @@ const useUserGames = () => {
 		gameId: Number
 	): Promise<DeleteUserGamesPayload> => {
 		try {
-			const response = await addUserGamesRequest({
+			const response = await deleteUserGamesRequest({
 				variables: { gameId },
 			});
 			if (
 				!response ||
 				!response.data ||
-				!response.data.addUserGames ||
-				response.data.addUserGames.errors[0]
+				!response.data.deleteUserGames ||
+				response.data.deleteUserGames.errors[0]
 			) {
-				throw new Error(response.data.addUserGames.errors[0]);
+				throw new Error(response.data.deleteUserGames.errors[0]);
 			}
-			console.log(response);
-			return response.data.addUserGames;
+			console.log("deleteUserGames response: ", response);
+			return response.data.deleteUserGames;
 		} catch (error: any) {
 			return error && { errors: [error.message] };
 		}
