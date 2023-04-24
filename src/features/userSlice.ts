@@ -4,7 +4,7 @@ import { InitialStateType } from "../types/user";
 const initialState: InitialStateType = {
   username: "",
   bannerPicture: "",
-  createdAt: new Date(),
+  createdAt: "",
   email: "",
   games: [],
   isActive: false,
