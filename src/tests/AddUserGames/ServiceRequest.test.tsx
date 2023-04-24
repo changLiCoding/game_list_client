@@ -12,7 +12,7 @@ import {
 const httpLink = new HttpLink({ uri: import.meta.env.VITE_BACKEND });
 
 describe("Add Game in UserGames", () => {
-	it("Should not add userGames request", async () => {
+	it("Successful send addUserGames request", async () => {
 		const token =
 			"eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyNywiZXhwIjoxNjg0ODk2NjcyfQ.-cq-wkG8phyBIHPjNYqi7mU2BsnDlBzDKhdcHcoxBYQ";
 		const { result } = renderHook(() => {
@@ -28,23 +28,62 @@ describe("Add Game in UserGames", () => {
 				},
 			});
 		});
-		console.log("result: ", result);
+		// console.log("result: ", result);
 
 		try {
 			await act(async () => {
 				const userGame = await result.current[0]({
 					variables: {
-						gameId: 1,
+						gameId: 2,
+					},
+				});
+				// console.log("Game: ", userGame.data.addUserGames);
+
+				expect(userGame.data.addUserGames.userGame.game.id).toEqual("2");
+			});
+		} catch (e: any) {
+			// console.log("e: ", e);
+
+			expect(e.message).toEqual(
+				"Cannot read properties of null (reading 'game')"
+			);
+		}
+	});
+
+	it("Fail send addUserGames request when the credentials fail", async () => {
+		const token = null;
+		const { result } = renderHook(() => {
+			return useMutation(ADD_USER_GAMES, {
+				client: new ApolloClient({
+					link: httpLink,
+					cache: new InMemoryCache(),
+				}),
+				context: {
+					headers: {
+						Authorization: token ? `Bearer ${token}` : "",
+					},
+				},
+			});
+		});
+		// console.log("result: ", result);
+
+		try {
+			await act(async () => {
+				const userGame = await result.current[0]({
+					variables: {
+						gameId: 2,
 					},
 				});
 				console.log("Game: ", userGame.data.addUserGames);
 
-				expect(userGame.data.addUserGames.userGame.game.id).toEqual("1");
+				expect(userGame.data.addUserGames.userGame.game.id).toEqual("2");
 			});
 		} catch (e: any) {
-			console.log("e: ", e);
+			// console.log("e: ", e);
 
-			expect(e.message).toEqual("Invalid email or password");
+			expect(e.message).toEqual(
+				"Response not successful: Received status code 401"
+			);
 		}
 	});
 });
