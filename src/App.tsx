@@ -5,12 +5,12 @@ import Router from "./Router";
 import Navbar from "./components/Navbar/Navbar";
 
 function App() {
-  return (
-    <ContextWrapper>
-      <Navbar />
-      <Router />
-    </ContextWrapper>
-  );
+	return (
+		<ContextWrapper>
+			<Navbar />
+			<Router />
+		</ContextWrapper>
+	);
 }
 
 export default App;
