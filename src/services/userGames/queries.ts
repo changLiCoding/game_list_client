@@ -43,3 +43,19 @@ export const ADD_USER_GAMES = gql`
 		}
 	}
 `;
+
+export const GAMES_FOR_A_USER = gql`
+	query GamesForAUser {
+		gamesForAUser {
+			id
+			name
+			description
+			imageURL
+			releaseDate
+			avgScore
+			genres
+			platforms
+			tags
+		}
+	}
+`;
