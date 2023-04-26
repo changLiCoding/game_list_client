@@ -4,7 +4,7 @@
 // import { RootState } from "../../app/store";
 import { Layout } from "antd";
 
-import FilterWrapper from "../FilterWrapper/FilterWrapper";
+import FilterWrapper from "../FilterWrapper/FiltersWrapper";
 
 const Hero: React.FC = () => {
 	// const user = useAppSelector((state) => state.user);
