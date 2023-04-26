@@ -1,4 +1,4 @@
-import { Layout, Cascader } from "antd";
+import { Layout } from "antd";
 import useGame from "../../services/game/useGame";
 import FilterField from "./FilterField";
 
@@ -42,20 +42,29 @@ export default function FilterWrapper() {
 		platformsOptions.length === 0 ? (
 		<Layout>Loading</Layout>
 	) : (
-		<Layout className='layout-FilterWrapper-container'>
+		<Layout className='layout-FiltersWrapper-container'>
 			<FilterField
+				fieldName='Genres'
 				options={genresOptions}
 				onChange={onChange}
 				changeOnSelect
 			/>
 
 			<FilterField
+				fieldName='Platforms'
 				options={platformsOptions}
 				onChange={onChange}
 				changeOnSelect
 			/>
 			<FilterField
+				fieldName='Tags'
 				options={tagsOptions}
+				onChange={onChange}
+				changeOnSelect
+			/>
+			<FilterField
+				fieldName='Year'
+				options={[]}
 				onChange={onChange}
 				changeOnSelect
 			/>

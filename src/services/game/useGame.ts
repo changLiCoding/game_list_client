@@ -1,4 +1,4 @@
-import { GET_ALL_GENRES, GET_ALL_PLATFORMS, GET_ALL_TAGS, Ge } from "./queries";
+import { GET_ALL_GENRES, GET_ALL_PLATFORMS, GET_ALL_TAGS } from "./queries";
 
 import { useQuery } from "@apollo/client";
 import { getTokenFromLocalStorage } from "../../constants";
