@@ -15,9 +15,12 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
 const documents = {
     "\n  mutation Login($email: String!, $password: String!) {\n    login(input: { email: $email, password: $password }) {\n      user {\n        username\n      }\n      token\n      errors\n    }\n  }\n": types.LoginDocument,
     "\n  mutation Register($username: String!, $email: String!, $password: String!) {\n    register(\n      input: { username: $username, email: $email, password: $password }\n    ) {\n      user {\n        username\n      }\n      token\n      errors\n    }\n  }\n": types.RegisterDocument,
-    "\n  query GetAllGamesByGenre($genre: EntityIdNameAttributes!, $limit: Int) {\n    getAllGamesByGenre(genre: $genre, limit: $limit) {\n      name\n    }\n  }\n": types.GetAllGamesByGenreDocument,
-    "\n  query GetAllGamesByPlatform($platform: EntityIdNameAttributes!, $limit: Int) {\n    getAllGamesByPlatform(platform: $platform, limit: $limit) {\n      name\n    }\n  }\n": types.GetAllGamesByPlatformDocument,
-    "\n  query GetAllGamesByTag($tag: EntityIdNameAttributes!, $limit: Int) {\n    getAllGamesByTag(tag: $tag, limit: $limit) {\n      name\n    }\n  }\n": types.GetAllGamesByTagDocument,
+    "\n\tquery GetAllGamesByGenre($genre: EntityIdNameAttributes!, $limit: Int) {\n\t\tgetAllGamesByGenre(genre: $genre, limit: $limit) {\n\t\t\tname\n\t\t}\n\t}\n": types.GetAllGamesByGenreDocument,
+    "\n\tquery GetAllGamesByPlatform($platform: EntityIdNameAttributes!, $limit: Int) {\n\t\tgetAllGamesByPlatform(platform: $platform, limit: $limit) {\n\t\t\tname\n\t\t}\n\t}\n": types.GetAllGamesByPlatformDocument,
+    "\n\tquery GetAllGamesByTag($tag: EntityIdNameAttributes!, $limit: Int) {\n\t\tgetAllGamesByTag(tag: $tag, limit: $limit) {\n\t\t\tname\n\t\t}\n\t}\n": types.GetAllGamesByTagDocument,
+    "\n\tquery GetAllGenres {\n\t\tgetAllGenres {\n\t\t\tname\n\t\t}\n\t}\n": types.GetAllGenresDocument,
+    "\n\tquery GetAllPlatforms {\n\t\tgetAllPlatforms {\n\t\t\tname\n\t\t}\n\t}\n": types.GetAllPlatformsDocument,
+    "\n\tquery GetAllTags {\n\t\tgetAllTags {\n\t\t\tname\n\t\t}\n\t}\n": types.GetAllTagsDocument,
     "\n  query GetAllGames {\n    allGames {\n      id\n      name\n      description\n      imageURL\n      releaseDate\n      avgScore\n      totalRating\n      genres\n      tags\n      platforms\n    }\n  }\n": types.GetAllGamesDocument,
     "\n  query User {\n    getUserById {\n      username\n      bannerPicture\n      userPicture\n    }\n  }\n": types.UserDocument,
     "\n\tmutation DeleteUserGames($gameId: ID!) {\n\t\tdeleteUserGames(input: { gameId: $gameId }) {\n\t\t\tuserGame {\n\t\t\t\tid\n\t\t\t\tgame {\n\t\t\t\t\tid\n\t\t\t\t\tname\n\t\t\t\t\tdescription\n\t\t\t\t\timageURL\n\t\t\t\t\treleaseDate\n\t\t\t\t\tavgScore\n\t\t\t\t\tgenres\n\t\t\t\t\tplatforms\n\t\t\t\t\ttags\n\t\t\t\t}\n\t\t\t}\n\t\t\terrors\n\t\t}\n\t}\n": types.DeleteUserGamesDocument,
@@ -50,15 +53,27 @@ export function gql(source: "\n  mutation Register($username: String!, $email: S
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  query GetAllGamesByGenre($genre: EntityIdNameAttributes!, $limit: Int) {\n    getAllGamesByGenre(genre: $genre, limit: $limit) {\n      name\n    }\n  }\n"): (typeof documents)["\n  query GetAllGamesByGenre($genre: EntityIdNameAttributes!, $limit: Int) {\n    getAllGamesByGenre(genre: $genre, limit: $limit) {\n      name\n    }\n  }\n"];
+export function gql(source: "\n\tquery GetAllGamesByGenre($genre: EntityIdNameAttributes!, $limit: Int) {\n\t\tgetAllGamesByGenre(genre: $genre, limit: $limit) {\n\t\t\tname\n\t\t}\n\t}\n"): (typeof documents)["\n\tquery GetAllGamesByGenre($genre: EntityIdNameAttributes!, $limit: Int) {\n\t\tgetAllGamesByGenre(genre: $genre, limit: $limit) {\n\t\t\tname\n\t\t}\n\t}\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  query GetAllGamesByPlatform($platform: EntityIdNameAttributes!, $limit: Int) {\n    getAllGamesByPlatform(platform: $platform, limit: $limit) {\n      name\n    }\n  }\n"): (typeof documents)["\n  query GetAllGamesByPlatform($platform: EntityIdNameAttributes!, $limit: Int) {\n    getAllGamesByPlatform(platform: $platform, limit: $limit) {\n      name\n    }\n  }\n"];
+export function gql(source: "\n\tquery GetAllGamesByPlatform($platform: EntityIdNameAttributes!, $limit: Int) {\n\t\tgetAllGamesByPlatform(platform: $platform, limit: $limit) {\n\t\t\tname\n\t\t}\n\t}\n"): (typeof documents)["\n\tquery GetAllGamesByPlatform($platform: EntityIdNameAttributes!, $limit: Int) {\n\t\tgetAllGamesByPlatform(platform: $platform, limit: $limit) {\n\t\t\tname\n\t\t}\n\t}\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  query GetAllGamesByTag($tag: EntityIdNameAttributes!, $limit: Int) {\n    getAllGamesByTag(tag: $tag, limit: $limit) {\n      name\n    }\n  }\n"): (typeof documents)["\n  query GetAllGamesByTag($tag: EntityIdNameAttributes!, $limit: Int) {\n    getAllGamesByTag(tag: $tag, limit: $limit) {\n      name\n    }\n  }\n"];
+export function gql(source: "\n\tquery GetAllGamesByTag($tag: EntityIdNameAttributes!, $limit: Int) {\n\t\tgetAllGamesByTag(tag: $tag, limit: $limit) {\n\t\t\tname\n\t\t}\n\t}\n"): (typeof documents)["\n\tquery GetAllGamesByTag($tag: EntityIdNameAttributes!, $limit: Int) {\n\t\tgetAllGamesByTag(tag: $tag, limit: $limit) {\n\t\t\tname\n\t\t}\n\t}\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n\tquery GetAllGenres {\n\t\tgetAllGenres {\n\t\t\tname\n\t\t}\n\t}\n"): (typeof documents)["\n\tquery GetAllGenres {\n\t\tgetAllGenres {\n\t\t\tname\n\t\t}\n\t}\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n\tquery GetAllPlatforms {\n\t\tgetAllPlatforms {\n\t\t\tname\n\t\t}\n\t}\n"): (typeof documents)["\n\tquery GetAllPlatforms {\n\t\tgetAllPlatforms {\n\t\t\tname\n\t\t}\n\t}\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n\tquery GetAllTags {\n\t\tgetAllTags {\n\t\t\tname\n\t\t}\n\t}\n"): (typeof documents)["\n\tquery GetAllTags {\n\t\tgetAllTags {\n\t\t\tname\n\t\t}\n\t}\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
