@@ -2,6 +2,7 @@ import React from "react";
 import useAllGames from "../../services/games/useAllGames";
 import { theme, Card, Col, Row, Popover, Tag } from "antd";
 import { Content } from "antd/es/layout/layout";
+import "./Games.css";
 
 export default function Games() {
 	const { games } = useAllGames();
@@ -16,7 +17,9 @@ export default function Games() {
 				<Row gutter={24}>
 					{games &&
 						games.map((game: any) => (
-							<Col span={6}>
+							<Col
+								span={6}
+								key={game.id}>
 								<Popover
 									title={game.name}
 									content={
@@ -26,25 +29,34 @@ export default function Games() {
 											<p>Average Score: {game.avgScore}</p>
 											<p>Total Ratings: {game.totalRating}</p>
 											{game.genres.map((genre: string) => (
-												<Tag color='blue'>{genre}</Tag>
+												<Tag
+													key={`${game.id}${genre}`}
+													color='blue'>
+													{genre}
+												</Tag>
 											))}
 										</div>
 									}>
 									<Card
+										className='Card-Games-container'
 										hoverable
+										bordered={false}
 										style={{
-											margin: 10,
+											margin: 5,
 											backgroundColor: colorBgContainer,
 										}}
 										cover={
 											<img
+												className='img-Games-background'
 												alt='example'
-												src='https://cdn-products.eneba.com/resized-products/BjdEY6u_350x200_2x-0.jpg'
+												src='https://cdn.cdkeys.com/700x700/media/catalog/product/5/d/5de6658946177c5f23698932_24__1_3.jpg'
 											/>
 										}>
 										<Meta
+											style={{ color: "white" }}
+											className='Meta-Games-description'
 											title={game.name}
-											description={game.description}
+											// description={game.description}
 										/>
 									</Card>
 								</Popover>
