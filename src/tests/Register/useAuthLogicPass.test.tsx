@@ -1,9 +1,7 @@
-// import authentication from "../../services/authentication";
-
 import { renderHook } from "@testing-library/react";
-import useAuth from "../../services/authentication/useAuth";
 import { v4 as uuidv4 } from "uuid";
 import { vi } from "vitest";
+import useAuth from "@/services/authentication/useAuth";
 const username = uuidv4();
 
 vi.mock("@apollo/client", async () => {

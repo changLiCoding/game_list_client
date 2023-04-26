@@ -1,5 +1,5 @@
-import { apolloClient } from "../../graphql";
-import { GET_ALL_GAMES } from "../../services/games/queries";
+import { apolloClient } from "@/graphql";
+import { GET_ALL_GAMES } from "@/services/games/queries";
 
 describe("Get All Games Query", () => {
   it("Successful queries games objects", async () => {

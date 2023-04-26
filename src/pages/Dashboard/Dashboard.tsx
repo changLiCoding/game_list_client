@@ -1,9 +1,8 @@
 import { Button } from "antd";
-import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setUser } from "../../features/userSlice";
-import { INITIAL_USER_STATE } from "../../constants";
+import { setUser } from "@/features/userSlice";
+import { INITIAL_USER_STATE } from "@/constants";
 
 const Dashboard = () => {
   const navigate = useNavigate();

@@ -1,6 +1,6 @@
 import { describe, it, vi } from "vitest";
 import { renderHook } from "@testing-library/react";
-import useTokenAuth from "../hooks/useTokenAuth";
+import useTokenAuth from "@/hooks/useTokenAuth";
 
 let fakeLocalStorage = {};
 

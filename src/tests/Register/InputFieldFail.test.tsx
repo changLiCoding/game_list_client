@@ -1,8 +1,8 @@
 import { describe, it, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
-import ContextWrapper from "../../ContextWrapper";
-import Register from "../../pages/Register/Register";
 import userEvent from "@testing-library/user-event";
+import ContextWrapper from "@/ContextWrapper";
+import Register from "@/pages/Register/Register";
 
 const registerButtonName = "REGISTER";
 

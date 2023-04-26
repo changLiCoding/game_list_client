@@ -1,6 +1,6 @@
 import { renderHook } from "@testing-library/react";
-import useAuth from "../../services/authentication/useAuth";
 import { vi } from "vitest";
+import useAuth from "@/services/authentication/useAuth";
 
 vi.mock("@apollo/client", async () => {
   const actual: any = await vi.importActual("@apollo/client");
