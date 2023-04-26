@@ -1,9 +1,8 @@
-import { Table } from "antd";
-
 import "./UserGameListStyle.css";
-import useUserGames from "../../services/userGames/useUserGames";
-import { Game } from "../../graphql/__generated__/graphql";
+import { Table } from "antd";
 import { ColumnsType, TableProps } from "antd/es/table";
+import { Game } from "@/graphql/__generated__/graphql";
+import useUserGames from "@/services/userGames/useUserGames";
 
 type DataType = Game & {
   key: React.Key;

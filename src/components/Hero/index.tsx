@@ -4,16 +4,16 @@
 // import { RootState } from "../../app/store";
 import { Layout } from "antd";
 
-import FiltersWrapper from "../FiltersWrapper/FiltersWrapper";
-import AllGames from "../AllGames/AllGames";
+import FiltersWrapper from "@/components/FiltersWrapper/FiltersWrapper";
+import AllGames from "@/components/AllGames/AllGames";
 
 const Hero: React.FC = () => {
-	return (
-		<Layout>
-			<FiltersWrapper></FiltersWrapper>
-			<AllGames />
-		</Layout>
-	);
+  return (
+    <Layout>
+      <FiltersWrapper></FiltersWrapper>
+      <AllGames />
+    </Layout>
+  );
 };
 
 export default Hero;

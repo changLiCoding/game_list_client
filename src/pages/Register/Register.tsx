@@ -1,9 +1,9 @@
-import { Button, Form, Input } from "antd";
-import WelcomeImage from "../../assets/images/register_welcome.webp";
 import "./Register.css";
+import WelcomeImage from "@/assets/images/register_welcome.webp";
+import { Button, Form, Input } from "antd";
 import { Link, useNavigate } from "react-router-dom";
-import { RegisterType } from "../../types/authentication";
-import useAuth from "../../services/authentication/useAuth";
+import { RegisterType } from "@/types/authentication";
+import useAuth from "@/services/authentication/useAuth";
 
 const Register = () => {
   const navigate = useNavigate();

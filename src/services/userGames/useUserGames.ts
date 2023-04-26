@@ -1,10 +1,11 @@
 import { useMutation, useQuery } from "@apollo/client";
+
+import { ADD_USER_GAMES, DELETE_USER_GAMES, GAMES_FOR_A_USER } from "./queries";
+import { getTokenFromLocalStorage } from "@/constants";
 import {
   AddUserGamesPayload,
   DeleteUserGamesPayload,
-} from "../../graphql/__generated__/graphql";
-import { ADD_USER_GAMES, DELETE_USER_GAMES, GAMES_FOR_A_USER } from "./queries";
-import { getTokenFromLocalStorage } from "../../constants";
+} from "@/graphql/__generated__/graphql";
 
 const useUserGames = () => {
   const [addUserGamesRequest] = useMutation(ADD_USER_GAMES);

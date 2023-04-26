@@ -1,9 +1,9 @@
+import { useAppSelector } from "@/app/hooks";
+import { setLoading, setUser } from "@/features/userSlice";
+import useGetUser from "@/services/user/useGetUser";
 import React, { useEffect } from "react";
 import { isExpired } from "react-jwt";
 import { useDispatch } from "react-redux";
-import useGetUser from "../services/user/useGetUser";
-import { useAppSelector } from "../app/hooks";
-import { setLoading, setUser } from "../features/userSlice";
 
 const useTokenAuth = () => {
   const authToken = localStorage.getItem("token");
