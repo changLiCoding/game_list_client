@@ -15,6 +15,22 @@
   width: 100%;
 }
 
+
+/* .TableContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1000px;
+  overflow: hidden;
+}
+
+.TableAdditional {
+  background-color: white;
+  box-shadow: 0 0 40px rgba(0,0,0,0.16);
+  margin: 0 auto;
+  border-radius: 12px;
+} */
+
 @media screen and (max-width: 1023px) {
   .TableContainer{
     max-width: 95%;

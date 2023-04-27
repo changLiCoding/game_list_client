@@ -68,6 +68,7 @@ const UserGameList = () => {
   return (
     <>
       <div className={styles.TableContainer}>
+        {/* <div className={`${styles.TableContainer} ${styles.TableAdditional}`}> */}
         <Table
           className={styles.Table}
           columns={columns}
