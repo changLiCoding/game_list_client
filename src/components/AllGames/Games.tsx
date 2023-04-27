@@ -14,11 +14,14 @@ export default function Games() {
 	return (
 		<Content>
 			<Card title='All Games'>
-				<Row gutter={24}>
+				<Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
 					{games &&
 						games.map((game: any) => (
 							<Col
-								span={6}
+								xs={{ span: 12 }}
+								sm={{ span: 8 }}
+								md={{ span: 6 }}
+								lg={{ span: 4 }}
 								key={game.id}>
 								<Popover
 									title={game.name}
@@ -41,6 +44,9 @@ export default function Games() {
 										className='Card-Games-container'
 										hoverable
 										bordered={false}
+										bodyStyle={{
+											color: "white",
+										}}
 										style={{
 											margin: 5,
 											backgroundColor: colorBgContainer,
@@ -56,7 +62,7 @@ export default function Games() {
 											style={{ color: "white" }}
 											className='Meta-Games-description'
 											title={game.name}
-											// description={game.description}
+											description={game.description}
 										/>
 									</Card>
 								</Popover>
