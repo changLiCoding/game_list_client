@@ -1,8 +1,8 @@
 import "./Login.css";
+import type { LoginType } from "@/types/Authentication";
 import { Button, Form, Input } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { LoginType } from "@/types/authentication";
 import { setUser } from "@/features/userSlice";
 import useAuth from "@/services/authentication/useAuth";
 import LoginImage from "@/assets/images/games_login.webp";
