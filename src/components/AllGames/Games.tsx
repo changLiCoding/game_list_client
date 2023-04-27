@@ -18,6 +18,7 @@ export default function Games() {
 					{games &&
 						games.map((game: any) => (
 							<Col
+								className='Col-Games-CardContainer'
 								xs={{ span: 12 }}
 								sm={{ span: 8 }}
 								md={{ span: 6 }}
@@ -42,13 +43,9 @@ export default function Games() {
 									}>
 									<Card
 										className='Card-Games-container'
-										hoverable
+										// hoverable
 										bordered={false}
-										bodyStyle={{
-											color: "white",
-										}}
 										style={{
-											margin: 5,
 											backgroundColor: colorBgContainer,
 										}}
 										cover={
@@ -58,7 +55,7 @@ export default function Games() {
 												src='https://cdn.cdkeys.com/700x700/media/catalog/product/5/d/5de6658946177c5f23698932_24__1_3.jpg'
 											/>
 										}>
-										<PlusCircleOutlined />
+										<PlusCircleOutlined className='PlusCircleOutlined-Games-hovershow' />
 										<Meta
 											// style={{ color: "white !important" }}
 											className='Meta-Games-description'
