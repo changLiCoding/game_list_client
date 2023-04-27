@@ -1,0 +1,7 @@
+.Card-Games-container {
+	box-shadow: none;
+}
+
+.Meta-Games-description > .ant-card-meta-title {
+	color: blueviolet !important;
+}

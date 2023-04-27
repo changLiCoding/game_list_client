@@ -1,6 +1,6 @@
-import React from "react";
-import useAllGames from "../../services/games/useAllGames";
+import useAllGames from "@/services/games/useAllGames";
 import { theme, Card, Col, Row, Popover, Tag } from "antd";
+import { PlusCircleOutlined } from "@ant-design/icons";
 import { Content } from "antd/es/layout/layout";
 import "./Games.css";
 
@@ -14,14 +14,14 @@ export default function Games() {
 	return (
 		<Content>
 			<Card title='All Games'>
-				<Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+				<Row gutter={{ xs: 8, sm: 16, md: 24, xl: 32 }}>
 					{games &&
 						games.map((game: any) => (
 							<Col
 								xs={{ span: 12 }}
 								sm={{ span: 8 }}
 								md={{ span: 6 }}
-								lg={{ span: 4 }}
+								xl={{ span: 4 }}
 								key={game.id}>
 								<Popover
 									title={game.name}
@@ -58,11 +58,11 @@ export default function Games() {
 												src='https://cdn.cdkeys.com/700x700/media/catalog/product/5/d/5de6658946177c5f23698932_24__1_3.jpg'
 											/>
 										}>
+										<PlusCircleOutlined />
 										<Meta
-											style={{ color: "white" }}
+											// style={{ color: "white !important" }}
 											className='Meta-Games-description'
 											title={game.name}
-											description={game.description}
 										/>
 									</Card>
 								</Popover>
