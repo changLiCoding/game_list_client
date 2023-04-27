@@ -10,3 +10,7 @@
   background-color: #335ddc;
   border-radius: 8px;
 }
+
+.ant-table-cell{
+  vertical-align: middle;
+}
