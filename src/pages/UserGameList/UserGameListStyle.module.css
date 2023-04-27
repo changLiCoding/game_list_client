@@ -1,0 +1,22 @@
+
+.TableContainer{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1000px;
+  background-color: white;
+  box-shadow: 0 0 40px rgba(0,0,0,0.16);
+  overflow: hidden;
+  margin: 0 auto;
+  border-radius: 12px;
+}
+
+.Table{
+  width: 100%;
+}
+
+@media screen and (max-width: 1023px) {
+  .TableContainer{
+    max-width: 95%;
+  }
+}

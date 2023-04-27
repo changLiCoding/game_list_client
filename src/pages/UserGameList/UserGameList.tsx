@@ -1,4 +1,4 @@
-import "./UserGameListStyle.css";
+import styles from "./UserGameListStyle.module.css";
 import { Table } from "antd";
 import { ColumnsType, TableProps } from "antd/es/table";
 import { Game } from "@/graphql/__generated__/graphql";
@@ -67,9 +67,9 @@ const UserGameList = () => {
 
   return (
     <>
-      <div className="table-container">
+      <div className={styles.TableContainer}>
         <Table
-          className="table"
+          className={styles.Table}
           columns={columns}
           dataSource={data}
           onChange={onChange}
