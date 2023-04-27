@@ -1,43 +1,9 @@
-import "./UserGameListStyle.css";
-import { Table } from "antd";
-import { ColumnsType, TableProps } from "antd/es/table";
+import styles from "./UserGameListStyle.module.css";
+import { Layout } from "antd";
 import { Game } from "@/graphql/__generated__/graphql";
 import useUserGames from "@/services/userGames/useUserGames";
-
-type DataType = Game & {
-  key: React.Key;
-};
-
-const columns: ColumnsType<DataType> = [
-  {
-    title: "Name",
-    dataIndex: "name",
-  },
-  {
-    title: "Average Score",
-    dataIndex: "avgScore",
-    sorter: {
-      compare: (a, b) => a.avgScore - b.avgScore,
-      multiple: 3,
-    },
-  },
-  // {
-  //   title: "Math Score",
-  //   dataIndex: "math",
-  //   sorter: {
-  //     compare: (a, b) => a.math - b.math,
-  //     multiple: 2,
-  //   },
-  // },
-  // {
-  //   title: "English Score",
-  //   dataIndex: "english",
-  //   sorter: {
-  //     compare: (a, b) => a.english - b.english,
-  //     multiple: 1,
-  //   },
-  // },
-];
+import UserGameListDesktop from "@/components/UserGameList/Desktop";
+import UserGameListMobile from "@/components/UserGameList/Mobile";
 
 const UserGameList = () => {
   // info("Cannot load the list of games");
@@ -46,15 +12,6 @@ const UserGameList = () => {
   if (gamesForAUserLoading) {
     return <div>Loading...</div>;
   }
-
-  const onChange: TableProps<DataType>["onChange"] = (
-    pagination,
-    filters,
-    sorter,
-    extra
-  ) => {
-    console.log("params", pagination, filters, sorter, extra);
-  };
 
   const data = gamesForAUser?.gamesForAUser.map((val: Game) => {
     return {
@@ -66,18 +23,90 @@ const UserGameList = () => {
   console.log(gamesForAUser?.gamesForAUser);
 
   return (
-    <>
-      <div className="table-container">
-        <Table
-          className="table"
-          columns={columns}
-          dataSource={data}
-          onChange={onChange}
-        />
+    <Layout>
+      <div className={styles.TableContainer}>
+        <UserGameListDesktop data={data} />
+      </div>
+      <div className={styles.TableContainerSmall}>
+        <UserGameListMobile data={data} />
       </div>
       {/* {contextHolder} */}
-    </>
+    </Layout>
   );
 };
 
 export default UserGameList;
+
+// import styles from "./UserGameListStyle.module.css";
+// import { Layout } from "antd";
+// import { Game } from "@/graphql/__generated__/graphql";
+// import useUserGames from "@/services/userGames/useUserGames";
+// import UserGameListDesktop from "@/components/UserGameList/Desktop";
+// import UserGameListMobile from "@/components/UserGameList/Mobile";
+
+// const UserGameList = () => {
+//   // info("Cannot load the list of games");
+//   const { gamesForAUserLoading, gamesForAUser } = useUserGames();
+
+//   if (gamesForAUserLoading) {
+//     return <div>Loading...</div>;
+//   }
+
+//   const data = gamesForAUser?.gamesForAUser.map((val: Game) => {
+//     return {
+//       key: val.id,
+//       ...val,
+//     };
+//   });
+
+//   console.log(gamesForAUser?.gamesForAUser);
+
+//   return (
+//     <Layout>
+//       <div className={styles.TableContainer}>
+//         <UserGameListDesktop data={data} />
+//       </div>
+//       <div className={styles.TableContainerSmall}>
+//         <UserGameListMobile data={data} />
+//         {/* <List
+//           className={styles.List}
+//           dataSource={data}
+//           renderItem={(item: any, index) => (
+//             <List.Item>
+//               <List.Item.Meta
+//                 avatar={
+//                   <div className={styles.ImageHolderSmall}>
+//                     <img
+//                       className={styles.Image}
+//                       src={item.imageURL}
+//                       alt="game"
+//                     />
+//                   </div>
+//                 }
+//                 title={<p>{item.name}</p>}
+//                 description={item.avgScore}
+//               />
+//               <Space className={styles.TagsContainerSmall} wrap>
+//                 {item.platforms.map((platform: any) => (
+//                   <Tag
+//                     style={{
+//                       whiteSpace: "nowrap",
+//                       overflow: "hidden",
+//                       textOverflow: "ellipsis",
+//                       maxWidth: "100px",
+//                     }}
+//                   >
+//                     {platform}
+//                   </Tag>
+//                 ))}
+//               </Space>
+//             </List.Item>
+//           )}
+//         /> */}
+//       </div>
+//       {/* {contextHolder} */}
+//     </Layout>
+//   );
+// };
+
+// export default UserGameList;
