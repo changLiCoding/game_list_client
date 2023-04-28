@@ -1,5 +1,5 @@
-import { apolloClient } from "../../graphql";
-import { GET_ALL_GAMES_BY_GENRE } from "../../services/game/queries";
+import { apolloClient } from "@/graphql";
+import { GET_ALL_GAMES_BY_GENRE } from "@/services/game/queries";
 
 describe("Get All Games By Genres Query", () => {
   it("Successful queries games objects by genre ID", async () => {

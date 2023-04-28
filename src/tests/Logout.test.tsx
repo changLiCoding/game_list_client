@@ -1,8 +1,8 @@
 import { describe, it } from "vitest";
 import { render, screen } from "@testing-library/react";
-import Dashboard from "../pages/Dashboard/Dashboard";
-import ContextWrapper from "../ContextWrapper";
 import userEvent from "@testing-library/user-event";
+import ContextWrapper from "@/ContextWrapper";
+import Dashboard from "@/pages/Dashboard/Dashboard";
 
 describe("App", () => {
   it("Renders Dashboard", async () => {

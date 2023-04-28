@@ -1,11 +1,11 @@
-import { Button, Form, Input } from "antd";
-import LoginImage from "../../assets/images/games_login.webp";
 import "./Login.css";
+import type { LoginType } from "@/types/Authentication";
+import { Button, Form, Input } from "antd";
 import { Link, useNavigate } from "react-router-dom";
-import { LoginType } from "../../types/authentication";
-import useAuth from "../../services/authentication/useAuth";
 import { useDispatch } from "react-redux";
-import { setUser } from "../../features/userSlice";
+import { setUser } from "@/features/userSlice";
+import useAuth from "@/services/authentication/useAuth";
+import LoginImage from "@/assets/images/games_login.webp";
 
 const Login = () => {
   const navigate = useNavigate();

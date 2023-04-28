@@ -5,6 +5,7 @@ import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import useTokenAuth from "./hooks/useTokenAuth";
+import UserGameList from "./pages/UserGameList/UserGameList";
 
 const Router = () => {
   const { loading, userState } = useTokenAuth();
@@ -16,7 +17,10 @@ const Router = () => {
   return (
     <Routes>
       {userState?.user?.username ? (
-        <Route path="/dashboard" element={<Dashboard />} />
+        <>
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/game-list" element={<UserGameList />} />
+        </>
       ) : (
         <>
           <Route path="/login" element={<Login />} />

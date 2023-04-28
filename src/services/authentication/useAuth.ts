@@ -1,10 +1,10 @@
 import { useMutation } from "@apollo/client";
+import { LOGIN, REGISTER } from "./queries";
+import useNotification from "@/hooks/useNotification";
 import {
   LoginUserPayload,
   RegisterUserPayload,
-} from "../../graphql/__generated__/graphql";
-import useNotification from "../../hooks/useNotification";
-import { LOGIN, REGISTER } from "./queries";
+} from "@/graphql/__generated__/graphql";
 
 const useAuth = () => {
   const { contextHolder, info } = useNotification();

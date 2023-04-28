@@ -1,9 +1,9 @@
 import { describe, it, vi } from "vitest";
-import { render, screen, waitFor } from "@testing-library/react";
-import Login from "../../pages/Login/Login";
-import ContextWrapper from "../../ContextWrapper";
-import userEvent from "@testing-library/user-event";
+import { render, screen } from "@testing-library/react";
 import { useNavigate } from "react-router-dom";
+import userEvent from "@testing-library/user-event";
+import ContextWrapper from "@/ContextWrapper";
+import Login from "@/pages/Login/Login";
 
 // This is a mock of useAuth (useAuth will not be running)
 vi.mock("../../services/authentication/useAuth", async () => {
