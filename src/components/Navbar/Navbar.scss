@@ -1,7 +1,6 @@
 $mobile-nav-width: 640px;
 
 .header {
-  position: absolute;
   width: 100%;
   z-index: 30;
   background-color: rgba(56, 58, 56, 0.4);
@@ -39,8 +38,14 @@ $mobile-nav-width: 640px;
   }
 }
 
-.nav {
+.nav-desktop {
   display: flex;
+  flex-grow: 1;
+}
+
+.nav-mobile {
+  display: flex;
+  justify-content: end;
   flex-grow: 1;
 }
 
@@ -77,6 +82,18 @@ a:active {
   text-decoration: none;
 }
 
+@media (max-width: $mobile-nav-width) {
+  .nav-desktop {
+    display: none;
+  }
+}
+
+@media (min-width: $mobile-nav-width) {
+
+  .nav-mobile {
+    display: none;
+  }
+}
 
 // .nav_item_button {
 //   --tw-text-opacity: 1;

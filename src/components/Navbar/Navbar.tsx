@@ -1,13 +1,9 @@
 import { useState } from 'react';
-import {
-  Menu, Layout, Button, Drawer, Image,
-} from 'antd';
+import { Button, Drawer, Image } from 'antd';
 import { AppstoreOutlined, MailOutlined, MenuOutlined } from '@ant-design/icons';
 
 import './Navbar.scss';
 import type { MenuProps } from 'antd';
-
-const { Header, Content, Footer } = Layout;
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -66,23 +62,23 @@ export default function Navbar() {
               </a>
             </div>
 
-            <nav className="nav">
+            {/* Desktop Navbar  */}
+            <nav className="nav-desktop">
               <ul className="nav-section">
-                <li>
-                  <a className="nav-item" href="/">Home</a>
+                <li className="nav-item">
+                  <a href="/">Home</a>
                 </li>
-                <li>
-                  <a className="nav-item" href="/profile">Profile</a>
+                <li className="nav-item">
+                  <a href="/profile">Profile</a>
                 </li>
-                <li>
-                  <a className="nav-item" href="/list">Game List</a>
+                <li className="nav-item">
+                  <a href="/list">Game List</a>
                 </li>
               </ul>
 
               <ul className="nav-section">
-                <li>
+                <li className="nav-item">
                   <a
-                    className="nav-item"
                     href="signin"
                   >
                     Sign in
@@ -96,6 +92,11 @@ export default function Navbar() {
                   src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
                 />
               </ul>
+            </nav>
+
+            {/* Mobile Navbar  */}
+            <nav className="nav-mobile">
+              <MenuOutlined style={{ color: 'black', fontSize: 25 }} />
             </nav>
           </div>
         </div>
