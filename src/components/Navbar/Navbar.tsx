@@ -1,9 +1,12 @@
 import { useState } from 'react';
-import { Button, Drawer, Image } from 'antd';
-import { AppstoreOutlined, MailOutlined, MenuOutlined } from '@ant-design/icons';
+import {
+  Button, Drawer, Image, Popover,
+} from 'antd';
+import {
+  EnterOutlined, MenuOutlined, SettingOutlined, UserOutlined,
+} from '@ant-design/icons';
 
 import './Navbar.scss';
-import type { MenuProps } from 'antd';
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -16,30 +19,30 @@ export default function Navbar() {
     setOpen(false);
   };
 
-  const items: MenuProps['items'] = [
-    {
-      label: 'Home',
-      key: 'title',
-      className: 'menu_item_title',
-    },
-    {
-      label: 'Profile',
-      key: 'profile',
-      className: 'menu-item',
-    },
-    {
-      label: 'Game List',
-      key: 'app',
-      className: 'menu-item',
-    },
-  ];
-
-  const [current, setCurrent] = useState('mail');
-
-  const onClick: MenuProps['onClick'] = (e) => {
-    console.log('click ', e);
-    setCurrent(e.key);
-  };
+  const content = (
+    <div>
+      <ul className="header-popover-dropdown">
+        <li>
+          <a className="header-popover-item" href="/profile">
+            <UserOutlined className="header-popover-icon" />
+            Profile
+          </a>
+        </li>
+        <li>
+          <a className="header-popover-item" href="/settings">
+            <SettingOutlined className="header-popover-icon" />
+            Settings
+          </a>
+        </li>
+        <li>
+          <a className="header-popover-item" href="/logout">
+            <EnterOutlined className="header-popover-icon" />
+            Logout
+          </a>
+        </li>
+      </ul>
+    </div>
+  );
 
   return (
     <div style={{ display: 'flex', height: '5rem' }}>
@@ -51,7 +54,7 @@ export default function Navbar() {
               <a href="/">
                 <svg
                   style={{
-                    width: '2rem', height: '2rem', fill: 'currentcolor', color: 'rgb(93 93 255)',
+                    width: '2rem', height: '2rem', fill: 'currentcolor', color: 'white',
                   }}
                   className="w-8 h-8 fill-current text-purple-600"
                   viewBox="0 0 32 32"
@@ -77,49 +80,39 @@ export default function Navbar() {
               </ul>
 
               <ul className="nav-section">
-                <li className="nav-item">
+                {/* <li className="nav-item">
                   <a
                     href="signin"
                   >
                     Sign in
 
                   </a>
-                </li>
-                <Image
-                  width={38}
-                  height={38}
-                  preview={false}
-                  src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-                />
+                </li> */}
+                <Popover overlayClassName="header-popover" content={content}>
+                  <Image
+                    width={38}
+                    height={38}
+                    preview={false}
+                    src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+                  />
+                </Popover>
+
               </ul>
             </nav>
 
             {/* Mobile Navbar  */}
             <nav className="nav-mobile">
               <MenuOutlined className="nav-mobile-hamburger" onClick={showDrawer} />
-              <Drawer title="Game List" placement="right" closable={false} onClose={onClose} open={open}>
-                <p>Some contents...</p>
-                <p>Some contents...</p>
-                <p>Some contents...</p>
-              </Drawer>
-              {/* <Menu className={style.navbar} onClick={onClick} selectedKeys={[current]} mode="vertical" items={items} />
-      </Drawer>
-              {/* style={{ color: 'black', fontSize: 25 }}  */}
-
             </nav>
+            <Drawer title="Game List" placement="left" closable={false} onClose={onClose} open={open}>
+              <p>Some contents...</p>
+              <p>Some contents...</p>
+              <p>Some contents...</p>
+            </Drawer>
           </div>
         </div>
       </header>
-
+      { /* <Button type="primary" onClick={showDrawer}> */ }
     </div>
   );
 }
-{ /* <Button type="primary" onClick={showDrawer}>
-        Open
-      </Button>
-      <Drawer className={style.navbar_drawer} title="Game List" placement="right" closable={false} onClose={onClose} open={open}>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        {/* <Menu className={style.navbar} onClick={onClick} selectedKeys={[current]} mode="vertical" items={items} />
-      </Drawer> */ }
