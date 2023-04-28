@@ -5,15 +5,15 @@
 import { Layout } from "antd";
 
 import FiltersWrapper from "@/components/FiltersWrapper/FiltersWrapper";
-import AllGames from "@/components/AllGames/AllGames";
+import AllGames from "@/components/AllGames";
 
 const Hero: React.FC = () => {
-  return (
-    <Layout>
-      <FiltersWrapper></FiltersWrapper>
-      <AllGames />
-    </Layout>
-  );
+	return (
+		<Layout>
+			<FiltersWrapper></FiltersWrapper>
+			<AllGames />
+		</Layout>
+	);
 };
 
 export default Hero;

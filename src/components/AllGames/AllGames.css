@@ -1,0 +1,12 @@
+.Lagout-AllGames-container {
+	margin: 0;
+	width: 100%;
+}
+
+@media screen and (min-width: 1024px) {
+	.Lagout-AllGames-container {
+		width: 97%;
+		margin-inline-start: 20px;
+		margin-inline-end: 20px;
+	}
+}

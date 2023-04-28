@@ -1,72 +1,100 @@
+import { Layout, Grid, Input, Space, Button } from "antd";
+import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
+import { useState } from "react";
+
 import "./FiltersWrapper.css";
-import { Layout } from "antd";
 import FilterField from "./FilterField";
 import useGame from "@/services/game/useGame";
 
 interface Option {
-  value: string;
-  label: string;
-  children?: Option[];
+	value: string;
+	label: string;
+	children?: Option[];
 }
 
+const { Search } = Input;
+
 export default function FilterWrapper() {
-  const onChange = (value: string[]): void => {
-    console.log(value);
-  };
-  const { genres, platforms, tags } = useGame();
+	const [collapsed, setCollapsed] = useState(false);
 
-  console.log("allGenres: ", genres);
+	const { useBreakpoint } = Grid;
+	const screens = useBreakpoint();
 
-  const optionsGenerator = (typeArray: Array<{ name: string }>): Option[] => {
-    return typeArray.map((type: { name: string }) => ({
-      value: type.name,
-      label: type.name,
-    }));
-  };
+	const onChange = (value: string[]): void => {
+		console.log(value);
+	};
+	const { genres, platforms, tags } = useGame();
 
-  const genresOptions: Option[] = genres ? optionsGenerator(genres) : [];
+	const optionsGenerator = (typeArray: Array<{ name: string }>): Option[] => {
+		return typeArray.map((type: { name: string }) => ({
+			value: type.name,
+			label: type.name,
+		}));
+	};
 
-  const platformsOptions: Option[] = platforms
-    ? optionsGenerator(platforms)
-    : [];
+	const genresOptions: Option[] = genres ? optionsGenerator(genres) : [];
 
-  const tagsOptions: Option[] = tags ? optionsGenerator(tags) : [];
+	const platformsOptions: Option[] = platforms
+		? optionsGenerator(platforms)
+		: [];
 
-  console.log("Genres: ", genresOptions);
-  console.log("Platforms: ", platformsOptions);
-  console.log("Tags: ", tagsOptions);
+	const tagsOptions: Option[] = tags ? optionsGenerator(tags) : [];
 
-  return tagsOptions.length === 0 ||
-    genresOptions.length === 0 ||
-    platformsOptions.length === 0 ? (
-    <Layout>Loading</Layout>
-  ) : (
-    <Layout className="layout-FiltersWrapper-container">
-      <FilterField
-        fieldName="Genres"
-        options={genresOptions}
-        onChange={onChange}
-        changeOnSelect
-      />
+	return tagsOptions.length === 0 ||
+		genresOptions.length === 0 ||
+		platformsOptions.length === 0 ? (
+		<Layout>Loading</Layout>
+	) : (
+		<Layout className='layout-FiltersWrapper-container'>
+			{screens.md ? (
+				<>
+					<FilterField
+						fieldName='Genres'
+						options={genresOptions}
+						onChange={onChange}
+						changeOnSelect
+					/>
 
-      <FilterField
-        fieldName="Platforms"
-        options={platformsOptions}
-        onChange={onChange}
-        changeOnSelect
-      />
-      <FilterField
-        fieldName="Tags"
-        options={tagsOptions}
-        onChange={onChange}
-        changeOnSelect
-      />
-      <FilterField
-        fieldName="Year"
-        options={[]}
-        onChange={onChange}
-        changeOnSelect
-      />
-    </Layout>
-  );
+					<FilterField
+						fieldName='Platforms'
+						options={platformsOptions}
+						onChange={onChange}
+						changeOnSelect
+					/>
+					<FilterField
+						fieldName='Tags'
+						options={tagsOptions}
+						onChange={onChange}
+						changeOnSelect
+					/>
+					<FilterField
+						fieldName='Year'
+						options={[]}
+						onChange={onChange}
+						changeOnSelect
+					/>
+				</>
+			) : (
+				<Space
+					direction='horizontal'
+					size={screens.sm ? 48 : 24}>
+					<Search
+						style={screens.sm ? { width: "470px" } : { width: "300px" }}
+						placeholder='input search text'
+						size='large'
+						onSearch={(value) => console.log(value)}
+						enterButton='Search'
+					/>
+					<Button
+						size='large'
+						type='primary'
+						onClick={() => {
+							setCollapsed(!collapsed);
+						}}>
+						{collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+					</Button>
+				</Space>
+			)}
+		</Layout>
+	);
 }
