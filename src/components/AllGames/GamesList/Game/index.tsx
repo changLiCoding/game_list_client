@@ -45,12 +45,11 @@ export default function Game({
 									))}
 								</div>
 							}>
-							{loading ? (
-								<p>Loading...</p>
-							) : error ? (
+							{error ? (
 								<p>Error!</p>
 							) : (
 								<Card
+									loading={loading}
 									className='Card-Games-container'
 									// hoverable
 									bordered={false}

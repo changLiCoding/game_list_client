@@ -7,9 +7,9 @@ import { Content } from "antd/es/layout/layout";
 
 export default function AllGames() {
 	return (
-		<div className='Lagout-AllGames-container'>
+		<Layout className='Lagout-AllGames-container'>
 			<InfoBar />
 			<GamesList />
-		</div>
+		</Layout>
 	);
 }
