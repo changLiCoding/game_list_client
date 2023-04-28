@@ -1,6 +1,6 @@
 import { Col, Card, Popover, Tag } from "antd";
 import { PlusCircleOutlined } from "@ant-design/icons";
-import Color, { useColor } from "color-thief-react";
+import Color from "color-thief-react";
 
 import "./Game.css";
 import { Game as GameType } from "@/graphql/__generated__/graphql";
@@ -65,6 +65,9 @@ export default function Game({
 										/>
 									}>
 									<PlusCircleOutlined
+										onClick={() => {
+											console.log(game.id);
+										}}
 										style={{ color: `${data}` }}
 										className='PlusCircleOutlined-Games-hovershow'
 									/>

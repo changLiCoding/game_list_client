@@ -23,5 +23,5 @@
 	.Meta-Games-description
 	> .ant-card-meta-detail
 	> .ant-card-meta-title {
-	/* color: blueviolet; */
+	color: var(--hover-color);
 }
