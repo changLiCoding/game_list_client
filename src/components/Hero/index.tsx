@@ -5,7 +5,7 @@
 import { Layout } from "antd";
 
 import FiltersWrapper from "../FiltersWrapper/FiltersWrapper";
-import AllGames from "../AllGames/AllGames";
+import AllGames from "../AllGames";
 
 const Hero: React.FC = () => {
 	return (

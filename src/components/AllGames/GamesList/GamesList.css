@@ -1,5 +1,6 @@
 .Col-Games-CardContainer {
 	position: relative;
+	margin-bottom: 8px;
 }
 .ant-col > .Card-Games-container {
 	box-shadow: none;
@@ -17,10 +18,10 @@
 	display: block;
 }
 
-.PlusCircleOutlined-Games-hovershow:hover {
-	display: none;
-}
-
-.Meta-Games-description > .ant-card-meta-title {
-	color: blueviolet !important;
+.ant-col
+	> .Card-Games-container:hover
+	.Meta-Games-description
+	> .ant-card-meta-detail
+	> .ant-card-meta-title {
+	/* color: blueviolet; */
 }
