@@ -96,7 +96,16 @@ export default function Navbar() {
 
             {/* Mobile Navbar  */}
             <nav className="nav-mobile">
-              <MenuOutlined style={{ color: 'black', fontSize: 25 }} />
+              <MenuOutlined className="nav-mobile-hamburger" onClick={showDrawer} />
+              <Drawer title="Game List" placement="right" closable={false} onClose={onClose} open={open}>
+                <p>Some contents...</p>
+                <p>Some contents...</p>
+                <p>Some contents...</p>
+              </Drawer>
+              {/* <Menu className={style.navbar} onClick={onClick} selectedKeys={[current]} mode="vertical" items={items} />
+      </Drawer>
+              {/* style={{ color: 'black', fontSize: 25 }}  */}
+
             </nav>
           </div>
         </div>
