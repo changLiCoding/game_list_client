@@ -1,5 +1,5 @@
-import { theme, Card, Col, Row, Popover, Tag } from "antd";
-import { PlusCircleOutlined } from "@ant-design/icons";
+import { theme, Card, Row } from "antd";
+
 import { Content } from "antd/es/layout/layout";
 
 // import type { Game } from "@/graphql/__generated__/graphql";
@@ -10,11 +10,10 @@ import "./GamesList.css";
 
 export default function Games() {
 	const { games } = useAllGames();
-	const { Meta } = Card;
 	const {
 		token: { colorBgContainer },
 	} = theme.useToken();
-	games && console.log(games);
+
 	return (
 		<Content>
 			<Card title='All Games'>

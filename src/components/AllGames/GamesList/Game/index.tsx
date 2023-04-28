@@ -1,4 +1,4 @@
-import { Col, Card, Popover, Tag } from "antd";
+import { Col, Card, Popover, Tag, Button } from "antd";
 import { PlusCircleOutlined } from "@ant-design/icons";
 import Color from "color-thief-react";
 
@@ -22,7 +22,7 @@ export default function Game({
 			{({ data, loading, error }) => {
 				return (
 					<Col
-						className='Col-Games-CardContainer'
+						className='Col-Game-CardContainer'
 						xs={{ span: 12 }}
 						sm={{ span: 8 }}
 						md={{ span: 6 }}
@@ -50,7 +50,7 @@ export default function Game({
 							) : (
 								<Card
 									loading={loading}
-									className='Card-Games-container'
+									className='Card-Game-container'
 									// hoverable
 									bordered={false}
 									style={{
@@ -58,21 +58,23 @@ export default function Game({
 									}}
 									cover={
 										<img
-											className='img-Games-background'
 											alt='example'
 											src={game.imageURL}
 										/>
 									}>
-									<PlusCircleOutlined
+									<Button
 										onClick={() => {
 											console.log(game.id);
 										}}
+										size='large'
+										className='Button-Game-hovershow'
+										type='ghost'
 										style={{ color: `${data}` }}
-										className='PlusCircleOutlined-Games-hovershow'
-									/>
+										icon={<PlusCircleOutlined style={{ fontSize: "1.2rem" }} />}
+										shape='circle'></Button>
 									<Meta
 										style={{ color: `${data}` }}
-										className='Meta-Games-description'
+										className='Meta-Game-description'
 										title={game.name}
 									/>
 								</Card>

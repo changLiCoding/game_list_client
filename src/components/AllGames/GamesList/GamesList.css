@@ -1,27 +1,3 @@
-.Col-Games-CardContainer {
-	position: relative;
-	margin-bottom: 8px;
-}
-.ant-col > .Card-Games-container {
+.ant-col > .Card-Game-container {
 	box-shadow: none;
-}
-
-.PlusCircleOutlined-Games-hovershow {
-	display: none;
-	font-size: 1.5rem;
-	position: absolute;
-	top: 88%;
-	left: 89%;
-}
-
-.ant-col > .Card-Games-container:hover .PlusCircleOutlined-Games-hovershow {
-	display: block;
-}
-
-.ant-col
-	> .Card-Games-container:hover
-	.Meta-Games-description
-	> .ant-card-meta-detail
-	> .ant-card-meta-title {
-	color: var(--hover-color);
 }
