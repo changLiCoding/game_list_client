@@ -1,9 +1,9 @@
 import { Table, Tag } from 'antd';
-import { ColumnsType, TableProps } from 'antd/es/table';
-import type { DataType } from '@/types/UserGameList';
+import { ColumnsType } from 'antd/es/table';
 import styles from './UserGameListMobile.module.css';
+import type { GameDataType } from '@/types/UserGameList';
 
-const columns: ColumnsType<DataType> = [
+const columns: ColumnsType<GameDataType> = [
   {
     title: '',
     dataIndex: 'imageURL',
@@ -49,8 +49,7 @@ const columns: ColumnsType<DataType> = [
   },
 ];
 
-// TODO: Add type for data
-function UserGameListMobile({ data }: { data: any }) {
+function UserGameListMobile({ data }: { data: GameDataType[] }) {
   // const onChange: TableProps<DataType>['onChange'] = (
   //   pagination,
   //   filters,

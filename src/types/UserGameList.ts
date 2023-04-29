@@ -1,5 +1,5 @@
 import { Game } from '@/graphql/__generated__/graphql';
 
-export type DataType = Game & {
+export type GameDataType = Game & {
   key: React.Key;
 };

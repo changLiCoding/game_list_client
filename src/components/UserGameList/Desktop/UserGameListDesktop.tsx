@@ -1,9 +1,9 @@
 import { Popover, Table, Tag } from 'antd';
-import { ColumnsType, TableProps } from 'antd/es/table';
+import { ColumnsType } from 'antd/es/table';
 import styles from './UserGameListDesktop.module.css';
-import type { DataType } from '@/types/UserGameList';
+import type { GameDataType } from '@/types/UserGameList';
 
-const columns: ColumnsType<DataType> = [
+const columns: ColumnsType<GameDataType> = [
   {
     title: '',
     dataIndex: 'imageURL',
@@ -52,9 +52,7 @@ const columns: ColumnsType<DataType> = [
   },
 ];
 
-// TODO: Add type to data
-function UserGameListDesktop({ data }: { data: any }) {
-  console.log(data);
+function UserGameListDesktop({ data }: { data: GameDataType[] }) {
   // const onChange: TableProps<DataType>['onChange'] = (
   //   pagination,
   //   filters,
