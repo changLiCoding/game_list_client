@@ -1,11 +1,11 @@
-import styles from "./UserGameListStyle.module.css";
-import { Layout } from "antd";
-import { Game } from "@/graphql/__generated__/graphql";
-import useUserGames from "@/services/userGames/useUserGames";
-import UserGameListDesktop from "@/components/UserGameList/Desktop";
-import UserGameListMobile from "@/components/UserGameList/Mobile";
+import { Layout } from 'antd';
+import styles from './UserGameListStyle.module.css';
+import { Game } from '@/graphql/__generated__/graphql';
+import useUserGames from '@/services/userGames/useUserGames';
+import UserGameListDesktop from '@/components/UserGameList/Desktop';
+import UserGameListMobile from '@/components/UserGameList/Mobile';
 
-const UserGameList = () => {
+function UserGameList() {
   // info("Cannot load the list of games");
   const { gamesForAUserLoading, gamesForAUser } = useUserGames();
 
@@ -13,14 +13,10 @@ const UserGameList = () => {
     return <div>Loading...</div>;
   }
 
-  const data = gamesForAUser?.gamesForAUser.map((val: Game) => {
-    return {
-      key: val.id,
-      ...val,
-    };
-  });
-
-  console.log(gamesForAUser?.gamesForAUser);
+  const data = gamesForAUser?.gamesForAUser.map((val: Game) => ({
+    key: val.id,
+    ...val,
+  }));
 
   return (
     <Layout>
@@ -33,7 +29,7 @@ const UserGameList = () => {
       {/* {contextHolder} */}
     </Layout>
   );
-};
+}
 
 export default UserGameList;
 

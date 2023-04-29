@@ -1,20 +1,20 @@
-import type { DataType } from "@/types/UserGameList";
-import styles from "./UserGameListMobile.module.css";
-import { Table, Tag } from "antd";
-import { ColumnsType, TableProps } from "antd/es/table";
+import { Table, Tag } from 'antd';
+import { ColumnsType } from 'antd/es/table';
+import styles from './UserGameListMobile.module.css';
+import type { GameDataType } from '@/types/UserGameList';
 
-const columns: ColumnsType<DataType> = [
+const columns: ColumnsType<GameDataType> = [
   {
-    title: "",
-    dataIndex: "imageURL",
+    title: '',
+    dataIndex: 'imageURL',
     width: 100,
     render: (imageURL: string) => (
       <img className={styles.ImageSmall} src={imageURL} alt="game" />
     ),
   },
   {
-    title: "Name",
-    dataIndex: "name",
+    title: 'Name',
+    dataIndex: 'name',
     sorter: {
       compare: (a, b) => a.name.localeCompare(b.name),
       multiple: 3,
@@ -27,48 +27,46 @@ const columns: ColumnsType<DataType> = [
     ),
   },
   {
-    title: "Platforms",
-    dataIndex: "platforms",
+    title: 'Platforms',
+    dataIndex: 'platforms',
     render: (platforms: string[]) => (
       <div className={styles.TagsContainer}>
-        {platforms.map((platform: string) => {
-          return (
-            <Tag
-              style={{
-                whiteSpace: "nowrap",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                maxWidth: "100px",
-              }}
-              key={platform}
-            >
-              {platform}
-            </Tag>
-          );
-        })}
+        {platforms.map((platform: string) => (
+          <Tag
+            style={{
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              maxWidth: '100px',
+            }}
+            key={platform}
+          >
+            {platform}
+          </Tag>
+        ))}
       </div>
     ),
   },
 ];
 
-// TODO: Add type for data
-const UserGameListMobile: React.FC<any> = ({ data }) => {
-  const onChange: TableProps<DataType>["onChange"] = (
-    pagination,
-    filters,
-    sorter,
-    extra
-  ) => {
-    console.log("params", pagination, filters, sorter, extra);
-  };
+function UserGameListMobile({ data }: { data: GameDataType[] }) {
+  // const onChange: TableProps<DataType>['onChange'] = (
+  //   pagination,
+  //   filters,
+  //   sorter,
+  //   extra
+  // ) => {
+  //   console.log('params', pagination, filters, sorter, extra);
+  // };
+
   return (
     <Table
       // className={styles.Table}
       columns={columns}
       dataSource={data}
-      onChange={onChange}
+      // onChange={onChange}
     />
   );
-};
+}
 
 export default UserGameListMobile;

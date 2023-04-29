@@ -1,11 +1,11 @@
-import React from "react";
-import { Provider } from "react-redux";
-import { store } from "./app/store";
-import { ApolloProvider } from "@apollo/client";
-import { apolloClient } from "./graphql";
-import { BrowserRouter } from "react-router-dom";
+import React from 'react';
+import { Provider } from 'react-redux';
+import { ApolloProvider } from '@apollo/client';
+import { BrowserRouter } from 'react-router-dom';
+import { store } from './app/store';
+import { apolloClient } from './graphql';
 
-const ContextWrapper = ({ children }: { children: React.ReactNode }) => {
+function ContextWrapper({ children }: { children: React.ReactNode }) {
   return (
     <Provider store={store}>
       <ApolloProvider client={apolloClient}>
@@ -13,6 +13,6 @@ const ContextWrapper = ({ children }: { children: React.ReactNode }) => {
       </ApolloProvider>
     </Provider>
   );
-};
+}
 
 export default ContextWrapper;

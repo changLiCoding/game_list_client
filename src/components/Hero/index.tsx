@@ -2,18 +2,18 @@
 // import { useAppSelector } from "../../app/hooks";
 // import { useSelector } from "react-redux";
 // import { RootState } from "../../app/store";
-import { Layout } from "antd";
+import { Layout } from 'antd';
 
-import FiltersWrapper from "@/components/FiltersWrapper/FiltersWrapper";
-import AllGames from "@/components/AllGames";
+import FiltersWrapper from '@/components/FiltersWrapper/FiltersWrapper';
+import AllGames from '@/components/AllGames';
 
-const Hero: React.FC = () => {
-	return (
-		<Layout>
-			<FiltersWrapper></FiltersWrapper>
-			<AllGames />
-		</Layout>
-	);
-};
+function Hero() {
+  return (
+    <Layout>
+      <FiltersWrapper />
+      <AllGames />
+    </Layout>
+  );
+}
 
 export default Hero;

@@ -1,11 +1,11 @@
-import Hero from "@/components/Hero";
+import Hero from '@/components/Hero';
 
-const Home = () => {
+function Home() {
   return (
     <main>
       <Hero />
     </main>
   );
-};
+}
 
 export default Home;

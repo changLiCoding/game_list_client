@@ -1,7 +1,7 @@
 export const getTokenFromLocalStorage = {
   context: {
     headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
     },
   },
 };
@@ -9,13 +9,13 @@ export const getTokenFromLocalStorage = {
 export const INITIAL_USER_STATE = {
   loading: true,
   user: {
-    username: "",
-    bannerPicture: "",
-    createdAt: "",
+    username: '',
+    bannerPicture: '',
+    createdAt: '',
     games: [],
     isActive: false,
     userGames: [],
-    userPicture: "",
-    __typename: "",
+    userPicture: '',
+    __typename: '',
   },
 };
