@@ -1,5 +1,5 @@
-import React from "react";
+import React from 'react';
 
 export default function InfoBar() {
-	return <div>InfoBar</div>;
+  return <div>InfoBar</div>;
 }

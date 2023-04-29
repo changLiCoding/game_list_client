@@ -1,25 +1,25 @@
-import styles from "./UserGameListDesktop.module.css";
-import type { DataType } from "@/types/UserGameList";
-import { Popover, Table, Tag } from "antd";
-import { ColumnsType, TableProps } from "antd/es/table";
+import { Popover, Table, Tag } from 'antd';
+import { ColumnsType, TableProps } from 'antd/es/table';
+import styles from './UserGameListDesktop.module.css';
+import type { DataType } from '@/types/UserGameList';
 
 const columns: ColumnsType<DataType> = [
   {
-    title: "",
-    dataIndex: "imageURL",
+    title: '',
+    dataIndex: 'imageURL',
     width: 100,
     render: (imageURL: string) => (
       <>
         <Popover
           className={styles.PopElement}
           placement="left"
-          content={
+          content={(
             <img
               className={styles.ImagePop}
               src={imageURL}
               alt="game-large"
-            ></img>
-          }
+            />
+          )}
         >
           <img className={styles.Image} src={imageURL} alt="game" />
         </Popover>
@@ -28,29 +28,27 @@ const columns: ColumnsType<DataType> = [
     ),
   },
   {
-    title: "Name",
-    dataIndex: "name",
+    title: 'Name',
+    dataIndex: 'name',
     sorter: {
       compare: (a, b) => a.name.localeCompare(b.name),
       multiple: 3,
     },
   },
   {
-    title: "Average Score",
-    dataIndex: "avgScore",
+    title: 'Average Score',
+    dataIndex: 'avgScore',
     sorter: {
       compare: (a, b) => a.avgScore - b.avgScore,
       multiple: 3,
     },
   },
   {
-    title: "Platforms",
-    dataIndex: "platforms",
+    title: 'Platforms',
+    dataIndex: 'platforms',
     render: (platforms: string[]) => (
       <div className={styles.TagsContainer}>
-        {platforms.map((platform: string) => {
-          return <Tag key={platform}>{platform}</Tag>;
-        })}
+        {platforms.map((platform: string) => <Tag key={platform}>{platform}</Tag>)}
       </div>
     ),
   },
@@ -58,13 +56,13 @@ const columns: ColumnsType<DataType> = [
 
 // TODO: Add type to data
 const UserGameListDesktop: React.FC<any> = ({ data }) => {
-  const onChange: TableProps<DataType>["onChange"] = (
+  const onChange: TableProps<DataType>['onChange'] = (
     pagination,
     filters,
     sorter,
-    extra
+    extra,
   ) => {
-    console.log("params", pagination, filters, sorter, extra);
+    console.log('params', pagination, filters, sorter, extra);
   };
 
   return (

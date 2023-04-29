@@ -1,6 +1,6 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import { setupListeners } from "@reduxjs/toolkit/query";
-import userReducer from "@/features/userSlice";
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { setupListeners } from '@reduxjs/toolkit/query';
+import userReducer from '@/features/userSlice';
 
 const rootReducer = combineReducers({
   user: userReducer,

@@ -1,3 +1,3 @@
-import UserGameListDesktop from "./UserGameListDesktop";
+import UserGameListDesktop from './UserGameListDesktop';
 
 export default UserGameListDesktop;

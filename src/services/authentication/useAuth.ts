@@ -1,10 +1,10 @@
-import { useMutation } from "@apollo/client";
-import { LOGIN, REGISTER } from "./queries";
-import useNotification from "@/hooks/useNotification";
+import { useMutation } from '@apollo/client';
+import { LOGIN, REGISTER } from './queries';
+import useNotification from '@/hooks/useNotification';
 import {
   LoginUserPayload,
   RegisterUserPayload,
-} from "@/graphql/__generated__/graphql";
+} from '@/graphql/__generated__/graphql';
 
 const useAuth = () => {
   const { contextHolder, info } = useNotification();
@@ -12,20 +12,19 @@ const useAuth = () => {
   const [registerRequest] = useMutation(REGISTER);
 
   const login = async (
-    email: String,
-    password: String
+    email: string,
+    password: string,
   ): Promise<LoginUserPayload> => {
     try {
       const response = await loginRequest({
         variables: { email, password },
       });
       if (
-        !response ||
-        !response.data ||
-        !response.data.login ||
-        response.data.login.errors[0]
-      )
-        throw new Error(response.data.login.errors[0]);
+        !response
+        || !response.data
+        || !response.data.login
+        || response.data.login.errors[0]
+      ) throw new Error(response.data.login.errors[0]);
 
       return response.data.login;
     } catch (err: any) {
@@ -34,9 +33,9 @@ const useAuth = () => {
   };
 
   const register = async (
-    username: String,
-    email: String,
-    password: String
+    username: string,
+    email: string,
+    password: string,
   ): Promise<RegisterUserPayload> => {
     try {
       const response = await registerRequest({
@@ -44,12 +43,11 @@ const useAuth = () => {
       });
 
       if (
-        !response ||
-        !response.data ||
-        !response.data.register ||
-        response.data.register.errors[0]
-      )
-        throw new Error(response.data.register.errors[0]);
+        !response
+        || !response.data
+        || !response.data.register
+        || response.data.register.errors[0]
+      ) throw new Error(response.data.register.errors[0]);
 
       return response.data.register;
     } catch (err: any) {

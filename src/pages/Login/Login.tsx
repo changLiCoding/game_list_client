@@ -1,13 +1,13 @@
-import "./Login.css";
-import type { LoginType } from "@/types/Authentication";
-import { Button, Form, Input } from "antd";
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { setUser } from "@/features/userSlice";
-import useAuth from "@/services/authentication/useAuth";
-import LoginImage from "@/assets/images/games_login.webp";
+import './Login.css';
+import { Button, Form, Input } from 'antd';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import type { LoginType } from '@/types/Authentication';
+import { setUser } from '@/features/userSlice';
+import useAuth from '@/services/authentication/useAuth';
+import LoginImage from '@/assets/images/games_login.webp';
 
-const Login = () => {
+function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { login, contextHolder, info } = useAuth();
@@ -17,9 +17,9 @@ const Login = () => {
 
     if (loginData.token) {
       // dispatch(setLoading(true));
-      localStorage.setItem("token", loginData.token);
+      localStorage.setItem('token', loginData.token);
       dispatch(setUser(loginData.user));
-      navigate("/dashboard");
+      navigate('/dashboard');
     } else {
       info(loginData.errors[0]);
     }
@@ -46,8 +46,8 @@ const Login = () => {
             <Form.Item
               name="email"
               rules={[
-                { required: true, message: "Please input your email!" },
-                { type: "email", message: "Please enter valid email!" },
+                { required: true, message: 'Please input your email!' },
+                { type: 'email', message: 'Please enter valid email!' },
               ]}
             >
               <Input placeholder="Email" data-testid="email-test" />
@@ -56,7 +56,7 @@ const Login = () => {
             <Form.Item
               name="password"
               rules={[
-                { required: true, message: "Please input your password!" },
+                { required: true, message: 'Please input your password!' },
               ]}
             >
               <Input.Password
@@ -74,13 +74,13 @@ const Login = () => {
                 LOGIN
               </Button>
             </Form.Item>
-            <Link to={"/register"}>Need an account?</Link>
+            <Link to="/register">Need an account?</Link>
           </Form>
         </div>
       </div>
       {contextHolder}
     </>
   );
-};
+}
 
 export default Login;

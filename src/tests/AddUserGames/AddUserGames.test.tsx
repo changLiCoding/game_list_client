@@ -1,5 +1,5 @@
-import { describe, it } from "vitest";
+import { describe, it } from 'vitest';
 
-describe("Temporary", () => {
-  it("Temporary", async () => {});
+describe('Temporary', () => {
+  it('Temporary', async () => {});
 });

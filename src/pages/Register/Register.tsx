@@ -1,11 +1,11 @@
-import "./Register.css";
-import WelcomeImage from "@/assets/images/register_welcome.webp";
-import { Button, Form, Input } from "antd";
-import { Link, useNavigate } from "react-router-dom";
-import type { RegisterType } from "@/types/Authentication";
-import useAuth from "@/services/authentication/useAuth";
+import './Register.css';
+import { Button, Form, Input } from 'antd';
+import { Link, useNavigate } from 'react-router-dom';
+import WelcomeImage from '@/assets/images/register_welcome.webp';
+import type { RegisterType } from '@/types/Authentication';
+import useAuth from '@/services/authentication/useAuth';
 
-const Register = () => {
+function Register() {
   const navigate = useNavigate();
   const { register, contextHolder, info } = useAuth();
 
@@ -13,12 +13,12 @@ const Register = () => {
     const registerData = await register(
       values.username,
       values.email,
-      values.password
+      values.password,
     );
 
     if (registerData.token) {
-      localStorage.setItem("token", registerData.token);
-      navigate("/dashboard");
+      localStorage.setItem('token', registerData.token);
+      navigate('/dashboard');
     } else {
       info(registerData.errors[0]);
     }
@@ -45,7 +45,7 @@ const Register = () => {
               rules={[
                 {
                   required: true,
-                  message: "Please input your username!",
+                  message: 'Please input your username!',
                   whitespace: true,
                 },
               ]}
@@ -56,8 +56,8 @@ const Register = () => {
             <Form.Item
               name="email"
               rules={[
-                { required: true, message: "Please input your email!" },
-                { type: "email", message: "Please enter valid email!" },
+                { required: true, message: 'Please input your email!' },
+                { type: 'email', message: 'Please enter valid email!' },
               ]}
             >
               <Input placeholder="Email" data-testid="email-test" />
@@ -66,10 +66,10 @@ const Register = () => {
             <Form.Item
               name="password"
               rules={[
-                { required: true, message: "Please input your password!" },
+                { required: true, message: 'Please input your password!' },
                 {
                   min: 8,
-                  message: "Password must be at least 8 characters long",
+                  message: 'Password must be at least 8 characters long',
                 },
               ]}
             >
@@ -82,16 +82,16 @@ const Register = () => {
             <Form.Item
               name="password_confirmation"
               rules={[
-                { required: true, message: "Please confirm your password!" },
+                { required: true, message: 'Please confirm your password!' },
                 ({ getFieldValue }) => ({
                   validator(_, value) {
-                    if (!value || getFieldValue("password") === value) {
+                    if (!value || getFieldValue('password') === value) {
                       return Promise.resolve();
                     }
                     return Promise.reject(
                       new Error(
-                        "The two passwords that you entered do not match!"
-                      )
+                        'The two passwords that you entered do not match!',
+                      ),
                     );
                   },
                 }),
@@ -112,7 +112,7 @@ const Register = () => {
                 REGISTER
               </Button>
             </Form.Item>
-            <Link to={"/login"}>Already have an account!</Link>
+            <Link to="/login">Already have an account!</Link>
           </Form>
           <div className="illustration-wrapper">
             <img src={WelcomeImage} alt="Register" />
@@ -122,6 +122,6 @@ const Register = () => {
       {contextHolder}
     </>
   );
-};
+}
 
 export default Register;

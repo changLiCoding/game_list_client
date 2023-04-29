@@ -1,11 +1,11 @@
-import { useLazyQuery, useQuery } from "@apollo/client";
-import { USER } from "./queries";
-import { getTokenFromLocalStorage } from "@/constants";
+import { useLazyQuery, useQuery } from '@apollo/client';
+import { USER } from './queries';
+import { getTokenFromLocalStorage } from '@/constants';
 
 const useGetUser = () => {
   const [getUser, { data, loading }] = useLazyQuery(
     USER,
-    getTokenFromLocalStorage
+    getTokenFromLocalStorage,
   );
 
   return { getUser, data, loading };

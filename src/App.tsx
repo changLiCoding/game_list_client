@@ -1,8 +1,8 @@
-import "./App.css";
+import './App.css';
 // import Home from "./pages/Home";
-import ContextWrapper from "./ContextWrapper";
-import Router from "./Router";
-import Navbar from "./components/Navbar/Navbar";
+import ContextWrapper from './ContextWrapper';
+import Router from './Router';
+import Navbar from './components/Navbar/Navbar';
 
 function App() {
   return (

@@ -12,23 +12,23 @@ const useUserGames = () => {
   const [deleteUserGamesRequest] = useMutation(DELETE_USER_GAMES);
   const { loading: gamesForAUserLoading, data: gamesForAUser } = useQuery(
     GAMES_FOR_A_USER,
-    { context: getTokenFromLocalStorage.context }
+    { context: getTokenFromLocalStorage.context },
   );
 
-  const addUserGames = async (gameId: Number): Promise<AddUserGamesPayload> => {
+  const addUserGames = async (gameId: number): Promise<AddUserGamesPayload> => {
     try {
       const response = await addUserGamesRequest({
         variables: { gameId },
       });
       if (
-        !response ||
-        !response.data ||
-        !response.data.addUserGames ||
-        response.data.addUserGames.errors[0]
+        !response
+        || !response.data
+        || !response.data.addUserGames
+        || response.data.addUserGames.errors[0]
       ) {
         console.log(
           'addUserGames from useUserGames HOOK ERRORs: ',
-          response.data.addUserGames.errors[0]
+          response.data.addUserGames.errors[0],
         );
         throw new Error(response.data.addUserGames.errors[0]);
       }
@@ -41,21 +41,21 @@ const useUserGames = () => {
     }
   };
   const deleteUserGames = async (
-    gameId: Number
+    gameId: number,
   ): Promise<DeleteUserGamesPayload> => {
     try {
       const response = await deleteUserGamesRequest({
         variables: { gameId },
       });
       if (
-        !response ||
-        !response.data ||
-        !response.data.deleteUserGames ||
-        response.data.deleteUserGames.errors[0]
+        !response
+        || !response.data
+        || !response.data.deleteUserGames
+        || response.data.deleteUserGames.errors[0]
       ) {
         console.log(
           'deleteUserGames from useUserGames error: ',
-          response.data.deleteUserGames.errors[0]
+          response.data.deleteUserGames.errors[0],
         );
 
         throw new Error(response.data.deleteUserGames.errors[0]);

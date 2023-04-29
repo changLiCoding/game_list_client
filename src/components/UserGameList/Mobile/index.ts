@@ -1,3 +1,3 @@
-import UserGameListMobile from "./UserGameListMobile";
+import UserGameListMobile from './UserGameListMobile';
 
 export default UserGameListMobile;
