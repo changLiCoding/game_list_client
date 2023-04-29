@@ -51,21 +51,21 @@ const columns: ColumnsType<DataType> = [
 
 // TODO: Add type for data
 function UserGameListMobile({ data }: { data: any }) {
-  const onChange: TableProps<DataType>['onChange'] = (
-    pagination,
-    filters,
-    sorter,
-    extra
-  ) => {
-    console.log('params', pagination, filters, sorter, extra);
-  };
+  // const onChange: TableProps<DataType>['onChange'] = (
+  //   pagination,
+  //   filters,
+  //   sorter,
+  //   extra
+  // ) => {
+  //   console.log('params', pagination, filters, sorter, extra);
+  // };
 
   return (
     <Table
       // className={styles.Table}
       columns={columns}
       dataSource={data}
-      onChange={onChange}
+      // onChange={onChange}
     />
   );
 }

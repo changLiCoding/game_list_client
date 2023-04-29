@@ -54,21 +54,22 @@ const columns: ColumnsType<DataType> = [
 
 // TODO: Add type to data
 function UserGameListDesktop({ data }: { data: any }) {
-  const onChange: TableProps<DataType>['onChange'] = (
-    pagination,
-    filters,
-    sorter,
-    extra
-  ) => {
-    console.log('params', pagination, filters, sorter, extra);
-  };
+  console.log(data);
+  // const onChange: TableProps<DataType>['onChange'] = (
+  //   pagination,
+  //   filters,
+  //   sorter,
+  //   extra
+  // ) => {
+  //   console.log('params', pagination, filters, sorter, extra);
+  // };
 
   return (
     <Table
       className={styles.Table}
       columns={columns}
       dataSource={data}
-      onChange={onChange}
+      // onChange={onChange}
     />
   );
 }

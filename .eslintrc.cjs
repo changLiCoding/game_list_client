@@ -51,5 +51,10 @@ module.exports = {
       },
     ],
   },
-  ignorePatterns: ['coverage/*.js', 'dist/**/*', 'codegen.ts'],
+  ignorePatterns: [
+    'coverage/*.js',
+    'dist/**/*',
+    'codegen.ts',
+    'src/graphql/__generated__/*',
+  ],
 };

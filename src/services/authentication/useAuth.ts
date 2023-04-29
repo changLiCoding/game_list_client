@@ -28,8 +28,12 @@ const useAuth = () => {
         throw new Error(response.data.login.errors[0]);
 
       return response.data.login;
-    } catch (err: any) {
-      return err && { errors: [err.message] };
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        return err && { errors: [err.message] };
+      }
+      // Handle other types of errors
+      return { errors: ['Unknown'] };
     }
   };
 
@@ -52,8 +56,12 @@ const useAuth = () => {
         throw new Error(response.data.register.errors[0]);
 
       return response.data.register;
-    } catch (err: any) {
-      return err && { errors: [err.message] };
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        return err && { errors: [err.message] };
+      }
+      // Handle other types of errors
+      return { errors: ['Unknown'] };
     }
   };
 

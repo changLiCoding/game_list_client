@@ -18,8 +18,6 @@ function UserGameList() {
     ...val,
   }));
 
-  console.log(gamesForAUser?.gamesForAUser);
-
   return (
     <Layout>
       <div className={styles.TableContainer}>

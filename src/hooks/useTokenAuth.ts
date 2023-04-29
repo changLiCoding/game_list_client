@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { isExpired } from 'react-jwt';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '@/app/hooks';

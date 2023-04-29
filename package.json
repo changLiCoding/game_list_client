@@ -15,6 +15,7 @@
     "lint:fix": "eslint --fix --ext .js,.jsx,.ts,.tsx ."
   },
   "dependencies": {
+    "@ant-design/icons": "^5.0.1",
     "@apollo/client": "^3.7.12",
     "@reduxjs/toolkit": "^1.9.3",
     "antd": "^5.4.2",
