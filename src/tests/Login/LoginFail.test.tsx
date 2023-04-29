@@ -26,7 +26,9 @@ import Login from '@/pages/Login/Login';
 // If use this, useAuth will run and require to mock useMutation inside useAuth
 // Let useAuth run due to the fact that it contains the useMessage hook
 vi.mock('@apollo/client', async () => {
-  const actual: any = await vi.importActual('@apollo/client');
+  const actual: unknown = await vi.importActual('@apollo/client');
+  if (typeof actual !== 'object')
+    throw new Error('Import Actual did not return not an object');
   return {
     ...actual,
     useMutation: vi.fn(() => [

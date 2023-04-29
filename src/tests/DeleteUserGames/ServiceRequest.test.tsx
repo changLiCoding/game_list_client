@@ -135,11 +135,21 @@ describe('Delete Game in UserGames', () => {
     try {
       await act(async () => {
         const userGame = await result.current[0]({ variables: { gameId: 1 } });
-
+        if (
+          !userGame ||
+          !userGame.data ||
+          !userGame.data.register ||
+          userGame.data.register.errors[0]
+        )
+          throw new Error(userGame.data.register.errors[0]);
         expect(userGame.data.deleteUserGames.userGame.game.id).toEqual('2');
       });
-    } catch (error: any) {
-      expect(error.networkError.result.message).toEqual('Please login again');
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        expect(error.message).toEqual(
+          'Response not successful: Received status code 401'
+        );
+      }
     }
   });
 });

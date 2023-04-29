@@ -7,9 +7,11 @@ import Login from '@/pages/Login/Login';
 
 // This is a mock of useAuth (useAuth will not be running)
 vi.mock('../../services/authentication/useAuth', async () => {
-  const actual: any = await vi.importActual(
+  const actual: unknown = await vi.importActual(
     '../../services/authentication/useAuth'
   );
+  if (typeof actual !== 'object')
+    throw new Error('Import Actual did not return not an object');
   return {
     ...actual,
     default: () => ({
@@ -50,7 +52,9 @@ vi.mock('../../services/authentication/useAuth', async () => {
 // });
 
 vi.mock('react-router-dom', async () => {
-  const actual: any = await vi.importActual('react-router-dom');
+  const actual: unknown = await vi.importActual('react-router-dom');
+  if (typeof actual !== 'object')
+    throw new Error('Import Actual did not return not an object');
   return {
     ...actual,
     useNavigate: vi.fn().mockReturnValue((value: string) => value),

@@ -114,11 +114,21 @@ describe('Add Game in UserGames', () => {
             gameId: 2,
           },
         });
-
+        if (
+          !userGame ||
+          !userGame.data ||
+          !userGame.data.login ||
+          userGame.data.login.errors[0]
+        )
+          throw new Error(userGame.data.login.errors[0]);
         expect(userGame.data.addUserGames.userGame.game.id).toEqual('2');
       });
-    } catch (error: any) {
-      expect(error.networkError.result.message).toEqual('Please login again');
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        expect(error.message).toEqual(
+          'Response not successful: Received status code 401'
+        );
+      }
     }
   });
 });
