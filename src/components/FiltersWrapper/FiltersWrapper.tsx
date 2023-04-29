@@ -41,9 +41,9 @@ export default function FilterWrapper() {
   const tagsOptions: Option[] = tags ? optionsGenerator(tags) : [];
 
   return tagsOptions.length === 0
-		|| genresOptions.length === 0
-		|| platformsOptions.length === 0 ? (
-  <Layout>Loading</Layout>
+    || genresOptions.length === 0
+    || platformsOptions.length === 0 ? (
+      <Layout>Loading</Layout>
     ) : (
       <Layout className="layout-FiltersWrapper-container">
         {screens.md ? (
@@ -75,10 +75,7 @@ export default function FilterWrapper() {
             />
           </>
         ) : (
-          <Space
-            direction="horizontal"
-            size={screens.sm ? 48 : 24}
-          >
+          <Space direction="horizontal" size={screens.sm ? 48 : 24}>
             <Search
               style={screens.sm ? { width: '470px' } : { width: '300px' }}
               placeholder="input search text"
@@ -90,7 +87,7 @@ export default function FilterWrapper() {
               size="large"
               type="primary"
               onClick={() => {
-						  setCollapsed(!collapsed);
+                setCollapsed(!collapsed);
               }}
             >
               {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}

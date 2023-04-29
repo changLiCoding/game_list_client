@@ -28,11 +28,15 @@ module.exports = {
       'error',
       'ignorePackages',
       {
+        '': 'never',
         js: 'never',
         jsx: 'never',
         ts: 'never',
         tsx: 'never',
       },
     ],
+    'import/prefer-default-export': 'off',
+    'no-underscore-dangle': 'off',
+    'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
   },
 };

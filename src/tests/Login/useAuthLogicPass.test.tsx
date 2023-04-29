@@ -29,7 +29,7 @@ describe('Login logic in useAuth', () => {
 
     const userData = await result.current.login(
       import.meta.env.VITE_USER_EMAIL_TEST,
-      import.meta.env.VITE_PASSWORD_TEST
+      import.meta.env.VITE_PASSWORD_TEST,
     );
 
     expect(userData?.user?.username).toEqual('Vv');

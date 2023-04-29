@@ -25,8 +25,8 @@ export default function Games() {
             xl: 32,
           }}
         >
-          {games &&
-            games.map((game: any) => (
+          {games
+            && games.map((game: any) => (
               <Game
                 key={game.id}
                 game={game}
