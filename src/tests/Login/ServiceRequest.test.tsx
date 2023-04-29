@@ -21,22 +21,19 @@ describe('Login Service', () => {
         }),
       })
     );
-    try {
-      await act(async () => {
-        const userData = await resultLogin.current[0]({
-          variables: {
-            email: import.meta.env.VITE_USER_EMAIL_TEST,
-            password: import.meta.env.VITE_PASSWORD_TEST,
-          },
-        });
-        expect(userData.data.login.user).toEqual({
-          __typename: 'User',
-          username: 'Vv',
-        });
+
+    await act(async () => {
+      const userData = await resultLogin.current[0]({
+        variables: {
+          email: import.meta.env.VITE_USER_EMAIL_TEST,
+          password: import.meta.env.VITE_PASSWORD_TEST,
+        },
       });
-    } catch (e: any) {
-      expect(e.message).toEqual('Invalid email or password');
-    }
+      expect(userData.data.login.user).toEqual({
+        __typename: 'User',
+        username: 'Vv',
+      });
+    });
   });
 
   it('Fail login credentials request', async () => {
@@ -61,8 +58,11 @@ describe('Login Service', () => {
           username: 'Vv',
         });
       });
-    } catch (e: any) {
-      expect(e.message).toEqual('Invalid email or password');
+    } catch (e: unknown) {
+      if (typeof e === 'object')
+        expect((e as { message: string }).message).toEqual(
+          'Invalid email or password'
+        );
     }
   });
 });

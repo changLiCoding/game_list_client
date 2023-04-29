@@ -26,7 +26,9 @@ const mockDispatch = vi.fn();
 const getUserFunc = vi.fn();
 
 vi.mock('react-redux', async () => {
-  const actual: any = await vi.importActual('react-redux');
+  const actual: unknown = await vi.importActual('react-redux');
+  if (typeof actual !== 'object')
+    throw new Error('Import Actual did not return not an object');
   return {
     ...actual,
     useDispatch: () => mockDispatch,
@@ -34,7 +36,9 @@ vi.mock('react-redux', async () => {
 });
 
 vi.mock('../services/user/useGetUser', async () => {
-  const actual: any = await vi.importActual('../services/user/useGetUser');
+  const actual: unknown = await vi.importActual('../services/user/useGetUser');
+  if (typeof actual !== 'object')
+    throw new Error('Import Actual did not return not an object');
   return {
     ...actual,
     default: () => ({
@@ -50,7 +54,9 @@ vi.mock('../services/user/useGetUser', async () => {
 });
 
 vi.mock('../app/hooks', async () => {
-  const actual: any = await vi.importActual('../app/hooks');
+  const actual: unknown = await vi.importActual('../app/hooks');
+  if (typeof actual !== 'object')
+    throw new Error('Import Actual did not return not an object');
   return {
     ...actual,
     useAppSelector: vi.fn().mockReturnValue({

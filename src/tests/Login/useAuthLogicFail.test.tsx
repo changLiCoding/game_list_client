@@ -3,7 +3,9 @@ import { vi } from 'vitest';
 import useAuth from '@/services/authentication/useAuth';
 
 vi.mock('@apollo/client', async () => {
-  const actual: any = await vi.importActual('@apollo/client');
+  const actual: unknown = await vi.importActual('@apollo/client');
+  if (typeof actual !== 'object')
+    throw new Error('Import Actual did not return not an object');
   return {
     ...actual,
     useMutation: vi.fn(() => [

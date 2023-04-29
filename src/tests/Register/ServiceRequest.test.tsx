@@ -24,20 +24,16 @@ describe('Register Service', () => {
       })
     );
 
-    try {
-      await act(async () => {
-        const userData = await resultRegistration.current[0]({
-          variables: {
-            username,
-            email: `${username}@gmail.com`,
-            password: 'password2',
-          },
-        });
-        expect(userData?.data?.register?.user?.username).toEqual(username);
+    await act(async () => {
+      const userData = await resultRegistration.current[0]({
+        variables: {
+          username,
+          email: `${username}@gmail.com`,
+          password: 'password2',
+        },
       });
-    } catch (e: any) {
-      expect(e.message).toEqual('Email is already taken');
-    }
+      expect(userData?.data?.register?.user?.username).toEqual(username);
+    });
   });
 
   it('Fail to register with invalid credentials', async () => {
@@ -59,9 +55,19 @@ describe('Register Service', () => {
             password: 'password2',
           },
         });
+        // if (
+        //   !response ||
+        //   !response.data ||
+        //   !response.data.register ||
+        //   response.data.register.errors[0]
+        // )
+        //   throw new Error(response.data.register.errors[0]);
       });
-    } catch (e: any) {
-      expect(e.message).toEqual('Email is already taken');
+    } catch (e: unknown) {
+      if (typeof e === 'object')
+        expect((e as { message: string }).message).toEqual(
+          'Email is already taken'
+        );
     }
   });
 });
