@@ -11,7 +11,14 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
   ],
-  overrides: [],
+  overrides: [
+    {
+      // feel free to replace with your preferred file pattern - eg. 'src/**/*Slice.ts'
+      files: ['src/**/*Slice.ts'],
+      // avoid state param assignment
+      rules: { 'no-param-reassign': ['error', { props: false }] },
+    },
+  ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 'latest',
@@ -34,6 +41,11 @@ module.exports = {
     ],
     'import/prefer-default-export': 'off',
     'no-underscore-dangle': 'off',
-    'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+    'import/no-extraneous-dependencies': [
+      'error',
+      {
+        devDependencies: true,
+      },
+    ],
   },
 };
