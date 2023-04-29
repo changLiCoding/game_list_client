@@ -51,4 +51,5 @@ module.exports = {
       },
     ],
   },
+  ignorePatterns: ['coverage/*.js', 'dist/**/*', 'codegen.ts'],
 };

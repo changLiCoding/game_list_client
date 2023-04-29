@@ -50,7 +50,7 @@ const columns: ColumnsType<DataType> = [
 ];
 
 // TODO: Add type for data
-const UserGameListMobile: React.FC<any> = ({ data }) => {
+function UserGameListMobile({ data }: { data: any }) {
   const onChange: TableProps<DataType>['onChange'] = (
     pagination,
     filters,
@@ -59,6 +59,7 @@ const UserGameListMobile: React.FC<any> = ({ data }) => {
   ) => {
     console.log('params', pagination, filters, sorter, extra);
   };
+
   return (
     <Table
       // className={styles.Table}
@@ -67,6 +68,6 @@ const UserGameListMobile: React.FC<any> = ({ data }) => {
       onChange={onChange}
     />
   );
-};
+}
 
 export default UserGameListMobile;

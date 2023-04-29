@@ -53,7 +53,7 @@ const columns: ColumnsType<DataType> = [
 ];
 
 // TODO: Add type to data
-const UserGameListDesktop: React.FC<any> = ({ data }) => {
+function UserGameListDesktop({ data }: { data: any }) {
   const onChange: TableProps<DataType>['onChange'] = (
     pagination,
     filters,
@@ -71,6 +71,6 @@ const UserGameListDesktop: React.FC<any> = ({ data }) => {
       onChange={onChange}
     />
   );
-};
+}
 
 export default UserGameListDesktop;
