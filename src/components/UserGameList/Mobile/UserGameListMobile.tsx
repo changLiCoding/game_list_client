@@ -55,7 +55,7 @@ const UserGameListMobile: React.FC<any> = ({ data }) => {
     pagination,
     filters,
     sorter,
-    extra,
+    extra
   ) => {
     console.log('params', pagination, filters, sorter, extra);
   };

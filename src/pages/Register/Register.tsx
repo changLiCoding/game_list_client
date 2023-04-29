@@ -13,7 +13,7 @@ function Register() {
     const registerData = await register(
       values.username,
       values.email,
-      values.password,
+      values.password
     );
 
     if (registerData.token) {
@@ -90,8 +90,8 @@ function Register() {
                     }
                     return Promise.reject(
                       new Error(
-                        'The two passwords that you entered do not match!',
-                      ),
+                        'The two passwords that you entered do not match!'
+                      )
                     );
                   },
                 }),

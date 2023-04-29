@@ -61,9 +61,9 @@ describe('Get All Games By Platforms Query', () => {
             Authorization: `Bearer ${import.meta.env.VITE_TOKEN_TEST}`,
           },
         },
-      }),
+      })
     ).rejects.toThrow(
-      'Variable $platform of type EntityIdNameAttributes! was provided invalid value',
+      'Variable $platform of type EntityIdNameAttributes! was provided invalid value'
     );
   });
 });

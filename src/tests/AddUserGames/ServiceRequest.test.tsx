@@ -14,17 +14,19 @@ describe('Add Game in UserGames', () => {
   let token = '';
   it('Successful send addUserGames request', async () => {
     const username = uuidv4();
-    const { result: resultRegistration } = renderHook(() => useMutation(REGISTER, {
-      client: new ApolloClient({
-        link: httpLink,
-        cache: new InMemoryCache(),
-      }),
-      context: {
-        headers: {
-          Authorization: '',
+    const { result: resultRegistration } = renderHook(() =>
+      useMutation(REGISTER, {
+        client: new ApolloClient({
+          link: httpLink,
+          cache: new InMemoryCache(),
+        }),
+        context: {
+          headers: {
+            Authorization: '',
+          },
         },
-      },
-    }));
+      })
+    );
 
     await act(async () => {
       const userData = await resultRegistration.current[0]({
@@ -39,17 +41,19 @@ describe('Add Game in UserGames', () => {
       token = userData?.data?.register.token;
     });
 
-    const { result } = renderHook(() => useMutation(ADD_USER_GAMES, {
-      client: new ApolloClient({
-        link: httpLink,
-        cache: new InMemoryCache(),
-      }),
-      context: {
-        headers: {
-          Authorization: `Bearer ${token}`,
+    const { result } = renderHook(() =>
+      useMutation(ADD_USER_GAMES, {
+        client: new ApolloClient({
+          link: httpLink,
+          cache: new InMemoryCache(),
+        }),
+        context: {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         },
-      },
-    }));
+      })
+    );
     await act(async () => {
       const userGame = await result.current[0]({
         variables: {
@@ -62,17 +66,19 @@ describe('Add Game in UserGames', () => {
   });
 
   it('should not add game in the list if the game has already been added', async () => {
-    const { result } = renderHook(() => useMutation(ADD_USER_GAMES, {
-      client: new ApolloClient({
-        link: httpLink,
-        cache: new InMemoryCache(),
-      }),
-      context: {
-        headers: {
-          Authorization: `Bearer ${token}`,
+    const { result } = renderHook(() =>
+      useMutation(ADD_USER_GAMES, {
+        client: new ApolloClient({
+          link: httpLink,
+          cache: new InMemoryCache(),
+        }),
+        context: {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         },
-      },
-    }));
+      })
+    );
     await act(async () => {
       const userGame = await result.current[0]({
         variables: {
@@ -82,23 +88,25 @@ describe('Add Game in UserGames', () => {
 
       expect(userGame.data.addUserGames.userGame).toBeNull();
       expect(userGame.data.addUserGames.errors[0]).toEqual(
-        'User Game already exists',
+        'User Game already exists'
       );
     });
   });
 
   it('Fail send addUserGames request when the credentials fail', async () => {
-    const { result } = renderHook(() => useMutation(ADD_USER_GAMES, {
-      client: new ApolloClient({
-        link: httpLink,
-        cache: new InMemoryCache(),
-      }),
-      context: {
-        headers: {
-          Authorization: '',
+    const { result } = renderHook(() =>
+      useMutation(ADD_USER_GAMES, {
+        client: new ApolloClient({
+          link: httpLink,
+          cache: new InMemoryCache(),
+        }),
+        context: {
+          headers: {
+            Authorization: '',
+          },
         },
-      },
-    }));
+      })
+    );
     try {
       await act(async () => {
         const userGame = await result.current[0]({

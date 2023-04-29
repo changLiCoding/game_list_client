@@ -13,12 +13,14 @@ const httpLink = new HttpLink({
 
 describe('Login Service', () => {
   it('Successful send login request', async () => {
-    const { result: resultLogin } = renderHook(() => useMutation(LOGIN, {
-      client: new ApolloClient({
-        link: httpLink,
-        cache: new InMemoryCache(),
-      }),
-    }));
+    const { result: resultLogin } = renderHook(() =>
+      useMutation(LOGIN, {
+        client: new ApolloClient({
+          link: httpLink,
+          cache: new InMemoryCache(),
+        }),
+      })
+    );
     try {
       await act(async () => {
         const userData = await resultLogin.current[0]({
@@ -38,12 +40,14 @@ describe('Login Service', () => {
   });
 
   it('Fail login credentials request', async () => {
-    const { result: resultLogin } = renderHook(() => useMutation(LOGIN, {
-      client: new ApolloClient({
-        link: httpLink,
-        cache: new InMemoryCache(),
-      }),
-    }));
+    const { result: resultLogin } = renderHook(() =>
+      useMutation(LOGIN, {
+        client: new ApolloClient({
+          link: httpLink,
+          cache: new InMemoryCache(),
+        }),
+      })
+    );
     try {
       await act(async () => {
         const userData = await resultLogin.current[0]({

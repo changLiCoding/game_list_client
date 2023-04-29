@@ -33,7 +33,7 @@ describe('Register logic in useAuth', () => {
     const userData = await result.current.register(
       username,
       `${username}@gmail.com`,
-      'password',
+      'password'
     );
 
     expect(userData?.user?.username).toEqual(username);

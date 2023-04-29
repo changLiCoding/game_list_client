@@ -1,6 +1,4 @@
-import {
-  Col, Card, Popover, Tag, Button,
-} from 'antd';
+import { Col, Card, Popover, Tag, Button } from 'antd';
 import { PlusCircleOutlined } from '@ant-design/icons';
 import Color from 'color-thief-react';
 
@@ -29,7 +27,7 @@ export default function Game({
         >
           <Popover
             title={game.name}
-            content={(
+            content={
               <div>
                 <p>{game.description}</p>
                 <p>
@@ -50,7 +48,7 @@ export default function Game({
                   </Tag>
                 ))}
               </div>
-            )}
+            }
           >
             {error ? (
               <p>Error!</p>

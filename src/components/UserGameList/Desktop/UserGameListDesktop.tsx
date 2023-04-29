@@ -13,13 +13,9 @@ const columns: ColumnsType<DataType> = [
         <Popover
           className={styles.PopElement}
           placement="left"
-          content={(
-            <img
-              className={styles.ImagePop}
-              src={imageURL}
-              alt="game-large"
-            />
-          )}
+          content={
+            <img className={styles.ImagePop} src={imageURL} alt="game-large" />
+          }
         >
           <img className={styles.Image} src={imageURL} alt="game" />
         </Popover>
@@ -48,7 +44,9 @@ const columns: ColumnsType<DataType> = [
     dataIndex: 'platforms',
     render: (platforms: string[]) => (
       <div className={styles.TagsContainer}>
-        {platforms.map((platform: string) => <Tag key={platform}>{platform}</Tag>)}
+        {platforms.map((platform: string) => (
+          <Tag key={platform}>{platform}</Tag>
+        ))}
       </div>
     ),
   },
@@ -60,7 +58,7 @@ const UserGameListDesktop: React.FC<any> = ({ data }) => {
     pagination,
     filters,
     sorter,
-    extra,
+    extra
   ) => {
     console.log('params', pagination, filters, sorter, extra);
   };

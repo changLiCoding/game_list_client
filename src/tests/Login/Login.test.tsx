@@ -8,7 +8,7 @@ import Login from '@/pages/Login/Login';
 // This is a mock of useAuth (useAuth will not be running)
 vi.mock('../../services/authentication/useAuth', async () => {
   const actual: any = await vi.importActual(
-    '../../services/authentication/useAuth',
+    '../../services/authentication/useAuth'
   );
   return {
     ...actual,
@@ -62,7 +62,7 @@ describe('Login', () => {
     render(
       <ContextWrapper>
         <Login />
-      </ContextWrapper>,
+      </ContextWrapper>
     );
 
     // Expect the following texts to be present
@@ -82,7 +82,7 @@ describe('Login', () => {
     render(
       <ContextWrapper>
         <Login />
-      </ContextWrapper>,
+      </ContextWrapper>
     );
 
     const button = screen.getByRole('button', { name: 'LOGIN' });

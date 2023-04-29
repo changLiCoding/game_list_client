@@ -51,7 +51,7 @@ describe('Register Input Fields', () => {
     render(
       <ContextWrapper>
         <Register />
-      </ContextWrapper>,
+      </ContextWrapper>
     );
     // Expect the following texts to be present when NO input is given
     const button = screen.getByRole('button', { name: registerButtonName });
@@ -61,7 +61,7 @@ describe('Register Input Fields', () => {
     expect(screen.getByText('Please input your email!')).toBeInTheDocument();
     expect(screen.getByText('Please input your password!')).toBeInTheDocument();
     expect(
-      screen.getByText('Please confirm your password!'),
+      screen.getByText('Please confirm your password!')
     ).toBeInTheDocument();
 
     // Expect the following texts to be present when ONLY email is given
@@ -74,7 +74,7 @@ describe('Register Input Fields', () => {
     expect(screen.getByText('Please input your username!')).toBeInTheDocument();
     expect(screen.getByText('Please input your password!')).toBeInTheDocument();
     expect(
-      screen.getByText('Please confirm your password!'),
+      screen.getByText('Please confirm your password!')
     ).toBeInTheDocument();
 
     // Expect the following texts to be present when ONLY username and email are given
@@ -86,7 +86,7 @@ describe('Register Input Fields', () => {
     expect(textUsername).toBeNull();
     expect(screen.getByText('Please input your password!')).toBeInTheDocument();
     expect(
-      screen.getByText('Please confirm your password!'),
+      screen.getByText('Please confirm your password!')
     ).toBeInTheDocument();
 
     // Expect "Password must be at least 8 characters long" when password is less than 8 characters
@@ -95,19 +95,19 @@ describe('Register Input Fields', () => {
     await userEvent.click(button);
 
     expect(
-      screen.getByText('Password must be at least 8 characters long'),
+      screen.getByText('Password must be at least 8 characters long')
     ).toBeInTheDocument();
 
     // Expect "The two passwords that you entered do not match!" when passwords are mismatched
     await userEvent.type(password, 'password');
     const passwordConfirmation = screen.getByTestId(
-      'password-confirmation-test',
+      'password-confirmation-test'
     );
     await userEvent.type(passwordConfirmation, 'pass');
     await userEvent.click(button);
 
     expect(
-      screen.getByText('The two passwords that you entered do not match!'),
+      screen.getByText('The two passwords that you entered do not match!')
     ).toBeInTheDocument();
   });
 
@@ -115,7 +115,7 @@ describe('Register Input Fields', () => {
     render(
       <ContextWrapper>
         <Register />
-      </ContextWrapper>,
+      </ContextWrapper>
     );
     const button = screen.getByRole('button', { name: 'REGISTER' });
     const username = screen.getByTestId('user-test');
@@ -125,7 +125,7 @@ describe('Register Input Fields', () => {
     const password = screen.getByTestId('password-test');
     await userEvent.type(password, 'password2');
     const passwordConfirmation = screen.getByTestId(
-      'password-confirmation-test',
+      'password-confirmation-test'
     );
     await userEvent.type(passwordConfirmation, 'password2');
 

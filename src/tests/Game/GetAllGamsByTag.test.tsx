@@ -61,9 +61,9 @@ describe('Get All Games By Tag Query', () => {
             Authorization: `Bearer ${import.meta.env.VITE_TOKEN_TEST}`,
           },
         },
-      }),
+      })
     ).rejects.toThrow(
-      'Variable $tag of type EntityIdNameAttributes! was provided invalid value',
+      'Variable $tag of type EntityIdNameAttributes! was provided invalid value'
     );
   });
 });

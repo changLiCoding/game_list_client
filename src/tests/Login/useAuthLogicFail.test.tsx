@@ -28,7 +28,7 @@ describe('Login logic in useAuth', () => {
 
     const userData = await result.current.login(
       import.meta.env.VITE_USER_EMAIL_TEST,
-      'password2',
+      'password2'
     );
 
     expect(userData.errors[0]).toEqual('Invalid email or password');

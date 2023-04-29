@@ -29,7 +29,7 @@ describe('Register logic in useAuth', () => {
     const userData = await result.current.register(
       'Meee',
       import.meta.env.VITE_USER_EMAIL_TEST,
-      'password2',
+      'password2'
     );
 
     expect(userData.errors[0]).toEqual('Email is already taken');

@@ -17,17 +17,19 @@ describe('Delete Game in UserGames', () => {
   let token = '';
   it('Successful send deleteUserGames request', async () => {
     const username = uuidv4();
-    const { result: resultRegistration } = renderHook(() => useMutation(REGISTER, {
-      client: new ApolloClient({
-        link: httpLink,
-        cache: new InMemoryCache(),
-      }),
-      context: {
-        headers: {
-          Authorization: '',
+    const { result: resultRegistration } = renderHook(() =>
+      useMutation(REGISTER, {
+        client: new ApolloClient({
+          link: httpLink,
+          cache: new InMemoryCache(),
+        }),
+        context: {
+          headers: {
+            Authorization: '',
+          },
         },
-      },
-    }));
+      })
+    );
 
     await act(async () => {
       const userData = await resultRegistration.current[0]({
@@ -41,17 +43,19 @@ describe('Delete Game in UserGames', () => {
       token = userData?.data?.register.token;
     });
 
-    const { result: resultAddUserGames } = renderHook(() => useMutation(ADD_USER_GAMES, {
-      client: new ApolloClient({
-        link: httpLink,
-        cache: new InMemoryCache(),
-      }),
-      context: {
-        headers: {
-          Authorization: `Bearer ${token}`,
+    const { result: resultAddUserGames } = renderHook(() =>
+      useMutation(ADD_USER_GAMES, {
+        client: new ApolloClient({
+          link: httpLink,
+          cache: new InMemoryCache(),
+        }),
+        context: {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         },
-      },
-    }));
+      })
+    );
     await act(async () => {
       const userGame = await resultAddUserGames.current[0]({
         variables: {
@@ -61,17 +65,19 @@ describe('Delete Game in UserGames', () => {
       expect(userGame.data.addUserGames.userGame.game.id).toEqual('1');
     });
 
-    const { result: resultDeleteUserGames } = renderHook(() => useMutation(DELETE_USER_GAMES, {
-      client: new ApolloClient({
-        link: httpLink,
-        cache: new InMemoryCache(),
-      }),
-      context: {
-        headers: {
-          Authorization: `Bearer ${token}`,
+    const { result: resultDeleteUserGames } = renderHook(() =>
+      useMutation(DELETE_USER_GAMES, {
+        client: new ApolloClient({
+          link: httpLink,
+          cache: new InMemoryCache(),
+        }),
+        context: {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         },
-      },
-    }));
+      })
+    );
     await act(async () => {
       const userGame = await resultDeleteUserGames.current[0]({
         variables: {
@@ -83,17 +89,19 @@ describe('Delete Game in UserGames', () => {
   });
 
   it('should return errors message when the game is not found in the userGames', async () => {
-    const { result: resultDeleteUserGames } = renderHook(() => useMutation(DELETE_USER_GAMES, {
-      client: new ApolloClient({
-        link: httpLink,
-        cache: new InMemoryCache(),
-      }),
-      context: {
-        headers: {
-          Authorization: `Bearer ${token}`,
+    const { result: resultDeleteUserGames } = renderHook(() =>
+      useMutation(DELETE_USER_GAMES, {
+        client: new ApolloClient({
+          link: httpLink,
+          cache: new InMemoryCache(),
+        }),
+        context: {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         },
-      },
-    }));
+      })
+    );
     await act(async () => {
       const userGame = await resultDeleteUserGames.current[0]({
         variables: {
@@ -103,24 +111,26 @@ describe('Delete Game in UserGames', () => {
 
       expect(userGame.data.deleteUserGames.userGame).toBeNull();
       expect(userGame.data.deleteUserGames.errors[0]).toEqual(
-        'User Game not found',
+        'User Game not found'
       );
     });
   });
 
   it('Fail send deleteUserGames request when the credentials fail', async () => {
     const token = null;
-    const { result } = renderHook(() => useMutation(DELETE_USER_GAMES, {
-      client: new ApolloClient({
-        link: httpLink,
-        cache: new InMemoryCache(),
-      }),
-      context: {
-        headers: {
-          Authorization: token ? `Bearer ${token}` : '',
+    const { result } = renderHook(() =>
+      useMutation(DELETE_USER_GAMES, {
+        client: new ApolloClient({
+          link: httpLink,
+          cache: new InMemoryCache(),
+        }),
+        context: {
+          headers: {
+            Authorization: token ? `Bearer ${token}` : '',
+          },
         },
-      },
-    }));
+      })
+    );
 
     try {
       await act(async () => {

@@ -61,9 +61,9 @@ describe('Get All Games By Genres Query', () => {
             Authorization: `Bearer ${import.meta.env.VITE_TOKEN_TEST}`,
           },
         },
-      }),
+      })
     ).rejects.toThrow(
-      'Variable $genre of type EntityIdNameAttributes! was provided invalid value',
+      'Variable $genre of type EntityIdNameAttributes! was provided invalid value'
     );
   });
 });

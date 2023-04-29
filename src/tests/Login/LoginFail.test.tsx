@@ -50,7 +50,7 @@ describe('Login', () => {
     render(
       <ContextWrapper>
         <Login />
-      </ContextWrapper>,
+      </ContextWrapper>
     );
 
     // Expect the following texts to be present when NO input is given
@@ -74,7 +74,7 @@ describe('Login', () => {
     render(
       <ContextWrapper>
         <Login />
-      </ContextWrapper>,
+      </ContextWrapper>
     );
 
     // Just need to get through the minimum requirement to send request -> request is mock to fail

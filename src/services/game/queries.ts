@@ -8,8 +8,8 @@ import {
 } from '../../graphql/__generated__/graphql';
 
 export const GET_ALL_GAMES_BY_GENRE: TypedDocumentNode<
-{ getAllGamesByGenre: Game[] },
-QueryGetAllGamesByGenreArgs
+  { getAllGamesByGenre: Game[] },
+  QueryGetAllGamesByGenreArgs
 > = gql`
   query GetAllGamesByGenre($genre: EntityIdNameAttributes!, $limit: Int) {
     getAllGamesByGenre(genre: $genre, limit: $limit) {
@@ -19,8 +19,8 @@ QueryGetAllGamesByGenreArgs
 `;
 
 export const GET_ALL_GAMES_BY_PLATFORM: TypedDocumentNode<
-{ getAllGamesByPlatform: Game[] },
-QueryGetAllGamesByPlatformArgs
+  { getAllGamesByPlatform: Game[] },
+  QueryGetAllGamesByPlatformArgs
 > = gql`
   query GetAllGamesByPlatform($platform: EntityIdNameAttributes!, $limit: Int) {
     getAllGamesByPlatform(platform: $platform, limit: $limit) {
@@ -30,8 +30,8 @@ QueryGetAllGamesByPlatformArgs
 `;
 
 export const GET_ALL_GAMES_BY_TAG: TypedDocumentNode<
-{ getAllGamesByTag: Game[] },
-QueryGetAllGamesByTagArgs
+  { getAllGamesByTag: Game[] },
+  QueryGetAllGamesByTagArgs
 > = gql`
   query GetAllGamesByTag($tag: EntityIdNameAttributes!, $limit: Int) {
     getAllGamesByTag(tag: $tag, limit: $limit) {

@@ -9,7 +9,7 @@ describe('App', () => {
     render(
       <ContextWrapper>
         <Dashboard />
-      </ContextWrapper>,
+      </ContextWrapper>
     );
 
     await userEvent.click(screen.getByRole('button', { name: 'Logout' }));

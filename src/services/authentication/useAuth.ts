@@ -13,18 +13,19 @@ const useAuth = () => {
 
   const login = async (
     email: string,
-    password: string,
+    password: string
   ): Promise<LoginUserPayload> => {
     try {
       const response = await loginRequest({
         variables: { email, password },
       });
       if (
-        !response
-        || !response.data
-        || !response.data.login
-        || response.data.login.errors[0]
-      ) throw new Error(response.data.login.errors[0]);
+        !response ||
+        !response.data ||
+        !response.data.login ||
+        response.data.login.errors[0]
+      )
+        throw new Error(response.data.login.errors[0]);
 
       return response.data.login;
     } catch (err: any) {
@@ -35,7 +36,7 @@ const useAuth = () => {
   const register = async (
     username: string,
     email: string,
-    password: string,
+    password: string
   ): Promise<RegisterUserPayload> => {
     try {
       const response = await registerRequest({
@@ -43,11 +44,12 @@ const useAuth = () => {
       });
 
       if (
-        !response
-        || !response.data
-        || !response.data.register
-        || response.data.register.errors[0]
-      ) throw new Error(response.data.register.errors[0]);
+        !response ||
+        !response.data ||
+        !response.data.register ||
+        response.data.register.errors[0]
+      )
+        throw new Error(response.data.register.errors[0]);
 
       return response.data.register;
     } catch (err: any) {

@@ -15,12 +15,14 @@ const httpLink = new HttpLink({
 describe('Register Service', () => {
   it('Successful send register request', async () => {
     const username = uuidv4();
-    const { result: resultRegistration } = renderHook(() => useMutation(REGISTER, {
-      client: new ApolloClient({
-        link: httpLink,
-        cache: new InMemoryCache(),
-      }),
-    }));
+    const { result: resultRegistration } = renderHook(() =>
+      useMutation(REGISTER, {
+        client: new ApolloClient({
+          link: httpLink,
+          cache: new InMemoryCache(),
+        }),
+      })
+    );
 
     try {
       await act(async () => {
@@ -39,12 +41,14 @@ describe('Register Service', () => {
   });
 
   it('Fail to register with invalid credentials', async () => {
-    const { result: resultRegistration } = renderHook(() => useMutation(REGISTER, {
-      client: new ApolloClient({
-        link: httpLink,
-        cache: new InMemoryCache(),
-      }),
-    }));
+    const { result: resultRegistration } = renderHook(() =>
+      useMutation(REGISTER, {
+        client: new ApolloClient({
+          link: httpLink,
+          cache: new InMemoryCache(),
+        }),
+      })
+    );
 
     try {
       await act(async () => {

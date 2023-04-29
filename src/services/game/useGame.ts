@@ -5,11 +5,11 @@ import { GET_ALL_GENRES, GET_ALL_PLATFORMS, GET_ALL_TAGS } from './queries';
 export default function useGame() {
   const { data: allGenres } = useQuery(
     GET_ALL_GENRES,
-    getTokenFromLocalStorage,
+    getTokenFromLocalStorage
   );
   const { data: allPlatforms } = useQuery(
     GET_ALL_PLATFORMS,
-    getTokenFromLocalStorage,
+    getTokenFromLocalStorage
   );
   const { data: allTags } = useQuery(GET_ALL_TAGS, getTokenFromLocalStorage);
 
