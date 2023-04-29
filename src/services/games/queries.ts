@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import { gql } from '@apollo/client';
 import { TypedDocumentNode } from '@graphql-typed-document-node/core';
 import { Game } from '../../graphql/__generated__/graphql';
 

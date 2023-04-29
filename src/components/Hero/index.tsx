@@ -7,11 +7,13 @@ import { Layout } from 'antd';
 import FiltersWrapper from '@/components/FiltersWrapper/FiltersWrapper';
 import AllGames from '@/components/AllGames';
 
-const Hero: React.FC = () => (
-  <Layout>
-    <FiltersWrapper />
-    <AllGames />
-  </Layout>
-);
+function Hero() {
+  return (
+    <Layout>
+      <FiltersWrapper />
+      <AllGames />
+    </Layout>
+  );
+}
 
 export default Hero;

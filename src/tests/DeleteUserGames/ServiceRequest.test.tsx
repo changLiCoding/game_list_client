@@ -14,7 +14,7 @@ import {
 
 describe('Delete Game in UserGames', () => {
   const httpLink = new HttpLink({ uri: import.meta.env.VITE_BACKEND });
-  let token = '';
+  let token: string | null = '';
   it('Successful send deleteUserGames request', async () => {
     const username = uuidv4();
     const { result: resultRegistration } = renderHook(() =>
@@ -117,7 +117,7 @@ describe('Delete Game in UserGames', () => {
   });
 
   it('Fail send deleteUserGames request when the credentials fail', async () => {
-    const token = null;
+    token = null;
     const { result } = renderHook(() =>
       useMutation(DELETE_USER_GAMES, {
         client: new ApolloClient({

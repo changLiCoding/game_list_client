@@ -45,6 +45,9 @@ module.exports = {
       'error',
       {
         devDependencies: true,
+        optionalDependencies: false,
+        peerDependencies: false,
+        packageDir: ['./'],
       },
     ],
   },

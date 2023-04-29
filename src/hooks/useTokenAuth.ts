@@ -18,13 +18,13 @@ const useTokenAuth = () => {
       localStorage.clear();
       dispatch(setLoading(false));
     }
-  }, []);
+  }, [authToken, dispatch, getUser]);
 
   useEffect(() => {
     if (data) {
       dispatch(setUser(data?.getUserById));
     }
-  }, [data]);
+  }, [data, dispatch]);
   return { loading, userState };
 };
 
