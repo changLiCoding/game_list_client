@@ -10,7 +10,9 @@
     "compile": "graphql-codegen",
     "watch": "graphql-codegen -w",
     "test": "vitest",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx .",
+    "lint:fix": "eslint --fix --ext .js,.jsx,.ts,.tsx ."
   },
   "dependencies": {
     "@apollo/client": "^3.7.12",

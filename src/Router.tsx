@@ -1,13 +1,13 @@
-import React from "react";
-import { Navigate, Route, Routes } from "react-router-dom";
-import Home from "./pages/Home";
-import Login from "./pages/Login/Login";
-import Register from "./pages/Register/Register";
-import Dashboard from "./pages/Dashboard/Dashboard";
-import useTokenAuth from "./hooks/useTokenAuth";
-import UserGameList from "./pages/UserGameList/UserGameList";
+import React from 'react';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import Home from './pages/Home';
+import Login from './pages/Login/Login';
+import Register from './pages/Register/Register';
+import Dashboard from './pages/Dashboard/Dashboard';
+import useTokenAuth from './hooks/useTokenAuth';
+import UserGameList from './pages/UserGameList/UserGameList';
 
-const Router = () => {
+function Router() {
   const { loading, userState } = useTokenAuth();
 
   if (loading || userState.loading) {
@@ -32,14 +32,14 @@ const Router = () => {
         path="*"
         element={
           userState?.user?.username ? (
-            <Navigate to={"/dashboard"} />
+            <Navigate to="/dashboard" />
           ) : (
-            <Navigate to={"/home"} />
+            <Navigate to="/home" />
           )
         }
       />
     </Routes>
   );
-};
+}
 
 export default Router;

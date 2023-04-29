@@ -1,9 +1,9 @@
-import "@testing-library/jest-dom";
-import matchers from "@testing-library/jest-dom/matchers";
-import { expect, vi } from "vitest";
-import fetch from "cross-fetch";
+import '@testing-library/jest-dom';
+import matchers from '@testing-library/jest-dom/matchers';
+import { expect, vi } from 'vitest';
+import fetch from 'cross-fetch';
 
-Object.defineProperty(window, "matchMedia", {
+Object.defineProperty(window, 'matchMedia', {
   writable: true,
   value: vi.fn().mockImplementation((query) => ({
     matches: false,

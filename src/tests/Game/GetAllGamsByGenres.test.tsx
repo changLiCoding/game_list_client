@@ -1,8 +1,8 @@
-import { apolloClient } from "@/graphql";
-import { GET_ALL_GAMES_BY_GENRE } from "@/services/game/queries";
+import { apolloClient } from '@/graphql';
+import { GET_ALL_GAMES_BY_GENRE } from '@/services/game/queries';
 
-describe("Get All Games By Genres Query", () => {
-  it("Successful queries games objects by genre ID", async () => {
+describe('Get All Games By Genres Query', () => {
+  it('Successful queries games objects by genre ID', async () => {
     const query = await apolloClient.query({
       query: GET_ALL_GAMES_BY_GENRE,
       variables: { genre: { ID: 1 } },
@@ -14,14 +14,14 @@ describe("Get All Games By Genres Query", () => {
     });
 
     const gameData = query.data.getAllGamesByGenre[0];
-    expect(gameData.__typename).toBe("Game");
+    expect(gameData.__typename).toBe('Game');
     expect(gameData.name).toBeDefined();
   });
 
-  it("Successful queries games objects by genre name", async () => {
+  it('Successful queries games objects by genre name', async () => {
     const query = await apolloClient.query({
       query: GET_ALL_GAMES_BY_GENRE,
-      variables: { genre: { name: "Puzzle" } },
+      variables: { genre: { name: 'Puzzle' } },
       context: {
         headers: {
           Authorization: `Bearer ${import.meta.env.VITE_TOKEN_TEST}`,
@@ -30,14 +30,14 @@ describe("Get All Games By Genres Query", () => {
     });
 
     const gameData = query.data.getAllGamesByGenre[0];
-    expect(gameData.__typename).toBe("Game");
+    expect(gameData.__typename).toBe('Game');
     expect(gameData.name).toBeDefined();
   });
 
-  it("Successful queries a certain amount of games based on the limit field provided", async () => {
+  it('Successful queries a certain amount of games based on the limit field provided', async () => {
     const query = await apolloClient.query({
       query: GET_ALL_GAMES_BY_GENRE,
-      variables: { genre: { name: "Puzzle" }, limit: 1 },
+      variables: { genre: { name: 'Puzzle' }, limit: 1 },
       context: {
         headers: {
           Authorization: `Bearer ${import.meta.env.VITE_TOKEN_TEST}`,
@@ -48,11 +48,11 @@ describe("Get All Games By Genres Query", () => {
     const gameData = query.data.getAllGamesByGenre[0];
 
     expect(query.data.getAllGamesByGenre).toHaveLength(1);
-    expect(gameData.__typename).toBe("Game");
+    expect(gameData.__typename).toBe('Game');
     expect(gameData.name).toBeDefined();
   });
 
-  it("Throws an error if no variables are provided", async () => {
+  it('Throws an error if no variables are provided', async () => {
     await expect(
       apolloClient.query({
         query: GET_ALL_GAMES_BY_GENRE,
@@ -61,9 +61,9 @@ describe("Get All Games By Genres Query", () => {
             Authorization: `Bearer ${import.meta.env.VITE_TOKEN_TEST}`,
           },
         },
-      })
+      }),
     ).rejects.toThrow(
-      "Variable $genre of type EntityIdNameAttributes! was provided invalid value"
+      'Variable $genre of type EntityIdNameAttributes! was provided invalid value',
     );
   });
 });

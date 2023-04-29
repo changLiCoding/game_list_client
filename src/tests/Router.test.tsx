@@ -1,45 +1,47 @@
-import { describe, it, vi } from "vitest";
-import { renderHook } from "@testing-library/react";
-import useTokenAuth from "@/hooks/useTokenAuth";
+import { describe, it, vi } from 'vitest';
+import { renderHook } from '@testing-library/react';
+import useTokenAuth from '@/hooks/useTokenAuth';
 
-let fakeLocalStorage = {};
+// const fakeLocalStorage = {};
 
-const storagePrototype = {
-  getItem: function (key: string) {
-    return localStorageMock[key] || null;
+const localStorage: Record<string, string> = {};
+
+// eslint-disable-next-line import/prefer-default-export
+export const localStorageMock = {
+  getItem(key: string) {
+    return localStorage[key] || null;
   },
-  setItem: function (key: string, value: string) {
-    localStorageMock[key] = value.toString();
+  setItem(key: string, value: string) {
+    localStorage[key] = value.toString();
   },
-  removeItem: function (key: string) {
-    delete localStorageMock[key];
+  removeItem(key: string) {
+    delete localStorage[key];
   },
-  clear: function () {
-    Object.keys(fakeLocalStorage).forEach(
-      (key) => delete localStorageMock[key]
-    );
+  clear() {
+    Object.keys(localStorage).forEach((key) => delete localStorage[key]);
   },
 };
 
-export const localStorageMock = Object.create(storagePrototype);
+// export const localStorageMock = Object.create(storagePrototype);
+// export default localStora
 
-Object.defineProperty(window, "localStorage", {
+Object.defineProperty(window, 'localStorage', {
   value: localStorageMock,
 });
 
 const mockDispatch = vi.fn();
 const getUserFunc = vi.fn();
 
-vi.mock("react-redux", async () => {
-  const actual: any = await vi.importActual("react-redux");
+vi.mock('react-redux', async () => {
+  const actual: any = await vi.importActual('react-redux');
   return {
     ...actual,
     useDispatch: () => mockDispatch,
   };
 });
 
-vi.mock("../services/user/useGetUser", async () => {
-  const actual: any = await vi.importActual("../services/user/useGetUser");
+vi.mock('../services/user/useGetUser', async () => {
+  const actual: any = await vi.importActual('../services/user/useGetUser');
   return {
     ...actual,
     default: () => ({
@@ -47,33 +49,33 @@ vi.mock("../services/user/useGetUser", async () => {
       loading: false,
       data: {
         getUserById: {
-          username: "Vv",
+          username: 'Vv',
         },
       },
     }),
   };
 });
 
-vi.mock("../app/hooks", async () => {
-  const actual: any = await vi.importActual("../app/hooks");
+vi.mock('../app/hooks', async () => {
+  const actual: any = await vi.importActual('../app/hooks');
   return {
     ...actual,
     useAppSelector: vi.fn().mockReturnValue({
       user: {
-        username: "Vv",
+        username: 'Vv',
       },
     }),
   };
 });
 
-describe("Router", () => {
-  it("Renders Router Hook", () => {
-    storagePrototype.setItem("token", import.meta.env.VITE_TOKEN_TEST);
+describe('Router', () => {
+  it('Renders Router Hook', () => {
+    localStorageMock.setItem('token', import.meta.env.VITE_TOKEN_TEST);
     const { result } = renderHook(() => useTokenAuth());
 
     expect(result.current.userState).toEqual({
       user: {
-        username: "Vv",
+        username: 'Vv',
       },
     });
   });

@@ -1,39 +1,37 @@
-import { renderHook } from "@testing-library/react";
-import { vi } from "vitest";
-import useAuth from "@/services/authentication/useAuth";
+import { renderHook } from '@testing-library/react';
+import { vi } from 'vitest';
+import useAuth from '@/services/authentication/useAuth';
 
-vi.mock("@apollo/client", async () => {
-  const actual: any = await vi.importActual("@apollo/client");
+vi.mock('@apollo/client', async () => {
+  const actual: any = await vi.importActual('@apollo/client');
   return {
     ...actual,
-    useMutation: vi.fn(() => {
-      return [
-        vi.fn(() => ({
-          data: {
-            register: {
-              user: {
-                username: null,
-              },
-              errors: ["Email is already taken"],
+    useMutation: vi.fn(() => [
+      vi.fn(() => ({
+        data: {
+          register: {
+            user: {
+              username: null,
             },
+            errors: ['Email is already taken'],
           },
-        })),
-        { loading: false, error: false },
-      ];
-    }),
+        },
+      })),
+      { loading: false, error: false },
+    ]),
   };
 });
 
-describe("Register logic in useAuth", () => {
-  it("Fail to register with these credentials", async () => {
+describe('Register logic in useAuth', () => {
+  it('Fail to register with these credentials', async () => {
     const { result } = renderHook(() => useAuth());
 
     const userData = await result.current.register(
-      "Meee",
+      'Meee',
       import.meta.env.VITE_USER_EMAIL_TEST,
-      "password2"
+      'password2',
     );
 
-    expect(userData.errors[0]).toEqual("Email is already taken");
+    expect(userData.errors[0]).toEqual('Email is already taken');
   });
 });
