@@ -61,7 +61,7 @@ function UserGameListMobile({ data }: { data: GameDataType[] }) {
 
   return (
     <Table
-      // className={styles.Table}
+      className={styles.Table}
       columns={columns}
       dataSource={data}
       // onChange={onChange}

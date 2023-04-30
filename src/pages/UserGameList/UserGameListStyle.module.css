@@ -1,7 +1,7 @@
 
 .TableContainer{
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   max-width: 1000px;
   background-color: white;
@@ -12,6 +12,7 @@
 }
 
 .TableContainerSmall {
+  width: 100%;
   display: none;
 }
 
@@ -26,6 +27,7 @@
     display: none;
   }
   .TableContainerSmall {
+    
     display: flex;
     justify-content: center;
     align-items: center;
