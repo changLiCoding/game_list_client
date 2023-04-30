@@ -52,7 +52,7 @@ function Login() {
               <Input
                 placeholder="Email"
                 data-testid="email-test"
-                // className={styles.emailInput}
+                className={styles.input}
               />
             </Form.Item>
 
@@ -65,6 +65,7 @@ function Login() {
               <Input.Password
                 placeholder="Password"
                 data-testid="password-test"
+                className={styles.input}
               />
             </Form.Item>
 
