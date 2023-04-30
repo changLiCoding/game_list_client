@@ -1,6 +1,6 @@
 import { Table, Tag } from 'antd';
 import { ColumnsType } from 'antd/es/table';
-import styles from './UserGameListMobile.module.css';
+import styles from './UserGameListMobile.module.scss';
 import type { GameDataType } from '@/types/UserGameList';
 
 const columns: ColumnsType<GameDataType> = [

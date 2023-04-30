@@ -1,6 +1,6 @@
 import { Popover, Table, Tag } from 'antd';
 import { ColumnsType } from 'antd/es/table';
-import styles from './UserGameListDesktop.module.css';
+import styles from './UserGameListDesktop.module.scss';
 import type { GameDataType } from '@/types/UserGameList';
 
 const columns: ColumnsType<GameDataType> = [

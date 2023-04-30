@@ -6,7 +6,7 @@ import { Content } from 'antd/es/layout/layout';
 import Game from './Game';
 import useAllGames from '@/services/games/useAllGames';
 
-import './GamesList.css';
+import './GamesList.scss';
 
 export default function Games() {
   const { games } = useAllGames();
