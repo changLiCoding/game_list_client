@@ -60,7 +60,7 @@ const useAuth = () => {
       if (err instanceof Error) {
         return err && { errors: [err.message] };
       }
-      // Handle other types of errors
+
       return { errors: ['Unknown'] };
     }
   };

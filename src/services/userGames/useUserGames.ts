@@ -34,10 +34,11 @@ const useUserGames = () => {
       }
       console.log('addUserGames response: ', response);
       return response.data.addUserGames;
-    } catch (error: any) {
-      console.log('addUserGames from useUserGames HOOK ERRORs: ', error);
-
-      return error && { errors: [error.message] };
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        return error && { errors: [error.message] };
+      }
+      return { errors: ['Unknown'] };
     }
   };
   const deleteUserGames = async (
@@ -62,8 +63,11 @@ const useUserGames = () => {
       }
       console.log('deleteUserGames response: ', response);
       return response.data.deleteUserGames;
-    } catch (error: any) {
-      return error && { errors: [error.message] };
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        return error && { errors: [error.message] };
+      }
+      return { errors: ['Unknown'] };
     }
   };
 
