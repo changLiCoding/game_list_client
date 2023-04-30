@@ -2,10 +2,10 @@ import './Login.scss';
 import { Button, Form, Input } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import type { LoginType } from '@/types/Authentication';
 import { setUser } from '@/features/userSlice';
 import useAuth from '@/services/authentication/useAuth';
 import LoginImage from '@/assets/images/games_login.webp';
+import type { LoginType } from './types';
 
 function Login() {
   const navigate = useNavigate();
@@ -16,7 +16,6 @@ function Login() {
     const loginData = await login(values.email, values.password);
 
     if (loginData.token) {
-      // dispatch(setLoading(true));
       localStorage.setItem('token', loginData.token);
       dispatch(setUser(loginData.user));
       navigate('/dashboard');
