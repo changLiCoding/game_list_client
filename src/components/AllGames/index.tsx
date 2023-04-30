@@ -1,7 +1,7 @@
 import { Layout } from 'antd';
 import GamesList from './GamesList';
 import InfoBar from './InfoBar';
-import './AllGames.css';
+import './AllGames.scss';
 
 export default function AllGames() {
   return (

@@ -1,4 +1,4 @@
-import './FilterField.css';
+import './FilterField.scss';
 import { Cascader, Layout } from 'antd';
 
 import React from 'react';

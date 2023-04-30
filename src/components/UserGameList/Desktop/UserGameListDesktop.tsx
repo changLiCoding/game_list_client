@@ -1,7 +1,7 @@
 import { Popover, Table, Tag } from 'antd';
 import { ColumnsType } from 'antd/es/table';
-import styles from './UserGameListDesktop.module.css';
-import type { GameDataType } from '@/types/UserGameList';
+import styles from './UserGameListDesktop.module.scss';
+import type { GameDataType } from '@/components/UserGameList/types';
 
 const columns: ColumnsType<GameDataType> = [
   {

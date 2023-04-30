@@ -1,5 +1,5 @@
 import { Layout } from 'antd';
-import styles from './UserGameListStyle.module.css';
+import styles from './UserGameListStyle.module.scss';
 import { Game } from '@/graphql/__generated__/graphql';
 import useUserGames from '@/services/userGames/useUserGames';
 import UserGameListDesktop from '@/components/UserGameList/Desktop';

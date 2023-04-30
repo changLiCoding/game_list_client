@@ -2,7 +2,7 @@ import { Col, Card, Popover, Tag, Button } from 'antd';
 import { PlusCircleOutlined } from '@ant-design/icons';
 import Color from 'color-thief-react';
 
-import './Game.css';
+import './Game.scss';
 import { Game as GameType } from '@/graphql/__generated__/graphql';
 
 export default function Game({

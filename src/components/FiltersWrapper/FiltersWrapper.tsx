@@ -2,7 +2,7 @@ import { Layout, Grid, Input, Space, Button } from 'antd';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 
-import './FiltersWrapper.css';
+import './FiltersWrapper.scss';
 import FilterField from './FilterField';
 import useGame from '@/services/game/useGame';
 

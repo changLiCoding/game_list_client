@@ -1,7 +1,7 @@
 import { Table, Tag } from 'antd';
 import { ColumnsType } from 'antd/es/table';
-import styles from './UserGameListMobile.module.css';
-import type { GameDataType } from '@/types/UserGameList';
+import styles from './UserGameListMobile.module.scss';
+import type { GameDataType } from '@/components/UserGameList/types';
 
 const columns: ColumnsType<GameDataType> = [
   {
@@ -61,7 +61,7 @@ function UserGameListMobile({ data }: { data: GameDataType[] }) {
 
   return (
     <Table
-      // className={styles.Table}
+      className={styles.Table}
       columns={columns}
       dataSource={data}
       // onChange={onChange}
