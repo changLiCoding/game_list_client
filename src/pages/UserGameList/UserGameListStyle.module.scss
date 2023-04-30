@@ -1,3 +1,4 @@
+@use "../../styles/mixin" as mixin;
 
 .TableContainer{
   display: flex;
@@ -9,31 +10,42 @@
   overflow: hidden;
   margin: 0 auto;
   border-radius: 12px;
+  @include mixin.tablet {
+    max-width: 95%;
+  }
+  @include mixin.phone {
+    display: none;
+  }
 }
 
 .TableContainerSmall {
   width: 100%;
   display: none;
-}
-
-@media screen and (max-width: 1450px) {
-  .TableContainer{
-    max-width: 95%;
-  }
-}
-
-@media screen and (max-width: 850px) {
-  .TableContainer{
-    display: none;
-  }
-  .TableContainerSmall {
-    
+  @include mixin.phone {
     display: flex;
     justify-content: center;
     align-items: center;
   }
-
 }
+
+// @media screen and (max-width: 1450px) {
+//   .TableContainer{
+//     max-width: 95%;
+//   }
+// }
+
+// @media screen and (max-width: 850px) {
+//   .TableContainer{
+//     display: none;
+//   }
+//   .TableContainerSmall {
+    
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//   }
+
+// }
 
 
 

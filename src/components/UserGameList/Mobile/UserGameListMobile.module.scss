@@ -1,3 +1,5 @@
+@use "../../../styles/mixin" as mixin;
+
 .Table{
   width: 95%;
 }
@@ -11,16 +13,7 @@
 
 .ImageSmall{
   display: none;
-}
-
-.TagsContainer{
-  display: flex;
-  flex-wrap: wrap;
-  overflow-x: hidden;
-}
-
-@media screen and (max-width: 1450px) {
-  .ImageSmall {
+  @include mixin.tablet {
     display: block;
     width: 50px;
     height: 50px;
@@ -29,3 +22,20 @@
     display: flex;
   }
 }
+
+.TagsContainer{
+  display: flex;
+  flex-wrap: wrap;
+  overflow-x: hidden;
+}
+
+// @media screen and (max-width: 1450px) {
+//   .ImageSmall {
+//     display: block;
+//     width: 50px;
+//     height: 50px;
+//     object-fit: cover;
+//     border-radius: 10%;
+//     display: flex;
+//   }
+// }
