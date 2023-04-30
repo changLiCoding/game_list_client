@@ -1,6 +1,6 @@
 @use "../../styles/mixin" as mixin;
 
-.login-page {
+.loginPage {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -8,7 +8,7 @@
   background: #d9edff;
 }
 
-.login-box {
+.loginBox {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -25,7 +25,7 @@
   }
 }
 
-#login-form {
+#loginForm {
   flex: 1 0 100%;
   max-width: 480px;
   width: 100%;
@@ -38,7 +38,7 @@
   p {
     margin-bottom: 30px;
 
-    &.form-title {
+    &.formTitle {
       color: #333333;
       font-family: 'Josefin Sans', sans-serif;
       font-size: 42px;
@@ -71,11 +71,11 @@
   height: 48px;
 }
 
-.login-form-button {
+.loginFormButton {
   width: 100%;
 }
 
-.illustration-wrapper {
+.illustrationWrapper {
   display: flex;
   align-items: flex-end;
   max-width: 800px;

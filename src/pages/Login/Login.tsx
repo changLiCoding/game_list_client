@@ -1,7 +1,7 @@
-import './Login.scss';
 import { Button, Form, Input } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import styles from './Login.module.scss';
 import { setUser } from '@/features/userSlice';
 import useAuth from '@/services/authentication/useAuth';
 import LoginImage from '@/assets/images/games_login.webp';
@@ -29,18 +29,18 @@ function Login() {
   // };
   return (
     <>
-      <div className="login-page">
-        <div className="login-box">
-          <div className="illustration-wrapper">
+      <div className={styles.loginPage}>
+        <div className={styles.loginBox}>
+          <div className={styles.illustrationWrapper}>
             <img src={LoginImage} alt="Login" />
           </div>
           <Form
-            name="login-form"
+            name={styles.loginForm}
             initialValues={{ remember: true }}
             onFinish={onFinish}
             // onFinishFailed={onFinishFailed}
           >
-            <p className="form-title">Welcome back</p>
+            <p className={styles.formTitle}>Welcome back</p>
             <p>Login to the Dashboard</p>
             <Form.Item
               name="email"
@@ -68,7 +68,7 @@ function Login() {
               <Button
                 type="primary"
                 htmlType="submit"
-                className="login-form-button"
+                className={styles.loginFormButton}
               >
                 LOGIN
               </Button>
