@@ -1,4 +1,4 @@
-import './Login.css';
+import './Login.scss';
 import { Button, Form, Input } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';

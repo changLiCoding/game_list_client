@@ -1,4 +1,4 @@
-$color-red: red;
+// $color-red: red;
 
 @mixin phone {
   @media screen and (max-width: 850px) {
@@ -6,8 +6,15 @@ $color-red: red;
   }
 }
 
-@mixin tablet {
-  @media screen and (max-width: 1450px) {
+@mixin loginTablet {
+  @media screen and (max-width: 1023px) {
     @content;
   }
 }
+
+@mixin tablet {
+  @media screen and (max-width: 1200px) {
+    @content;
+  }
+}
+
