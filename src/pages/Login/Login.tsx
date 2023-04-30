@@ -49,7 +49,11 @@ function Login() {
                 { type: 'email', message: 'Please enter valid email!' },
               ]}
             >
-              <Input placeholder="Email" data-testid="email-test" />
+              <Input
+                placeholder="Email"
+                data-testid="email-test"
+                // className={styles.emailInput}
+              />
             </Form.Item>
 
             <Form.Item
