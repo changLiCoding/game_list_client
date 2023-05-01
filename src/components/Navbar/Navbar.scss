@@ -36,8 +36,8 @@ $mobile-nav-width: 640px;
 
 @media (min-width: 640px) {
   .sm\:px-6 {
-    padding-left: 1.5rem /* 24px */;
-    padding-right: 1.5rem /* 24px */;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
   }
 }
 
@@ -92,9 +92,6 @@ $mobile-nav-width: 640px;
   }
 }
 
-.header-popover {
-}
-
 .header-popover-dropdown {
   width: 150px;
 }
@@ -103,8 +100,8 @@ $mobile-nav-width: 640px;
   display: flex;
   align-items: center;
 
-  padding-top: 0.2rem /* 8px */;
-  padding-bottom: 0.2rem /* 8px */;
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
 
   color: rgb(163, 154, 167);
 
@@ -129,13 +126,13 @@ $mobile-nav-width: 640px;
 
 .header-drawer-item {
   font-size: x-large;
-  padding-top: 0.3rem /* 8px */;
-  padding-bottom: 0.3rem /* 8px */;
+  padding-top: 0.3rem;
+  padding-bottom: 0.3rem;
 }
 
 .ant-drawer-header-title {
   display: flex;
-  justify-content: end; 
+  justify-content: end;
 }
 
 .ant-drawer-header {
