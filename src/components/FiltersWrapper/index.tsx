@@ -2,7 +2,7 @@ import { Layout, Grid, Input, Space, Button } from 'antd';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 
-import './FiltersWrapper.scss';
+import styles from './FiltersWrapper.module.scss';
 import FilterField from './FilterField';
 import useGame from '@/services/game/useGame';
 
@@ -44,7 +44,7 @@ export default function FilterWrapper() {
     platformsOptions.length === 0 ? (
     <Layout>Loading</Layout>
   ) : (
-    <Layout className="layout-FiltersWrapper-container">
+    <Layout className={styles.layoutFiltersWrapperContainer}>
       {screens.md ? (
         <>
           <FilterField
@@ -74,9 +74,13 @@ export default function FilterWrapper() {
           />
         </>
       ) : (
-        <Space direction="horizontal" size={screens.sm ? 48 : 24}>
+        <Space
+          direction="horizontal"
+          size={screens.sm ? 48 : 24}
+          style={{ display: 'flex', width: '100%', justifyContent: 'center' }}
+        >
           <Search
-            style={screens.sm ? { width: '470px' } : { width: '300px' }}
+            style={{ width: '80vw', flexGrow: 1 }}
             placeholder="input search text"
             size="large"
             onSearch={(value) => console.log(value)}

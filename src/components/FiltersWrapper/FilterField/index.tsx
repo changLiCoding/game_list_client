@@ -1,7 +1,5 @@
-import './FilterField.scss';
+import styles from './FilterField.module.scss';
 import { Cascader, Layout } from 'antd';
-
-import React from 'react';
 
 export default function FilterField({
   fieldName,
@@ -15,10 +13,10 @@ export default function FilterField({
   changeOnSelect?: boolean;
 }) {
   return (
-    <Layout className="layout-FilterField-container">
-      <h3 className="h3-FilterField-title">{fieldName}</h3>
+    <Layout className={styles.layoutFilterFieldContainer}>
+      <h3 className={styles.h3FilterFieldTitle}>{fieldName}</h3>
       <Cascader
-        className="Cascader-FilterField-cascader"
+        className={styles.CascaderFilterFieldCascader}
         placeholder={fieldName}
         options={options}
         onChange={onChange}
