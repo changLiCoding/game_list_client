@@ -2,7 +2,7 @@
 
 @mixin phone {
   @media screen and (max-width: 850px) {
-    @content;  
+    @content;
   }
 }
 
@@ -18,3 +18,8 @@
   }
 }
 
+@mixin desktop {
+  @media screen and (min-width: 1023px) {
+    @content;
+  }
+}

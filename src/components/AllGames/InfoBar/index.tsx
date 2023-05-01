@@ -1,5 +1,3 @@
-import React from 'react';
+import InfoBar from '@/components/AllGames/InfoBar/InfoBar';
 
-export default function InfoBar() {
-  return <div>InfoBar</div>;
-}
+export default InfoBar;

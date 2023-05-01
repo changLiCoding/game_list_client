@@ -1,0 +1,28 @@
+.colGameCardContainer {
+  position: relative;
+  margin-bottom: 8px;
+}
+
+.buttonGameHovershow {
+  display: none;
+  position: absolute;
+  top: 83%;
+  left: 87%;
+  color: var(--hover-color);
+}
+
+.colGameCardContainer > div.cardGameContainer:hover .buttonGameHovershow {
+  display: block;
+}
+
+.colGameCardContainer
+  > .cardGameContainer:hover
+  .metaGameDescription
+  > div
+  > div {
+  color: var(--hover-color);
+}
+
+.colGameCardContainer > .cardGameContainer {
+  box-shadow: none;
+}

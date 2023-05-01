@@ -1,7 +1,7 @@
 import { Layout } from 'antd';
-import GamesList from './GamesList';
-import InfoBar from './InfoBar';
-import styles from './AllGames.module.scss';
+import GamesList from '@/components/AllGames/GamesList';
+import InfoBar from '@/components/AllGames/InfoBar';
+import styles from '@/components/AllGames/AllGames.module.scss';
 
 export default function AllGames() {
   return (

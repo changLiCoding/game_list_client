@@ -1,12 +1,14 @@
-.layoutAllGamesContainer{
-	margin: 0;
-	width: 100%;
+@use '../../styles/mixin.scss' as mixin;
+
+.layoutAllGamesContainer {
+  margin: 0;
+  width: 100%;
 }
 
-@media screen and (min-width: 1024px) {
-	.layoutAllGamesContainer{
-		width: 97%;
-		margin-inline-start: 20px;
-		margin-inline-end: 20px;
-	}
+@include mixin.desktop {
+  .layoutAllGamesContainer {
+    width: 97%;
+    margin-inline-start: 20px;
+    margin-inline-end: 20px;
+  }
 }
