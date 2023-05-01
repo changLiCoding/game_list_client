@@ -19,6 +19,7 @@ const useUserGames = () => {
     try {
       const response = await addUserGamesRequest({
         variables: { gameId },
+        context: getTokenFromLocalStorage.context,
       });
       if (
         !response ||
@@ -26,10 +27,6 @@ const useUserGames = () => {
         !response.data.addUserGames ||
         response.data.addUserGames.errors[0]
       ) {
-        console.log(
-          'addUserGames from useUserGames HOOK ERRORs: ',
-          response.data.addUserGames.errors[0]
-        );
         throw new Error(response.data.addUserGames.errors[0]);
       }
       console.log('addUserGames response: ', response);
@@ -54,11 +51,6 @@ const useUserGames = () => {
         !response.data.deleteUserGames ||
         response.data.deleteUserGames.errors[0]
       ) {
-        console.log(
-          'deleteUserGames from useUserGames error: ',
-          response.data.deleteUserGames.errors[0]
-        );
-
         throw new Error(response.data.deleteUserGames.errors[0]);
       }
       console.log('deleteUserGames response: ', response);
