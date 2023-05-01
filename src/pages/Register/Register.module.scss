@@ -1,6 +1,6 @@
 @use "../../styles/mixin" as mixin;
 
-.register-page {
+.registerPage {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -8,7 +8,7 @@
   background: #d9edff;
 }
 
-.register-box {
+.registerBox {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -25,7 +25,7 @@
   }
 }
 
-#register-form {
+#registerForm {
   flex: 1 0 100%;
   max-width: 480px;
   width: 100%;
@@ -38,7 +38,7 @@
   p {
     margin-bottom: 30px;
 
-    &.form-title {
+    &.formTitle {
       color: #333333;
       font-family: 'Josefin Sans', sans-serif;
       font-size: 42px;
@@ -51,35 +51,18 @@
   .ant-form-item-label > label.ant-form-item-required::before {
     display: none;
   }
-
-  .ant-input-affix-wrapper {
-    padding: 12px 15px;
-  }
-
-  .ant-btn {
-    height: 42px;
-    letter-spacing: 1px;
-    border-radius: 6px;
-  }
 }
 
-.ant-form-item-control-input-content {
-  text-align: left;
-}
-
-#register-form_username {
+.input {
   height: 48px;
 }
 
-#register-form_email {
-  height: 48px;
-}
-
-.register-form-button {
+.registerFormButton {
   width: 100%;
+  height: 40px;
 }
 
-.illustration-wrapper {
+.illustrationWrapper {
   display: flex;
   align-items: flex-end;
   max-width: 800px;
@@ -96,6 +79,7 @@
     width: 100%;
   }
 }
+
 
 
 

@@ -1,8 +1,8 @@
 import { Layout } from 'antd';
 import styles from './UserGameListStyle.module.scss';
-import { Game } from '@/graphql/__generated__/graphql';
-import useUserGames from '@/services/userGames/useUserGames';
+import type { Game } from '@/graphql/__generated__/graphql';
 import UserGameListDesktop from '@/components/UserGameList/Desktop';
+import useUserGames from '@/services/userGames/useUserGames';
 import UserGameListMobile from '@/components/UserGameList/Mobile';
 
 function UserGameList() {
