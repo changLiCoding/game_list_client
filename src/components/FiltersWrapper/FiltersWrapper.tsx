@@ -21,7 +21,7 @@ export default function FilterWrapper() {
   const screens = useBreakpoint();
 
   const onChange = (value: string[]): void => {
-    console.log(value);
+    // console.log(value);
   };
   const { genres, platforms, tags } = useGame();
 
@@ -83,7 +83,9 @@ export default function FilterWrapper() {
             className={styles.searchFiltersWrapperSearch}
             placeholder="input search text"
             size="large"
-            onSearch={(value) => console.log(value)}
+            onSearch={(value) => {
+              // console.log(value);
+            }}
             enterButton="Search"
           />
           <Button
