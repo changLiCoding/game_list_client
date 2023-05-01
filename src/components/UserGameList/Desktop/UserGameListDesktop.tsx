@@ -1,5 +1,6 @@
 import { Popover, Table, Tag } from 'antd';
 import { ColumnsType } from 'antd/es/table';
+
 import styles from '@/components/UserGameList/Desktop/UserGameListDesktop.module.scss';
 import type { GameDataType } from '@/components/UserGameList/types';
 
