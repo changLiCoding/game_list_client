@@ -10,15 +10,17 @@ import {
 const useUserGames = () => {
   const [addUserGamesRequest] = useMutation(ADD_USER_GAMES);
   const [deleteUserGamesRequest] = useMutation(DELETE_USER_GAMES);
-  const { loading: gamesForAUserLoading, data: gamesForAUser } = useQuery(
-    GAMES_FOR_A_USER,
-    { context: getTokenFromLocalStorage.context }
-  );
+  const {
+    loading: gamesForAUserLoading,
+    data: gamesForAUser,
+    refetch,
+  } = useQuery(GAMES_FOR_A_USER, { context: getTokenFromLocalStorage.context });
 
   const addUserGames = async (gameId: number): Promise<AddUserGamesPayload> => {
     try {
       const response = await addUserGamesRequest({
         variables: { gameId },
+        context: getTokenFromLocalStorage.context,
       });
       if (
         !response ||
@@ -35,6 +37,7 @@ const useUserGames = () => {
       console.log('addUserGames response: ', response);
       return response.data.addUserGames;
     } catch (error: unknown) {
+      console.log('addUserGames from useUserGames error: ', error);
       if (error instanceof Error) {
         return error && { errors: [error.message] };
       }
@@ -47,6 +50,7 @@ const useUserGames = () => {
     try {
       const response = await deleteUserGamesRequest({
         variables: { gameId },
+        context: getTokenFromLocalStorage.context,
       });
       if (
         !response ||
@@ -76,6 +80,7 @@ const useUserGames = () => {
     deleteUserGames,
     gamesForAUser,
     gamesForAUserLoading,
+    refetch,
   };
 };
 
