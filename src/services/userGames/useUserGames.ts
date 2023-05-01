@@ -29,7 +29,6 @@ const useUserGames = () => {
       ) {
         throw new Error(response.data.addUserGames.errors[0]);
       }
-      console.log('addUserGames response: ', response);
       return response.data.addUserGames;
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -53,7 +52,7 @@ const useUserGames = () => {
       ) {
         throw new Error(response.data.deleteUserGames.errors[0]);
       }
-      console.log('deleteUserGames response: ', response);
+
       return response.data.deleteUserGames;
     } catch (error: unknown) {
       if (error instanceof Error) {

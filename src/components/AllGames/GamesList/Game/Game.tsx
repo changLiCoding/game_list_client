@@ -64,7 +64,7 @@ export default function Game({
               >
                 <Button
                   onClick={() => {
-                    console.log(game.id);
+                    // console.log(game.id);
                   }}
                   size="large"
                   className={styles.buttonGameHovershow}
