@@ -1,6 +1,5 @@
-import styles from '@/components/FiltersWrapper/FilterField/FilterField.module.scss';
-
 import { Cascader, Layout } from 'antd';
+import styles from '@/components/FiltersWrapper/FilterField/FilterField.module.scss';
 
 export default function FilterField({
   fieldName,
