@@ -1,28 +1,29 @@
 .colGameCardContainer {
   position: relative;
   margin-bottom: 8px;
-}
 
-.buttonGameHovershow {
-  display: none;
-  position: absolute;
-  top: 83%;
-  left: 87%;
-  color: var(--hover-color);
-}
-
-.colGameCardContainer > div.cardGameContainer:hover .buttonGameHovershow {
-  display: block;
-}
-
-.colGameCardContainer
-  > .cardGameContainer:hover
-  .metaGameDescription
-  > div
-  > div {
-  color: var(--hover-color);
-}
-
-.colGameCardContainer > .cardGameContainer {
-  box-shadow: none;
+  .buttonGameHovershow {
+    display: none;
+    position: absolute;
+    top: 83%;
+    left: 84%;
+  }
+  & .cardGameContainer {
+    box-shadow: none;
+    transition: box-shadow 0.3s ease-in-out;
+    &:hover {
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03),
+        0 1px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px 0 rgba(0, 0, 0, 0.02);
+      .metaGameDescription {
+        & div {
+          & div {
+            color: var(--hover-color);
+          }
+        }
+      }
+      .buttonGameHovershow {
+        display: block;
+      }
+    }
+  }
 }

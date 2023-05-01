@@ -67,8 +67,8 @@ export default function Game({
                     // console.log(game.id);
                   }}
                   size="large"
-                  className={styles.buttonGameHovershow}
                   type="ghost"
+                  className={styles.buttonGameHovershow}
                   style={{ color: `${data}` }}
                   icon={<PlusCircleOutlined style={{ fontSize: '1.2rem' }} />}
                   shape="circle"
