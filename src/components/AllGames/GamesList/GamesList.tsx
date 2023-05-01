@@ -2,11 +2,10 @@ import { theme, Card, Row } from 'antd';
 
 import { Content } from 'antd/es/layout/layout';
 
-// import type { Game } from "@/graphql/__generated__/graphql";
 import Game from '@/components/AllGames/GamesList/Game';
 import useAllGames from '@/services/games/useAllGames';
 
-import './GamesList.scss';
+import styles from '@/components/AllGames/GamesList/GamesList.module.scss';
 
 export default function Games() {
   const { games } = useAllGames();

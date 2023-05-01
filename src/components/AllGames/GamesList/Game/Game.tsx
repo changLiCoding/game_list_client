@@ -2,7 +2,7 @@ import { Col, Card, Popover, Tag, Button } from 'antd';
 import { PlusCircleOutlined } from '@ant-design/icons';
 import Color from 'color-thief-react';
 
-import './Game.scss';
+import styles from '@/components/AllGames/GamesList/Game/Game.module.scss';
 import { Game as GameType } from '@/graphql/__generated__/graphql';
 
 export default function Game({
@@ -18,7 +18,7 @@ export default function Game({
     <Color crossOrigin="anonymous" src={game.imageURL} format="hex">
       {({ data, loading, error }) => (
         <Col
-          className="Col-Game-CardContainer"
+          className={styles.ColGameCardContainer}
           xs={{ span: 12 }}
           sm={{ span: 8 }}
           md={{ span: 6 }}
@@ -55,7 +55,7 @@ export default function Game({
             ) : (
               <Card
                 loading={loading}
-                className="Card-Game-container"
+                className={styles.CardGameContainer}
                 // hoverable
                 bordered={false}
                 style={{
@@ -68,7 +68,7 @@ export default function Game({
                     console.log(game.id);
                   }}
                   size="large"
-                  className="Button-Game-hovershow"
+                  className={styles.ButtonGameHovershow}
                   type="ghost"
                   style={{ color: `${data}` }}
                   icon={<PlusCircleOutlined style={{ fontSize: '1.2rem' }} />}
@@ -76,7 +76,7 @@ export default function Game({
                 />
                 <Meta
                   style={{ color: `${data}` }}
-                  className="Meta-Game-description"
+                  className={styles.MetaGameDescription}
                   title={game.name}
                 />
               </Card>

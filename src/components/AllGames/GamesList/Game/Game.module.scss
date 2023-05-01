@@ -1,0 +1,27 @@
+.ColGameCardContainer {
+  position: relative;
+  margin-bottom: 8px;
+}
+
+.ButtonGameHovershow {
+  display: none;
+  position: absolute;
+  top: 83%;
+  left: 87%;
+}
+
+.ant-col > .CardGameContainer:hover .ButtonGameHovershow {
+  display: block;
+}
+
+.ant-col
+  > .Card-GameContainer:hover
+  .MetaGameDescription
+  > .ant-card-meta-detail
+  > .ant-card-meta-title {
+  color: var(--hover-color);
+}
+
+.ant-col > .CardGameContainer {
+  box-shadow: none;
+}
