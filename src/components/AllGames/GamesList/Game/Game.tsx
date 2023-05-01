@@ -18,7 +18,7 @@ export default function Game({
     <Color crossOrigin="anonymous" src={game.imageURL} format="hex">
       {({ data, loading, error }) => (
         <Col
-          className={styles.ColGameCardContainer}
+          className={styles.colGameCardContainer}
           xs={{ span: 12 }}
           sm={{ span: 8 }}
           md={{ span: 6 }}
@@ -55,8 +55,7 @@ export default function Game({
             ) : (
               <Card
                 loading={loading}
-                className={styles.CardGameContainer}
-                // hoverable
+                className={styles.cardGameContainer}
                 bordered={false}
                 style={{
                   backgroundColor: colorBgContainer,
@@ -68,7 +67,7 @@ export default function Game({
                     console.log(game.id);
                   }}
                   size="large"
-                  className={styles.ButtonGameHovershow}
+                  className={styles.buttonGameHovershow}
                   type="ghost"
                   style={{ color: `${data}` }}
                   icon={<PlusCircleOutlined style={{ fontSize: '1.2rem' }} />}
@@ -76,7 +75,7 @@ export default function Game({
                 />
                 <Meta
                   style={{ color: `${data}` }}
-                  className={styles.MetaGameDescription}
+                  className={styles.metaGameDescription}
                   title={game.name}
                 />
               </Card>

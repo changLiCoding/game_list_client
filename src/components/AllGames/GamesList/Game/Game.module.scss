@@ -1,27 +1,28 @@
-.ColGameCardContainer {
+.colGameCardContainer {
   position: relative;
   margin-bottom: 8px;
 }
 
-.ButtonGameHovershow {
+.buttonGameHovershow {
   display: none;
   position: absolute;
   top: 83%;
   left: 87%;
-}
-
-.ant-col > .CardGameContainer:hover .ButtonGameHovershow {
-  display: block;
-}
-
-.ant-col
-  > .Card-GameContainer:hover
-  .MetaGameDescription
-  > .ant-card-meta-detail
-  > .ant-card-meta-title {
   color: var(--hover-color);
 }
 
-.ant-col > .CardGameContainer {
+.colGameCardContainer > div.cardGameContainer:hover .buttonGameHovershow {
+  display: block;
+}
+
+.colGameCardContainer
+  > .cardGameContainer:hover
+  .metaGameDescription
+  > div
+  > div {
+  color: var(--hover-color);
+}
+
+.colGameCardContainer > .cardGameContainer {
   box-shadow: none;
 }
