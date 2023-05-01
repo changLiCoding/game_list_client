@@ -1,0 +1,152 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap");
+
+$mobile-nav-width: 640px;
+
+.header {
+  width: 100%;
+  z-index: 30;
+  background-color: rgba(105, 39, 211, 0.733);
+  overflow: hidden;
+  font-family: "Roboto", sans-serif;
+}
+
+.header-spacing {
+  max-width: 72rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 5rem;
+}
+
+.header-logo {
+  flex-shrink: 0;
+  margin-right: 1rem;
+
+  a {
+    display: block;
+  }
+}
+
+@media (min-width: 640px) {
+  .sm\:px-6 {
+    padding-left: 1.5rem /* 24px */;
+    padding-right: 1.5rem /* 24px */;
+  }
+}
+
+.nav-desktop {
+  display: flex;
+  flex-grow: 1;
+}
+
+.nav-mobile {
+  display: flex;
+  justify-content: end;
+  flex-grow: 1;
+}
+
+.nav-mobile-hamburger {
+  color: black;
+  font-size: 20px;
+}
+
+.nav-section {
+  display: flex;
+  flex-grow: 1;
+  justify-content: end;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.nav-item {
+  color: rgb(197 210 220);
+  padding-left: 1rem;
+  padding-right: 1rem;
+  display: flex;
+  align-items: center;
+
+  a:link {
+    color: white;
+    text-decoration: none;
+  }
+
+  a:visited {
+    color: white;
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: none;
+    color: rgba(206, 215, 221, 0.548);
+  }
+
+  a:active {
+    text-decoration: none;
+  }
+}
+
+.header-popover {
+}
+
+.header-popover-dropdown {
+  width: 150px;
+}
+
+.header-popover-item {
+  display: flex;
+  align-items: center;
+
+  padding-top: 0.2rem /* 8px */;
+  padding-bottom: 0.2rem /* 8px */;
+
+  color: rgb(163, 154, 167);
+
+  :hover {
+    color: rgb(70, 74, 77);
+  }
+
+  .header-popover-icon {
+    padding-right: 0.2rem;
+  }
+}
+
+.header-drawer {
+  display: flex;
+  flex-direction: row;
+}
+
+.header-drawer-section {
+  display: flex;
+  flex-direction: row;
+}
+
+.header-drawer-item {
+  font-size: x-large;
+  padding-top: 0.3rem /* 8px */;
+  padding-bottom: 0.3rem /* 8px */;
+}
+
+.ant-drawer-header-title {
+  display: flex;
+  justify-content: end;
+  
+}
+
+@media (max-width: $mobile-nav-width) {
+  .nav-desktop {
+    display: none;
+  }
+}
+
+@media (min-width: $mobile-nav-width) {
+  .nav-mobile {
+    display: none;
+  }
+}
