@@ -116,13 +116,13 @@ export default function Navbar() {
               >
                 <ul>
                   <li className="header-drawer-item">
-                    <a  href="/">Home</a>
+                    <a href="/">Home</a>
                   </li>
                   <li className="header-drawer-item">
-                  <a  href="/">Profile</a>
+                    <a href="/">Profile</a>
                   </li>
                   <li className="header-drawer-item">
-                  <a  href="/">Game List</a>
+                    <a href="/">Game List</a>
                   </li>
                 </ul>
               </Drawer>
