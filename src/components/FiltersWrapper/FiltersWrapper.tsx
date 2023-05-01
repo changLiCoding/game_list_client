@@ -77,10 +77,10 @@ export default function FilterWrapper() {
         <Space
           direction="horizontal"
           size={screens.sm ? 48 : 24}
-          style={{ display: 'flex', width: '100%', justifyContent: 'center' }}
+          className={styles.spaceFiltersWrapperContainer}
         >
           <Search
-            style={{ width: '80vw', flexGrow: 1 }}
+            className={styles.searchFiltersWrapperSearch}
             placeholder="input search text"
             size="large"
             onSearch={(value) => console.log(value)}

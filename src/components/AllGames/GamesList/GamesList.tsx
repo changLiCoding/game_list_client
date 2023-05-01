@@ -5,7 +5,7 @@ import { Content } from 'antd/es/layout/layout';
 import Game from '@/components/AllGames/GamesList/Game';
 import useAllGames from '@/services/games/useAllGames';
 
-import styles from '@/components/AllGames/GamesList/GamesList.module.scss';
+import styles from '@/components/AllGames/GamesList/Game/Game.module.scss';
 
 export default function Games() {
   const { games } = useAllGames();
