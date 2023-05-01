@@ -135,8 +135,22 @@ $mobile-nav-width: 640px;
 
 .ant-drawer-header-title {
   display: flex;
-  justify-content: end;
-  
+  justify-content: end; 
+}
+
+.ant-drawer-header {
+  height: 5rem;
+  padding: 0 1rem !important;
+  flex: none !important;
+  border-bottom: none !important;
+}
+
+.ant-drawer-body {
+  padding: 0 24px !important;
+}
+
+.ant-drawer-close {
+  margin-inline-end: 0 !important;
 }
 
 @media (max-width: $mobile-nav-width) {
