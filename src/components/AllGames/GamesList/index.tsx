@@ -3,7 +3,7 @@ import { theme, Card, Row } from 'antd';
 import { Content } from 'antd/es/layout/layout';
 
 // import type { Game } from "@/graphql/__generated__/graphql";
-import Game from './Game';
+import Game from '@/components/AllGames/GamesList/Game/Game';
 import useAllGames from '@/services/games/useAllGames';
 
 import './GamesList.scss';
