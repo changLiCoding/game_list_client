@@ -120,11 +120,6 @@ export default function Navbar() {
                 <p>Some contents...</p>
               </Drawer>
             </nav>
-            <Drawer title="Game List" placement="left" closable={false} onClose={onClose} open={open}>
-              <p>Some contents...</p>
-              <p>Some contents...</p>
-              <p>Some contents...</p>
-            </Drawer>
           </div>
         </div>
       </header>
