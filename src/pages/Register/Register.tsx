@@ -1,9 +1,10 @@
-import './Register.css';
 import { Button, Form, Input } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
+import styles from './Register.module.scss';
 import WelcomeImage from '@/assets/images/register_welcome.webp';
-import type { RegisterType } from '@/types/Authentication';
+
 import useAuth from '@/services/authentication/useAuth';
+import type { RegisterType } from './types';
 
 function Register() {
   const navigate = useNavigate();
@@ -30,15 +31,15 @@ function Register() {
 
   return (
     <>
-      <div className="register-page">
-        <div className="register-box">
+      <div className={styles.registerPage}>
+        <div className={styles.registerBox}>
           <Form
-            name="register-form"
+            name={styles.registerForm}
             initialValues={{ remember: true }}
             onFinish={onFinish}
             // onFinishFailed={onFinishFailed}
           >
-            <p className="form-title">Register</p>
+            <p className={styles.formTitle}>Register</p>
             <p>Please fill in the form below</p>
             <Form.Item
               name="username"
@@ -50,7 +51,11 @@ function Register() {
                 },
               ]}
             >
-              <Input placeholder="Username" data-testid="user-test" />
+              <Input
+                placeholder="Username"
+                data-testid="user-test"
+                className={styles.input}
+              />
             </Form.Item>
 
             <Form.Item
@@ -60,7 +65,11 @@ function Register() {
                 { type: 'email', message: 'Please enter valid email!' },
               ]}
             >
-              <Input placeholder="Email" data-testid="email-test" />
+              <Input
+                placeholder="Email"
+                data-testid="email-test"
+                className={styles.input}
+              />
             </Form.Item>
 
             <Form.Item
@@ -76,6 +85,7 @@ function Register() {
               <Input.Password
                 placeholder="Password"
                 data-testid="password-test"
+                className={styles.input}
               />
             </Form.Item>
 
@@ -100,6 +110,7 @@ function Register() {
               <Input.Password
                 placeholder="Password Confirmation"
                 data-testid="password-confirmation-test"
+                className={styles.input}
               />
             </Form.Item>
 
@@ -107,14 +118,14 @@ function Register() {
               <Button
                 type="primary"
                 htmlType="submit"
-                className="register-form-button"
+                className={styles.registerFormButton}
               >
                 REGISTER
               </Button>
             </Form.Item>
             <Link to="/login">Already have an account!</Link>
           </Form>
-          <div className="illustration-wrapper">
+          <div className={styles.illustrationWrapper}>
             <img src={WelcomeImage} alt="Register" />
           </div>
         </div>

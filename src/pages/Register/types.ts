@@ -1,7 +1,4 @@
-export type LoginType = {
-  email: string;
-  password: string;
-};
+import { LoginType } from '@/pages/Login/types';
 
 export type RegisterType = LoginType & {
   username: string;
