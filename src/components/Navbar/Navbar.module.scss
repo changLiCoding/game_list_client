@@ -161,6 +161,15 @@ $mobile-nav-header-drawer-item-hover-color : rgb(109, 49, 158);
   padding-top: 0.3rem;
   padding-bottom: 0.3rem;
 
+  div {
+    color: $mobile-nav-header-drawer-item-color;
+  }
+
+  div:hover {
+    color: $mobile-nav-header-drawer-item-hover-color;
+    cursor: pointer;
+  }
+
   a:link {
     color: $mobile-nav-header-drawer-item-color;
     text-decoration: none;
