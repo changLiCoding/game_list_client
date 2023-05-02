@@ -10,7 +10,7 @@ export default function FilterField({
   fieldName: string;
   options: any;
   onChange: any;
-  changeOnSelect?: boolean;
+  changeOnSelect: boolean;
 }) {
   return (
     <Layout className={styles.layoutFilterFieldContainer}>

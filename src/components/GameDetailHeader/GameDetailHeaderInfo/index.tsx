@@ -1,0 +1,1 @@
+import GameDetailInfo from './GameDetailHeaderInfo';
