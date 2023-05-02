@@ -6,6 +6,7 @@ import Register from './pages/Register/Register';
 import Dashboard from './pages/Dashboard/Dashboard';
 import useTokenAuth from './hooks/useTokenAuth';
 import UserGameList from './pages/UserGameList/UserGameList';
+import GameDetail from './pages/GameDetail/GameDetail';
 
 function Router() {
   const { loading, userState } = useTokenAuth();
@@ -28,6 +29,8 @@ function Router() {
         </>
       )}
       <Route path="/home" element={<Home />} />
+      <Route path="/" element={<Navigate to="/home" />} />
+      <Route path="/game-detail/:id/:name" element={<GameDetail />} />
       <Route
         path="*"
         element={
