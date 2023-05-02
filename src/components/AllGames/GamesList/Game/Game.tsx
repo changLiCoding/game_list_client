@@ -1,6 +1,7 @@
 import { Col, Card, Popover, Tag, Button } from 'antd';
 import { PlusCircleOutlined } from '@ant-design/icons';
 import Color from 'color-thief-react';
+import { Link } from 'react-router-dom';
 
 import styles from '@/components/AllGames/GamesList/Game/Game.module.scss';
 import { Game as GameType } from '@/graphql/__generated__/graphql';
@@ -15,7 +16,15 @@ export default function Game({
   const { Meta } = Card;
 
   return (
-    <Color crossOrigin="anonymous" src={game.imageURL} format="hex">
+    <Color
+      crossOrigin="anonymous"
+      src={
+        game.imageURL
+          ? game.imageURL
+          : 'https://images.igdb.com/igdb/image/upload/t_cover_big/co4a7a.png'
+      }
+      format="hex"
+    >
       {({ data, loading, error }) => (
         <Col
           className={styles.colGameCardContainer}
@@ -53,32 +62,38 @@ export default function Game({
             {error ? (
               <p>Error!</p>
             ) : (
-              <Card
-                loading={loading}
-                className={styles.cardGameContainer}
-                bordered={false}
-                style={{
-                  backgroundColor: colorBgContainer,
-                }}
-                cover={<img alt="example" src={game.imageURL} />}
-              >
-                <Button
-                  onClick={() => {
-                    // console.log(game.id);
-                  }}
-                  size="large"
-                  type="ghost"
-                  className={styles.buttonGameHovershow}
-                  style={{ color: `${data}` }}
-                  icon={<PlusCircleOutlined style={{ fontSize: '1.2rem' }} />}
-                  shape="circle"
-                />
-                <Meta
-                  style={{ color: `${data}` }}
-                  className={styles.metaGameDescription}
-                  title={game.name}
-                />
-              </Card>
+              <Link to={`/game-detail/${game.id}/${game.name}`}>
+                {game.imageURL && (
+                  <Card
+                    loading={loading}
+                    className={styles.cardGameContainer}
+                    bordered={false}
+                    style={{
+                      backgroundColor: colorBgContainer,
+                    }}
+                    cover={<img alt="example" src={game.imageURL} />}
+                  >
+                    <Button
+                      onClick={() => {
+                        // console.log(game.id);
+                      }}
+                      size="large"
+                      type="ghost"
+                      className={styles.buttonGameHovershow}
+                      style={{ color: `${data}` }}
+                      icon={
+                        <PlusCircleOutlined style={{ fontSize: '1.2rem' }} />
+                      }
+                      shape="circle"
+                    />
+                    <Meta
+                      style={{ color: `${data}` }}
+                      className={styles.metaGameDescription}
+                      title={game.name}
+                    />
+                  </Card>
+                )}
+              </Link>
             )}
           </Popover>
         </Col>
