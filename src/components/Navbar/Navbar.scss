@@ -6,10 +6,17 @@ $background-color: rgba(105, 39, 211, 0.733);
 $header-brand-color: white;
 
 // Desktop Colors
-$desktop-nav-item-color: rgb(197 210 220);
+$desktop-nav-item-color: white;
+$desktop-nav-item-hover-color: rgba(206, 215, 221, 0.548);
+
+$desktop-nav-dropdown-item-color: rgb(167, 168, 184);
+$desktop-nav-dropdown-item-hover-color: rgb(109, 49, 158);
 
 // Mobile Colors
+$mobile-hamburger-color: black;
 
+$mobile-nav-header-drawer-item-color: rgb(167, 168, 184);
+$mobile-nav-header-drawer-item-hover-color : rgb(109, 49, 158);
 
 .header {
   width: 100%;
@@ -62,25 +69,24 @@ $desktop-nav-item-color: rgb(197 210 220);
 }
 
 .desktop-nav__nav-item {
-  color: rgb(197 210 220);
   padding-left: 1rem;
   padding-right: 1rem;
   display: flex;
   align-items: center;
 
   a:link {
-    color: white;
+    color: $desktop-nav-item-color;
     text-decoration: none;
   }
 
   a:visited {
-    color: white;
+    color: $desktop-nav-item-color;
     text-decoration: none;
   }
 
   a:hover {
     text-decoration: none;
-    color: rgba(206, 215, 221, 0.548);
+    color: $desktop-nav-item-hover-color;
   }
 
   a:active {
@@ -99,10 +105,10 @@ $desktop-nav-item-color: rgb(197 210 220);
   padding-top: 0.2rem;
   padding-bottom: 0.2rem;
 
-  color: rgb(163, 154, 167);
+  color: $desktop-nav-dropdown-item-color;
 
-  :hover {
-    color: rgb(70, 74, 77);
+  &:hover {
+    color: $desktop-nav-dropdown-item-hover-color;
   }
 
   .desktop-nav__header-popover-icon {
@@ -119,7 +125,7 @@ $desktop-nav-item-color: rgb(197 210 220);
 }
 
 .mobile-nav__hamburger {
-  color: black;
+  color: $mobile-hamburger-color;
   font-size: 20px;
 }
 
@@ -132,6 +138,25 @@ $desktop-nav-item-color: rgb(197 210 220);
   font-size: x-large;
   padding-top: 0.3rem;
   padding-bottom: 0.3rem;
+
+  a:link {
+    color: $mobile-nav-header-drawer-item-color;
+    text-decoration: none;
+  }
+
+  a:visited {
+    color: $mobile-nav-header-drawer-item-color;
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: none;
+    color: $mobile-nav-header-drawer-item-hover-color;
+  }
+
+  a:active {
+    text-decoration: none;
+  }
 }
 
 .ant-drawer-header-title {
