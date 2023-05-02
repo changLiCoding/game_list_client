@@ -7,12 +7,10 @@ import {
   UserOutlined,
 } from '@ant-design/icons';
 import useAuth from '@/services/authentication/useAuth';
-
 import styles from './Navbar.module.scss';
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
-  const { contextHolder, info } = useAuth();
 
   const showDrawer = () => {
     setOpen(true);
@@ -88,20 +86,14 @@ export default function Navbar() {
               </ul>
 
               <ul className={styles['desktop-nav__nav-section']}>
-                {!contextHolder ? (
-                  <li className={styles['desktop-nav__nav-item']}>
-                    <a href="/signin">Sign in</a>
-                  </li>
-                ) : (
-                  <Popover content={content}>
-                    <Image
-                      width={38}
-                      height={38}
-                      preview={false}
-                      src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-                    />
-                  </Popover>
-                )}
+                <Popover content={content}>
+                  <Image
+                    width={38}
+                    height={38}
+                    preview={false}
+                    src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+                  />
+                </Popover>
               </ul>
             </nav>
 
@@ -126,6 +118,9 @@ export default function Navbar() {
                   </li>
                   <li className={styles['mobile-nav__header-drawer-item']}>
                     <a href="/">Game List</a>
+                  </li>
+                  <li className={styles['mobile-nav__header-drawer-item']}>
+                    <div>Logout</div>
                   </li>
                 </ul>
               </Drawer>
