@@ -24,22 +24,22 @@ export default function Navbar() {
 
   const content = (
     <div>
-      <ul className="header-popover-dropdown">
+      <ul className="desktop-nav__popover-dropdown">
         <li>
-          <a className="header-popover-item" href="/profile">
-            <UserOutlined className="header-popover-icon" />
+          <a className="desktop-nav__popover-dropdown-item" href="/profile">
+            <UserOutlined className="desktop-nav__header-popover-icon" />
             Profile
           </a>
         </li>
         <li>
-          <a className="header-popover-item" href="/settings">
-            <SettingOutlined className="header-popover-icon" />
+          <a className="desktop-nav__popover-dropdown-item" href="/settings">
+            <SettingOutlined className="desktop-nav__header-popover-icon" />
             Settings
           </a>
         </li>
         <li>
-          <a className="header-popover-item" href="/logout">
-            <EnterOutlined className="header-popover-icon" />
+          <a className="desktop-nav__popover-dropdown-item" href="/logout">
+            <EnterOutlined className="desktop-nav__header-popover-icon" />
             Logout
           </a>
         </li>
@@ -52,16 +52,10 @@ export default function Navbar() {
       <header className="header">
         <div className="header-spacing sm:px-6">
           <div className="header-content">
-            <div className="logo">
+            <div className="header-brand">
               <a href="/">
                 <svg
-                  style={{
-                    width: '2rem',
-                    height: '2rem',
-                    fill: 'currentcolor',
-                    color: 'white',
-                  }}
-                  className="w-8 h-8 fill-current text-purple-600"
+                  className="header-brand__icon"
                   viewBox="0 0 32 32"
                   xmlns="http://www.w3.org/2000/svg"
                 >
@@ -72,25 +66,25 @@ export default function Navbar() {
 
             {/* Desktop Navbar  */}
             <nav className="desktop-nav">
-              <ul className="nav__section">
-                <li className="nav__item">
+              <ul className="desktop-nav__nav-section">
+                <li className="desktop-nav__nav-item">
                   <a href="/">Home</a>
                 </li>
-                <li className="nav__item">
+                <li className="desktop-nav__nav-item">
                   <a href="/profile">Profile</a>
                 </li>
-                <li className="nav__item">
+                <li className="desktop-nav__nav-item">
                   <a href="/list">Game List</a>
                 </li>
               </ul>
 
-              <ul className="nav__section">
+              <ul className="desktop-nav__nav-section">
                 {!contextHolder ? (
-                  <li className="nav__item">
+                  <li className="desktop-nav__nav-item">
                     <a href="/signin">Sign in</a>
                   </li>
                 ) : (
-                  <Popover overlayClassName="header-popover" content={content}>
+                  <Popover content={content}>
                     <Image
                       width={38}
                       height={38}
@@ -105,23 +99,23 @@ export default function Navbar() {
             {/* Mobile Navbar  */}
             <nav className="mobile-nav">
               <MenuOutlined
-                className="nav-mobile__hamburger"
+                className="mobile-nav__hamburger"
                 onClick={showDrawer}
               />
               <Drawer
-                // className="header-drawer"
+                className="mobile-nav__header-drawer"
                 placement="top"
                 onClose={onClose}
                 open={open}
               >
                 <ul>
-                  <li className="header-drawer-item">
+                  <li className="mobile-nav__header-drawer-item">
                     <a href="/">Home</a>
                   </li>
-                  <li className="header-drawer-item">
+                  <li className="mobile-nav__header-drawer-item">
                     <a href="/">Profile</a>
                   </li>
-                  <li className="header-drawer-item">
+                  <li className="mobile-nav__header-drawer-item">
                     <a href="/">Game List</a>
                   </li>
                 </ul>
