@@ -23,3 +23,15 @@
     @content;
   }
 }
+
+@mixin desktopUltroLarge {
+  @media screen and (min-width: 1540px) {
+    @content;
+  }
+}
+
+@mixin desktopLarge {
+  @media screen and (max-width: 1540px) {
+    @content;
+  }
+}

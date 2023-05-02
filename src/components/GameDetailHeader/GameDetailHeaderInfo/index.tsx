@@ -1,1 +1,3 @@
-import GameDetailInfo from './GameDetailHeaderInfo';
+import GameDetailInfo from '@/components/GameDetailHeader/GameDetailHeaderInfo/GameDetailHeaderInfo';
+
+export default GameDetailInfo;

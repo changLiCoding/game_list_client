@@ -1,0 +1,96 @@
+@use '../../../styles/mixin' as mixin;
+
+.infoContainer {
+  position: relative;
+  box-sizing: border-box;
+
+  & .infoContent {
+    margin: 0 auto;
+    width: 100%;
+    min-height: 250px;
+    min-width: 320px;
+    display: grid;
+    grid-column-gap: 30px;
+    grid-template-columns: 215px auto;
+    @include mixin.desktopUltroLarge {
+      max-width: 1520px;
+      padding-left: 100px;
+      padding-right: 100px;
+    }
+    @include mixin.desktopLarge;
+    @include mixin.desktop {
+      max-width: 1140px;
+      padding-left: 50px;
+      padding-right: 50px;
+    }
+    @include mixin.loginTablet {
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+    @include mixin.phone {
+      grid-template-columns: 1fr;
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
+    & .infoOverlap {
+      margin-top: -125px;
+      position: relative;
+      @include mixin.phone {
+        margin-top: -100px;
+      }
+
+      & .overlapInner {
+        @include mixin.phone {
+          display: grid;
+          grid-template-columns: 100px auto;
+          grid-gap: 20px;
+          align-items: flex-end;
+        }
+
+        & .infoImage {
+          background-color: rgba(212, 230, 245, 0.5);
+          border-radius: 2px;
+          box-shadow: 0 0 29px rgba(49, 54, 68, 0.25);
+          margin-top: 15px;
+          width: 100%;
+        }
+
+        & .infoActions {
+          display: grid;
+          grid-template-columns: auto 35px;
+          margin-bottom: 20px;
+          margin-top: 20px;
+          grid-gap: 15px;
+          @include mixin.phone {
+            margin-bottom: 0px;
+          }
+
+          & .listActions {
+            align-items: center;
+            background: rgb(var(--color-blue));
+            border-radius: 3px;
+            color: rgb(var(--color-white));
+            cursor: pointer;
+            display: flex;
+            font-size: 1.4rem;
+            height: 35px;
+            justify-content: center;
+            line-height: 1.3rem;
+
+            & .add {
+              align-items: center;
+              display: flex;
+              height: 100%;
+              justify-content: center;
+              margin-left: auto;
+              margin-right: auto;
+              padding-left: 10px;
+              width: calc(100% - 34px);
+            }
+          }
+        }
+      }
+    }
+  }
+}
