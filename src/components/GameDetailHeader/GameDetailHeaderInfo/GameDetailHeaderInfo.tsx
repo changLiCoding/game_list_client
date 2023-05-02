@@ -1,7 +1,7 @@
 import { Button, Layout, Dropdown } from 'antd';
 import type { MenuProps } from 'antd';
 
-import { HeartOutlined } from '@ant-design/icons';
+import { HeartOutlined, DownCircleOutlined } from '@ant-design/icons';
 
 import { Content } from 'antd/es/layout/layout';
 import { Game as GameType } from '@/graphql/__generated__/graphql';
@@ -54,15 +54,18 @@ function GameDetailHeaderInfo({ game }: { game: GameType | undefined }) {
           <div className={styles.overlapInner}>
             <img
               alt={game?.name}
-              src="https://upload.wikimedia.org/wikipedia/zh/thumb/f/fe/Sekiro_art_%28Re-uploaded%29.jpg/220px-Sekiro_art_%28Re-uploaded%29.jpg"
+              src={game?.imageURL}
               className={styles.infoImage}
             />
             <div className={styles.infoActions}>
               <div className={styles.listActions}>
-                <Button className={styles.add}>add to list </Button>
+                <Button className={styles.add}>Add to List </Button>
                 <div>
                   <Dropdown menu={{ items }} placement="bottom" arrow>
-                    <Button>Change Status</Button>
+                    <Button>
+                      Change Status
+                      <DownCircleOutlined />
+                    </Button>
                   </Dropdown>
                 </div>
               </div>

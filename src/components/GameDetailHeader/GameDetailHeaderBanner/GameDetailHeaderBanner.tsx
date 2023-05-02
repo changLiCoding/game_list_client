@@ -10,7 +10,7 @@ function GameDetailHeaderBanner({
     <div
       className={styles.banner}
       style={{
-        backgroundImage: `url(${'https://pbs.twimg.com/media/FqCb8eXWYAAwQTs?format=jpg'})`,
+        backgroundImage: `url(${game?.bannerURL})`,
       }}
     >
       <div className={styles.shadow} />
