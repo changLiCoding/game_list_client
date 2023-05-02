@@ -134,6 +134,26 @@ $mobile-nav-header-drawer-item-hover-color : rgb(109, 49, 158);
 .mobile-nav__header-drawer {
   display: flex;
   flex-direction: row;
+
+  :global(.ant-drawer-header-title) {
+    display: flex;
+    justify-content: end;
+  }
+
+  :global(.ant-drawer-header) {
+    height: 5rem;
+    padding: 0 1rem !important;
+    flex: none !important;
+    border-bottom: none !important;
+  }
+
+  :global(.ant-drawer-body) {
+    padding: 0 24px !important;
+  }
+
+  :global(.ant-drawer-close) {
+    margin-inline-end: 0 !important;
+  }
 }
 
 .mobile-nav__header-drawer-item {
@@ -159,26 +179,6 @@ $mobile-nav-header-drawer-item-hover-color : rgb(109, 49, 158);
   a:active {
     text-decoration: none;
   }
-}
-
-.ant-drawer-header-title {
-  display: flex;
-  justify-content: end;
-}
-
-.ant-drawer-header {
-  height: 5rem;
-  padding: 0 1rem !important;
-  flex: none !important;
-  border-bottom: none !important;
-}
-
-.ant-drawer-body {
-  padding: 0 24px !important;
-}
-
-.ant-drawer-close {
-  margin-inline-end: 0 !important;
 }
 
 @media (min-width: 640px) {
