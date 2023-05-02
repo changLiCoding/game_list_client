@@ -8,7 +8,7 @@ import {
 } from '@ant-design/icons';
 import useAuth from '@/services/authentication/useAuth';
 
-import './Navbar.scss';
+import styles from './Navbar.module.scss';
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -24,21 +24,30 @@ export default function Navbar() {
 
   const content = (
     <div>
-      <ul className="desktop-nav__popover-dropdown">
+      <ul className={styles['desktop-nav__popover-dropdown']}>
         <li>
-          <a className="desktop-nav__popover-dropdown-item" href="/profile">
+          <a
+            className={styles['desktop-nav__popover-dropdown-item']}
+            href="/profile"
+          >
             <UserOutlined className="desktop-nav__header-popover-icon" />
             Profile
           </a>
         </li>
         <li>
-          <a className="desktop-nav__popover-dropdown-item" href="/settings">
+          <a
+            className={styles['desktop-nav__popover-dropdown-item']}
+            href="/settings"
+          >
             <SettingOutlined className="desktop-nav__header-popover-icon" />
             Settings
           </a>
         </li>
         <li>
-          <a className="desktop-nav__popover-dropdown-item" href="/logout">
+          <a
+            className={styles['desktop-nav__popover-dropdown-item']}
+            href="/logout"
+          >
             <EnterOutlined className="desktop-nav__header-popover-icon" />
             Logout
           </a>
@@ -49,13 +58,13 @@ export default function Navbar() {
 
   return (
     <div style={{ display: 'flex', height: '5rem' }}>
-      <header className="header">
-        <div className="header-spacing sm:px-6">
-          <div className="header-content">
-            <div className="header-brand">
+      <header className={styles.header}>
+        <div className={`${styles['header-spacing']} ${styles['sm:px-6']}`}>
+          <div className={styles['header-content']}>
+            <div className={styles['header-brand']}>
               <a href="/">
                 <svg
-                  className="header-brand__icon"
+                  className={styles['header-brand__icon']}
                   viewBox="0 0 32 32"
                   xmlns="http://www.w3.org/2000/svg"
                 >
@@ -65,22 +74,22 @@ export default function Navbar() {
             </div>
 
             {/* Desktop Navbar  */}
-            <nav className="desktop-nav">
-              <ul className="desktop-nav__nav-section">
-                <li className="desktop-nav__nav-item">
+            <nav className={styles['desktop-nav']}>
+              <ul className={styles['desktop-nav__nav-section']}>
+                <li className={styles['desktop-nav__nav-item']}>
                   <a href="/">Home</a>
                 </li>
-                <li className="desktop-nav__nav-item">
+                <li className={styles['desktop-nav__nav-item']}>
                   <a href="/profile">Profile</a>
                 </li>
-                <li className="desktop-nav__nav-item">
+                <li className={styles['desktop-nav__nav-item']}>
                   <a href="/list">Game List</a>
                 </li>
               </ul>
 
-              <ul className="desktop-nav__nav-section">
+              <ul className={styles['desktop-nav__nav-section']}>
                 {!contextHolder ? (
-                  <li className="desktop-nav__nav-item">
+                  <li className={styles['desktop-nav__nav-item']}>
                     <a href="/signin">Sign in</a>
                   </li>
                 ) : (
@@ -97,25 +106,25 @@ export default function Navbar() {
             </nav>
 
             {/* Mobile Navbar  */}
-            <nav className="mobile-nav">
+            <nav className={styles['mobile-nav']}>
               <MenuOutlined
-                className="mobile-nav__hamburger"
+                className={styles['mobile-nav__hamburger']}
                 onClick={showDrawer}
               />
               <Drawer
-                className="mobile-nav__header-drawer"
+                className={styles['mobile-nav__header-drawer']}
                 placement="top"
                 onClose={onClose}
                 open={open}
               >
                 <ul>
-                  <li className="mobile-nav__header-drawer-item">
+                  <li className={styles['mobile-nav__header-drawer-item']}>
                     <a href="/">Home</a>
                   </li>
-                  <li className="mobile-nav__header-drawer-item">
+                  <li className={styles['mobile-nav__header-drawer-item']}>
                     <a href="/">Profile</a>
                   </li>
-                  <li className="mobile-nav__header-drawer-item">
+                  <li className={styles['mobile-nav__header-drawer-item']}>
                     <a href="/">Game List</a>
                   </li>
                 </ul>
