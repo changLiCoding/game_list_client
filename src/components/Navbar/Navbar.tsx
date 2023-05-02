@@ -1,16 +1,18 @@
 import { useState } from 'react';
-import { Button, Drawer, Image, Popover, Space } from 'antd';
+import { Drawer, Image, Popover } from 'antd';
 import {
   EnterOutlined,
   MenuOutlined,
   SettingOutlined,
   UserOutlined,
 } from '@ant-design/icons';
+import useAuth from '@/services/authentication/useAuth';
 
 import './Navbar.scss';
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const { contextHolder, info } = useAuth();
 
   const showDrawer = () => {
     setOpen(true);
@@ -50,7 +52,7 @@ export default function Navbar() {
       <header className="header">
         <div className="header-spacing sm:px-6">
           <div className="header-content">
-            <div className="header-logo">
+            <div className="logo">
               <a href="/">
                 <svg
                   style={{
@@ -69,43 +71,41 @@ export default function Navbar() {
             </div>
 
             {/* Desktop Navbar  */}
-            <nav className="nav-desktop">
-              <ul className="nav-section">
-                <li className="nav-item">
+            <nav className="desktop-nav">
+              <ul className="nav__section">
+                <li className="nav__item">
                   <a href="/">Home</a>
                 </li>
-                <li className="nav-item">
+                <li className="nav__item">
                   <a href="/profile">Profile</a>
                 </li>
-                <li className="nav-item">
+                <li className="nav__item">
                   <a href="/list">Game List</a>
                 </li>
               </ul>
 
-              <ul className="nav-section">
-                {/* <li className="nav-item">
-                  <a
-                    href="signin"
-                  >
-                    Sign in
-
-                  </a>
-                </li> */}
-                <Popover overlayClassName="header-popover" content={content}>
-                  <Image
-                    width={38}
-                    height={38}
-                    preview={false}
-                    src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-                  />
-                </Popover>
+              <ul className="nav__section">
+                {!contextHolder ? (
+                  <li className="nav__item">
+                    <a href="/signin">Sign in</a>
+                  </li>
+                ) : (
+                  <Popover overlayClassName="header-popover" content={content}>
+                    <Image
+                      width={38}
+                      height={38}
+                      preview={false}
+                      src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+                    />
+                  </Popover>
+                )}
               </ul>
             </nav>
 
             {/* Mobile Navbar  */}
-            <nav className="nav-mobile">
+            <nav className="mobile-nav">
               <MenuOutlined
-                className="nav-mobile-hamburger"
+                className="nav-mobile__hamburger"
                 onClick={showDrawer}
               />
               <Drawer
@@ -130,7 +130,6 @@ export default function Navbar() {
           </div>
         </div>
       </header>
-      {/* <Button type="primary" onClick={showDrawer}> */}
     </div>
   );
 }
