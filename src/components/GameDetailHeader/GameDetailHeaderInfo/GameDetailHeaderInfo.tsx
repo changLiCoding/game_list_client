@@ -1,4 +1,4 @@
-import { Button, Layout, Dropdown } from 'antd';
+import { Button, Layout, Dropdown, Space } from 'antd';
 import type { MenuProps } from 'antd';
 
 import { HeartOutlined, DownCircleOutlined } from '@ant-design/icons';
@@ -52,27 +52,31 @@ function GameDetailHeaderInfo({ game }: { game: GameType | undefined }) {
       <Content className={styles.infoContent}>
         <div className={styles.infoOverlap}>
           <div className={styles.overlapInner}>
-            <img
-              alt={game?.name}
-              src={game?.imageURL}
-              className={styles.infoImage}
-            />
+            {game?.imageURL && (
+              <img
+                alt={game?.name}
+                src={game?.imageURL}
+                className={styles.infoImage}
+              />
+            )}
             <div className={styles.infoActions}>
-              <div className={styles.listActions}>
-                <Button className={styles.add}>Add to List </Button>
-                <div>
-                  <Dropdown menu={{ items }} placement="bottom" arrow>
-                    <Button>
-                      Change Status
-                      <DownCircleOutlined />
-                    </Button>
-                  </Dropdown>
-                </div>
-              </div>
-              <div>
-                <Button>
-                  <HeartOutlined />
+              <Space.Compact className={styles.listActions}>
+                <Button type="primary" className={styles.add}>
+                  Add to List
                 </Button>
+
+                <Dropdown
+                  arrow
+                  className="dropdown"
+                  menu={{ items }}
+                  placement="bottomRight"
+                  trigger={['click']}
+                >
+                  <Button type="primary" icon={<DownCircleOutlined />} />
+                </Dropdown>
+              </Space.Compact>
+              <div>
+                <Button type="primary" danger icon={<HeartOutlined />} />
               </div>
             </div>
           </div>
