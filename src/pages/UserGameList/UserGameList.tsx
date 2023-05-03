@@ -1,5 +1,4 @@
-import { Layout } from 'antd';
-import styles from './UserGameListStyle.module.scss';
+// import styles from './UserGameListStyle.module.scss';
 import type { Game } from '@/graphql/__generated__/graphql';
 import useGamesByStatus from '@/services/userGames/useGamesByStatus';
 import UserGamesTable from '@/components/UserGameList/UserGamesTable';
@@ -11,7 +10,7 @@ function UserGameList() {
     return <div>Loading...</div>;
   }
 
-  console.log('gamesByTagForAUser', gamesByTagForAUser);
+  // console.log('gamesByTagForAUser', gamesByTagForAUser);
 
   const playingGames = gamesByTagForAUser?.gamesByStatusForAUser?.playing.map(
     (val: Game) => ({
@@ -48,13 +47,13 @@ function UserGameList() {
   );
 
   return (
-    <Layout>
+    <>
       <UserGamesTable gamesData={playingGames} title="Playing" />
       <UserGamesTable gamesData={planningGames} title="Planning" />
       <UserGamesTable gamesData={completedGames} title="Completed" />
       <UserGamesTable gamesData={pausedGames} title="Paused" />
       <UserGamesTable gamesData={droppedGames} title="Dropped" />
-    </Layout>
+    </>
   );
 }
 

@@ -1,5 +1,15 @@
 @use "../../styles/mixin" as mixin;
 
+.Title {
+  max-width: 1000px;
+  margin: 2rem auto;
+  font-size: 1.5rem;
+  @include mixin.tablet {
+    max-width: 95%;
+    margin: 1rem auto;
+  }
+}
+
 .TableContainer{
   display: flex;
   justify-content: center;

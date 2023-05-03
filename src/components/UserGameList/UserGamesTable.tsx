@@ -13,7 +13,7 @@ function UserGamesTable({
     <div>
       {gamesData?.length > 0 && (
         <>
-          <p>{title}</p>
+          <h3 className={styles.Title}>{title}</h3>
           <div className={styles.TableContainer}>
             <UserGameListDesktop data={gamesData} />
           </div>
