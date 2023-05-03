@@ -1,12 +1,13 @@
 import UserGameListDesktop from './Desktop';
 import UserGameListMobile from './Mobile';
 import styles from './UserGamesTable.module.scss';
+import type { GameDataType } from './types';
 
 function UserGamesTable({
   gamesData,
   title,
 }: {
-  gamesData: any;
+  gamesData: GameDataType[];
   title: string;
 }) {
   return (
