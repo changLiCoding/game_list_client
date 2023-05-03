@@ -1,5 +1,10 @@
-import { Col, Card, Popover, Tag, Button } from 'antd';
-import { PlusCircleOutlined } from '@ant-design/icons';
+import { Col, Card, Popover, Tag, Button, Divider } from 'antd';
+import {
+  PlusCircleOutlined,
+  FrownOutlined,
+  MehOutlined,
+  SmileOutlined,
+} from '@ant-design/icons';
 import Color from 'color-thief-react';
 import { Link } from 'react-router-dom';
 
@@ -14,6 +19,46 @@ export default function Game({
   colorBgContainer: string;
 }) {
   const { Meta } = Card;
+
+  const getRatingIcon = (avgScore: number, color: string) => {
+    if (avgScore > 8.5) {
+      return (
+        <SmileOutlined
+          style={{
+            fontSize: '2.5rem',
+            color: `${color}`,
+            position: 'absolute',
+            left: '80%',
+            top: '20%',
+          }}
+        />
+      );
+    }
+    if (avgScore > 6.5) {
+      return (
+        <MehOutlined
+          style={{
+            fontSize: '2.5rem',
+            color: `${color}`,
+            position: 'absolute',
+            left: '80%',
+            top: '20%',
+          }}
+        />
+      );
+    }
+    return (
+      <FrownOutlined
+        style={{
+          fontSize: '2.5rem',
+          color: `${color}`,
+          position: 'absolute',
+          left: '80%',
+          top: '20%',
+        }}
+      />
+    );
+  };
 
   return (
     <Color
@@ -35,25 +80,23 @@ export default function Game({
           key={game.id}
         >
           <Popover
+            color="#f0f0f0"
             title={game.name}
             content={
-              <div>
-                <p>{game.description}</p>
-                <p>
-                  Released:
-                  {game.releaseDate}
-                </p>
-                <p>
-                  Average Score:
-                  {game.avgScore}
-                </p>
-                <p>
-                  Total Ratings:
-                  {game.totalRating}
-                </p>
-                {game.genres.map((genre: string) => (
-                  <Tag key={`${game.id}${genre}`} color={data}>
-                    {genre}
+              <div style={{ position: 'relative' }}>
+                {game.releaseDate && (
+                  <p>{`Released: ${game.releaseDate.slice(0, 10)}`}</p>
+                )}
+
+                <p>{`Average Score: ${game.avgScore}`}</p>
+
+                {/* Conditional rendering icon */}
+                {game.avgScore && data && getRatingIcon(game.avgScore, data)}
+
+                <Divider> Tags</Divider>
+                {game.tags.map((tag: string) => (
+                  <Tag key={`${game.id}${tag}`} color={data}>
+                    {tag}
                   </Tag>
                 ))}
               </div>
