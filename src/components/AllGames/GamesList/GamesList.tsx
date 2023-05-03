@@ -3,7 +3,6 @@ import { Content } from 'antd/es/layout/layout';
 
 import Game from '@/components/AllGames/GamesList/Game';
 import useAllGames from '@/services/games/useAllGames';
-import { Game as GameType } from '@//graphql/__generated__/graphql';
 
 // import styles from '@/components/AllGames/GamesList/Game/Game.module.scss';
 
@@ -25,7 +24,7 @@ export default function Games() {
           }}
         >
           {games &&
-            games.map((game: GameType) => (
+            games.map((game) => (
               <Game
                 key={game.id}
                 game={game}

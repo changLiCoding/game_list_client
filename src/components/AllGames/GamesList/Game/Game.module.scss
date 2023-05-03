@@ -5,24 +5,25 @@
   .buttonGameHovershow {
     display: none;
     position: absolute;
-    top: 83%;
-    left: 84%;
+    top: 86%;
+    left: 82%;
+  }
+  &:hover .buttonGameHovershow {
+    display: block;
   }
   & .cardGameContainer {
     box-shadow: none;
     transition: box-shadow 0.3s ease-in-out;
     &:hover {
-      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03),
-        0 1px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px 0 rgba(0, 0, 0, 0.02);
+      box-shadow: 0 1px 2px -2px rgba(0, 0, 0, 0.16),
+        0 3px 6px 0px rgba(0, 0, 0, 0.12), 0 5px 12px 4px rgba(0, 0, 0, 0.09);
+
       .metaGameDescription {
         & div {
           & div {
             color: var(--hover-color);
           }
         }
-      }
-      .buttonGameHovershow {
-        display: block;
       }
     }
   }

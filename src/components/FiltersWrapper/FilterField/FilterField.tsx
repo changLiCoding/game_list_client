@@ -1,5 +1,7 @@
 import { Cascader, Layout } from 'antd';
+
 import styles from '@/components/FiltersWrapper/FilterField/FilterField.module.scss';
+import { Option } from '@/components/FiltersWrapper/types';
 
 export default function FilterField({
   fieldName,
@@ -8,9 +10,9 @@ export default function FilterField({
   changeOnSelect,
 }: {
   fieldName: string;
-  options: any;
-  onChange: any;
-  changeOnSelect?: boolean;
+  options: Option[];
+  onChange: (value: string[]) => void;
+  changeOnSelect: boolean;
 }) {
   return (
     <Layout className={styles.layoutFilterFieldContainer}>

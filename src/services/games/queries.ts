@@ -8,6 +8,7 @@ export const GET_ALL_GAMES: TypedDocumentNode<{ allGames: Game[] }, void> = gql`
       id
       name
       description
+      bannerURL
       imageURL
       releaseDate
       avgScore

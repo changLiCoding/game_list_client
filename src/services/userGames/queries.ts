@@ -10,6 +10,7 @@ export const DELETE_USER_GAMES = gql`
           name
           description
           imageURL
+          bannerURL
           releaseDate
           avgScore
           genres
@@ -32,6 +33,7 @@ export const ADD_USER_GAMES = gql`
           name
           description
           imageURL
+          bannerURL
           releaseDate
           avgScore
           genres
@@ -51,6 +53,7 @@ export const GAMES_FOR_A_USER = gql`
       name
       description
       imageURL
+      bannerURL
       releaseDate
       avgScore
       genres
