@@ -1,79 +1,59 @@
 import { Layout } from 'antd';
 import styles from './UserGameListStyle.module.scss';
 import type { Game } from '@/graphql/__generated__/graphql';
-import UserGameListDesktop from '@/components/UserGameList/Desktop';
-import useUserGames from '@/services/userGames/useUserGames';
-import UserGameListMobile from '@/components/UserGameList/Mobile';
 import useGamesByStatus from '@/services/userGames/useGamesByStatus';
-import { useEffect } from 'react';
+import UserGamesTable from '@/components/UserGameList/UserGamesTable';
 
 function UserGameList() {
-  // info("Cannot load the list of games");
-  const { gamesForAUserLoading, gamesForAUser } = useUserGames();
-  const { fetchGamesByStatus } = useGamesByStatus();
+  const { gamesByTagForAUserLoading, gamesByTagForAUser } = useGamesByStatus();
 
-  const fetchGames = async () => {
-    const playingGames = await fetchGamesByStatus('Playing');
-    const planningGames = await fetchGamesByStatus('Planning');
-    const completedGames = await fetchGamesByStatus('Completed');
-    const pausedGames = await fetchGamesByStatus('Paused');
-    const droppedGames = await fetchGamesByStatus('Dropped');
-    console.log('playingGames', playingGames);
-    console.log('planningGames', planningGames);
-    console.log('playingGames', completedGames);
-    console.log('planningGames', pausedGames);
-    console.log('droppedGames', droppedGames);
-  };
-
-  useEffect(() => {
-    fetchGames();
-  }, []);
-
-  if (gamesForAUserLoading) {
+  if (gamesByTagForAUserLoading) {
     return <div>Loading...</div>;
   }
 
-  const data = gamesForAUser?.gamesForAUser.map((val: Game) => ({
-    key: val.id,
-    ...val,
-  }));
+  console.log('gamesByTagForAUser', gamesByTagForAUser);
+
+  const playingGames = gamesByTagForAUser?.gamesByStatusForAUser?.playing.map(
+    (val: Game) => ({
+      key: val.id,
+      ...val,
+    })
+  );
+
+  const planningGames = gamesByTagForAUser?.gamesByStatusForAUser?.planning.map(
+    (val: Game) => ({
+      key: val.id,
+      ...val,
+    })
+  );
+
+  const completedGames =
+    gamesByTagForAUser?.gamesByStatusForAUser?.completed.map((val: Game) => ({
+      key: val.id,
+      ...val,
+    }));
+
+  const pausedGames = gamesByTagForAUser?.gamesByStatusForAUser?.paused.map(
+    (val: Game) => ({
+      key: val.id,
+      ...val,
+    })
+  );
+
+  const droppedGames = gamesByTagForAUser?.gamesByStatusForAUser?.dropped.map(
+    (val: Game) => ({
+      key: val.id,
+      ...val,
+    })
+  );
 
   return (
     <Layout>
-      {gamesForAUser?.gamesForAUser.length > 0 && (
-        <div>
-          <p>Playing</p>
-          <div className={styles.TableContainer}>
-            <UserGameListDesktop data={data} />
-          </div>
-          <div className={styles.TableContainerSmall}>
-            <UserGameListMobile data={data} />
-          </div>
-        </div>
-      )}
-      {gamesForAUser?.gamesForAUser.length > 0 && (
-        <div>
-          <p>Planning</p>
-          <div className={styles.TableContainer}>
-            <UserGameListDesktop data={data} />
-          </div>
-          <div className={styles.TableContainerSmall}>
-            <UserGameListMobile data={data} />
-          </div>
-        </div>
-      )}
-      {gamesForAUser?.gamesForAUser.length > 0 && (
-        <div>
-          <p>Completed</p>
-          <div className={styles.TableContainer}>
-            <UserGameListDesktop data={data} />
-          </div>
-          <div className={styles.TableContainerSmall}>
-            <UserGameListMobile data={data} />
-          </div>
-        </div>
-      )}
-      {/* {contextHolder} */}
+      <UserGamesTable gamesData={playingGames} title="Playing" />
+      <UserGamesTable gamesData={planningGames} title="Planning" />
+      <UserGamesTable gamesData={completedGames} title="Completed" />
+      <UserGamesTable gamesData={pausedGames} title="Paused" />
+      <UserGamesTable gamesData={droppedGames} title="Dropped" />
     </Layout>
   );
 }

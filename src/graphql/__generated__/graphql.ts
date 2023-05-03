@@ -82,16 +82,17 @@ export type EntityIdNameAttributes = {
 
 export type Game = {
   __typename?: 'Game';
-  avgScore: Scalars['Float'];
+  avgScore?: Maybe<Scalars['Float']>;
+  bannerURL?: Maybe<Scalars['String']>;
   description: Scalars['String'];
   genres: Array<Scalars['String']>;
   id: Scalars['ID'];
-  imageURL: Scalars['String'];
+  imageURL?: Maybe<Scalars['String']>;
   name: Scalars['String'];
   platforms: Array<Scalars['String']>;
   releaseDate: Scalars['ISO8601DateTime'];
   tags: Array<Scalars['String']>;
-  totalRating: Scalars['Int'];
+  totalRating?: Maybe<Scalars['Int']>;
 };
 
 export type Genre = {
@@ -171,6 +172,8 @@ export type Query = {
   __typename?: 'Query';
   /** Get all games */
   allGames: Array<Game>;
+  /** Get games by status for a user */
+  gamesByStatusForAUser: UserGamesByStatus;
   /** Get a list of games for a user */
   gamesForAUser: Array<Game>;
   /** Get all games by genre */
@@ -189,6 +192,11 @@ export type Query = {
   getAllUsers: Array<User>;
   /** Get user by id */
   getUserById: User;
+};
+
+
+export type QueryGamesByStatusForAUserArgs = {
+  status?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -280,6 +288,15 @@ export type UserGame = {
   updatedAt: Scalars['ISO8601DateTime'];
 };
 
+export type UserGamesByStatus = {
+  __typename?: 'UserGamesByStatus';
+  completed?: Maybe<Array<Game>>;
+  dropped?: Maybe<Array<Game>>;
+  paused?: Maybe<Array<Game>>;
+  planning?: Maybe<Array<Game>>;
+  playing?: Maybe<Array<Game>>;
+};
+
 export type LoginMutationVariables = Exact<{
   email: Scalars['String'];
   password: Scalars['String'];
@@ -339,7 +356,7 @@ export type GetAllTagsQuery = { __typename?: 'Query', getAllTags: Array<{ __type
 export type GetAllGamesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAllGamesQuery = { __typename?: 'Query', allGames: Array<{ __typename?: 'Game', id: string, name: string, description: string, imageURL: string, releaseDate: any, avgScore: number, totalRating: number, genres: Array<string>, tags: Array<string>, platforms: Array<string> }> };
+export type GetAllGamesQuery = { __typename?: 'Query', allGames: Array<{ __typename?: 'Game', id: string, name: string, description: string, imageURL?: string | null, releaseDate: any, avgScore?: number | null, totalRating?: number | null, genres: Array<string>, tags: Array<string>, platforms: Array<string> }> };
 
 export type UserQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -351,19 +368,24 @@ export type DeleteUserGamesMutationVariables = Exact<{
 }>;
 
 
-export type DeleteUserGamesMutation = { __typename?: 'Mutation', deleteUserGames?: { __typename?: 'DeleteUserGamesPayload', errors?: Array<string> | null, userGame?: { __typename?: 'UserGame', id: string, game: { __typename?: 'Game', id: string, name: string, description: string, imageURL: string, releaseDate: any, avgScore: number, genres: Array<string>, platforms: Array<string>, tags: Array<string> } } | null } | null };
+export type DeleteUserGamesMutation = { __typename?: 'Mutation', deleteUserGames?: { __typename?: 'DeleteUserGamesPayload', errors?: Array<string> | null, userGame?: { __typename?: 'UserGame', id: string, game: { __typename?: 'Game', id: string, name: string, description: string, imageURL?: string | null, releaseDate: any, avgScore?: number | null, genres: Array<string>, platforms: Array<string>, tags: Array<string> } } | null } | null };
 
 export type AddUserGamesMutationVariables = Exact<{
   gameId: Scalars['ID'];
 }>;
 
 
-export type AddUserGamesMutation = { __typename?: 'Mutation', addUserGames?: { __typename?: 'AddUserGamesPayload', errors?: Array<string> | null, userGame?: { __typename?: 'UserGame', id: string, game: { __typename?: 'Game', id: string, name: string, description: string, imageURL: string, releaseDate: any, avgScore: number, genres: Array<string>, platforms: Array<string>, tags: Array<string> } } | null } | null };
+export type AddUserGamesMutation = { __typename?: 'Mutation', addUserGames?: { __typename?: 'AddUserGamesPayload', errors?: Array<string> | null, userGame?: { __typename?: 'UserGame', id: string, game: { __typename?: 'Game', id: string, name: string, description: string, imageURL?: string | null, releaseDate: any, avgScore?: number | null, genres: Array<string>, platforms: Array<string>, tags: Array<string> } } | null } | null };
 
 export type GamesForAUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GamesForAUserQuery = { __typename?: 'Query', gamesForAUser: Array<{ __typename?: 'Game', id: string, name: string, description: string, imageURL: string, releaseDate: any, avgScore: number, genres: Array<string>, platforms: Array<string>, tags: Array<string> }> };
+export type GamesForAUserQuery = { __typename?: 'Query', gamesForAUser: Array<{ __typename?: 'Game', id: string, name: string, description: string, imageURL?: string | null, releaseDate: any, avgScore?: number | null, genres: Array<string>, platforms: Array<string>, tags: Array<string> }> };
+
+export type GamesByTagsForAUserQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GamesByTagsForAUserQuery = { __typename?: 'Query', gamesByStatusForAUser: { __typename?: 'UserGamesByStatus', playing?: Array<{ __typename?: 'Game', id: string, name: string, imageURL?: string | null, avgScore?: number | null, platforms: Array<string> }> | null, planning?: Array<{ __typename?: 'Game', id: string, name: string, imageURL?: string | null, avgScore?: number | null, platforms: Array<string> }> | null, completed?: Array<{ __typename?: 'Game', id: string, name: string, imageURL?: string | null, avgScore?: number | null, platforms: Array<string> }> | null, paused?: Array<{ __typename?: 'Game', id: string, name: string, imageURL?: string | null, avgScore?: number | null, platforms: Array<string> }> | null, dropped?: Array<{ __typename?: 'Game', id: string, name: string, imageURL?: string | null, avgScore?: number | null, platforms: Array<string> }> | null } };
 
 
 export const LoginDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Login"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"login"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"username"}}]}},{"kind":"Field","name":{"kind":"Name","value":"token"}},{"kind":"Field","name":{"kind":"Name","value":"errors"}}]}}]}}]} as unknown as DocumentNode<LoginMutation, LoginMutationVariables>;
@@ -379,3 +401,4 @@ export const UserDocument = {"kind":"Document","definitions":[{"kind":"Operation
 export const DeleteUserGamesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteUserGames"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"gameId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteUserGames"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"gameId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"gameId"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userGame"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"game"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"imageURL"}},{"kind":"Field","name":{"kind":"Name","value":"releaseDate"}},{"kind":"Field","name":{"kind":"Name","value":"avgScore"}},{"kind":"Field","name":{"kind":"Name","value":"genres"}},{"kind":"Field","name":{"kind":"Name","value":"platforms"}},{"kind":"Field","name":{"kind":"Name","value":"tags"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"errors"}}]}}]}}]} as unknown as DocumentNode<DeleteUserGamesMutation, DeleteUserGamesMutationVariables>;
 export const AddUserGamesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"AddUserGames"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"gameId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addUserGames"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"gameId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"gameId"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userGame"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"game"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"imageURL"}},{"kind":"Field","name":{"kind":"Name","value":"releaseDate"}},{"kind":"Field","name":{"kind":"Name","value":"avgScore"}},{"kind":"Field","name":{"kind":"Name","value":"genres"}},{"kind":"Field","name":{"kind":"Name","value":"platforms"}},{"kind":"Field","name":{"kind":"Name","value":"tags"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"errors"}}]}}]}}]} as unknown as DocumentNode<AddUserGamesMutation, AddUserGamesMutationVariables>;
 export const GamesForAUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GamesForAUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"gamesForAUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"imageURL"}},{"kind":"Field","name":{"kind":"Name","value":"releaseDate"}},{"kind":"Field","name":{"kind":"Name","value":"avgScore"}},{"kind":"Field","name":{"kind":"Name","value":"genres"}},{"kind":"Field","name":{"kind":"Name","value":"platforms"}},{"kind":"Field","name":{"kind":"Name","value":"tags"}}]}}]}}]} as unknown as DocumentNode<GamesForAUserQuery, GamesForAUserQueryVariables>;
+export const GamesByTagsForAUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GamesByTagsForAUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"gamesByStatusForAUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"playing"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"imageURL"}},{"kind":"Field","name":{"kind":"Name","value":"avgScore"}},{"kind":"Field","name":{"kind":"Name","value":"platforms"}}]}},{"kind":"Field","name":{"kind":"Name","value":"planning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"imageURL"}},{"kind":"Field","name":{"kind":"Name","value":"avgScore"}},{"kind":"Field","name":{"kind":"Name","value":"platforms"}}]}},{"kind":"Field","name":{"kind":"Name","value":"completed"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"imageURL"}},{"kind":"Field","name":{"kind":"Name","value":"avgScore"}},{"kind":"Field","name":{"kind":"Name","value":"platforms"}}]}},{"kind":"Field","name":{"kind":"Name","value":"paused"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"imageURL"}},{"kind":"Field","name":{"kind":"Name","value":"avgScore"}},{"kind":"Field","name":{"kind":"Name","value":"platforms"}}]}},{"kind":"Field","name":{"kind":"Name","value":"dropped"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"imageURL"}},{"kind":"Field","name":{"kind":"Name","value":"avgScore"}},{"kind":"Field","name":{"kind":"Name","value":"platforms"}}]}}]}}]}}]} as unknown as DocumentNode<GamesByTagsForAUserQuery, GamesByTagsForAUserQueryVariables>;
