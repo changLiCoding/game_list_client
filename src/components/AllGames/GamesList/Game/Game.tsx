@@ -116,19 +116,6 @@ export default function Game({
                     }}
                     cover={<img alt="example" src={game.imageURL} />}
                   >
-                    <Button
-                      onClick={() => {
-                        // console.log(game.id);
-                      }}
-                      size="large"
-                      type="ghost"
-                      className={styles.buttonGameHovershow}
-                      style={{ color: `${data}` }}
-                      icon={
-                        <PlusCircleOutlined style={{ fontSize: '1.2rem' }} />
-                      }
-                      shape="circle"
-                    />
                     <Meta
                       style={{ color: `${data}` }}
                       className={styles.metaGameDescription}
@@ -138,6 +125,20 @@ export default function Game({
                 )}
               </Link>
             )}
+            <Button
+              onClick={(e) => {
+                e.stopPropagation();
+                // console.log(game.id);
+              }}
+              size="large"
+              type="ghost"
+              className={styles.buttonGameHovershow}
+              style={{
+                color: `${data}`,
+              }}
+              icon={<PlusCircleOutlined style={{ fontSize: '1.2rem' }} />}
+              shape="circle"
+            />
           </Popover>
         </Col>
       )}
