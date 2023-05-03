@@ -20,12 +20,39 @@ function UserGameList() {
 
   return (
     <Layout>
-      <div className={styles.TableContainer}>
-        <UserGameListDesktop data={data} />
-      </div>
-      <div className={styles.TableContainerSmall}>
-        <UserGameListMobile data={data} />
-      </div>
+      {gamesForAUser?.gamesForAUser.length > 0 && (
+        <div>
+          <p>Playing</p>
+          <div className={styles.TableContainer}>
+            <UserGameListDesktop data={data} />
+          </div>
+          <div className={styles.TableContainerSmall}>
+            <UserGameListMobile data={data} />
+          </div>
+        </div>
+      )}
+      {gamesForAUser?.gamesForAUser.length > 0 && (
+        <div>
+          <p>Planning</p>
+          <div className={styles.TableContainer}>
+            <UserGameListDesktop data={data} />
+          </div>
+          <div className={styles.TableContainerSmall}>
+            <UserGameListMobile data={data} />
+          </div>
+        </div>
+      )}
+      {gamesForAUser?.gamesForAUser.length > 0 && (
+        <div>
+          <p>Completed</p>
+          <div className={styles.TableContainer}>
+            <UserGameListDesktop data={data} />
+          </div>
+          <div className={styles.TableContainerSmall}>
+            <UserGameListMobile data={data} />
+          </div>
+        </div>
+      )}
       {/* {contextHolder} */}
     </Layout>
   );
