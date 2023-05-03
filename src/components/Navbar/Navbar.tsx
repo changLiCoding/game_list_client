@@ -6,12 +6,25 @@ import {
   SettingOutlined,
   UserOutlined,
 } from '@ant-design/icons';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import useTokenAuth from '@/hooks/useTokenAuth';
+import { setUser } from '@/features/userSlice';
+import { INITIAL_USER_STATE } from '@/constants';
 import styles from './Navbar.module.scss';
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const { loading, userState } = useTokenAuth();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const logout = () => {
+    localStorage.removeItem('token');
+    setOpen(false);
+    dispatch(setUser(INITIAL_USER_STATE.user));
+    navigate('/home');
+  };
 
   const showDrawer = () => {
     setOpen(true);
@@ -43,13 +56,14 @@ export default function Navbar() {
           </a>
         </li>
         <li>
-          <a
+          <button
             className={styles['desktop-nav__popover-dropdown-item']}
-            href="/logout"
+            type="button"
+            onClick={logout}
           >
             <EnterOutlined className="desktop-nav__header-popover-icon" />
             Logout
-          </a>
+          </button>
         </li>
       </ul>
     </div>
@@ -128,7 +142,9 @@ export default function Navbar() {
                   </li>
                   {!loading && userState?.user?.username ? (
                     <li className={styles['mobile-nav__header-drawer-item']}>
-                      <div>Logout</div>
+                      <button type="button" onClick={logout}>
+                        Logout
+                      </button>
                     </li>
                   ) : (
                     <li className={styles['mobile-nav__header-drawer-item']}>

@@ -109,6 +109,12 @@ $mobile-nav-header-drawer-item-hover-color : rgb(109, 49, 158);
 
   color: $desktop-nav-dropdown-item-color;
 
+  background: none;
+
+  border: none;
+  cursor: pointer;
+  width: 100%;
+
   &:hover {
     color: $desktop-nav-dropdown-item-hover-color;
   }
@@ -160,14 +166,27 @@ $mobile-nav-header-drawer-item-hover-color : rgb(109, 49, 158);
   font-size: x-large;
   padding-top: 0.3rem;
   padding-bottom: 0.3rem;
+  width: 100%;
+  display: flex;
 
-  div {
+  button {
     color: $mobile-nav-header-drawer-item-color;
+    text-align: left;
+    background: none;
+    font-size: x-large;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    padding: 0;
   }
 
-  div:hover {
+  button:hover {
     color: $mobile-nav-header-drawer-item-hover-color;
     cursor: pointer;
+  }
+
+  a {
+    width: 100%;
   }
 
   a:link {
