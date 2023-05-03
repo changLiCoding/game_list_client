@@ -10,9 +10,13 @@ import GameDetailHeader from '@/components/GameDetailHeader';
 
 function GameDetail() {
   const { id, name } = useParams();
-  const { games: gamesState }: { games: GameType[] | undefined } =
-    useAllGames();
+  const {
+    games: gamesState,
+    loading,
+  }: { games: GameType[] | undefined; loading: boolean } = useAllGames();
   // const gamesState = useAppSelector((state) => state.games);
+  if (loading) return <div>Loading...</div>;
+
   const game: GameType | undefined = gamesState?.find(
     (gameEle: GameType) => gameEle.id === id
   );

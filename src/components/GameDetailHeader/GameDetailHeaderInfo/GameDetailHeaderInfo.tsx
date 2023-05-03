@@ -7,7 +7,7 @@ import { Content } from 'antd/es/layout/layout';
 import { Game as GameType } from '@/graphql/__generated__/graphql';
 import styles from '@/components/GameDetailHeader/GameDetailHeaderInfo/GameDetailHeaderInfo.module.scss';
 
-function GameDetailHeaderInfo({ game }: { game: GameType | undefined }) {
+function GameDetailHeaderInfo({ game }: { game: GameType }) {
   const items: MenuProps['items'] = [
     {
       key: '1',
@@ -86,8 +86,8 @@ function GameDetailHeaderInfo({ game }: { game: GameType | undefined }) {
           <p>{game?.description}</p>
           <div className={styles.infoInfoTags}>
             <a href="/">Overview</a>
-            <a href="/">Member Reviews</a>
-            <a href="/">Related Content</a>
+            <a href="/">Reviews</a>
+            <a href="/">Related</a>
             <a href="/">Status</a>
             <a href="/">Social</a>
           </div>
