@@ -81,7 +81,11 @@ function GameDetailHeaderInfo({ game }: { game: GameType | undefined }) {
             </div>
           </div>
         </div>
-        <div className={styles.infoInfo}>content</div>
+        <div className={styles.infoInfo}>
+          <h1>{game?.name}</h1>
+          <p>{game?.description}</p>
+          <div className={styles.infoInfoTags}>tags</div>
+        </div>
       </Content>
     </Layout>
   );

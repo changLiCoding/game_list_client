@@ -92,5 +92,36 @@
         }
       }
     }
+    .infoInfo {
+      display: inline-grid;
+      grid-template-rows: -webkit-min-content -webkit-min-content auto;
+      grid-template-rows: min-content min-content auto;
+      padding-top: 25px;
+
+      h1 {
+        color: rgb(93, 114, 138);
+        font-size: 1.4rem;
+        font-weight: 400;
+        margin-block-start: 0.67em;
+        margin-block-end: 0.67em;
+        margin-inline-start: 0px;
+        margin-inline-end: 0px;
+        display: block;
+      }
+      p {
+        color: rgb(93, 114, 138);
+        font-size: 0.9rem;
+        line-height: 1.5;
+        margin: 0;
+        max-width: 900px;
+        padding: 15px 0;
+        transition: 0.2s;
+        display: block;
+        margin-block-start: 1em;
+        margin-block-end: 1em;
+        margin-inline-start: 0px;
+        margin-inline-end: 0px;
+      }
+    }
   }
 }
