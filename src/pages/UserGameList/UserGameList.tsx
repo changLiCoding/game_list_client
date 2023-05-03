@@ -10,8 +10,6 @@ function UserGameList() {
     return <div>Loading...</div>;
   }
 
-  // console.log('gamesByTagForAUser', gamesByTagForAUser);
-
   const playingGames = gamesByTagForAUser?.gamesByStatusForAUser?.playing.map(
     (val: Game) => ({
       key: val.id,
