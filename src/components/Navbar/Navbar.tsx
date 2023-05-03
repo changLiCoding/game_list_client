@@ -6,11 +6,12 @@ import {
   SettingOutlined,
   UserOutlined,
 } from '@ant-design/icons';
-import useAuth from '@/services/authentication/useAuth';
+import useTokenAuth from '@/hooks/useTokenAuth';
 import styles from './Navbar.module.scss';
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const { loading, userState } = useTokenAuth();
 
   const showDrawer = () => {
     setOpen(true);
@@ -86,14 +87,20 @@ export default function Navbar() {
               </ul>
 
               <ul className={styles['desktop-nav__nav-section']}>
-                <Popover content={content}>
-                  <Image
-                    width={38}
-                    height={38}
-                    preview={false}
-                    src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-                  />
-                </Popover>
+                {!loading && userState?.user?.username ? (
+                  <Popover content={content}>
+                    <Image
+                      width={38}
+                      height={38}
+                      preview={false}
+                      src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+                    />
+                  </Popover>
+                ) : (
+                  <li className={styles['desktop-nav__nav-item']}>
+                    <a href="/login">Sign In</a>
+                  </li>
+                )}
               </ul>
             </nav>
 
@@ -119,9 +126,15 @@ export default function Navbar() {
                   <li className={styles['mobile-nav__header-drawer-item']}>
                     <a href="/">Game List</a>
                   </li>
-                  <li className={styles['mobile-nav__header-drawer-item']}>
-                    <div>Logout</div>
-                  </li>
+                  {!loading && userState?.user?.username ? (
+                    <li className={styles['mobile-nav__header-drawer-item']}>
+                      <div>Logout</div>
+                    </li>
+                  ) : (
+                    <li className={styles['mobile-nav__header-drawer-item']}>
+                      <a href="/login">Log In</a>
+                    </li>
+                  )}
                 </ul>
               </Drawer>
             </nav>
