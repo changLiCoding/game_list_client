@@ -84,7 +84,13 @@ function GameDetailHeaderInfo({ game }: { game: GameType | undefined }) {
         <div className={styles.infoInfo}>
           <h1>{game?.name}</h1>
           <p>{game?.description}</p>
-          <div className={styles.infoInfoTags}>tags</div>
+          <div className={styles.infoInfoTags}>
+            <a href="/">Overview</a>
+            <a href="/">Member Reviews</a>
+            <a href="/">Related Content</a>
+            <a href="/">Status</a>
+            <a href="/">Social</a>
+          </div>
         </div>
       </Content>
     </Layout>
