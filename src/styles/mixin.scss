@@ -1,3 +1,6 @@
+// @import '~antd/dist/antd.less';
+
+$color-primary: #ff4d4f;
 // $color-red: red;
 
 @mixin phone {
@@ -20,6 +23,18 @@
 
 @mixin desktop {
   @media screen and (min-width: 1023px) {
+    @content;
+  }
+}
+
+@mixin desktopUltroLarge {
+  @media screen and (min-width: 1540px) {
+    @content;
+  }
+}
+
+@mixin desktopLarge {
+  @media screen and (max-width: 1540px) {
     @content;
   }
 }
