@@ -4,10 +4,30 @@ import type { Game } from '@/graphql/__generated__/graphql';
 import UserGameListDesktop from '@/components/UserGameList/Desktop';
 import useUserGames from '@/services/userGames/useUserGames';
 import UserGameListMobile from '@/components/UserGameList/Mobile';
+import useGamesByStatus from '@/services/userGames/useGamesByStatus';
+import { useEffect } from 'react';
 
 function UserGameList() {
   // info("Cannot load the list of games");
   const { gamesForAUserLoading, gamesForAUser } = useUserGames();
+  const { fetchGamesByStatus } = useGamesByStatus();
+
+  const fetchGames = async () => {
+    const playingGames = await fetchGamesByStatus('Playing');
+    const planningGames = await fetchGamesByStatus('Planning');
+    const completedGames = await fetchGamesByStatus('Completed');
+    const pausedGames = await fetchGamesByStatus('Paused');
+    const droppedGames = await fetchGamesByStatus('Dropped');
+    console.log('playingGames', playingGames);
+    console.log('planningGames', planningGames);
+    console.log('playingGames', completedGames);
+    console.log('planningGames', pausedGames);
+    console.log('droppedGames', droppedGames);
+  };
+
+  useEffect(() => {
+    fetchGames();
+  }, []);
 
   if (gamesForAUserLoading) {
     return <div>Loading...</div>;

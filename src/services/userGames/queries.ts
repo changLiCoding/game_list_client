@@ -59,3 +59,19 @@ export const GAMES_FOR_A_USER = gql`
     }
   }
 `;
+
+export const GET_GAMES_BY_STATUS = gql`
+  query GamesByTagsForAUser($status: String!) {
+    gamesByStatusForAUser(status: $status) {
+      id
+      name
+      description
+      imageURL
+      releaseDate
+      avgScore
+      genres
+      platforms
+      tags
+    }
+  }
+`;
