@@ -122,6 +122,31 @@
         margin-inline-start: 0px;
         margin-inline-end: 0px;
       }
+
+      .infoInfoTags {
+        align-self: end;
+        display: flex;
+        font-size: 1.3rem;
+        justify-content: space-evenly;
+        justify-self: center;
+        max-width: 800px;
+        padding-top: 10px;
+        width: 100%;
+
+        @include mixin.phone {
+          overflow-x: auto;
+          white-space: nowrap;
+          width: auto;
+          justify-self: unset;
+          justify-content: unset;
+        }
+
+        a {
+          color: rgb(93, 114, 138);
+          font-size: 0.9rem;
+          padding: 15px;
+        }
+      }
     }
   }
 }
