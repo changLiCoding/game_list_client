@@ -31,6 +31,9 @@ export default function FilterWrapper() {
       label: type.name,
     }));
 
+  console.log(genres);
+  console.log(platforms);
+  console.log(tags);
   const genresOptions: Option[] = genres ? optionsGenerator(genres) : [];
 
   const platformsOptions: Option[] = platforms
