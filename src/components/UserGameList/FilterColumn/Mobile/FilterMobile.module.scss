@@ -1,0 +1,24 @@
+@use "../../../../styles/mixin" as mixin;
+
+// .FilterMobile {
+//   display: none;
+//   @include mixin.phone {
+//     display: flex;
+//   }
+// }
+
+.spaceFiltersWrapperContainer {
+  display: none;
+  @include mixin.phone {
+    margin-top: 1rem;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+  }
+
+}
+
+.searchFiltersWrapperSearch {
+  width: 80vw;
+  flex-grow: 1;
+}

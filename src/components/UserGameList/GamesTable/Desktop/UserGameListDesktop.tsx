@@ -1,8 +1,7 @@
 import { Popover, Table, Tag } from 'antd';
 import { ColumnsType } from 'antd/es/table';
-
-import styles from '@/components/UserGameList/Desktop/UserGameListDesktop.module.scss';
-import type { GameDataType } from '@/components/UserGameList/types';
+import styles from '@/components/UserGameList/GamesTable/Desktop/UserGameListDesktop.module.scss';
+import type { GameDataType } from '@/components/UserGameList/GamesTable/types';
 
 const columns: ColumnsType<GameDataType> = [
   {
@@ -36,7 +35,9 @@ const columns: ColumnsType<GameDataType> = [
     title: 'Average Score',
     dataIndex: 'avgScore',
     sorter: {
-      compare: (a, b) => a.avgScore - b.avgScore,
+      compare: (a, b) =>
+        (a as { avgScore: number }).avgScore -
+        (b as { avgScore: number }).avgScore,
       multiple: 3,
     },
   },

@@ -49,7 +49,7 @@ vi.mock('../../services/userGames/useGamesByStatus', async () => {
               id: '28',
               imageURL: 'https://loremflickr.com/300/300/game',
               name: 'Halo 3',
-              platforms: ['PlayStation'],
+              platforms: ['Pokemon Y'],
               releaseDate: '2019-08-01T00:00:00Z',
               tags: ['Adventure'],
               __typename: 'Game',
@@ -79,5 +79,7 @@ describe('Get all games for a user', () => {
     expect(gameElements[0].textContent).toBe('Halo 2');
     const avgScoreElements = screen.queryAllByText('1.7');
     expect(avgScoreElements[0].textContent).toBe('1.7');
+    const gamePlanningElements = screen.queryAllByText('Pokemon Y');
+    expect(gamePlanningElements[0].textContent).toBe('Pokemon Y');
   });
 });

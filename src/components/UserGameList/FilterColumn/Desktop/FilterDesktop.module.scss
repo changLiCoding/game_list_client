@@ -1,0 +1,8 @@
+@use "../../../../styles/mixin" as mixin;
+
+.FilterDesktop {
+  display: flex;
+  @include mixin.phone {
+    display: none;
+  }
+}

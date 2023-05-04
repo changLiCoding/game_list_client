@@ -1,7 +1,8 @@
-// import styles from './UserGameListStyle.module.scss';
+import UserGamesTable from '@/components/UserGameList/GamesTable/UserGamesTable';
+import styles from './UserGameListStyle.module.scss';
 import type { Game } from '@/graphql/__generated__/graphql';
 import useGamesByStatus from '@/services/userGames/useGamesByStatus';
-import UserGamesTable from '@/components/UserGameList/UserGamesTable';
+import FilterColumn from '@/components/UserGameList/FilterColumn/FilterColumn';
 
 function UserGameList() {
   const { gamesByTagForAUserLoading, gamesByTagForAUser } = useGamesByStatus();
@@ -45,13 +46,16 @@ function UserGameList() {
   );
 
   return (
-    <>
-      <UserGamesTable gamesData={playingGames} title="Playing" />
-      <UserGamesTable gamesData={planningGames} title="Planning" />
-      <UserGamesTable gamesData={completedGames} title="Completed" />
-      <UserGamesTable gamesData={pausedGames} title="Paused" />
-      <UserGamesTable gamesData={droppedGames} title="Dropped" />
-    </>
+    <div className={styles.mainContainer}>
+      <FilterColumn />
+      <div>
+        <UserGamesTable gamesData={playingGames} title="Playing" />
+        <UserGamesTable gamesData={planningGames} title="Planning" />
+        <UserGamesTable gamesData={completedGames} title="Completed" />
+        <UserGamesTable gamesData={pausedGames} title="Paused" />
+        <UserGamesTable gamesData={droppedGames} title="Dropped" />
+      </div>
+    </div>
   );
 }
 

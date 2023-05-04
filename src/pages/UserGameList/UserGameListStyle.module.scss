@@ -1,3 +1,16 @@
+@use "../../styles/mixin" as mixin;
+
+.mainContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 2rem;
+  @include mixin.phone {
+    flex-direction: column;
+    gap: 0;
+  }
+}
+
 // @use "../../styles/mixin" as mixin;
 
 // .TableContainer{
