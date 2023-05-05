@@ -6,8 +6,10 @@ import useAllGames from '@/services/games/useAllGames';
 
 // import styles from '@/components/AllGames/GamesList/Game/Game.module.scss';
 
-export default function Games() {
+export default function GamesList() {
   const { games } = useAllGames();
+  console.log('Games', games);
+
   const {
     token: { colorBgContainer },
   } = theme.useToken();
