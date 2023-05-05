@@ -1,7 +1,5 @@
 import { describe, it, vi } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
-import { useNavigate } from 'react-router-dom';
-import userEvent from '@testing-library/user-event';
 
 import ContextWrapper from '@/ContextWrapper';
 import Home from '@/pages/Home';
@@ -16,26 +14,25 @@ vi.mock('../../services/games/useAllGames', async () => {
   return {
     ...actual,
     default: () => ({
-      allGames: vi.fn().mockReturnValue({
-        games: [
-          {
-            id: '1',
-            name: 'Game 1',
-            description: 'Description 1',
-            imageURL: 'https://via.placeholder.com/150',
-            tags: ['3D', 'Fantasy'],
-          },
-          {
-            id: '2',
-            name: 'Game 2',
-            description: 'Description 2',
-            imageURL: 'https://via.placeholder.com/150',
-            tags: ['3D', 'Fantasy', 'Soullike'],
-          },
-        ],
-        errors: [],
-      }),
-      info: vi.fn(),
+      loading: false,
+      games: [
+        {
+          __typename: 'Game',
+          id: '1',
+          name: 'Game 1',
+          description: 'Description 1',
+          imageURL: 'https://via.placeholder.com/150',
+          tags: ['3D', 'Fantasy'],
+        },
+        {
+          __typename: 'Game',
+          id: '2',
+          name: 'Game 2',
+          description: 'Description 2',
+          imageURL: 'https://via.placeholder.com/150',
+          tags: ['3D', 'Fantasy', 'Soullike'],
+        },
+      ],
     }),
   };
 });
@@ -48,40 +45,36 @@ vi.mock('../../services/game/useGame', async () => {
   return {
     ...actual,
     default: () => ({
-      getAllGenres: vi.fn().mockReturnValue({
-        genres: [
-          {
-            name: 'Genre 1',
-          },
-          {
-            name: 'Genre 2',
-          },
-        ],
-        errors: [],
-      }),
-      getAllPlatforms: vi.fn().mockReturnValue({
-        platforms: [
-          {
-            name: 'Platform 1',
-          },
-          {
-            name: 'Platform 2',
-          },
-        ],
-        errors: [],
-      }),
-      getAllTags: vi.fn().mockReturnValue({
-        tags: [
-          {
-            name: 'Tag 1',
-          },
-          {
-            name: 'Tag 2',
-          },
-        ],
-        errors: [],
-      }),
-      info: vi.fn(),
+      genres: [
+        {
+          __typename: 'Genre',
+          name: 'Genre 1',
+        },
+        {
+          __typename: 'Genre',
+          name: 'Genre 2',
+        },
+      ],
+      platforms: [
+        {
+          __typename: 'Platform',
+          name: 'Platform 1',
+        },
+        {
+          __typename: 'Platform',
+          name: 'Platform 2',
+        },
+      ],
+      tags: [
+        {
+          __typename: 'Tag',
+          name: 'Tag 1',
+        },
+        {
+          __typename: 'Tag',
+          name: 'Tag 2',
+        },
+      ],
     }),
   };
 });
@@ -97,14 +90,14 @@ vi.mock('react-router-dom', async () => {
 });
 
 describe('Home Page', () => {
-  it('Render Home Page When Data Is Loading', async () => {
+  it('Render Home Page without loading', async () => {
     render(
       <ContextWrapper>
         <Home />
       </ContextWrapper>
     );
     expect(screen.getByText('InfoBar')).toBeInTheDocument();
-    expect(screen.getByText('Loading')).toBeInTheDocument();
+    expect(screen.getByText('Search')).toBeInTheDocument();
     expect(screen.getByText('All Games')).toBeInTheDocument();
 
     await waitFor(() => {
