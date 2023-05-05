@@ -8,15 +8,17 @@ function SelectDropdown({
   options,
   onChange,
   changeOnSelect,
+  customCascaderStyle,
 }: {
   fieldName: string;
   options: DropDownOption[];
   onChange: (value: any) => void;
   changeOnSelect: boolean;
+  customCascaderStyle: any;
 }) {
   return (
     <Cascader
-      className={styles.CascaderFilterFieldCascader}
+      className={customCascaderStyle}
       placeholder={fieldName}
       options={options}
       onChange={onChange}

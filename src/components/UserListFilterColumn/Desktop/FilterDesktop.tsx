@@ -12,6 +12,7 @@ function FilterDesktop() {
   const [listStyles, setListStyles] = React.useState<boolean>(false);
 
   const onSearch = (value: string) => console.log(value);
+
   return (
     <div className={styles.filterDesktop}>
       <Search
@@ -30,8 +31,10 @@ function FilterDesktop() {
       <div className={styles.multiLists}>
         {listStyles ? <ReorderLists /> : <AvailableLists />}
       </div>
-      <p>Filters</p>
-      <FilterList />
+      <div className={styles.multiFilterStyle}>
+        <p>Filters</p>
+        <FilterList />
+      </div>
     </div>
   );
 }

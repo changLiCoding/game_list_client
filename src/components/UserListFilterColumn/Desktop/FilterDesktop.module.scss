@@ -22,3 +22,10 @@
 .multiLists {
   margin: 4px 0px;;
 }
+
+.multiFilterStyle {
+  display: flex;
+  flex-direction: column;
+  margin: 5px 0px;
+  gap: 8px;
+}

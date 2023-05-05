@@ -1,5 +1,6 @@
 import React from 'react';
 import SelectDropdown from '@/components/SelectDropdown';
+import styles from './FilterListStyle.module.scss';
 
 interface Option {
   value: string;
@@ -24,6 +25,7 @@ function FilterList() {
   };
   return (
     <SelectDropdown
+      customCascaderStyle={styles.cascaderStyle}
       fieldName="Genres"
       options={genresOptions}
       onChange={onChange}

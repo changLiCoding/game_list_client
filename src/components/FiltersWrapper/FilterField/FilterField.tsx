@@ -17,6 +17,7 @@ export default function FilterField({
     <div className={styles.layoutFilterFieldContainer}>
       <h3 className={styles.h3FilterFieldTitle}>{fieldName}</h3>
       <SelectDropdown
+        customCascaderStyle={styles.cascaderStyle}
         fieldName={fieldName}
         options={options}
         onChange={onChange}
