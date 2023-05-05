@@ -1,3 +1,3 @@
-import SortLists from './SortLists';
+import SortListsWrapper from './SortListsWrapper';
 
-export default SortLists;
+export default SortListsWrapper;

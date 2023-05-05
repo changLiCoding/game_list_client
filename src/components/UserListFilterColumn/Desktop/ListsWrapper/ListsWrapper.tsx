@@ -4,13 +4,8 @@ import ReorderLists from '../ReorderLists';
 import AvailableLists from '../AvailableLists';
 import styles from './ListsWrapperStyle.module.scss';
 
-function ListsWrapper({
-  listStyles,
-  setListStyles,
-}: {
-  listStyles: boolean;
-  setListStyles: React.Dispatch<React.SetStateAction<boolean>>;
-}) {
+function ListsWrapper() {
+  const [listStyles, setListStyles] = React.useState<boolean>(false);
   return (
     <>
       <div className={styles.multiListStyle}>

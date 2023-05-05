@@ -1,3 +1,3 @@
-import FilterList from './FilterList';
+import FilterListWrapper from './FilterListWrapper';
 
-export default FilterList;
+export default FilterListWrapper;

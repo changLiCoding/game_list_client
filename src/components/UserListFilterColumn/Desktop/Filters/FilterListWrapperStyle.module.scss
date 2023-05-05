@@ -1,0 +1,36 @@
+
+// .listStyle {
+//   div {
+//     div {
+//       ul {
+//         .listItem {
+//           padding: 5px;
+//           cursor: pointer;
+//           color: aqua;
+//         }
+//       }
+//     }
+//   }
+// }
+
+// .listItem {
+//   padding: 0;
+//   color: blue;
+// }
+
+.cascaderStyle {
+  width: 100%;
+}
+
+.dropdownList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.multiFilterStyle{
+  display: flex;
+  flex-direction: column;
+  margin: 10px 0px;
+  gap: 8px;
+}

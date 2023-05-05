@@ -1,6 +1,6 @@
 import React from 'react';
 import SelectDropdown from '@/components/SelectDropdown';
-import styles from './FilterListStyle.module.scss';
+import styles from './FilterListWrapperStyle.module.scss';
 import type { Filter } from '../types';
 
 const filters: Filter[] = [
