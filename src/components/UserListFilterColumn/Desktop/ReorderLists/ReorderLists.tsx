@@ -6,8 +6,8 @@ import type {
   InitialStatusStateType,
   StatusContentType,
   StatusListType,
-} from '@/components/UserGameList/FilterColumn/types';
-import StatusItem from '@/components/UserGameList/FilterColumn/StatusItem';
+} from '@/components/UserListFilterColumn/types';
+import StatusItem from '@/components/UserListFilterColumn/Desktop/StatusItem';
 import { USER_LISTS } from '@/constants';
 
 const reorder = (

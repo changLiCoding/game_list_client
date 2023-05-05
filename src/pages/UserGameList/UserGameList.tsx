@@ -1,8 +1,8 @@
 import styles from './UserGameListStyle.module.scss';
 import type { Game } from '@/graphql/__generated__/graphql';
 import useGamesByStatus from '@/services/userGames/useGamesByStatus';
-import FilterColumn from '@/components/UserGameList/FilterColumn';
-import UserGamesTable from '@/components/UserGameList/GamesTable';
+import FilterColumn from '@/components/UserListFilterColumn';
+import UserGamesTable from '@/components/GamesListTable';
 
 function UserGameList() {
   const { gamesByTagForAUserLoading, gamesByTagForAUser } = useGamesByStatus();

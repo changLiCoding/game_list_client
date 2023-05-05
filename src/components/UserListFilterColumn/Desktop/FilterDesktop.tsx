@@ -2,8 +2,8 @@ import React from 'react';
 import { Input } from 'antd';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import styles from './FilterDesktop.module.scss';
-import ReorderLists from '../ReorderLists';
-import AvailableLists from '../AvailableLists';
+import ReorderLists from './ReorderLists';
+import AvailableLists from './AvailableLists';
 
 const { Search } = Input;
 
