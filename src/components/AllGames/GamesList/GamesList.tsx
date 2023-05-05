@@ -8,7 +8,6 @@ import useAllGames from '@/services/games/useAllGames';
 
 export default function GamesList() {
   const { games } = useAllGames();
-  console.log('Games', games);
 
   const {
     token: { colorBgContainer },
