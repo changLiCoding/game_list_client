@@ -8,6 +8,7 @@ function GameDetailHeaderBanner({
 }): JSX.Element | null {
   return (
     <div
+      role="banner"
       className={styles.banner}
       style={{
         backgroundImage: `url(${game?.bannerURL})`,
