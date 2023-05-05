@@ -1,6 +1,6 @@
 @use "../../../../styles/mixin" as mixin;
 
-.FilterDesktop {
+.filterDesktop {
   display: flex;
   flex-direction: column;
   padding: 10px;
@@ -9,11 +9,16 @@
   }
 }
 
-.SearchBar {
-  margin: 10px 0px;
+.searchBar {
+  margin: 15px 0px;
 }
 
-.MultiListStyle {
+.multiListStyle {
   display: flex;
-  gap: 6px;
+  gap: 8px;
+  margin: 5px 0px;
+}
+
+.multiLists {
+  margin: 4px 0px;;
 }

@@ -3,6 +3,7 @@ import { Input } from 'antd';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import styles from './FilterDesktop.module.scss';
 import ReorderLists from '../ReorderLists';
+import AvailableLists from '../AvailableLists';
 
 const { Search } = Input;
 
@@ -11,13 +12,13 @@ function FilterDesktop() {
 
   const onSearch = (value: string) => console.log(value);
   return (
-    <div className={styles.FilterDesktop}>
+    <div className={styles.filterDesktop}>
       <Search
-        className={styles.SearchBar}
+        className={styles.searchBar}
         placeholder="input search text"
         onSearch={onSearch}
       />
-      <div className={styles.MultiListStyle}>
+      <div className={styles.multiListStyle}>
         <p>Lists</p>
         {listStyles ? (
           <UpOutlined onClick={() => setListStyles((prev) => !prev)} />
@@ -25,8 +26,8 @@ function FilterDesktop() {
           <DownOutlined onClick={() => setListStyles((prev) => !prev)} />
         )}
       </div>
-      <div>
-        <ReorderLists />
+      <div className={styles.multiLists}>
+        {listStyles ? <ReorderLists /> : <AvailableLists />}
       </div>
     </div>
   );
