@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import { Draggable } from 'react-beautiful-dnd';
-import { StatusContentType } from '../../types';
+import type { StatusContentType } from '../../types';
 import styles from './StatusItemStyle.module.scss';
 
 function StatusItem({

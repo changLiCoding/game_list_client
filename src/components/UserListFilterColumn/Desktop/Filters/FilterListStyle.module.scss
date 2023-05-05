@@ -1,0 +1,23 @@
+
+.listStyle {
+  div {
+    div {
+      ul {
+        .listItem {
+          padding: 5px;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+
+// .listItem {
+//   padding: 0;
+//   color: blue;
+// }
+
+.listItem {
+  margin: 0;
+  padding: 0;
+}

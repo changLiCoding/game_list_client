@@ -4,6 +4,7 @@ import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import styles from './FilterDesktop.module.scss';
 import ReorderLists from './ReorderLists';
 import AvailableLists from './AvailableLists';
+import FilterList from './Filters';
 
 const { Search } = Input;
 
@@ -29,6 +30,8 @@ function FilterDesktop() {
       <div className={styles.multiLists}>
         {listStyles ? <ReorderLists /> : <AvailableLists />}
       </div>
+      <p>Filters</p>
+      <FilterList />
     </div>
   );
 }
