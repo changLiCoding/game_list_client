@@ -25,3 +25,9 @@
 .cascaderStyle {
   width: 100%;
 }
+
+.dropdownList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
