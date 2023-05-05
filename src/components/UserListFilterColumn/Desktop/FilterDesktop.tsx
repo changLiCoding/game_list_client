@@ -6,6 +6,7 @@ import ReorderLists from './ReorderLists';
 import AvailableLists from './AvailableLists';
 import FilterList from './Filters';
 import SortLists from './SortLists';
+import ListsWrapper from './ListsWrapper/ListsWrapper';
 
 const { Search } = Input;
 
@@ -34,6 +35,7 @@ function FilterDesktop() {
       <div className={styles.multiLists}>
         {listStyles ? <ReorderLists /> : <AvailableLists />}
       </div>
+      {/* <ListsWrapper listStyles={listStyles} setListStyles={setListStyles} /> */}
       <div className={styles.multiFilterStyle}>
         <p>Filters</p>
         <FilterList />
