@@ -36,6 +36,16 @@ vi.mock('../../services/games/useAllGames', async () => {
           releaseDate: '2021-01-02 00:00:00',
           avgScore: 10,
         },
+        {
+          __typename: 'Game',
+          id: '3',
+          name: 'Game 3',
+          description: 'Description 3',
+          imageURL: 'https://via.placeholder.com/150',
+          tags: ['3D', 'Soullike'],
+          releaseDate: '2021-01-03 00:00:00',
+          avgScore: 8,
+        },
       ],
     }),
   };
@@ -54,6 +64,7 @@ describe('Games List Component', () => {
       expect(screen.getByText('Game 2')).toBeInTheDocument();
       const game1 = screen.getByText('Game 1');
       const game2 = screen.getByText('Game 2');
+      const game3 = screen.getByText('Game 3');
 
       userEvent.hover(game1);
       expect(screen.getByText('Fantasy')).toBeInTheDocument();
@@ -69,6 +80,10 @@ describe('Games List Component', () => {
       expect(screen.getByText('2021-01-02')).toBeInTheDocument();
       const smileIcon = screen.getByLabelText('smile');
       expect(smileIcon).toBeInTheDocument();
+
+      userEvent.hover(game3);
+      const mehIcon = screen.getByLabelText('meh');
+      expect(mehIcon).toBeInTheDocument();
     });
   });
 });
