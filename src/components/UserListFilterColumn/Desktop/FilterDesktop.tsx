@@ -12,7 +12,9 @@ const { Search } = Input;
 function FilterDesktop() {
   const [listStyles, setListStyles] = React.useState<boolean>(false);
 
-  const onSearch = (value: string) => console.log(value);
+  const onSearch = (value: string) => {
+    // console.log(value);
+  };
 
   return (
     <div className={styles.filterDesktop}>

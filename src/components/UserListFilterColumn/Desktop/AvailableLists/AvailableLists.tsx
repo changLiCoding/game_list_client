@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { List } from 'antd';
+import { Badge, List } from 'antd';
 import styles from './AvailableListsStyle.module.scss';
 
 function AvailableLists() {
@@ -20,7 +20,10 @@ function AvailableLists() {
           onClick={() => handleItemClick(item)}
           style={selectedItem === item ? { backgroundColor: '#f7f5f5' } : {}}
         >
-          {item}
+          <div className={styles.listName}>
+            <p>{item}</p>
+            <Badge count={11} showZero color="#d4cfc1" />
+          </div>
         </List.Item>
       )}
     />

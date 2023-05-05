@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import { Draggable } from 'react-beautiful-dnd';
+import { DragOutlined } from '@ant-design/icons';
 import type { StatusContentType } from '../../types';
 import styles from './StatusItemStyle.module.scss';
 
@@ -20,7 +21,8 @@ function StatusItem({
           {...provided.dragHandleProps}
           className={styles.statusItem}
         >
-          {status.content}
+          <p>{status.content}</p>
+          <DragOutlined />
         </div>
       )}
     </Draggable>
