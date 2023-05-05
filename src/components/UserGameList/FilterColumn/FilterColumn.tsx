@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './FilterColumn.module.scss';
-import FilterDesktop from './Desktop/FilterDesktop';
-import FilterMobile from './Mobile/FilterMobile';
+import FilterDesktop from './Desktop';
+import FilterMobile from './Mobile';
 
 function FilterColumn() {
   return (

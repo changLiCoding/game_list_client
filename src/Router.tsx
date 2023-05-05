@@ -1,12 +1,12 @@
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
-import Dashboard from './pages/Dashboard/Dashboard';
+import Dashboard from './pages/Dashboard';
 import useTokenAuth from './hooks/useTokenAuth';
-import UserGameList from './pages/UserGameList/UserGameList';
 import GameDetail from './pages/GameDetail/GameDetail';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import UserGameList from './pages/UserGameList';
 
 function Router() {
   const { loading, userState } = useTokenAuth();

@@ -2,7 +2,18 @@
 
 .FilterDesktop {
   display: flex;
+  flex-direction: column;
+  padding: 10px;
   @include mixin.phone {
     display: none;
   }
+}
+
+.SearchBar {
+  margin: 10px 0px;
+}
+
+.MultiListStyle {
+  display: flex;
+  gap: 6px;
 }
