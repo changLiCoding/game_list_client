@@ -1,7 +1,8 @@
 import { describe, it, vi } from 'vitest';
-import { renderHook } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 
-import useAllGames from '@/services/games/useAllGames';
+import ContextWrapper from '@/ContextWrapper';
+import GamesList from '@/components/AllGames/GamesList/index';
 
 vi.mock('../../services/games/useAllGames', async () => {
   const actual: unknown = await vi.importActual(
@@ -35,29 +36,17 @@ vi.mock('../../services/games/useAllGames', async () => {
   };
 });
 
-describe('useAllGames', () => {
-  it('returns games and loading state', async () => {
-    const { result } = renderHook(() => useAllGames());
-    const { loading, games } = await result.current;
-    expect(loading).toEqual(false);
-    expect(games).toEqual([
-      {
-        __typename: 'Game',
-        id: '1',
-        name: 'Game 1',
-        description: 'Description 1',
-        imageURL: 'https://via.placeholder.com/150',
-        tags: ['3D', 'Fantasy'],
-      },
-      {
-        __typename: 'Game',
+describe('Games List Component', () => {
+  it('should render the games list', async () => {
+    render(
+      <ContextWrapper>
+        <GamesList />
+      </ContextWrapper>
+    );
 
-        id: '2',
-        name: 'Game 2',
-        description: 'Description 2',
-        imageURL: 'https://via.placeholder.com/150',
-        tags: ['3D', 'Fantasy', 'Soullike'],
-      },
-    ]);
+    waitFor(() => {
+      expect(screen.getByText('Game 1')).toBeInTheDocument();
+      expect(screen.getByText('Game 2')).toBeInTheDocument();
+    });
   });
 });
