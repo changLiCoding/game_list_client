@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Space, Input } from 'antd';
-import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
+import { CloseOutlined, MenuOutlined } from '@ant-design/icons';
 import styles from './FilterMobile.module.scss';
 
 const { Search } = Input;
@@ -8,12 +8,9 @@ const { Search } = Input;
 function FilterMobile() {
   const [collapsed, setCollapsed] = useState(false);
   return (
-    <Space
-      direction="horizontal"
-      className={styles.spaceFiltersWrapperContainer}
-    >
+    <Space direction="horizontal" className={styles.mobileSearchFieldWrapper}>
       <Search
-        // className={styles.searchFiltersWrapperSearch}
+        className={styles.mobileSearchField}
         placeholder="input search text"
         size="large"
         onSearch={(value) => {
@@ -25,11 +22,10 @@ function FilterMobile() {
         size="large"
         type="primary"
         onClick={() => {
-          console.log('first');
           setCollapsed(!collapsed);
         }}
       >
-        {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+        {collapsed ? <CloseOutlined /> : <MenuOutlined />}
       </Button>
     </Space>
   );

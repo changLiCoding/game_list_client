@@ -7,10 +7,10 @@
 //   }
 // }
 
-.spaceFiltersWrapperContainer {
+.mobileSearchFieldWrapper {
   display: none;
   @include mixin.phone {
-    margin-top: 1rem;
+    margin: 1.5rem 0 0.5rem 0;
     display: flex;
     width: 100%;
     justify-content: center;
@@ -18,7 +18,7 @@
 
 }
 
-.searchFiltersWrapperSearch {
+.mobileSearchField {
   width: 80vw;
   flex-grow: 1;
 }
