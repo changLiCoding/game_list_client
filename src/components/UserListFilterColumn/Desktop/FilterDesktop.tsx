@@ -1,10 +1,11 @@
 import React from 'react';
-import { Input } from 'antd';
+import { Input, Slider } from 'antd';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import styles from './FilterDesktop.module.scss';
 import ReorderLists from './ReorderLists';
 import AvailableLists from './AvailableLists';
 import FilterList from './Filters';
+import SortLists from './SortLists';
 
 const { Search } = Input;
 
@@ -34,6 +35,19 @@ function FilterDesktop() {
       <div className={styles.multiFilterStyle}>
         <p>Filters</p>
         <FilterList />
+      </div>
+      <div className={styles.multiFilterStyle}>
+        <p>Year</p>
+        <Slider
+          className={styles.slideColor}
+          min={1950}
+          max={2024}
+          defaultValue={1950}
+        />
+      </div>
+      <div className={styles.multiFilterStyle}>
+        <p>Sort</p>
+        <SortLists />
       </div>
     </div>
   );

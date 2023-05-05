@@ -1,20 +1,9 @@
 import React from 'react';
 import SelectDropdown from '@/components/SelectDropdown';
 import styles from './FilterListStyle.module.scss';
-import type { DropDownOption } from '@/types/global';
+import type { Filter } from '../types';
 
-const filterOptions: DropDownOption[] = [
-  {
-    value: 'Option1',
-    label: 'Option1',
-  },
-  {
-    value: 'Option2',
-    label: 'Option2',
-  },
-];
-
-const filters = [
+const filters: Filter[] = [
   {
     name: 'Platform',
     options: [
