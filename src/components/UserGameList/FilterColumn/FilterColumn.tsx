@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './FilterColumn.module.scss';
+// import styles from './FilterColumn.module.scss';
 import FilterDesktop from './Desktop';
 import FilterMobile from './Mobile';
 

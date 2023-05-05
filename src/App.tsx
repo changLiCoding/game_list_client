@@ -1,7 +1,7 @@
 import './App.scss';
 import ContextWrapper from './ContextWrapper';
 import Router from './Router';
-import Navbar from './components/Navbar/Navbar';
+import Navbar from './components/Navbar';
 
 function App() {
   return (

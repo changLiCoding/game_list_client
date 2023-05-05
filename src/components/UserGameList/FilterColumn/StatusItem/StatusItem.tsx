@@ -2,6 +2,7 @@
 import React from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import { StatusContentType } from '../types';
+import styles from './StatusItemStyle.module.scss';
 
 function StatusItem({
   status,
@@ -17,6 +18,7 @@ function StatusItem({
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
+          className={styles.statusItem}
         >
           {status.content}
         </div>
