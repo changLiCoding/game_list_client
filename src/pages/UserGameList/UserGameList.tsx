@@ -1,33 +1,61 @@
-import { Layout } from 'antd';
 import styles from './UserGameListStyle.module.scss';
 import type { Game } from '@/graphql/__generated__/graphql';
-import UserGameListDesktop from '@/components/UserGameList/Desktop';
-import useUserGames from '@/services/userGames/useUserGames';
-import UserGameListMobile from '@/components/UserGameList/Mobile';
+import useGamesByStatus from '@/services/userGames/useGamesByStatus';
+import FilterColumn from '@/components/UserListFilterColumn';
+import UserGamesTable from '@/components/GamesListTable';
 
 function UserGameList() {
-  // info("Cannot load the list of games");
-  const { gamesForAUserLoading, gamesForAUser } = useUserGames();
+  const { gamesByTagForAUserLoading, gamesByTagForAUser } = useGamesByStatus();
 
-  if (gamesForAUserLoading) {
+  if (gamesByTagForAUserLoading) {
     return <div>Loading...</div>;
   }
 
-  const data = gamesForAUser?.gamesForAUser.map((val: Game) => ({
-    key: val.id,
-    ...val,
-  }));
+  const playingGames = gamesByTagForAUser?.gamesByStatusForAUser?.playing.map(
+    (val: Game) => ({
+      key: val.id,
+      ...val,
+    })
+  );
+
+  const planningGames = gamesByTagForAUser?.gamesByStatusForAUser?.planning.map(
+    (val: Game) => ({
+      key: val.id,
+      ...val,
+    })
+  );
+
+  const completedGames =
+    gamesByTagForAUser?.gamesByStatusForAUser?.completed.map((val: Game) => ({
+      key: val.id,
+      ...val,
+    }));
+
+  const pausedGames = gamesByTagForAUser?.gamesByStatusForAUser?.paused.map(
+    (val: Game) => ({
+      key: val.id,
+      ...val,
+    })
+  );
+
+  const droppedGames = gamesByTagForAUser?.gamesByStatusForAUser?.dropped.map(
+    (val: Game) => ({
+      key: val.id,
+      ...val,
+    })
+  );
 
   return (
-    <Layout>
-      <div className={styles.TableContainer}>
-        <UserGameListDesktop data={data} />
+    <div className={styles.mainContainer}>
+      <FilterColumn />
+      <div>
+        <UserGamesTable gamesData={playingGames} title="Playing" />
+        <UserGamesTable gamesData={planningGames} title="Planning" />
+        <UserGamesTable gamesData={completedGames} title="Completed" />
+        <UserGamesTable gamesData={pausedGames} title="Paused" />
+        <UserGamesTable gamesData={droppedGames} title="Dropped" />
       </div>
-      <div className={styles.TableContainerSmall}>
-        <UserGameListMobile data={data} />
-      </div>
-      {/* {contextHolder} */}
-    </Layout>
+    </div>
   );
 }
 

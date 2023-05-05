@@ -1,0 +1,24 @@
+@use "../../../styles/mixin" as mixin;
+
+// .FilterMobile {
+//   display: none;
+//   @include mixin.phone {
+//     display: flex;
+//   }
+// }
+
+.mobileSearchFieldWrapper {
+  display: none;
+  @include mixin.phone {
+    margin: 1.5rem 0 0.5rem 0;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+  }
+
+}
+
+.mobileSearchField {
+  width: 80vw;
+  flex-grow: 1;
+}

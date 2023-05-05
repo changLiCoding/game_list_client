@@ -1,7 +1,6 @@
-import { Cascader, Layout } from 'antd';
-
 import styles from '@/components/FiltersWrapper/FilterField/FilterField.module.scss';
-import { Option } from '@/components/FiltersWrapper/types';
+import SelectDropdown from '@/components/SelectDropdown';
+import type { DropDownOption } from '@/types/global';
 
 export default function FilterField({
   fieldName,
@@ -10,20 +9,20 @@ export default function FilterField({
   changeOnSelect,
 }: {
   fieldName: string;
-  options: Option[];
-  onChange: (value: string[]) => void;
+  options: DropDownOption[];
+  onChange: (value: any) => void;
   changeOnSelect: boolean;
 }) {
   return (
-    <Layout className={styles.layoutFilterFieldContainer}>
+    <div className={styles.layoutFilterFieldContainer}>
       <h3 className={styles.h3FilterFieldTitle}>{fieldName}</h3>
-      <Cascader
-        className={styles.CascaderFilterFieldCascader}
-        placeholder={fieldName}
+      <SelectDropdown
+        customCascaderStyle={styles.cascaderStyle}
+        fieldName={fieldName}
         options={options}
         onChange={onChange}
         changeOnSelect={changeOnSelect}
       />
-    </Layout>
+    </div>
   );
 }

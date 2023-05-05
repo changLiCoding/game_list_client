@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react';
 import { vi } from 'vitest';
-import useUserGames from '@/services/userGames/useUserGames';
+import useAddDeleteGame from '@/services/userGames/useAddDeleteGame';
 
 vi.mock('@apollo/client', async () => {
   const actual: unknown = await vi.importActual('@apollo/client');
@@ -43,7 +43,7 @@ vi.mock('@apollo/client', async () => {
 
 describe('useUserGames hook', () => {
   it("Successfully delete a game from the user's list", async () => {
-    const { result } = renderHook(() => useUserGames());
+    const { result } = renderHook(() => useAddDeleteGame());
 
     const deleteUserGamesData = await result.current.deleteUserGames(17);
     expect((deleteUserGamesData as { errors: string[] }).errors).toEqual([]);

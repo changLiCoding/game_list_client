@@ -1,16 +1,10 @@
 import { Layout, Grid, Input, Space, Button } from 'antd';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import { useState } from 'react';
-
 import styles from '@/components/FiltersWrapper/FiltersWrapper.module.scss';
 import FilterField from '@/components/FiltersWrapper/FilterField';
 import useGame from '@/services/game/useGame';
-
-interface Option {
-  value: string;
-  label: string;
-  children?: Option[];
-}
+import type { DropDownOption } from '@/types/global';
 
 const { Search } = Input;
 
@@ -25,19 +19,23 @@ export default function FilterWrapper() {
   };
   const { genres, platforms, tags } = useGame();
 
-  const optionsGenerator = (typeArray: Array<{ name: string }>): Option[] =>
+  const optionsGenerator = (
+    typeArray: Array<{ name: string }>
+  ): DropDownOption[] =>
     typeArray.map((type: { name: string }) => ({
       value: type.name,
       label: type.name,
     }));
 
-  const genresOptions: Option[] = genres ? optionsGenerator(genres) : [];
+  const genresOptions: DropDownOption[] = genres
+    ? optionsGenerator(genres)
+    : [];
 
-  const platformsOptions: Option[] = platforms
+  const platformsOptions: DropDownOption[] = platforms
     ? optionsGenerator(platforms)
     : [];
 
-  const tagsOptions: Option[] = tags ? optionsGenerator(tags) : [];
+  const tagsOptions: DropDownOption[] = tags ? optionsGenerator(tags) : [];
 
   return tagsOptions.length === 0 ||
     genresOptions.length === 0 ||

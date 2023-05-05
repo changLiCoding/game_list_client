@@ -1,0 +1,12 @@
+.multiFilterStyle {
+  display: flex;
+  flex-direction: column;
+  margin: 10px 0px;
+  gap: 8px;
+}
+
+.slideColor {
+  div:nth-child(2){
+    background-color: #7a1f8f;
+  }
+}
