@@ -1,13 +1,12 @@
 import { describe, it, vi } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 
 import ContextWrapper from '@/ContextWrapper';
-import GameDetailHeaderBanner from '@/components/GameDetailHeader/GameDetailHeaderBanner';
+import GameDetailHeaderInfo from '@/components/GameDetailHeader/GameDetailHeaderInfo/GameDetailHeaderInfo';
 import { Game } from '@/graphql/__generated__/graphql';
 
-describe('GameDetailHeaderBanner', () => {
-  it('renders banner element with background image', () => {
+describe('GameDetailHeaderInfo', () => {
+  it('should render GameDetailHeaderInfo with name and description', () => {
     const game: Game = {
       __typename: 'Game',
       id: '1',
@@ -23,14 +22,14 @@ describe('GameDetailHeaderBanner', () => {
     };
     render(
       <ContextWrapper>
-        <GameDetailHeaderBanner game={game} />
+        <GameDetailHeaderInfo game={game} />
       </ContextWrapper>
     );
 
-    const bannerElement = screen.getByRole('banner');
-    expect(bannerElement).toBeInTheDocument();
-    expect(bannerElement).toHaveStyle(
-      `background-image: url(${game.bannerURL})`
-    );
+    const nameElement = screen.getByText(game.name);
+    expect(nameElement).toBeInTheDocument();
+
+    const descriptionElement = screen.getByText(game.description);
+    expect(descriptionElement).toBeInTheDocument();
   });
 });
