@@ -13,3 +13,9 @@ type UserInfo = {
   userPicture: string;
   __typename: string;
 };
+
+export type InitialStateUserGamesListType = {
+  selectedList: string;
+  selectedLists: string[];
+  listOrder: string[];
+};

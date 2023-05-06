@@ -5,7 +5,7 @@ import UserGamesTable from '@/components/GamesListTable';
 import { useAppSelector } from '@/app/hooks';
 
 function UserGameList() {
-  const listOrder = useAppSelector((state) => state.userGames);
+  const listOrder = useAppSelector((state) => state.userGames.selectedLists);
   const { gamesByTagForAUserLoading, gamesByTagForAUser } = useGamesByStatus();
 
   if (gamesByTagForAUserLoading) {
