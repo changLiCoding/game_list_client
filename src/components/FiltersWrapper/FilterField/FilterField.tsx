@@ -14,13 +14,17 @@ export default function FilterField({
 }: {
   fieldName: string;
   options: DropDownOption[];
-  onChange: (value: OnChangeType) => void;
+  onChange: (
+    value:
+      | OnChangeType
+      | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
   changeOnSelect: boolean;
   type: string | null;
   optionalStyles: string | null;
 }) {
-  const getInputFromType = (type: string | null) => {
-    switch (type) {
+  const getInputFromType = (typeValue: string | null) => {
+    switch (typeValue) {
       case 'date':
         return (
           <DatePickerField

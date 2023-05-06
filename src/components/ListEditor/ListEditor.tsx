@@ -97,7 +97,7 @@ function ListEditor({
             <FilterField type="date" fieldName="Finish" onChange={onChange} />
           </div>
           <div className={styles.inputNote} style={{ gridArea: 'notes' }}>
-            <h3>Notes</h3>
+            <FilterField type="text" fieldName="Notes" />
           </div>
         </div>
         <div className={styles.bodyCheckbox}>Check box</div>
