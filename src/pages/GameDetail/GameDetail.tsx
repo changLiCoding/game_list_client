@@ -9,7 +9,7 @@ import GameDetailHeader from '@/components/GameDetailHeader';
 // import { useAppSelector } from '@/app/hooks';
 
 function GameDetail() {
-  const { id, name } = useParams();
+  const { id } = useParams();
   const {
     games: gamesState,
     loading,

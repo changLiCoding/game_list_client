@@ -4,7 +4,7 @@ import { useState } from 'react';
 import styles from '@/components/FiltersWrapper/FiltersWrapper.module.scss';
 import FilterField from '@/components/FiltersWrapper/FilterField';
 import useGame from '@/services/game/useGame';
-import type { DropDownOption } from '@/types/global';
+import type { DropDownOption, OnChangeType } from '@/types/global';
 
 const { Search } = Input;
 
@@ -14,7 +14,7 @@ export default function FilterWrapper() {
   const { useBreakpoint } = Grid;
   const screens = useBreakpoint();
 
-  const onChange = (value: string[]): void => {
+  const onChange = (value: OnChangeType) => {
     // console.log(value);
   };
   const { genres, platforms, tags } = useGame();
@@ -89,7 +89,7 @@ export default function FilterWrapper() {
             className={styles.searchFiltersWrapperSearch}
             placeholder="input search text"
             size="large"
-            onSearch={(value) => {
+            onSearch={() => {
               // console.log(value);
             }}
             enterButton="Search"

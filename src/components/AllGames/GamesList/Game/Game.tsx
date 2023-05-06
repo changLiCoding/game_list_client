@@ -74,7 +74,7 @@ export default function Game({
       }
       format="hex"
     >
-      {({ data, loading, error }) => (
+      {({ data, error }) => (
         <Col
           className={styles.colGameCardContainer}
           xs={{ span: 12 }}
@@ -112,7 +112,6 @@ export default function Game({
               <Link to={`/game-detail/${game.id}/${game.name}`}>
                 {game.imageURL && (
                   <Card
-                    loading={loading}
                     className={styles.cardGameContainer}
                     bordered={false}
                     style={{

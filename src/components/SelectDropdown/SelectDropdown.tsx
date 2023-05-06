@@ -1,6 +1,7 @@
 import { Cascader } from 'antd';
-import styles from './SelectDropdownStyle.module.scss';
-import type { DropDownOption } from '@/types/global';
+import React from 'react';
+// import styles from './SelectDropdownStyle.module.scss';
+import type { DropDownOption, OnChangeType } from '@/types/global';
 
 function SelectDropdown({
   fieldName,
@@ -11,7 +12,7 @@ function SelectDropdown({
 }: {
   fieldName: string;
   options: DropDownOption[];
-  onChange: (value: any) => void;
+  onChange: (value: OnChangeType) => void;
   changeOnSelect: boolean;
   customCascaderStyle: string | undefined;
 }) {
@@ -20,7 +21,7 @@ function SelectDropdown({
       className={customCascaderStyle}
       placeholder={fieldName}
       options={options}
-      onChange={onChange}
+      onChange={(e: OnChangeType) => onChange(e)}
       changeOnSelect={changeOnSelect}
     />
   );
