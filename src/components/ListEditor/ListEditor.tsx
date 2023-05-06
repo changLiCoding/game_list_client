@@ -1,7 +1,10 @@
-import { Modal, Button } from 'antd';
+import { Modal, Button, DatePicker } from 'antd';
+import type { DatePickerProps } from 'antd';
+
 import { HeartOutlined } from '@ant-design/icons';
 import { Game as GameType } from '@/graphql/__generated__/graphql';
 
+import FilterField from '../FiltersWrapper/FilterField';
 import styles from '@/components/ListEditor/ListEditor.module.scss';
 
 function ListEditor({
@@ -13,6 +16,9 @@ function ListEditor({
   setOpen: (open: boolean) => void;
   game: GameType | undefined;
 }) {
+  const onChange: DatePickerProps['onChange'] = (date, dateString) => {
+    console.log(date, dateString);
+  };
   return (
     <Modal
       className={styles.listEditorContainer}
@@ -42,7 +48,20 @@ function ListEditor({
         </div>
       </div>
       <div className={styles.listEditorBody}>
-        <div className={styles.bodyInput}>input</div>
+        <div className={styles.bodyInput}>
+          <div style={{ gridArea: 'status' }}>
+            <FilterField fieldName="Status" changeOnSelect />
+          </div>
+          <div style={{ gridArea: 'score' }}>
+            <FilterField fieldName="Score" changeOnSelect />
+          </div>
+          <div style={{ gridArea: 'start' }}>
+            <DatePicker onChange={onChange} />
+          </div>
+          <div style={{ gridArea: 'finish' }}>
+            <DatePicker onChange={onChange} />
+          </div>
+        </div>
         <div className={styles.bodyCheckbox}>Check box</div>
       </div>
     </Modal>
