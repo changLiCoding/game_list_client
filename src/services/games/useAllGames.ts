@@ -9,7 +9,6 @@ export default function useAllGames() {
   );
 
   const games = allGames?.allGames;
-  console.log('Games in useAllGames', games);
 
   return { games, loading };
 }

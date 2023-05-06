@@ -4,7 +4,7 @@ import { Game as GameType } from '@/graphql/__generated__/graphql';
 import GameDetailHeaderBanner from '@/components/GameDetailHeader/GameDetailHeaderBanner';
 import GameDetailHeaderInfo from '@/components/GameDetailHeader/GameDetailHeaderInfo';
 
-function GameDetailHeader({ game }: { game: GameType }) {
+function GameDetailHeader({ game }: { game: GameType | undefined }) {
   return (
     <Layout>
       <GameDetailHeaderBanner game={game} />
