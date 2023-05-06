@@ -1,15 +1,13 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useState } from 'react';
+import React from 'react';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import { useDispatch } from 'react-redux';
 import { StrictModeDroppable } from './StrictModeDroppable';
 import type {
-  InitialStatusStateType,
   StatusContentType,
   StatusListType,
 } from '@/components/UserListFilterColumn/types';
 import StatusItem from '@/components/UserListFilterColumn/Desktop/StatusItem';
-import { USER_LISTS } from '@/constants';
 import { setListOrder } from '@/features/userUserGamesListSlice';
 import { useAppSelector } from '@/app/hooks';
 

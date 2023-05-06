@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Badge, List } from 'antd';
 import { useDispatch } from 'react-redux';
 import styles from './AvailableListsStyle.module.scss';
