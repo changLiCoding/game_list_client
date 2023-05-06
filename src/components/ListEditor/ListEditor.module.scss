@@ -1,0 +1,71 @@
+@import '../../styles/variables.scss';
+
+.listEditorContainer {
+  :global(.ant-modal-content) {
+    padding: 0px;
+    button {
+      color: rgba(255, 255, 255, 0.45);
+    }
+    .listEditorHeader {
+      background-position: 50%;
+      background-repeat: no-repeat;
+      background-size: cover;
+      box-shadow: inset 0 0 250px #2f3133;
+      height: 180px;
+      position: relative;
+      opacity: 1;
+
+      .headerContent {
+        align-items: flex-end;
+        display: flex;
+        height: 100%;
+        padding: 50px;
+        padding-bottom: 0;
+        position: relative;
+        .contentCover {
+          border-radius: 2px;
+          margin-bottom: -30px;
+          max-width: 100px;
+          overflow: hidden;
+          img {
+            width: 100%;
+            vertical-align: text-top;
+            border-style: none;
+          }
+        }
+
+        .contentTitle {
+          color: rgba(var(--color-white), 0.9);
+          font-size: 0.9rem;
+          padding: 20px;
+        }
+
+        .contentFavourite {
+          margin-left: auto;
+          margin-bottom: 13px;
+          margin-right: 10px;
+          color: rgba(var(--color-white), 0.9);
+        }
+
+        .contentSave {
+          background: rgb(var(--color-blue));
+          border-radius: 3px;
+          color: rgb(var(--color-white));
+          cursor: pointer;
+          font-size: 1.3rem;
+          margin-bottom: 15px;
+          padding: 8px 14px;
+        }
+      }
+    }
+
+    .listEditorBody {
+      background: rgb(var(--color-foreground));
+      display: grid;
+      grid-gap: 50px;
+      grid-template-columns: auto 160px;
+      padding: 50px;
+      padding-top: 70px;
+    }
+  }
+}
