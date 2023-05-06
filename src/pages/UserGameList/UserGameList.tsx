@@ -1,17 +1,11 @@
-import { useState } from 'react';
 import styles from './UserGameListStyle.module.scss';
 import useGamesByStatus from '@/services/userGames/useGamesByStatus';
 import FilterColumn from '@/components/UserListFilterColumn';
 import UserGamesTable from '@/components/GamesListTable';
+import { useAppSelector } from '@/app/hooks';
 
 function UserGameList() {
-  const [listOrder, setListOrder] = useState<string[]>([
-    'completed',
-    'planning',
-    'playing',
-    'paused',
-    'dropped',
-  ]);
+  const listOrder = useAppSelector((state) => state.userGames);
   const { gamesByTagForAUserLoading, gamesByTagForAUser } = useGamesByStatus();
 
   if (gamesByTagForAUserLoading) {
@@ -31,11 +25,6 @@ function UserGameList() {
             />
           );
         })}
-        {/* <UserGamesTable gamesData={playingGames} title="Playing" />
-        <UserGamesTable gamesData={planningGames} title="Planning" />
-        <UserGamesTable gamesData={completedGames} title="Completed" />
-        <UserGamesTable gamesData={pausedGames} title="Paused" />
-        <UserGamesTable gamesData={droppedGames} title="Dropped" /> */}
       </div>
     </div>
   );
