@@ -1,59 +1,30 @@
 import styles from './UserGameListStyle.module.scss';
-import type { Game } from '@/graphql/__generated__/graphql';
 import useGamesByStatus from '@/services/userGames/useGamesByStatus';
 import FilterColumn from '@/components/UserListFilterColumn';
 import UserGamesTable from '@/components/GamesListTable';
+import { useAppSelector } from '@/app/hooks';
 
 function UserGameList() {
+  const listOrder = useAppSelector((state) => state.userGames.selectedLists);
   const { gamesByTagForAUserLoading, gamesByTagForAUser } = useGamesByStatus();
 
   if (gamesByTagForAUserLoading) {
     return <div>Loading...</div>;
   }
 
-  const playingGames = gamesByTagForAUser?.gamesByStatusForAUser?.playing.map(
-    (val: Game) => ({
-      key: val.id,
-      ...val,
-    })
-  );
-
-  const planningGames = gamesByTagForAUser?.gamesByStatusForAUser?.planning.map(
-    (val: Game) => ({
-      key: val.id,
-      ...val,
-    })
-  );
-
-  const completedGames =
-    gamesByTagForAUser?.gamesByStatusForAUser?.completed.map((val: Game) => ({
-      key: val.id,
-      ...val,
-    }));
-
-  const pausedGames = gamesByTagForAUser?.gamesByStatusForAUser?.paused.map(
-    (val: Game) => ({
-      key: val.id,
-      ...val,
-    })
-  );
-
-  const droppedGames = gamesByTagForAUser?.gamesByStatusForAUser?.dropped.map(
-    (val: Game) => ({
-      key: val.id,
-      ...val,
-    })
-  );
-
   return (
     <div className={styles.mainContainer}>
       <FilterColumn />
       <div>
-        <UserGamesTable gamesData={playingGames} title="Playing" />
-        <UserGamesTable gamesData={planningGames} title="Planning" />
-        <UserGamesTable gamesData={completedGames} title="Completed" />
-        <UserGamesTable gamesData={pausedGames} title="Paused" />
-        <UserGamesTable gamesData={droppedGames} title="Dropped" />
+        {listOrder.map((list) => {
+          return (
+            <UserGamesTable
+              key={list}
+              gamesData={gamesByTagForAUser?.gamesByStatusForAUser[list]}
+              title={list[0].toUpperCase() + list.slice(1)}
+            />
+          );
+        })}
       </div>
     </div>
   );

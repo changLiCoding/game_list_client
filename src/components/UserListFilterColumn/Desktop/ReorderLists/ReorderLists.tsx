@@ -1,14 +1,15 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useState } from 'react';
+import React from 'react';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
+import { useDispatch } from 'react-redux';
 import { StrictModeDroppable } from './StrictModeDroppable';
 import type {
-  InitialStatusStateType,
   StatusContentType,
   StatusListType,
 } from '@/components/UserListFilterColumn/types';
 import StatusItem from '@/components/UserListFilterColumn/Desktop/StatusItem';
-import { USER_LISTS } from '@/constants';
+import { setListOrder } from '@/features/userUserGamesListSlice';
+import { useAppSelector } from '@/app/hooks';
 
 const reorder = (
   list: StatusListType,
@@ -23,9 +24,13 @@ const reorder = (
 };
 
 function ReorderLists() {
-  const [state, setState] = useState<InitialStatusStateType>({
-    status: USER_LISTS,
-  });
+  const dispatch = useDispatch();
+  const listState = useAppSelector((state) => state.userGames.listOrder);
+
+  const formattedListState = listState.map((item) => ({
+    id: item,
+    content: item[0].toUpperCase() + item.slice(1),
+  }));
 
   const onDragEnd = (result: DropResult) => {
     if (!result.destination) {
@@ -37,12 +42,12 @@ function ReorderLists() {
     }
 
     const newStatusOrder = reorder(
-      state.status,
+      formattedListState,
       result.source.index,
       result.destination.index
     );
 
-    setState({ status: newStatusOrder });
+    dispatch(setListOrder(newStatusOrder.map((item) => item.id)));
   };
 
   return (
@@ -50,7 +55,7 @@ function ReorderLists() {
       <StrictModeDroppable droppableId="list">
         {(provided) => (
           <div ref={provided.innerRef} {...provided.droppableProps}>
-            {state.status.map(
+            {formattedListState.map(
               (singleStatus: StatusContentType, index: number) => (
                 <StatusItem
                   status={singleStatus}

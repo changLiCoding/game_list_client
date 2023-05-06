@@ -1,9 +1,11 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import userReducer from '@/features/userSlice';
+import userGamesListReducer from '@/features/userUserGamesListSlice';
 
 const rootReducer = combineReducers({
   user: userReducer,
+  userGames: userGamesListReducer,
 });
 
 export const store = configureStore({
