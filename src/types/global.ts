@@ -3,3 +3,5 @@ export interface DropDownOption {
   label: string;
   children?: DropDownOption[];
 }
+
+export type OnChangeType = (string | number)[];

@@ -1,6 +1,6 @@
 import styles from '@/components/FiltersWrapper/FilterField/FilterField.module.scss';
 import SelectDropdown from '@/components/SelectDropdown';
-import type { DropDownOption } from '@/types/global';
+import type { DropDownOption, OnChangeType } from '@/types/global';
 
 export default function FilterField({
   fieldName,
@@ -10,7 +10,7 @@ export default function FilterField({
 }: {
   fieldName: string;
   options: DropDownOption[];
-  onChange: (value: any) => void;
+  onChange: (value: OnChangeType) => void;
   changeOnSelect: boolean;
 }) {
   return (
