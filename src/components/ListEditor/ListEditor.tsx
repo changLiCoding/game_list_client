@@ -1,10 +1,9 @@
-import { Modal, Button, DatePicker } from 'antd';
+import { Modal, Button } from 'antd';
 import type { DatePickerProps } from 'antd';
 
 import { HeartOutlined } from '@ant-design/icons';
 import { Game as GameType } from '@/graphql/__generated__/graphql';
-import type { DropDownOption } from '@/types/global';
-
+import type { DropDownOption, OnChangeType } from '@/types/global';
 import FilterField from '../FiltersWrapper/FilterField';
 import styles from '@/components/ListEditor/ListEditor.module.scss';
 
@@ -69,21 +68,24 @@ function ListEditor({
         <div className={styles.bodyInput}>
           <div style={{ gridArea: 'status' }}>
             <FilterField
-              onChange={(value: string): void => {
+              onChange={(value: OnChangeType): void => {
                 // console.log(value);
               }}
               options={statusOptions}
               fieldName="Status"
               changeOnSelect
               type={null}
+              optionalStyles={null}
             />
           </div>
           <div style={{ gridArea: 'score' }}>
             <FilterField
+              type={null}
+              optionalStyles={null}
               fieldName="Score"
               options={scoreOptions}
               changeOnSelect
-              onChange={(value: string): void => {
+              onChange={(value: OnChangeType): void => {
                 // console.log(value);
               }}
             />
@@ -93,6 +95,9 @@ function ListEditor({
           </div>
           <div style={{ gridArea: 'finish' }}>
             <FilterField type="date" fieldName="Finish" onChange={onChange} />
+          </div>
+          <div className={styles.inputNote} style={{ gridArea: 'notes' }}>
+            <h3>Notes</h3>
           </div>
         </div>
         <div className={styles.bodyCheckbox}>Check box</div>

@@ -1,4 +1,3 @@
-import React from 'react';
 import SelectDropdown from '@/components/SelectDropdown';
 import styles from './SortListsStyle.module.scss';
 import type { DropDownOption, OnChangeType } from '@/types/global';

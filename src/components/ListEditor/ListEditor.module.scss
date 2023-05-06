@@ -63,14 +63,20 @@
 
       .bodyInput {
         display: grid;
-        grid-gap: 40px;
+        grid-gap: 15px;
         grid-template-areas:
           'status score'
           'start finish'
-          'notes notes'
-          'advanced advanced';
-        justify-content: space-around;
+          'notes notes';
+        justify-content: space-evenly;
         color: variables.$color-text;
+        & div {
+          width: 25vw;
+        }
+        & .inputNote {
+          width: 100%;
+          grid-area: notes;
+        }
       }
     }
   }

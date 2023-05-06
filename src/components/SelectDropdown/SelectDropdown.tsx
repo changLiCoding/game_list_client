@@ -1,5 +1,4 @@
 import { Cascader } from 'antd';
-import React from 'react';
 // import styles from './SelectDropdownStyle.module.scss';
 import type { DropDownOption, OnChangeType } from '@/types/global';
 
