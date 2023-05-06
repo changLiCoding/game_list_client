@@ -13,7 +13,7 @@ function SelectDropdown({
   options: DropDownOption[];
   onChange: (value: any) => void;
   changeOnSelect: boolean;
-  customCascaderStyle: string | null;
+  customCascaderStyle: string | undefined;
 }) {
   return (
     <Cascader

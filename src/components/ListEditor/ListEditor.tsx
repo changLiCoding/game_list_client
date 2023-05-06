@@ -3,6 +3,7 @@ import type { DatePickerProps } from 'antd';
 
 import { HeartOutlined } from '@ant-design/icons';
 import { Game as GameType } from '@/graphql/__generated__/graphql';
+import type { DropDownOption } from '@/types/global';
 
 import FilterField from '../FiltersWrapper/FilterField';
 import styles from '@/components/ListEditor/ListEditor.module.scss';
@@ -19,16 +20,33 @@ function ListEditor({
   const onChange: DatePickerProps['onChange'] = (date, dateString) => {
     console.log(date, dateString);
   };
+
+  const statusOptions: DropDownOption[] = [
+    { label: 'Playing', value: 'Playing' },
+    { label: 'Completed', value: 'Completed' },
+    { label: 'Paused', value: 'Paused' },
+    { label: 'Dropped', value: 'Dropped' },
+    { label: 'Planning', value: 'Planning' },
+  ];
+  const scoreOptions: DropDownOption[] = Array.from(
+    { length: 10 },
+    (_, index) => index + 1
+  ).map((score) => ({
+    label: score.toString(),
+    value: score.toString(),
+  }));
+
   return (
     <Modal
       className={styles.listEditorContainer}
       wrapClassName={styles.listEditor}
-      zIndex={1500}
+      zIndex={1040}
       centered
       open={open}
       onOk={() => setOpen(false)}
       onCancel={() => setOpen(false)}
       width={1000}
+      footer={null}
     >
       <div
         className={styles.listEditorHeader}
@@ -50,16 +68,31 @@ function ListEditor({
       <div className={styles.listEditorBody}>
         <div className={styles.bodyInput}>
           <div style={{ gridArea: 'status' }}>
-            <FilterField fieldName="Status" changeOnSelect />
+            <FilterField
+              onChange={(value: string): void => {
+                // console.log(value);
+              }}
+              options={statusOptions}
+              fieldName="Status"
+              changeOnSelect
+              type={null}
+            />
           </div>
           <div style={{ gridArea: 'score' }}>
-            <FilterField fieldName="Score" changeOnSelect />
+            <FilterField
+              fieldName="Score"
+              options={scoreOptions}
+              changeOnSelect
+              onChange={(value: string): void => {
+                // console.log(value);
+              }}
+            />
           </div>
           <div style={{ gridArea: 'start' }}>
-            <DatePicker onChange={onChange} />
+            <FilterField type="date" onChange={onChange} fieldName="Start" />
           </div>
           <div style={{ gridArea: 'finish' }}>
-            <DatePicker onChange={onChange} />
+            <FilterField type="date" fieldName="Finish" onChange={onChange} />
           </div>
         </div>
         <div className={styles.bodyCheckbox}>Check box</div>
