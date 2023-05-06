@@ -1,10 +1,12 @@
-import Hero from '@/components/Hero';
+import AllGames from '@/components/AllGames';
+import FiltersWrapper from '@/components/FiltersWrapper';
 
 function Home() {
   return (
-    <main>
-      <Hero />
-    </main>
+    <>
+      <FiltersWrapper />
+      <AllGames />
+    </>
   );
 }
 
