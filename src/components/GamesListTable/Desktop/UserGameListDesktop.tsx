@@ -7,15 +7,19 @@ const columns: ColumnsType<GameDataType> = [
   {
     title: '',
     dataIndex: 'imageURL',
-    width: 100,
+    width: 80,
     render: (imageURL: string) => (
       <>
         <Popover
-          className={styles.PopElement}
           placement="left"
           content={
             <img className={styles.ImagePop} src={imageURL} alt="game-large" />
           }
+          className={styles.PopElement}
+          overlayInnerStyle={{
+            backgroundColor: 'transparent',
+            boxShadow: 'none',
+          }}
         >
           <img className={styles.Image} src={imageURL} alt="game" />
         </Popover>
@@ -26,14 +30,16 @@ const columns: ColumnsType<GameDataType> = [
   {
     title: 'Name',
     dataIndex: 'name',
+    width: 300,
     sorter: {
       compare: (a, b) => a.name.localeCompare(b.name),
       multiple: 3,
     },
   },
   {
-    title: 'Average Score',
+    title: 'Score',
     dataIndex: 'avgScore',
+    width: 100,
     sorter: {
       compare: (a, b) =>
         (a as { avgScore: number }).avgScore -
@@ -44,10 +50,13 @@ const columns: ColumnsType<GameDataType> = [
   {
     title: 'Platforms',
     dataIndex: 'platforms',
+    width: 300,
     render: (platforms: string[]) => (
       <div className={styles.TagsContainer}>
         {platforms.map((platform: string) => (
-          <Tag key={platform}>{platform}</Tag>
+          <Tag className={styles.TagStyle} key={platform}>
+            {platform}
+          </Tag>
         ))}
       </div>
     ),
