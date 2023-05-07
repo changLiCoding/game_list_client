@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Col, Card, Popover, Tag, Button, Divider } from 'antd';
 import {
   PlusCircleOutlined,
@@ -10,6 +11,7 @@ import { Link } from 'react-router-dom';
 
 import styles from '@/components/AllGames/GamesList/Game/Game.module.scss';
 import { Game as GameType } from '@/graphql/__generated__/graphql';
+import ListEditor from '@/components/ListEditor';
 
 export default function Game({
   game,
@@ -19,6 +21,8 @@ export default function Game({
   colorBgContainer: string;
 }) {
   const { Meta } = Card;
+
+  const [open, setOpen] = useState(false);
 
   const getRatingIcon = (avgScore: number, color: string) => {
     if (avgScore > 8.5) {
@@ -127,17 +131,19 @@ export default function Game({
             <Button
               onClick={(e) => {
                 e.stopPropagation();
+                setOpen(!open);
                 // console.log(game.id);
               }}
-              size="large"
+              size="middle"
               type="ghost"
               className={styles.buttonGameHovershow}
               style={{
                 color: `${data}`,
               }}
-              icon={<PlusCircleOutlined style={{ fontSize: '1.2rem' }} />}
+              icon={<PlusCircleOutlined style={{ fontSize: '1rem' }} />}
               shape="circle"
             />
+            <ListEditor open={open} setOpen={setOpen} game={game} />
           </Popover>
         </Col>
       )}

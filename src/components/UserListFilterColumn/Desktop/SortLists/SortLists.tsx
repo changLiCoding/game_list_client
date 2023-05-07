@@ -1,7 +1,6 @@
-import React from 'react';
 import SelectDropdown from '@/components/SelectDropdown';
 import styles from './SortListsStyle.module.scss';
-import type { DropDownOption, OnChangeType } from '@/types/global';
+import type { DropDownOption, OnChangeCascaderType } from '@/types/global';
 
 const options: DropDownOption[] = [
   {
@@ -15,7 +14,7 @@ const options: DropDownOption[] = [
 ];
 
 function SortLists() {
-  const onChange = (value: OnChangeType): void => {
+  const onChange = (value: OnChangeCascaderType): void => {
     // console.log(value);
   };
   return (

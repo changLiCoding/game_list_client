@@ -1,0 +1,111 @@
+@use '../../styles/variables.scss' as variables;
+@use '../../styles/mixin.scss' as mixin;
+
+.listEditorContainer {
+  :global(.ant-modal-content) {
+    padding: 0px;
+    button {
+      color: rgba(variables.$color-white, 0.45);
+    }
+    .listEditorHeader {
+      background-position: 50%;
+      background-repeat: no-repeat;
+      background-size: cover;
+      box-shadow: inset 0 0 250px #2f3133;
+      height: 180px;
+      position: relative;
+      opacity: 1;
+
+      .headerContent {
+        align-items: flex-end;
+        display: flex;
+        height: 100%;
+        padding: 0px 50px 0px 50px;
+        padding-bottom: 0px;
+        position: relative;
+        .contentCover {
+          border-radius: 2px;
+          margin-bottom: -30px;
+          max-width: 100px;
+          overflow: hidden;
+          img {
+            width: 100%;
+            vertical-align: text-top;
+            border-style: none;
+          }
+        }
+
+        .contentTitle {
+          color: rgba(variables.$color-white, 0.9);
+          font-size: 0.9rem;
+          padding: 20px;
+        }
+
+        .contentFavourite {
+          padding-bottom: 10px;
+          margin-left: auto;
+          margin-right: 10px;
+          color: rgba(variables.$color-white, 0.9);
+        }
+
+        .contentSave {
+          padding-bottom: 10px;
+        }
+      }
+    }
+
+    .listEditorBody {
+      background: variables.$color-foreground;
+      display: grid;
+      grid-gap: 50px;
+      grid-template-columns: auto 160px;
+      padding: 50px;
+      padding-top: 70px;
+
+      @include mixin.loginTablet {
+        display: block;
+      }
+
+      .bodyInput {
+        display: grid;
+        grid-gap: 15px;
+        grid-template-areas:
+          'status score'
+          'start finish'
+          'notes notes';
+        justify-content: space-evenly;
+        color: variables.$color-text;
+
+        @include mixin.phone {
+          display: block;
+        }
+
+        & div {
+          width: 100%;
+          min-width: 25vw;
+        }
+      }
+
+      .bodyCheckbox {
+        display: flex;
+        flex-direction: column;
+        .checkboxList {
+          border-bottom: solid 1px rgba(variables.$color-text-lighter, 0.3);
+          margin-bottom: 12px;
+          & div {
+            padding-bottom: 12px;
+            color: rgba(variables.$color-text-light, 0.9);
+            padding-left: 1px;
+          }
+          & span {
+            color: variables.$color-text-lighter;
+            display: inline-block;
+            margin-bottom: 12px;
+            text-align: center;
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}

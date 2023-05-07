@@ -23,6 +23,8 @@ describe('FilterField Component', () => {
     render(
       <ContextWrapper>
         <FilterField
+          type={null}
+          optionalStyles={null}
           fieldName={fieldName}
           options={options}
           onChange={onChange}

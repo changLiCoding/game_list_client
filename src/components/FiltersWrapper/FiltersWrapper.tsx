@@ -4,7 +4,7 @@ import { useState } from 'react';
 import styles from '@/components/FiltersWrapper/FiltersWrapper.module.scss';
 import FilterField from '@/components/FiltersWrapper/FilterField';
 import useGame from '@/services/game/useGame';
-import type { DropDownOption, OnChangeType } from '@/types/global';
+import type { DropDownOption, OnChangeFilterType } from '@/types/global';
 
 const { Search } = Input;
 
@@ -14,7 +14,10 @@ export default function FilterWrapper() {
   const { useBreakpoint } = Grid;
   const screens = useBreakpoint();
 
-  const onChange = (value: OnChangeType) => {
+  const onChange = (
+    value: OnChangeFilterType | undefined,
+    dataString?: string | undefined
+  ) => {
     // console.log(value);
   };
   const { genres, platforms, tags } = useGame();
@@ -46,6 +49,8 @@ export default function FilterWrapper() {
       {screens.md ? (
         <>
           <FilterField
+            type={undefined}
+            optionalStyles={undefined}
             fieldName="Genres"
             options={genresOptions}
             onChange={onChange}
@@ -53,18 +58,24 @@ export default function FilterWrapper() {
           />
 
           <FilterField
+            type={undefined}
+            optionalStyles={undefined}
             fieldName="Platforms"
             options={platformsOptions}
             onChange={onChange}
             changeOnSelect
           />
           <FilterField
+            type={undefined}
+            optionalStyles={undefined}
             fieldName="Tags"
             options={tagsOptions}
             onChange={onChange}
             changeOnSelect
           />
           <FilterField
+            type={undefined}
+            optionalStyles={undefined}
             fieldName="Year"
             options={[]}
             onChange={onChange}

@@ -1,28 +1,62 @@
 import styles from '@/components/FiltersWrapper/FilterField/FilterField.module.scss';
 import SelectDropdown from '@/components/SelectDropdown';
-import type { DropDownOption, OnChangeType } from '@/types/global';
+import DatePickerField from '@/components/DatePickerField';
+import type { OnChangeFilterType, DropDownOption } from '@/types/global';
+import TextAreaInput from '@/components/TextAreaInput';
+
+interface FilterFieldProps {
+  fieldName: string;
+  options: DropDownOption[];
+  onChange: (value?: OnChangeFilterType, dateString?: string) => void;
+  changeOnSelect: boolean | undefined;
+  type: string | undefined;
+  optionalStyles: string | undefined;
+}
 
 export default function FilterField({
   fieldName,
-  options,
+  options = [],
   onChange,
-  changeOnSelect,
-}: {
-  fieldName: string;
-  options: DropDownOption[];
-  onChange: (value: OnChangeType) => void;
-  changeOnSelect: boolean;
-}) {
+  changeOnSelect = undefined,
+  type = undefined,
+  optionalStyles = undefined,
+}: FilterFieldProps) {
+  const getInputFromType = (typeValue: string | undefined) => {
+    switch (typeValue) {
+      case 'date':
+        return (
+          <DatePickerField
+            fieldName={fieldName}
+            onChange={onChange}
+            customCascaderStyle={optionalStyles || styles.cascaderStyle}
+          />
+        );
+
+      case 'text':
+        return (
+          <TextAreaInput
+            fieldName={fieldName}
+            onChange={onChange}
+            customCascaderStyle={optionalStyles || styles.cascaderStyle}
+          />
+        );
+      default:
+        return (
+          <SelectDropdown
+            customCascaderStyle={optionalStyles || styles.cascaderStyle}
+            fieldName={fieldName}
+            options={options}
+            onChange={onChange}
+            changeOnSelect={changeOnSelect}
+          />
+        );
+    }
+  };
+
   return (
     <div className={styles.layoutFilterFieldContainer}>
       <h3 className={styles.h3FilterFieldTitle}>{fieldName}</h3>
-      <SelectDropdown
-        customCascaderStyle={styles.cascaderStyle}
-        fieldName={fieldName}
-        options={options}
-        onChange={onChange}
-        changeOnSelect={changeOnSelect}
-      />
+      {getInputFromType(type)}
     </div>
   );
 }
