@@ -1,7 +1,7 @@
 import { DatePicker } from 'antd';
-import type { DatePickerProps } from 'antd';
+import type { Dayjs } from 'dayjs';
 
-import styles from '@/components/DatePickerField/DatePickerField.module.scss';
+// import styles from '@/components/DatePickerField/DatePickerField.module.scss';
 
 function DatePickerField({
   fieldName,
@@ -9,7 +9,7 @@ function DatePickerField({
   customCascaderStyle,
 }: {
   fieldName: string;
-  onChange: (value: any) => void;
+  onChange: (value: Dayjs | null, dateString: string) => void;
   customCascaderStyle: string | undefined;
 }) {
   return (

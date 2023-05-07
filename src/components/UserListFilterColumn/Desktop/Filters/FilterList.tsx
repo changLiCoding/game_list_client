@@ -2,7 +2,7 @@ import React from 'react';
 import SelectDropdown from '@/components/SelectDropdown';
 import styles from './FilterListWrapperStyle.module.scss';
 import type { Filter } from '../types';
-import type { OnChangeType } from '@/types/global';
+import type { OnChangeCascaderType } from '@/types/global';
 
 const filters: Filter[] = [
   {
@@ -61,7 +61,7 @@ const filters: Filter[] = [
 ];
 
 function FilterList() {
-  const onChange = (value: OnChangeType): void => {
+  const onChange = (value: OnChangeCascaderType): void => {
     // console.log(value);
   };
   return (

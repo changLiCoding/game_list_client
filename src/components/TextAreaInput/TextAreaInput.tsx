@@ -9,7 +9,7 @@ function TextAreaInput({
   fieldName: string;
   customCascaderStyle: string | undefined;
   onChange: (
-    value: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;
 }) {
   const { TextArea } = Input;
@@ -17,9 +17,7 @@ function TextAreaInput({
     <TextArea
       showCount
       maxLength={100}
-      onChange={(
-        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-      ) => onChange(e)}
+      onChange={(e) => onChange(e)}
       placeholder={fieldName}
       className={customCascaderStyle}
     />

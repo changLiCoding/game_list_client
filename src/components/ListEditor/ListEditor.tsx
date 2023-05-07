@@ -1,10 +1,15 @@
 import { Modal, Button, Checkbox } from 'antd';
 import type { DatePickerProps } from 'antd';
-import type { CheckboxChangeEvent } from 'antd/es/checkbox';
 
 import { HeartOutlined } from '@ant-design/icons';
+import { Dayjs } from 'dayjs';
 import { Game as GameType } from '@/graphql/__generated__/graphql';
-import type { DropDownOption, OnChangeType } from '@/types/global';
+import type {
+  DropDownOption,
+  OnChangeCascaderType,
+  OnChangeCheckboxType,
+  OnChangeTextAreaType,
+} from '@/types/global';
 import FilterField from '../FiltersWrapper/FilterField';
 import styles from '@/components/ListEditor/ListEditor.module.scss';
 
@@ -18,7 +23,7 @@ function ListEditor({
   game: GameType | undefined;
 }) {
   const onChange: DatePickerProps['onChange'] = (date, dateString) => {
-    console.log(date, dateString);
+    // console.log(date, dateString);
   };
 
   const statusOptions: DropDownOption[] = [
@@ -69,7 +74,9 @@ function ListEditor({
         <div className={styles.bodyInput}>
           <div style={{ gridArea: 'status' }}>
             <FilterField
-              onChange={(value: OnChangeType): void => {
+              onChange={(
+                value: OnChangeCascaderType | Dayjs | null | undefined
+              ): void => {
                 // console.log(value);
               }}
               options={statusOptions}
@@ -86,26 +93,57 @@ function ListEditor({
               fieldName="Score"
               options={scoreOptions}
               changeOnSelect
-              onChange={(value: OnChangeType): void => {
+              onChange={(
+                value: OnChangeCascaderType | Dayjs | null | undefined
+              ): void => {
                 // console.log(value);
               }}
             />
           </div>
           <div style={{ gridArea: 'start' }}>
-            <FilterField type="date" onChange={onChange} fieldName="Start" />
+            <FilterField
+              optionalStyles={null}
+              options={undefined}
+              changeOnSelect={null}
+              type="date"
+              onChange={(
+                value: OnChangeCascaderType | Dayjs | null | undefined,
+                e?: OnChangeTextAreaType | undefined,
+                dateString?: string | undefined
+              ) => {
+                // console.log(date, dateString);
+              }}
+              fieldName="Start"
+            />
           </div>
           <div style={{ gridArea: 'finish' }}>
-            <FilterField type="date" fieldName="Finish" onChange={onChange} />
+            <FilterField
+              optionalStyles={null}
+              options={undefined}
+              changeOnSelect={null}
+              type="date"
+              fieldName="Finish"
+              onChange={(
+                value: OnChangeCascaderType | Dayjs | null | undefined,
+                e?: OnChangeTextAreaType | undefined,
+                dateString?: string | undefined
+              ) => {
+                // console.log(date, dateString);
+              }}
+            />
           </div>
           <div style={{ gridArea: 'notes' }}>
             <FilterField
+              optionalStyles={null}
+              options={undefined}
+              changeOnSelect={null}
               type="text"
               fieldName="Notes"
               onChange={(
-                e: React.ChangeEvent<
-                  OnChangeType | HTMLInputElement | HTMLTextAreaElement
-                >
-              ) => console.log(e.target.value)}
+                value: OnChangeCascaderType | Dayjs | null | undefined,
+                e?: OnChangeTextAreaType | undefined,
+                dateString?: string | undefined
+              ) => console.log(e?.target.value)}
             />
           </div>
         </div>
@@ -115,7 +153,7 @@ function ListEditor({
             <span>No custom game lists</span>
           </div>
           <Checkbox
-            onChange={(e: CheckboxChangeEvent) => {
+            onChange={(e: OnChangeCheckboxType) => {
               // console.log(`checked = ${e.target.checked}`);
             }}
           >

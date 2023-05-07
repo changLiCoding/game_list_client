@@ -4,7 +4,7 @@ import { useState } from 'react';
 import styles from '@/components/FiltersWrapper/FiltersWrapper.module.scss';
 import FilterField from '@/components/FiltersWrapper/FilterField';
 import useGame from '@/services/game/useGame';
-import type { DropDownOption, OnChangeType } from '@/types/global';
+import type { DropDownOption, OnChangeCascaderType } from '@/types/global';
 
 const { Search } = Input;
 
@@ -14,7 +14,11 @@ export default function FilterWrapper() {
   const { useBreakpoint } = Grid;
   const screens = useBreakpoint();
 
-  const onChange = (value: OnChangeType) => {
+  const onChange = (
+    value: OnChangeCascaderType | Dayjs | null | undefined,
+    e?: OnChangeTextAreaType | undefined,
+    dateString?: string | undefined
+  ) => {
     // console.log(value);
   };
   const { genres, platforms, tags } = useGame();
