@@ -1,5 +1,6 @@
-import { Modal, Button } from 'antd';
+import { Modal, Button, Checkbox } from 'antd';
 import type { DatePickerProps } from 'antd';
+import type { CheckboxChangeEvent } from 'antd/es/checkbox';
 
 import { HeartOutlined } from '@ant-design/icons';
 import { Game as GameType } from '@/graphql/__generated__/graphql';
@@ -96,11 +97,31 @@ function ListEditor({
           <div style={{ gridArea: 'finish' }}>
             <FilterField type="date" fieldName="Finish" onChange={onChange} />
           </div>
-          <div className={styles.inputNote} style={{ gridArea: 'notes' }}>
-            <FilterField type="text" fieldName="Notes" />
+          <div style={{ gridArea: 'notes' }}>
+            <FilterField
+              type="text"
+              fieldName="Notes"
+              onChange={(
+                e: React.ChangeEvent<
+                  OnChangeType | HTMLInputElement | HTMLTextAreaElement
+                >
+              ) => console.log(e.target.value)}
+            />
           </div>
         </div>
-        <div className={styles.bodyCheckbox}>Check box</div>
+        <div className={styles.bodyCheckbox}>
+          <div className={styles.checkboxList}>
+            <div>Custom Lists</div>
+            <span>No custom game lists</span>
+          </div>
+          <Checkbox
+            onChange={(e: CheckboxChangeEvent) => {
+              // console.log(`checked = ${e.target.checked}`);
+            }}
+          >
+            Private
+          </Checkbox>
+        </div>
       </div>
     </Modal>
   );

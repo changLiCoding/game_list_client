@@ -85,6 +85,27 @@
           min-width: 25vw;
         }
       }
+
+      .bodyCheckbox {
+        display: flex;
+        flex-direction: column;
+        .checkboxList {
+          border-bottom: solid 1px rgba(variables.$color-text-lighter, 0.3);
+          margin-bottom: 12px;
+          & div {
+            padding-bottom: 12px;
+            color: rgba(variables.$color-text-light, 0.9);
+            padding-left: 1px;
+          }
+          & span {
+            color: variables.$color-text-lighter;
+            display: inline-block;
+            margin-bottom: 12px;
+            text-align: center;
+            width: 100%;
+          }
+        }
+      }
     }
   }
 }
