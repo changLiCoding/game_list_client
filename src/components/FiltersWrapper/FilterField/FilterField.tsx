@@ -4,18 +4,18 @@ import DatePickerField from '@/components/DatePickerField';
 import type { OnChangeFilterType, DropDownOption } from '@/types/global';
 import TextAreaInput from '@/components/TextAreaInput';
 
-type FilterFieldProps = {
+interface FilterFieldProps {
   fieldName: string;
-  options: DropDownOption[] | undefined;
+  options: DropDownOption[];
   onChange: (value?: OnChangeFilterType, dateString?: string) => void;
   changeOnSelect: boolean | undefined;
   type: string | undefined;
   optionalStyles: string | undefined;
-};
+}
 
 export default function FilterField({
   fieldName,
-  options,
+  options = [],
   onChange,
   changeOnSelect = undefined,
   type = undefined,

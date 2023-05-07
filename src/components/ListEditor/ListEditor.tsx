@@ -121,8 +121,8 @@ function ListEditor({
           </div>
           <div style={{ gridArea: 'start' }}>
             <FilterField
+              options={[]}
               optionalStyles={undefined}
-              options={undefined}
               changeOnSelect={undefined}
               type="date"
               onChange={(
@@ -137,7 +137,7 @@ function ListEditor({
           <div style={{ gridArea: 'finish' }}>
             <FilterField
               optionalStyles={undefined}
-              options={undefined}
+              options={[]}
               changeOnSelect={undefined}
               type="date"
               fieldName="Finish"
@@ -152,7 +152,7 @@ function ListEditor({
           <div style={{ gridArea: 'notes' }}>
             <FilterField
               optionalStyles={undefined}
-              options={undefined}
+              options={[]}
               changeOnSelect={undefined}
               type="text"
               fieldName="Notes"
