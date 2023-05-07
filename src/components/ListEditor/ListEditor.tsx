@@ -1,8 +1,8 @@
 import { Modal, Button, Checkbox } from 'antd';
-import type { DatePickerProps } from 'antd';
 
 import { HeartOutlined } from '@ant-design/icons';
-import { Dayjs } from 'dayjs';
+import useAddDeleteGame from '@/services/userGames/useAddDeleteGame';
+import useNotification from '@/hooks/useNotification';
 import { Game as GameType } from '@/graphql/__generated__/graphql';
 import type {
   DropDownOption,
@@ -26,6 +26,15 @@ function ListEditor({
     dateString: string | undefined
   ) => {
     // console.log(date, dateString);
+  };
+
+  const { contextHolder, info } = useNotification();
+
+  const { addUserGames } = useAddDeleteGame();
+
+  const onAddGameHandler = (gameId: string | undefined) => {
+    addUserGames(gameId);
+    info(`Game ${game?.name} added to your list`);
   };
 
   const statusOptions: DropDownOption[] = [
@@ -65,7 +74,13 @@ function ListEditor({
           </div>
           <div className={styles.contentTitle}>{game?.name}</div>
           <div className={styles.contentFavourite}>
-            <Button type="ghost" icon={<HeartOutlined />} />
+            <Button
+              type="ghost"
+              onClick={() => {
+                onAddGameHandler(game?.id);
+              }}
+              icon={<HeartOutlined />}
+            />
           </div>
           <div className={styles.contentSave}>
             <Button type="primary">Save</Button>
@@ -164,6 +179,7 @@ function ListEditor({
           </Checkbox>
         </div>
       </div>
+      {contextHolder}
     </Modal>
   );
 }

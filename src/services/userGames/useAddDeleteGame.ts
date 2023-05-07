@@ -10,7 +10,9 @@ const useAddDeleteGame = () => {
   const [addUserGamesRequest] = useMutation(ADD_USER_GAMES);
   const [deleteUserGamesRequest] = useMutation(DELETE_USER_GAMES);
 
-  const addUserGames = async (gameId: number): Promise<AddUserGamesPayload> => {
+  const addUserGames = async (
+    gameId: string | undefined
+  ): Promise<AddUserGamesPayload> => {
     try {
       const response = await addUserGamesRequest({
         variables: { gameId },
@@ -34,7 +36,7 @@ const useAddDeleteGame = () => {
   };
 
   const deleteUserGames = async (
-    gameId: number
+    gameId: string | undefined
   ): Promise<DeleteUserGamesPayload> => {
     try {
       const response = await deleteUserGamesRequest({
