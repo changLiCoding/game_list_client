@@ -4,7 +4,7 @@ import { useState } from 'react';
 import styles from '@/components/FiltersWrapper/FiltersWrapper.module.scss';
 import FilterField from '@/components/FiltersWrapper/FilterField';
 import useGame from '@/services/game/useGame';
-import type { DropDownOption, OnChangeCascaderType } from '@/types/global';
+import type { DropDownOption, OnChangeFilterType } from '@/types/global';
 
 const { Search } = Input;
 
@@ -15,9 +15,8 @@ export default function FilterWrapper() {
   const screens = useBreakpoint();
 
   const onChange = (
-    value: OnChangeCascaderType | Dayjs | null | undefined,
-    e?: OnChangeTextAreaType | undefined,
-    dateString?: string | undefined
+    value: OnChangeFilterType | undefined,
+    dataString?: string | undefined
   ) => {
     // console.log(value);
   };
@@ -50,8 +49,8 @@ export default function FilterWrapper() {
       {screens.md ? (
         <>
           <FilterField
-            type={null}
-            optionalStyles={null}
+            type={undefined}
+            optionalStyles={undefined}
             fieldName="Genres"
             options={genresOptions}
             onChange={onChange}
@@ -59,24 +58,24 @@ export default function FilterWrapper() {
           />
 
           <FilterField
-            type={null}
-            optionalStyles={null}
+            type={undefined}
+            optionalStyles={undefined}
             fieldName="Platforms"
             options={platformsOptions}
             onChange={onChange}
             changeOnSelect
           />
           <FilterField
-            type={null}
-            optionalStyles={null}
+            type={undefined}
+            optionalStyles={undefined}
             fieldName="Tags"
             options={tagsOptions}
             onChange={onChange}
             changeOnSelect
           />
           <FilterField
-            type={null}
-            optionalStyles={null}
+            type={undefined}
+            optionalStyles={undefined}
             fieldName="Year"
             options={[]}
             onChange={onChange}

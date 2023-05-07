@@ -6,9 +6,8 @@ import { Dayjs } from 'dayjs';
 import { Game as GameType } from '@/graphql/__generated__/graphql';
 import type {
   DropDownOption,
-  OnChangeCascaderType,
   OnChangeCheckboxType,
-  OnChangeTextAreaType,
+  OnChangeFilterType,
 } from '@/types/global';
 import FilterField from '../FiltersWrapper/FilterField';
 import styles from '@/components/ListEditor/ListEditor.module.scss';
@@ -22,7 +21,10 @@ function ListEditor({
   setOpen: (open: boolean) => void;
   game: GameType | undefined;
 }) {
-  const onChange: DatePickerProps['onChange'] = (date, dateString) => {
+  const onChange = (
+    value: OnChangeFilterType | undefined,
+    dateString: string | undefined
+  ) => {
     // console.log(date, dateString);
   };
 
@@ -75,26 +77,28 @@ function ListEditor({
           <div style={{ gridArea: 'status' }}>
             <FilterField
               onChange={(
-                value: OnChangeCascaderType | Dayjs | null | undefined
+                value: OnChangeFilterType | undefined,
+                dateString?: string | undefined
               ): void => {
                 // console.log(value);
               }}
               options={statusOptions}
               fieldName="Status"
               changeOnSelect
-              type={null}
-              optionalStyles={null}
+              type={undefined}
+              optionalStyles={undefined}
             />
           </div>
           <div style={{ gridArea: 'score' }}>
             <FilterField
-              type={null}
-              optionalStyles={null}
+              type={undefined}
+              optionalStyles={undefined}
               fieldName="Score"
               options={scoreOptions}
               changeOnSelect
               onChange={(
-                value: OnChangeCascaderType | Dayjs | null | undefined
+                value: OnChangeFilterType | undefined,
+                dateString?: string | undefined
               ): void => {
                 // console.log(value);
               }}
@@ -102,13 +106,12 @@ function ListEditor({
           </div>
           <div style={{ gridArea: 'start' }}>
             <FilterField
-              optionalStyles={null}
+              optionalStyles={undefined}
               options={undefined}
-              changeOnSelect={null}
+              changeOnSelect={undefined}
               type="date"
               onChange={(
-                value: OnChangeCascaderType | Dayjs | null | undefined,
-                e?: OnChangeTextAreaType | undefined,
+                value: OnChangeFilterType | undefined,
                 dateString?: string | undefined
               ) => {
                 // console.log(date, dateString);
@@ -118,14 +121,13 @@ function ListEditor({
           </div>
           <div style={{ gridArea: 'finish' }}>
             <FilterField
-              optionalStyles={null}
+              optionalStyles={undefined}
               options={undefined}
-              changeOnSelect={null}
+              changeOnSelect={undefined}
               type="date"
               fieldName="Finish"
               onChange={(
-                value: OnChangeCascaderType | Dayjs | null | undefined,
-                e?: OnChangeTextAreaType | undefined,
+                value: OnChangeFilterType | undefined,
                 dateString?: string | undefined
               ) => {
                 // console.log(date, dateString);
@@ -134,16 +136,17 @@ function ListEditor({
           </div>
           <div style={{ gridArea: 'notes' }}>
             <FilterField
-              optionalStyles={null}
+              optionalStyles={undefined}
               options={undefined}
-              changeOnSelect={null}
+              changeOnSelect={undefined}
               type="text"
               fieldName="Notes"
               onChange={(
-                value: OnChangeCascaderType | Dayjs | null | undefined,
-                e?: OnChangeTextAreaType | undefined,
+                value: OnChangeFilterType | undefined,
                 dateString?: string | undefined
-              ) => console.log(e?.target.value)}
+              ) => {
+                // console.log(value?.target.value)
+              }}
             />
           </div>
         </div>

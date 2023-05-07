@@ -1,37 +1,27 @@
-import type { Dayjs } from 'dayjs';
-
 import styles from '@/components/FiltersWrapper/FilterField/FilterField.module.scss';
 import SelectDropdown from '@/components/SelectDropdown';
 import DatePickerField from '@/components/DatePickerField';
-import type {
-  DropDownOption,
-  OnChangeCascaderType,
-  OnChangeTextAreaType,
-} from '@/types/global';
+import type { OnChangeFilterType, DropDownOption } from '@/types/global';
 import TextAreaInput from '@/components/TextAreaInput';
 
 type FilterFieldProps = {
   fieldName: string;
-  options?: DropDownOption[];
-  onChange: (
-    value?: OnChangeCascaderType | Dayjs | null,
-    e?: OnChangeTextAreaType,
-    dateString?: string
-  ) => void;
-  changeOnSelect?: boolean | null;
-  type?: string | null;
-  optionalStyles?: string | null;
+  options: DropDownOption[] | undefined;
+  onChange: (value?: OnChangeFilterType, dateString?: string) => void;
+  changeOnSelect: boolean | undefined;
+  type: string | undefined;
+  optionalStyles: string | undefined;
 };
 
 export default function FilterField({
   fieldName,
   options,
   onChange,
-  changeOnSelect = null,
-  type = null,
-  optionalStyles = null,
+  changeOnSelect = undefined,
+  type = undefined,
+  optionalStyles = undefined,
 }: FilterFieldProps) {
-  const getInputFromType = (typeValue: string | null) => {
+  const getInputFromType = (typeValue: string | undefined) => {
     switch (typeValue) {
       case 'date':
         return (

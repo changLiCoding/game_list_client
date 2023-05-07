@@ -18,3 +18,10 @@ export type OnChangeTextAreaType = React.ChangeEvent<
 >;
 
 export type OnChangeDatePickerType = Dayjs | null;
+
+export type OnChangeFilterType =
+  | OnChangeCascaderType
+  | OnChangeCheckboxType
+  | Dayjs
+  | OnChangeTextAreaType
+  | null;
