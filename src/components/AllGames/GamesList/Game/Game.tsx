@@ -92,7 +92,7 @@ export default function Game({
                   <p>{`Released: ${game.releaseDate.slice(0, 10)}`}</p>
                 )}
 
-                <p>{`Average Score: ${game.avgScore}`}</p>
+                <p>{`Score: ${game.avgScore}`}</p>
 
                 {/* Conditional rendering icon */}
                 {game.avgScore && data && getRatingIcon(game.avgScore, data)}

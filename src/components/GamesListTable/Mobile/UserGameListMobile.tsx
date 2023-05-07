@@ -7,7 +7,7 @@ const columns: ColumnsType<GameDataType> = [
   {
     title: '',
     dataIndex: 'imageURL',
-    width: 100,
+    width: 80,
     render: (imageURL: string) => (
       <img className={styles.ImageSmall} src={imageURL} alt="game" />
     ),
@@ -29,6 +29,7 @@ const columns: ColumnsType<GameDataType> = [
   {
     title: 'Platforms',
     dataIndex: 'platforms',
+    width: 150,
     render: (platforms: string[]) => (
       <div className={styles.TagsContainer}>
         {platforms.map((platform: string) => (

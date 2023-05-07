@@ -1,14 +1,8 @@
-
 .listStyle {
-  div {
-    div {
-      ul {
-        .listItem {
-          padding: 5px;
-          cursor: pointer;
-        }
-      }
-    }
+  :global(.ant-list-item) {
+    padding: 5px;
+    cursor: pointer;
+    border: none;
   }
 }
 
@@ -17,10 +11,10 @@
 //   color: blue;
 // }
 
-.listItem {
-  margin: 0;
-  padding: 0;
-}
+// .listItem {
+//   margin: 0;
+//   padding: 0;
+// }
 
 .listName {
   display: flex;

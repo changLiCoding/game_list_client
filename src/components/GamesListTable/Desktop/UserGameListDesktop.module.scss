@@ -1,6 +1,6 @@
-@use "../../../styles/mixin" as mixin;
+@use '../../../styles/mixin' as mixin;
 
-.Table{
+.Table {
   width: 100%;
 }
 
@@ -12,13 +12,12 @@
 }
 
 .ImagePop {
-  width: 200px;
-  height: 200px;
   object-fit: cover;
-  border-radius: 10%;
+  border-radius: 3%;
+  max-width: 230px;
 }
 
-.ImageSmall{
+.ImageSmall {
   display: none;
   @include mixin.tablet {
     display: block;
@@ -29,16 +28,23 @@
   }
 }
 
-.TagsContainer{
+.TagsContainer {
   display: flex;
   flex-wrap: wrap;
   overflow-x: hidden;
 }
 
 .PopElement {
-    @include mixin.tablet {
-      display: none;
-    }
+  @include mixin.tablet {
+    display: none;
+  }
+}
+
+.TagStyle {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 150px;
 }
 
 // @media screen and (max-width: 1450px) {

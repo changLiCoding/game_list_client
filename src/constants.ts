@@ -42,3 +42,9 @@ export const USER_LISTS = [
     content: 'Dropped',
   },
 ];
+
+export const INITIAL_USER_GAME_LISTS = {
+  selectedList: 'all',
+  selectedLists: ['planning', 'playing', 'paused', 'completed', 'dropped'],
+  listOrder: ['planning', 'playing', 'paused', 'completed', 'dropped'],
+};
