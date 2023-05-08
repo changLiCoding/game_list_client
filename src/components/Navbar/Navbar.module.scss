@@ -215,15 +215,3 @@ $mobile-nav-header-drawer-item-hover-color : rgb(109, 49, 158);
     padding-right: 1.5rem;
   }
 }
-
-@media (max-width: $mobile-nav-width) {
-  .desktop-nav {
-    display: none;
-  }
-}
-
-@media (min-width: $mobile-nav-width) {
-  .mobile-nav {
-    display: none;
-  }
-}
