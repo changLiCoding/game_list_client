@@ -1,11 +1,7 @@
 import { Game as GameType } from '@/graphql/__generated__/graphql';
 import styles from '@/components/GameDetailHeader/GameDetailHeaderBanner/GameDetailHeaderBanner.module.scss';
 
-function GameDetailHeaderBanner({
-  game,
-}: {
-  game: GameType;
-}): JSX.Element | null {
+function GameDetailHeaderBanner({ game }: { game: GameType }): JSX.Element {
   return (
     <div
       role="banner"

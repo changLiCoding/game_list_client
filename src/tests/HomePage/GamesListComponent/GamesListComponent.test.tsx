@@ -93,7 +93,10 @@ describe('Games List Component', () => {
     await userEvent.hover(game3);
     await waitFor(() => {
       expect(queryByText('2D')).toBeInTheDocument();
+      expect(queryByText('4D')).toBeInTheDocument();
       expect(queryByLabelText('meh')).toBeInTheDocument();
+      expect(queryByLabelText('smile')).toBeInTheDocument();
+      expect(queryByLabelText('frown')).toBeInTheDocument();
     });
   });
 });

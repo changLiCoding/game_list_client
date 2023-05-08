@@ -6,7 +6,7 @@ import GameDetailHeaderInfo from '@/components/GameDetailHeader/GameDetailHeader
 import { Game } from '@/graphql/__generated__/graphql';
 
 describe('GameDetailHeaderInfo', () => {
-  it('should render GameDetailHeaderInfo with name and description', () => {
+  it('should render GameDetailHeaderInfo with name, description and image cover', () => {
     const game: Game = {
       __typename: 'Game',
       id: '1',
@@ -20,16 +20,22 @@ describe('GameDetailHeaderInfo', () => {
       avgScore: 5,
       bannerURL: 'https://example.com/banner.jpg',
     };
-    render(
+    const { queryByText } = render(
       <ContextWrapper>
         <GameDetailHeaderInfo game={game} />
       </ContextWrapper>
     );
 
-    const nameElement = screen.getByText(game.name);
+    const nameElement = screen.getByText('Game 1');
     expect(nameElement).toBeInTheDocument();
+    expect(queryByText('Game 3')).not.toBeInTheDocument();
 
-    const descriptionElement = screen.getByText(game.description);
+    const imgBanner = screen.queryByAltText('Game 1');
+    expect(imgBanner).toBeInTheDocument();
+    expect(imgBanner).toHaveAttribute('src', 'https://via.placeholder.com/150');
+
+    const descriptionElement = screen.getByText('Description 1');
     expect(descriptionElement).toBeInTheDocument();
+    expect(queryByText('Description 3')).not.toBeInTheDocument();
   });
 });

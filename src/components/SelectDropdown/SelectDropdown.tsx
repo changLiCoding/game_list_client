@@ -10,10 +10,10 @@ function SelectDropdown({
   customCascaderStyle,
 }: {
   fieldName: string;
-  options: DropDownOption[] | undefined;
+  options: DropDownOption[];
   onChange: (value: OnChangeCascaderType) => void;
-  changeOnSelect: boolean | undefined;
-  customCascaderStyle: string | undefined;
+  changeOnSelect: boolean;
+  customCascaderStyle: string;
 }) {
   return (
     <Cascader

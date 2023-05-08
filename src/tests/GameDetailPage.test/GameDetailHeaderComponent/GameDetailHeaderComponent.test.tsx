@@ -34,8 +34,14 @@ describe('GameDetailHeader', () => {
       `background-image: url(https://example.com/banner.jpg)`
     );
 
-    const nameElement = screen.getByText('Game 1');
-    expect(nameElement).toBeInTheDocument();
+    const coverElement = screen.queryByAltText('Game 1');
+    expect(coverElement).toBeInTheDocument();
+    expect(coverElement).toHaveAttribute(
+      'src',
+      'https://via.placeholder.com/150'
+    );
+
+    expect(screen.queryByText('Game 3')).not.toBeInTheDocument();
 
     const descriptionElement = screen.getByText('Description 1');
     expect(descriptionElement).toBeInTheDocument();
