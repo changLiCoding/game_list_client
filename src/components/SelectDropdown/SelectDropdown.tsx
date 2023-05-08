@@ -22,6 +22,7 @@ function SelectDropdown({
       options={options}
       onChange={(e: OnChangeCascaderType) => onChange(e)}
       changeOnSelect={changeOnSelect}
+      data-testid={`dropdown-${fieldName}`}
     />
   );
 }

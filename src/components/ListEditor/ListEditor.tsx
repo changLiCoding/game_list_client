@@ -100,14 +100,10 @@ function ListEditor({
               options={statusOptions}
               fieldName="Status"
               changeOnSelect
-              type={undefined}
-              optionalStyles={undefined}
             />
           </div>
           <div style={{ gridArea: 'score' }}>
             <FilterField
-              type={undefined}
-              optionalStyles={undefined}
               fieldName="Score"
               options={scoreOptions}
               changeOnSelect
@@ -121,9 +117,6 @@ function ListEditor({
           </div>
           <div style={{ gridArea: 'start' }}>
             <FilterField
-              options={[]}
-              optionalStyles={undefined}
-              changeOnSelect={undefined}
               type="date"
               onChange={(
                 value: OnChangeFilterType | undefined,
@@ -136,9 +129,6 @@ function ListEditor({
           </div>
           <div style={{ gridArea: 'finish' }}>
             <FilterField
-              optionalStyles={undefined}
-              options={[]}
-              changeOnSelect={undefined}
               type="date"
               fieldName="Finish"
               onChange={(
@@ -151,9 +141,6 @@ function ListEditor({
           </div>
           <div style={{ gridArea: 'notes' }}>
             <FilterField
-              optionalStyles={undefined}
-              options={[]}
-              changeOnSelect={undefined}
               type="text"
               fieldName="Notes"
               onChange={(
