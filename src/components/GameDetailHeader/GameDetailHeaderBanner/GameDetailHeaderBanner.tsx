@@ -4,7 +4,7 @@ import styles from '@/components/GameDetailHeader/GameDetailHeaderBanner/GameDet
 function GameDetailHeaderBanner({
   game,
 }: {
-  game: GameType | undefined;
+  game: GameType;
 }): JSX.Element | null {
   return (
     <div
