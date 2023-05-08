@@ -6,20 +6,20 @@ import TextAreaInput from '@/components/TextAreaInput';
 
 interface FilterFieldProps {
   fieldName: string;
-  options: DropDownOption[];
+  options?: DropDownOption[];
   onChange: (value?: OnChangeFilterType, dateString?: string) => void;
-  changeOnSelect: boolean | undefined;
-  type: string | undefined;
-  optionalStyles: string | undefined;
+  changeOnSelect?: boolean;
+  type?: string;
+  optionalStyles?: string;
 }
 
 export default function FilterField({
   fieldName,
-  options = [],
+  options,
   onChange,
-  changeOnSelect = undefined,
-  type = undefined,
-  optionalStyles = undefined,
+  changeOnSelect,
+  type,
+  optionalStyles,
 }: FilterFieldProps) {
   const getInputFromType = (typeValue: string | undefined) => {
     switch (typeValue) {
