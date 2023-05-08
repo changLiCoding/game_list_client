@@ -2,8 +2,8 @@
 import React from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import { DragOutlined } from '@ant-design/icons';
-import type { StatusContentType } from '../../types';
 import styles from './StatusItemStyle.module.scss';
+import type { StatusContentType } from '@/components/UserListFilterColumn/types';
 
 function StatusItem({
   status,

@@ -82,7 +82,7 @@ describe('Games List Component', () => {
 
     await userEvent.hover(game2);
     await waitFor(() => {
-      expect(queryByText('3D')).toBeInTheDocument();
+      expect(queryByText('4D')).toBeInTheDocument();
       expect(queryByText('Soullike')).toBeInTheDocument();
       expect(queryByText('2D')).not.toBeInTheDocument();
       expect(queryByText('Action')).not.toBeInTheDocument();

@@ -22,12 +22,10 @@ export default function FilterWrapper() {
   };
   const { genres, platforms, tags } = useGame();
 
-  const optionsGenerator = (
-    typeArray: Array<{ name: string }>
-  ): DropDownOption[] =>
-    typeArray.map((type: { name: string }) => ({
-      value: type.name,
-      label: type.name,
+  const optionsGenerator = (typeArray: string[]): DropDownOption[] =>
+    typeArray.map((name) => ({
+      value: name,
+      label: name,
     }));
 
   const genresOptions: DropDownOption[] = genres
