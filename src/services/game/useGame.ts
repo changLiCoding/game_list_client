@@ -13,9 +13,9 @@ export default function useGame() {
   );
   const { data: allTags } = useQuery(GET_ALL_TAGS, getTokenFromLocalStorage);
 
-  const genres: { name: string }[] = allGenres.getAllGenres;
-  const platforms: { name: string }[] = allPlatforms.getAllPlatforms;
-  const tags: { name: string }[] = allTags.getAllTags;
+  const genres: { name: string }[] = allGenres?.getAllGenres;
+  const platforms: { name: string }[] = allPlatforms?.getAllPlatforms;
+  const tags: { name: string }[] = allTags?.getAllTags;
 
   return { genres, platforms, tags };
 }
