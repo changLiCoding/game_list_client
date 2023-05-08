@@ -32,7 +32,7 @@ function ListEditor({
 
   const { addUserGames } = useAddDeleteGame();
 
-  const onAddGameHandler = (gameId: string | undefined) => {
+  const onAddGameHandler = (gameId: string) => {
     addUserGames(gameId);
     info(`Game ${game?.name} added to your list`);
   };

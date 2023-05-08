@@ -29,3 +29,12 @@
     }
   }
 }
+
+:global(span.anticon-smile),
+:global(span.anticon-frown),
+:global(span.anticon-meh) {
+  position: absolute;
+  top: 20%;
+  left: 80%;
+  font-size: 2rem;
+}

@@ -45,7 +45,7 @@ describe('useUserGames hook', () => {
   it("Successful add a game to the user's list", async () => {
     const { result } = renderHook(() => useAddDeleteGame());
 
-    const addUserGamesData = await result.current.addUserGames(17);
+    const addUserGamesData = await result.current.addUserGames('17');
     expect((addUserGamesData as { errors: string[] }).errors).toEqual([]);
     expect(
       parseInt(

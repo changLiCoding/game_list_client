@@ -28,12 +28,9 @@ export default function Game({
     if (avgScore > 8.5) {
       return (
         <SmileOutlined
+          className={styles.ratingIcon}
           style={{
             color: `${color}`,
-            position: 'absolute',
-            top: '20%',
-            left: '80%',
-            fontSize: '2.5rem',
           }}
         />
       );
@@ -41,24 +38,18 @@ export default function Game({
     if (avgScore > 6.5) {
       return (
         <MehOutlined
+          className={styles.ratingIcon}
           style={{
             color: `${color}`,
-            position: 'absolute',
-            top: '20%',
-            left: '80%',
-            fontSize: '2.5rem',
           }}
         />
       );
     }
     return (
       <FrownOutlined
+        className={styles.ratingIcon}
         style={{
           color: `${color}`,
-          position: 'absolute',
-          top: '20%',
-          left: '80%',
-          fontSize: '2.5rem',
         }}
       />
     );
