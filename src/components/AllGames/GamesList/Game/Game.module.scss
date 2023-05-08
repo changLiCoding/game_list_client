@@ -5,8 +5,8 @@
   .buttonGameHovershow {
     display: none;
     position: absolute;
-    top: 82%;
-    left: 80%;
+    bottom: 14px;
+    right: 9px;
   }
   &:hover .buttonGameHovershow {
     display: block;
@@ -28,4 +28,13 @@
       }
     }
   }
+}
+
+:global(span.anticon-smile),
+:global(span.anticon-frown),
+:global(span.anticon-meh) {
+  position: absolute;
+  top: 20%;
+  left: 80%;
+  font-size: 2rem;
 }

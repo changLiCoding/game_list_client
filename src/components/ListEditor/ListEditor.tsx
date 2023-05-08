@@ -6,11 +6,15 @@ import useNotification from '@/hooks/useNotification';
 import { Game as GameType } from '@/graphql/__generated__/graphql';
 import type {
   DropDownOption,
+  OnChangeCascaderType,
   OnChangeCheckboxType,
-  OnChangeFilterType,
+  OnChangeDatePickerType,
+  OnChangeTextAreaType,
 } from '@/types/global';
 import FilterField from '../FiltersWrapper/FilterField';
 import styles from '@/components/ListEditor/ListEditor.module.scss';
+import DatePickerField from '../DatePickerField';
+import TextAreaInput from '../TextAreaInput';
 
 function ListEditor({
   open,
@@ -21,10 +25,7 @@ function ListEditor({
   setOpen: (open: boolean) => void;
   game: GameType;
 }) {
-  const onChange = (
-    value: OnChangeFilterType | undefined,
-    dateString: string | undefined
-  ) => {
+  const onChange = (value: OnChangeDatePickerType, dateString: string) => {
     // console.log(date, dateString);
   };
 
@@ -32,7 +33,7 @@ function ListEditor({
 
   const { addUserGames } = useAddDeleteGame();
 
-  const onAddGameHandler = (gameId: string | undefined) => {
+  const onAddGameHandler = (gameId: string) => {
     addUserGames(gameId);
     info(`Game ${game?.name} added to your list`);
   };
@@ -91,65 +92,57 @@ function ListEditor({
         <div className={styles.bodyInput}>
           <div style={{ gridArea: 'status' }}>
             <FilterField
-              onChange={(
-                value: OnChangeFilterType | undefined,
-                dateString?: string | undefined
-              ): void => {
+              onChange={(value: OnChangeCascaderType): void => {
                 // console.log(value);
               }}
               options={statusOptions}
               fieldName="Status"
               changeOnSelect
+              customCascaderStyle={styles.cascaderStyle}
             />
           </div>
           <div style={{ gridArea: 'score' }}>
             <FilterField
               fieldName="Score"
-              options={scoreOptions}
               changeOnSelect
-              onChange={(
-                value: OnChangeFilterType | undefined,
-                dateString?: string | undefined
-              ): void => {
+              customCascaderStyle={styles.cascaderStyle}
+              options={scoreOptions}
+              onChange={(value: OnChangeCascaderType): void => {
                 // console.log(value);
               }}
             />
           </div>
           <div style={{ gridArea: 'start' }}>
-            <FilterField
-              type="date"
-              onChange={(
-                value: OnChangeFilterType | undefined,
-                dateString?: string | undefined
-              ) => {
-                // console.log(date, dateString);
-              }}
-              fieldName="Start"
-            />
+            <div>
+              <h3 className={styles.h3FilterFieldTitle}>Start</h3>
+              <DatePickerField
+                onChange={onChange}
+                fieldName="Start"
+                customCascaderStyle={styles.cascaderStyle}
+              />
+            </div>
           </div>
           <div style={{ gridArea: 'finish' }}>
-            <FilterField
-              type="date"
-              fieldName="Finish"
-              onChange={(
-                value: OnChangeFilterType | undefined,
-                dateString?: string | undefined
-              ) => {
-                // console.log(date, dateString);
-              }}
-            />
+            <div>
+              <h3 className={styles.h3FilterFieldTitle}>Finish</h3>
+              <DatePickerField
+                fieldName="Finish"
+                customCascaderStyle={styles.cascaderStyle}
+                onChange={onChange}
+              />
+            </div>
           </div>
           <div style={{ gridArea: 'notes' }}>
-            <FilterField
-              type="text"
-              fieldName="Notes"
-              onChange={(
-                value: OnChangeFilterType | undefined,
-                dateString?: string | undefined
-              ) => {
-                // console.log(value?.target.value)
-              }}
-            />
+            <div>
+              <h3 className={styles.h3FilterFieldTitle}>Notes</h3>
+              <TextAreaInput
+                fieldName="Notes"
+                customCascaderStyle={styles.cascaderStyle}
+                onChange={(value: OnChangeTextAreaType) => {
+                  // console.log(value?.target.value)
+                }}
+              />
+            </div>
           </div>
         </div>
         <div className={styles.bodyCheckbox}>

@@ -26,6 +26,8 @@ describe('GameDetailHeaderBanner', () => {
       </ContextWrapper>
     );
 
+    expect(screen.queryByAltText('Game 1')).not.toBeInTheDocument();
+
     const bannerElement = screen.getByRole('banner');
     expect(bannerElement).toBeInTheDocument();
     expect(bannerElement).toHaveStyle(
