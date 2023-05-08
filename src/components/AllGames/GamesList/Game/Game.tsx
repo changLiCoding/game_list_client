@@ -95,7 +95,8 @@ export default function Game({
                 <p>{`Score: ${game.avgScore}`}</p>
 
                 {/* Conditional rendering icon */}
-                {game.avgScore && data && getRatingIcon(game.avgScore, data)}
+                {game.avgScore &&
+                  getRatingIcon(game.avgScore, data as string | '#6927d3')}
 
                 <Divider> Tags</Divider>
                 {game.tags.map((tag: string) => (
