@@ -1,7 +1,9 @@
 import { render, screen } from '@testing-library/react';
 import { vi } from 'vitest';
+import userEvent from '@testing-library/user-event';
 import UserGameList from '@/pages/UserGameList/UserGameList';
 import ContextWrapper from '@/ContextWrapper';
+import FilterColumn from '@/components/UserListFilterColumn';
 
 vi.mock('../../services/userGames/useGamesByStatus', async () => {
   const actual: unknown = await vi.importActual(
@@ -67,7 +69,7 @@ vi.mock('../../services/userGames/useGamesByStatus', async () => {
 const { getComputedStyle } = window;
 window.getComputedStyle = (elt) => getComputedStyle(elt);
 
-describe('Get all games for a user', () => {
+describe('Get games according to list types for a user', () => {
   it('should render all games for a user', async () => {
     render(
       <ContextWrapper>
@@ -81,5 +83,21 @@ describe('Get all games for a user', () => {
     expect(avgScoreElements[0].textContent).toBe('1.7');
     const gamePlanningElements = screen.queryAllByText('Pokemon Y');
     expect(gamePlanningElements[0].textContent).toBe('Pokemon Y');
+  });
+
+  it('should render filter column for user', async () => {
+    render(
+      <ContextWrapper>
+        <FilterColumn />
+      </ContextWrapper>
+    );
+
+    const downArrow = screen.getByTestId('down-arrow');
+    await userEvent.click(downArrow);
+
+    const planningElement = await screen.findByText('Dropped');
+    expect(planningElement).toBeInTheDocument();
+
+    // await userEvent.keyboard('{space}{arrowdown}{space}');
   });
 });

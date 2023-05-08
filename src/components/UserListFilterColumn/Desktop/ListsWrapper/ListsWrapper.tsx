@@ -11,9 +11,15 @@ function ListsWrapper() {
       <div className={styles.multiListStyle}>
         <p>Lists</p>
         {listStyles ? (
-          <UpOutlined onClick={() => setListStyles((prev) => !prev)} />
+          <UpOutlined
+            data-testid="up-arrow"
+            onClick={() => setListStyles((prev) => !prev)}
+          />
         ) : (
-          <DownOutlined onClick={() => setListStyles((prev) => !prev)} />
+          <DownOutlined
+            data-testid="down-arrow"
+            onClick={() => setListStyles((prev) => !prev)}
+          />
         )}
       </div>
       <div className={styles.multiLists}>
