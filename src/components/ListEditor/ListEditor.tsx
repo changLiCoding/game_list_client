@@ -19,7 +19,7 @@ function ListEditor({
 }: {
   open: boolean;
   setOpen: (open: boolean) => void;
-  game: GameType | undefined;
+  game: GameType;
 }) {
   const onChange = (
     value: OnChangeFilterType | undefined,

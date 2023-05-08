@@ -29,11 +29,11 @@ export default function Game({
       return (
         <SmileOutlined
           style={{
-            fontSize: '2.5rem',
             color: `${color}`,
             position: 'absolute',
-            left: '80%',
             top: '20%',
+            left: '80%',
+            fontSize: '2.5rem',
           }}
         />
       );
@@ -42,11 +42,11 @@ export default function Game({
       return (
         <MehOutlined
           style={{
-            fontSize: '2.5rem',
             color: `${color}`,
             position: 'absolute',
-            left: '80%',
             top: '20%',
+            left: '80%',
+            fontSize: '2.5rem',
           }}
         />
       );
@@ -54,11 +54,11 @@ export default function Game({
     return (
       <FrownOutlined
         style={{
-          fontSize: '2.5rem',
           color: `${color}`,
           position: 'absolute',
-          left: '80%',
           top: '20%',
+          left: '80%',
+          fontSize: '2.5rem',
         }}
       />
     );

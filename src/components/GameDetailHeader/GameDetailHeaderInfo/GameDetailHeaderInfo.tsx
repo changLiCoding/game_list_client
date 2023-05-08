@@ -9,7 +9,7 @@ import ListEditor from '@/components/ListEditor';
 import { Game as GameType } from '@/graphql/__generated__/graphql';
 import styles from '@/components/GameDetailHeader/GameDetailHeaderInfo/GameDetailHeaderInfo.module.scss';
 
-function GameDetailHeaderInfo({ game }: { game: GameType | undefined }) {
+function GameDetailHeaderInfo({ game }: { game: GameType }) {
   const [open, setOpen] = useState(false);
 
   const items: MenuProps['items'] = [
@@ -78,8 +78,8 @@ function GameDetailHeaderInfo({ game }: { game: GameType | undefined }) {
           </div>
         </div>
         <div className={styles.infoInfo}>
-          <h1>{game?.name}</h1>
-          <p>{game?.description}</p>
+          <h1>{game.name}</h1>
+          <p>{game.description}</p>
           <div className={styles.infoInfoTags}>
             <a href="/">Overview</a>
             <a href="/">Reviews</a>
