@@ -9,7 +9,7 @@ import type { DropDownOption } from '@/types/global';
 
 describe('FilterField Component', () => {
   it('should render FilterField Component with title and SelectDropdown', async () => {
-    const fieldName = 'Test Field';
+    const fieldName = 'TestField';
     const options: DropDownOption[] = [
       {
         value: 'Test Value',
@@ -23,8 +23,6 @@ describe('FilterField Component', () => {
     render(
       <ContextWrapper>
         <FilterField
-          type={null}
-          optionalStyles={null}
           fieldName={fieldName}
           options={options}
           onChange={onChange}
@@ -33,11 +31,11 @@ describe('FilterField Component', () => {
       </ContextWrapper>
     );
 
-    const selectDropdown = await screen.getByRole('combobox');
-    waitFor(() => {
-      userEvent.click(selectDropdown);
-      expect(screen.getByText('Test Label')).toBeInTheDocument();
-      expect(screen.getByText('Test Value')).toBeInTheDocument();
+    const selectDropdown = screen.getByTestId('dropdown-TestField')
+      .firstChild as Element;
+    await userEvent.click(selectDropdown);
+    await waitFor(() => {
+      expect(screen.queryByText('Test Label')).toBeInTheDocument();
     });
   });
 });

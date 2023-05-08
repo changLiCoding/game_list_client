@@ -49,8 +49,6 @@ export default function FilterWrapper() {
       {screens.md ? (
         <>
           <FilterField
-            type={undefined}
-            optionalStyles={undefined}
             fieldName="Genres"
             options={genresOptions}
             onChange={onChange}
@@ -58,24 +56,18 @@ export default function FilterWrapper() {
           />
 
           <FilterField
-            type={undefined}
-            optionalStyles={undefined}
             fieldName="Platforms"
             options={platformsOptions}
             onChange={onChange}
             changeOnSelect
           />
           <FilterField
-            type={undefined}
-            optionalStyles={undefined}
             fieldName="Tags"
             options={tagsOptions}
             onChange={onChange}
             changeOnSelect
           />
           <FilterField
-            type={undefined}
-            optionalStyles={undefined}
             fieldName="Year"
             options={[]}
             onChange={onChange}
