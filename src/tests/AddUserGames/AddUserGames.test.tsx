@@ -17,9 +17,15 @@ vi.mock('@apollo/client', async () => {
             userGame: {
               id: 1,
               game: {
-                id: 1,
-                name: 'game1',
-                discription: 'discription1',
+                id: '1',
+                name: 'Pokémon Black',
+                description: 'Ex ut omnis. Quasi delectus eos.',
+                imageURL: 'https://loremflickr.com/300/300/all',
+                releaseDate: '2015-07-17T00:00:00Z',
+                avgScore: 0.3,
+                genres: ['Real-time tactics', 'Rhythm'],
+                platforms: ['PlayStation 4', 'Game Boy'],
+                tags: ['Action', 'Action'],
               },
             },
             errors: [],
@@ -28,35 +34,44 @@ vi.mock('@apollo/client', async () => {
       })),
       { loading: false, error: false },
     ]),
-    useQuery: vi.fn(() => ({
-      loading: false,
-      data: {
-        userGames: [],
-      },
-    })),
   };
 });
 
-vi.mock('../../../constants.ts', async () => ({
-  getTokenFromLocalStorage: {
-    context: {
-      headers: {
-        authorization:
-          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyNiwiZXhwIjoxNjg2MTYwNzY2fQ.cuRDDV8KVX8nUk1soQb1JH6VB8N7rGFzVkSqizWtvdU',
-      },
-    },
-  },
-}));
+vi.mock('../../../constants.ts', async () => {
+  const actual: unknown = await vi.importActual('../../../constants.ts');
 
-console.log('GetTokenFromLocalStorage', vi.get('../../../constants.ts'));
+  if (typeof actual !== 'object')
+    throw new Error('Import Actual did not return not an object');
+  return {
+    ...actual,
+    getTokenFromLocalStorage: vi.fn(() => 'token'),
+  };
+  // getTokenFromLocalStorage: {
+  //   context: {
+  //     headers: {
+  //       authorization:
+  //         'Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyNiwiZXhwIjoxNjg2MTYwNzY2fQ.cuRDDV8KVX8nUk1soQb1JH6VB8N7rGFzVkSqizWtvdU',
+  //     },
+  //   },
+  // },
+});
 
 describe('AddUserGames logic in useAddDeleteGame hook', () => {
   it('Successful add game in UserGame', async () => {
     const { result } = renderHook(() => useAddDeleteGame());
-    console.log('result', result);
-
-    const userGame = await result.current.addUserGames('1');
-
-    console.log('data', userGame);
+    const addUserGamesData = await result.current.addUserGames('17');
+    expect((addUserGamesData as { errors: string[] }).errors).toEqual([]);
+    expect(
+      parseInt(
+        (
+          addUserGamesData as {
+            userGame: {
+              id: string;
+            };
+          }
+        ).userGame.id,
+        10
+      )
+    ).toBeGreaterThan(0);
   });
 });

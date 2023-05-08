@@ -7,7 +7,7 @@ function TextAreaInput({
   onChange,
 }: {
   fieldName: string;
-  customCascaderStyle: string | undefined;
+  customCascaderStyle: string;
   onChange: (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;

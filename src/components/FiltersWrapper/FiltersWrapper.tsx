@@ -4,7 +4,7 @@ import { useState } from 'react';
 import styles from '@/components/FiltersWrapper/FiltersWrapper.module.scss';
 import FilterField from '@/components/FiltersWrapper/FilterField';
 import useGame from '@/services/game/useGame';
-import type { DropDownOption, OnChangeFilterType } from '@/types/global';
+import type { DropDownOption, OnChangeCascaderType } from '@/types/global';
 
 const { Search } = Input;
 
@@ -14,10 +14,7 @@ export default function FilterWrapper() {
   const { useBreakpoint } = Grid;
   const screens = useBreakpoint();
 
-  const onChange = (
-    value: OnChangeFilterType | undefined,
-    dataString?: string | undefined
-  ) => {
+  const onChange = (value: OnChangeCascaderType) => {
     // console.log(value);
   };
   const { genres, platforms, tags } = useGame();
@@ -50,6 +47,7 @@ export default function FilterWrapper() {
         <>
           <FilterField
             fieldName="Genres"
+            customCascaderStyle={styles.cascaderStyle}
             options={genresOptions}
             onChange={onChange}
             changeOnSelect
@@ -57,6 +55,7 @@ export default function FilterWrapper() {
 
           <FilterField
             fieldName="Platforms"
+            customCascaderStyle={styles.cascaderStyle}
             options={platformsOptions}
             onChange={onChange}
             changeOnSelect
@@ -66,12 +65,14 @@ export default function FilterWrapper() {
             options={tagsOptions}
             onChange={onChange}
             changeOnSelect
+            customCascaderStyle={styles.cascaderStyle}
           />
           <FilterField
             fieldName="Year"
             options={[]}
             onChange={onChange}
             changeOnSelect
+            customCascaderStyle={styles.cascaderStyle}
           />
         </>
       ) : (
