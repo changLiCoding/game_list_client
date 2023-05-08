@@ -13,18 +13,22 @@ function GameDetail() {
   const {
     games: gamesState,
     loading,
-  }: { games: GameType[] | undefined; loading: boolean } = useAllGames();
+  }: { games: GameType[]; loading: boolean } = useAllGames();
   // const gamesState = useAppSelector((state) => state.games);
   if (loading) return <div>Loading...</div>;
 
-  const game: GameType | undefined = gamesState?.find(
-    (gameEle: GameType) => gameEle.id === id
-  );
+  const game = gamesState.find((gameEle: GameType) => gameEle.id === id);
 
-  return (
+  return game !== undefined ? (
     <Layout>
       <Content>
         <GameDetailHeader game={game} />
+      </Content>
+    </Layout>
+  ) : (
+    <Layout>
+      <Content>
+        <div>Game not found</div>
       </Content>
     </Layout>
   );

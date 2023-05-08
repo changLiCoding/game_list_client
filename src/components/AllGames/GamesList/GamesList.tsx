@@ -24,14 +24,13 @@ export default function GamesList() {
             xl: 32,
           }}
         >
-          {games &&
-            games.map((game) => (
-              <Game
-                key={game.id}
-                game={game}
-                colorBgContainer={colorBgContainer}
-              />
-            ))}
+          {games.map((game) => (
+            <Game
+              key={game.id}
+              game={game}
+              colorBgContainer={colorBgContainer}
+            />
+          ))}
         </Row>
       </Card>
     </Content>
