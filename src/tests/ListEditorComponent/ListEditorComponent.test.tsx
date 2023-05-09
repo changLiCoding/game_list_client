@@ -24,18 +24,12 @@ describe('ListEditor Component', () => {
 
     const setOpenMock = vi.fn();
 
-    const {
-      queryByText,
-      queryByAltText,
-      debug,
-      queryByTestId,
-      queryAllByRole,
-      queryByRole,
-    } = await render(
-      <ContextWrapper>
-        <ListEditor game={game} open setOpen={setOpenMock} />
-      </ContextWrapper>
-    );
+    const { queryByText, queryByAltText, queryByTestId, queryAllByRole } =
+      await render(
+        <ContextWrapper>
+          <ListEditor game={game} open setOpen={setOpenMock} />
+        </ContextWrapper>
+      );
     expect(queryByText('Game 1')).toBeInTheDocument();
     const coverElement = queryByAltText('Game 1') as HTMLImageElement;
     expect(coverElement).toBeInTheDocument();
@@ -54,6 +48,20 @@ describe('ListEditor Component', () => {
       const tag = queryAllByRole('menuitemcheckbox')['0'] as HTMLElement;
       expect(tag).toBeInTheDocument();
       expect(queryByText('Playing')).toBeInTheDocument();
+    });
+
+    const startDateElement = queryByTestId('date-picker-Start') as HTMLElement;
+    expect(startDateElement).toBeInTheDocument();
+    expect(startDateElement).toHaveValue('');
+    await userEvent.click(startDateElement);
+    await waitFor(async () => {
+      const todayButton = queryByText('Today') as HTMLElement;
+      expect(todayButton).toBeInTheDocument();
+
+      await userEvent.click(todayButton);
+      expect(startDateElement).toHaveValue(
+        new Date(Date.now()).toISOString().slice(0, 10)
+      );
     });
 
     const notesElement = queryByTestId('text-area-Notes') as HTMLElement;
