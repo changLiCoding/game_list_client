@@ -17,6 +17,7 @@ function DatePickerField({
       className={customCascaderStyle}
       placeholder={fieldName}
       onChange={onChange}
+      data-testid={`date-picker-${fieldName}`}
     />
   );
 }
