@@ -1,6 +1,7 @@
 import { describe, it, vi } from 'vitest';
-import { render } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 
+import userEvent from '@testing-library/user-event';
 import GameDetail from '@/pages/GameDetail';
 import ContextWrapper from '@/ContextWrapper';
 
@@ -64,12 +65,20 @@ describe('Game Detail Page', () => {
         useParams: vi.fn(() => ({ id: '2' })),
       };
     });
-    const { queryByText } = render(
+    const { queryByText, queryByLabelText } = render(
       <ContextWrapper>
         <GameDetail />
       </ContextWrapper>
     );
     expect(queryByText('Game 2')).toBeInTheDocument();
     expect(queryByText('Description 2')).toBeInTheDocument();
+    const downCircleButton = queryByLabelText('down-circle') as HTMLElement;
+
+    await userEvent.click(downCircleButton);
+    await waitFor(() => {
+      expect(queryByText('Set as Planning')).toBeInTheDocument();
+      expect(queryByText('Set as Playing')).toBeInTheDocument();
+      expect(queryByText('Open List Editor')).toBeInTheDocument();
+    });
   });
 });
