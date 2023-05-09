@@ -25,7 +25,7 @@ describe('ListEditor Component', () => {
     const setOpenMock = vi.fn();
 
     const { queryByText, queryByAltText, queryByTestId, queryAllByRole } =
-      await render(
+      render(
         <ContextWrapper>
           <ListEditor game={game} open setOpen={setOpenMock} />
         </ContextWrapper>
@@ -70,5 +70,40 @@ describe('ListEditor Component', () => {
 
     await userEvent.type(notesElement, '2021-01-01');
     expect(notesElement).toHaveValue('2021-01-01');
+  });
+
+  it('should not render the component when open is false', async () => {
+    const game: GameType = {
+      __typename: 'Game',
+      id: '1',
+      name: 'Game 1',
+      description: 'Description 1',
+      imageURL: 'https://via.placeholder.com/150',
+      tags: ['3D', 'Fantasy'],
+      genres: ['Genre 1', 'Genre 2'],
+      platforms: ['Platform 1', 'Platform 2'],
+      releaseDate: '2021-01-01 00:00:00',
+      avgScore: 5,
+      bannerURL: 'https://example.com/banner.jpg',
+    };
+
+    const setOpenMock = vi.fn();
+
+    const { queryByText, queryByTestId } = render(
+      <ContextWrapper>
+        <ListEditor game={game} open={false} setOpen={setOpenMock} />
+      </ContextWrapper>
+    );
+
+    expect(queryByText('Game 1')).not.toBeInTheDocument();
+
+    const statusElement = queryByTestId('dropdown-Status') as HTMLElement;
+    expect(statusElement).not.toBeInTheDocument();
+
+    const startDateElement = queryByTestId('date-picker-Start') as HTMLElement;
+    expect(startDateElement).not.toBeInTheDocument();
+
+    const notesElement = queryByTestId('text-area-Notes') as HTMLElement;
+    expect(notesElement).not.toBeInTheDocument();
   });
 });
