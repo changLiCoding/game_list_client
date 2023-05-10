@@ -81,12 +81,13 @@ vi.mock('../../services/game/useGame', async () => {
 
 describe('Home Page', () => {
   it('Render Home Page without loading', async () => {
-    const { debug } = render(
+    const { queryByLabelText } = render(
       <ContextWrapper>
         <Home />
       </ContextWrapper>
     );
-    debug();
+    const tagIcon = queryByLabelText('tags') as HTMLElement;
+    expect(tagIcon).toBeInTheDocument();
     expect(screen.getByText('Search')).toBeInTheDocument();
     expect(screen.getByText('All Games')).toBeInTheDocument();
 
