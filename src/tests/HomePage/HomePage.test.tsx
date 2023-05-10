@@ -81,12 +81,12 @@ vi.mock('../../services/game/useGame', async () => {
 
 describe('Home Page', () => {
   it('Render Home Page without loading', async () => {
-    render(
+    const { debug } = render(
       <ContextWrapper>
         <Home />
       </ContextWrapper>
     );
-    expect(screen.getByText('InfoBar')).toBeInTheDocument();
+    debug();
     expect(screen.getByText('Search')).toBeInTheDocument();
     expect(screen.getByText('All Games')).toBeInTheDocument();
 

@@ -76,3 +76,12 @@
     }
   }
 }
+
+:global(.ant-dropdown) {
+  :global(.ant-dropdown-menu) {
+    :global(.ant-dropdown-menu-item.ant-dropdown-menu-item-only-child) {
+      padding: 0px;
+      margin: 6px;
+    }
+  }
+}

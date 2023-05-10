@@ -18,17 +18,13 @@ function FilterTags({
   tagsArr: { id: string; value: string | number | OnChangeCascaderType }[];
 }) {
   const handleClose = (removedTag: string | OnChangeCascaderType) => {
-    console.log('Tag got removed', removedTag);
-
     const newTags = tagsArr.filter((tag) => tag.value !== removedTag);
-    console.log('NeWTAGS', newTags);
     setTagsArr(newTags);
   };
-  console.log(tagsArr);
 
   return (
     <div className={styles.tagsContainer}>
-      <TagsTwoTone className={styles.tagsIcon} />
+      {tagsArr.length > 0 && <TagsTwoTone className={styles.tagsIcon} />}
       {tagsArr &&
         tagsArr.map((tag) => (
           <Tag
