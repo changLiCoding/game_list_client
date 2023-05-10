@@ -9,6 +9,12 @@ $color-primary: #ff4d4f;
   }
 }
 
+@mixin phoneSmall {
+  @media screen and (max-width: 600px) {
+    @content;
+  }
+}
+
 @mixin loginTablet {
   @media screen and (max-width: 1023px) {
     @content;
