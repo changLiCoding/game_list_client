@@ -1,5 +1,6 @@
 import { Layout, Grid, Input, Space, Button } from 'antd';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
+import { v4 as uuidv4 } from 'uuid';
 import { useState } from 'react';
 import styles from '@/components/FiltersWrapper/FiltersWrapper.module.scss';
 import FilterField from '@/components/FiltersWrapper/FilterField';
@@ -8,14 +9,25 @@ import type { DropDownOption, OnChangeCascaderType } from '@/types/global';
 
 const { Search } = Input;
 
-export default function FilterWrapper() {
+export default function FilterWrapper({
+  setTagsArr,
+}: {
+  setTagsArr: React.Dispatch<
+    React.SetStateAction<
+      {
+        id: string;
+        value: string | OnChangeCascaderType;
+      }[]
+    >
+  >;
+}) {
   const [collapsed, setCollapsed] = useState(false);
 
   const { useBreakpoint } = Grid;
   const screens = useBreakpoint();
 
-  const onChange = (value: OnChangeCascaderType) => {
-    // console.log(value);
+  const onChange = (value: string | OnChangeCascaderType) => {
+    setTagsArr((prev) => [...prev, { id: uuidv4(), value }]);
   };
   const { genres, platforms, tags } = useGame();
 
