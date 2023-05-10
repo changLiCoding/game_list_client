@@ -9,7 +9,7 @@ export interface DropDownOption {
   children?: DropDownOption[];
 }
 
-export type OnChangeCascaderType = (string | number)[];
+export type OnChangeCascaderType = (string | number)[] | string | number;
 
 export type OnChangeCheckboxType = CheckboxChangeEvent;
 
