@@ -7,12 +7,21 @@ import { OnChangeCascaderType } from '@/types/global';
 
 export default function InfoBar({
   tagsArr,
+  setTagsArr,
 }: {
+  setTagsArr: React.Dispatch<
+    React.SetStateAction<
+      {
+        id: string;
+        value: string | OnChangeCascaderType;
+      }[]
+    >
+  >;
   tagsArr: { id: string; value: string | number | OnChangeCascaderType }[];
 }) {
   return (
     <Layout className={styles.infoBarContainer}>
-      <FilterTags tagsArr={tagsArr} />
+      <FilterTags tagsArr={tagsArr} setTagsArr={setTagsArr} />
       <SelectorsWrapper />
     </Layout>
   );

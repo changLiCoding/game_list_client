@@ -6,12 +6,21 @@ import { OnChangeCascaderType } from '@/types/global';
 
 export default function AllGames({
   tagsArr,
+  setTagsArr,
 }: {
   tagsArr: { id: string; value: string | OnChangeCascaderType }[];
+  setTagsArr: React.Dispatch<
+    React.SetStateAction<
+      {
+        id: string;
+        value: string | OnChangeCascaderType;
+      }[]
+    >
+  >;
 }) {
   return (
     <Layout className={styles.layoutAllGamesContainer}>
-      <InfoBar tagsArr={tagsArr} />
+      <InfoBar tagsArr={tagsArr} setTagsArr={setTagsArr} />
       <GamesList />
     </Layout>
   );

@@ -20,7 +20,7 @@ function Home() {
     <div className={styles.homeContainer}>
       <div className={styles.gamesContainer}>
         <FiltersWrapper setTagsArr={setTagsArr} />
-        <AllGames tagsArr={tagsArr} />
+        <AllGames tagsArr={tagsArr} setTagsArr={setTagsArr} />
       </div>
     </div>
   );

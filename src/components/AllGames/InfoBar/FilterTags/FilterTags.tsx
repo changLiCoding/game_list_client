@@ -5,11 +5,24 @@ import { OnChangeCascaderType } from '@/types/global';
 
 function FilterTags({
   tagsArr,
+  setTagsArr,
 }: {
+  setTagsArr: React.Dispatch<
+    React.SetStateAction<
+      {
+        id: string;
+        value: string | OnChangeCascaderType;
+      }[]
+    >
+  >;
   tagsArr: { id: string; value: string | number | OnChangeCascaderType }[];
 }) {
-  const log = (e: React.MouseEvent<HTMLElement>) => {
-    // console.log(e);
+  const handleClose = (removedTag: string | OnChangeCascaderType) => {
+    console.log('Tag got removed', removedTag);
+
+    const newTags = tagsArr.filter((tag) => tag.value !== removedTag);
+    console.log('NeWTAGS', newTags);
+    setTagsArr(newTags);
   };
   console.log(tagsArr);
 
@@ -18,7 +31,12 @@ function FilterTags({
       <TagsTwoTone className={styles.tagsIcon} />
       {tagsArr &&
         tagsArr.map((tag) => (
-          <Tag closable onClose={log} key={tag.id} className={styles.tagsText}>
+          <Tag
+            closable
+            onClose={() => handleClose(tag.value)}
+            key={tag.id}
+            className={styles.tagsText}
+          >
             {tag.value}
           </Tag>
         ))}
