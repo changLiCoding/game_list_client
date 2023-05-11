@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Drawer, Image, Popover } from 'antd';
+import { Drawer, Image, Popover, Grid } from 'antd';
 import {
   EnterOutlined,
   MenuOutlined,
@@ -13,11 +13,14 @@ import { setUser } from '@/features/userSlice';
 import { INITIAL_USER_STATE } from '@/constants';
 import styles from './Navbar.module.scss';
 
+const { useBreakpoint } = Grid;
+
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const { loading, userState } = useTokenAuth();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const screens = useBreakpoint();
 
   const logout = () => {
     localStorage.removeItem('token');
@@ -35,7 +38,7 @@ export default function Navbar() {
   };
 
   const content = (
-    <div>
+    <div aria-label="testt">
       <ul className={styles['desktop-nav__popover-dropdown']}>
         <li>
           <a
@@ -86,74 +89,86 @@ export default function Navbar() {
               </a>
             </div>
 
-            {/* Desktop Navbar  */}
-            <nav className={styles['desktop-nav']}>
-              <ul className={styles['desktop-nav__nav-section']}>
-                <li className={styles['desktop-nav__nav-item']}>
-                  <a href="/">Home</a>
-                </li>
-                <li className={styles['desktop-nav__nav-item']}>
-                  <a href="/profile">Profile</a>
-                </li>
-                <li className={styles['desktop-nav__nav-item']}>
-                  <a href="/list">Game List</a>
-                </li>
-              </ul>
-
-              <ul className={styles['desktop-nav__nav-section']}>
-                {!loading && userState?.user?.username ? (
-                  <Popover content={content}>
-                    <Image
-                      width={38}
-                      height={38}
-                      preview={false}
-                      src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-                    />
-                  </Popover>
-                ) : (
-                  <li className={styles['desktop-nav__nav-item']}>
-                    <a href="/login">Sign In</a>
-                  </li>
-                )}
-              </ul>
-            </nav>
-
-            {/* Mobile Navbar  */}
-            <nav className={styles['mobile-nav']}>
-              <MenuOutlined
-                className={styles['mobile-nav__hamburger']}
-                onClick={showDrawer}
-              />
-              <Drawer
-                className={styles['mobile-nav__header-drawer']}
-                placement="top"
-                onClose={onClose}
-                open={open}
-              >
-                <ul>
-                  <li className={styles['mobile-nav__header-drawer-item']}>
-                    <a href="/">Home</a>
-                  </li>
-                  <li className={styles['mobile-nav__header-drawer-item']}>
-                    <a href="/">Profile</a>
-                  </li>
-                  <li className={styles['mobile-nav__header-drawer-item']}>
-                    <a href="/">Game List</a>
-                  </li>
-                  {!loading && userState?.user?.username ? (
-                    <li className={styles['mobile-nav__header-drawer-item']}>
-                      <button type="button" onClick={logout}>
-                        Logout
-                      </button>
+            {screens.xs ? (
+              <>
+                {/* Mobile Navbar  */}
+                <nav className={styles['mobile-nav']}>
+                  <MenuOutlined
+                    className={styles['mobile-nav__hamburger']}
+                    onClick={showDrawer}
+                    data-testId="mobile-nav__hamburger"
+                  />
+                  <Drawer
+                    className={styles['mobile-nav__header-drawer']}
+                    placement="top"
+                    onClose={onClose}
+                    open={open}
+                  >
+                    <ul>
+                      <li className={styles['mobile-nav__header-drawer-item']}>
+                        <a href="/">Home</a>
+                      </li>
+                      <li className={styles['mobile-nav__header-drawer-item']}>
+                        <a href="/">Profile</a>
+                      </li>
+                      <li className={styles['mobile-nav__header-drawer-item']}>
+                        <a href="/">Game List</a>
+                      </li>
+                      {!loading && userState?.user?.username ? (
+                        <li
+                          className={styles['mobile-nav__header-drawer-item']}
+                        >
+                          <button type="button" onClick={logout}>
+                            Logout
+                          </button>
+                        </li>
+                      ) : (
+                        <li
+                          className={styles['mobile-nav__header-drawer-item']}
+                        >
+                          <a href="/login">Log In</a>
+                        </li>
+                      )}
+                    </ul>
+                  </Drawer>
+                </nav>
+              </>
+            ) : (
+              <>
+                {/* Desktop Navbar  */}
+                <nav className={styles['desktop-nav']}>
+                  <ul className={styles['desktop-nav__nav-section']}>
+                    <li className={styles['desktop-nav__nav-item']}>
+                      <a href="/">Home</a>
                     </li>
-                  ) : (
-                    <li className={styles['mobile-nav__header-drawer-item']}>
-                      <a href="/login">Log In</a>
+                    <li className={styles['desktop-nav__nav-item']}>
+                      <a href="/profile">Profile</a>
                     </li>
-                  )}
-                </ul>
-              </Drawer>
-            </nav>
+                    <li className={styles['desktop-nav__nav-item']}>
+                      <a href="/list">Game List</a>
+                    </li>
+                  </ul>
+
+                  <ul className={styles['desktop-nav__nav-section']}>
+                    {!loading && userState?.user?.username ? (
+                      <Popover content={content}>
+                        <Image
+                          data-testid="profile-image"
+                          width={38}
+                          height={38}
+                          preview={false}
+                          src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+                        />
+                      </Popover>
+                    ) : (
+                      <li className={styles['desktop-nav__nav-item']}>
+                        <a href="/login">Sign In</a>
+                      </li>
+                    )}
+                  </ul>
+                </nav>
+              </>
+            )}
           </div>
         </div>
       </header>

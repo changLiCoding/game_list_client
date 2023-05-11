@@ -25,6 +25,7 @@ const useTokenAuth = () => {
       dispatch(setUser(data?.getUserById));
     }
   }, [data, dispatch]);
+
   return { loading, userState };
 };
 
