@@ -1,33 +1,32 @@
-import { Layout } from 'antd';
 import styles from './UserGameListStyle.module.scss';
-import type { Game } from '@/graphql/__generated__/graphql';
-import UserGameListDesktop from '@/components/UserGameList/Desktop';
-import useUserGames from '@/services/userGames/useUserGames';
-import UserGameListMobile from '@/components/UserGameList/Mobile';
+import useGamesByStatus from '@/services/userGames/useGamesByStatus';
+import FilterColumn from '@/components/UserListFilterColumn';
+import UserGamesTable from '@/components/GamesListTable';
+import { useAppSelector } from '@/app/hooks';
 
 function UserGameList() {
-  // info("Cannot load the list of games");
-  const { gamesForAUserLoading, gamesForAUser } = useUserGames();
+  const listOrder = useAppSelector((state) => state.userGames.selectedLists);
+  const { gamesByTagForAUserLoading, gamesByTagForAUser } = useGamesByStatus();
 
-  if (gamesForAUserLoading) {
+  if (gamesByTagForAUserLoading) {
     return <div>Loading...</div>;
   }
 
-  const data = gamesForAUser?.gamesForAUser.map((val: Game) => ({
-    key: val.id,
-    ...val,
-  }));
-
   return (
-    <Layout>
-      <div className={styles.TableContainer}>
-        <UserGameListDesktop data={data} />
+    <div className={styles.mainContainer}>
+      <FilterColumn />
+      <div>
+        {listOrder.map((list) => {
+          return (
+            <UserGamesTable
+              key={list}
+              gamesData={gamesByTagForAUser?.gamesByStatusForAUser[list]}
+              title={list[0].toUpperCase() + list.slice(1)}
+            />
+          );
+        })}
       </div>
-      <div className={styles.TableContainerSmall}>
-        <UserGameListMobile data={data} />
-      </div>
-      {/* {contextHolder} */}
-    </Layout>
+    </div>
   );
 }
 

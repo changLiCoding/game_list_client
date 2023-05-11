@@ -1,29 +1,32 @@
-import { Cascader, Layout } from 'antd';
-
 import styles from '@/components/FiltersWrapper/FilterField/FilterField.module.scss';
-import { Option } from '@/components/FiltersWrapper/types';
+import SelectDropdown from '@/components/SelectDropdown';
+import type { OnChangeCascaderType, DropDownOption } from '@/types/global';
+
+interface FilterFieldProps {
+  fieldName: string;
+  options: DropDownOption[];
+  onChange: (value: OnChangeCascaderType) => void;
+  changeOnSelect: boolean;
+  customCascaderStyle: string;
+}
 
 export default function FilterField({
   fieldName,
   options,
   onChange,
   changeOnSelect,
-}: {
-  fieldName: string;
-  options: Option[];
-  onChange: (value: string[]) => void;
-  changeOnSelect: boolean;
-}) {
+  customCascaderStyle,
+}: FilterFieldProps) {
   return (
-    <Layout className={styles.layoutFilterFieldContainer}>
+    <div className={styles.layoutFilterFieldContainer}>
       <h3 className={styles.h3FilterFieldTitle}>{fieldName}</h3>
-      <Cascader
-        className={styles.CascaderFilterFieldCascader}
-        placeholder={fieldName}
+      <SelectDropdown
+        fieldName={fieldName}
         options={options}
         onChange={onChange}
         changeOnSelect={changeOnSelect}
+        customCascaderStyle={customCascaderStyle}
       />
-    </Layout>
+    </div>
   );
 }

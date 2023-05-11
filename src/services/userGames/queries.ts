@@ -62,3 +62,45 @@ export const GAMES_FOR_A_USER = gql`
     }
   }
 `;
+
+export const GET_GAMES_BY_STATUS = gql`
+  query GamesByTagsForAUser {
+    gamesByStatusForAUser {
+      playing {
+        id
+        name
+        imageURL
+        avgScore
+        platforms
+      }
+      planning {
+        id
+        name
+        imageURL
+        avgScore
+        platforms
+      }
+      completed {
+        id
+        name
+        imageURL
+        avgScore
+        platforms
+      }
+      paused {
+        id
+        name
+        imageURL
+        avgScore
+        platforms
+      }
+      dropped {
+        id
+        name
+        imageURL
+        avgScore
+        platforms
+      }
+    }
+  }
+`;

@@ -1,43 +1,53 @@
 import { Layout, Grid, Input, Space, Button } from 'antd';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
+import { v4 as uuidv4 } from 'uuid';
 import { useState } from 'react';
-
 import styles from '@/components/FiltersWrapper/FiltersWrapper.module.scss';
 import FilterField from '@/components/FiltersWrapper/FilterField';
 import useGame from '@/services/game/useGame';
-
-interface Option {
-  value: string;
-  label: string;
-  children?: Option[];
-}
+import type { DropDownOption, OnChangeCascaderType } from '@/types/global';
 
 const { Search } = Input;
 
-export default function FilterWrapper() {
+export default function FilterWrapper({
+  setTagsArr,
+}: {
+  setTagsArr: React.Dispatch<
+    React.SetStateAction<
+      {
+        id: string;
+        value: string | OnChangeCascaderType;
+      }[]
+    >
+  >;
+}) {
   const [collapsed, setCollapsed] = useState(false);
 
   const { useBreakpoint } = Grid;
   const screens = useBreakpoint();
 
-  const onChange = (value: string[]): void => {
-    // console.log(value);
+  const onChange = (value: string | OnChangeCascaderType) => {
+    setTagsArr((prev) => [...prev, { id: uuidv4(), value }]);
   };
   const { genres, platforms, tags } = useGame();
 
-  const optionsGenerator = (typeArray: Array<{ name: string }>): Option[] =>
+  const optionsGenerator = (
+    typeArray: Array<{ name: string }>
+  ): DropDownOption[] =>
     typeArray.map((type: { name: string }) => ({
       value: type.name,
       label: type.name,
     }));
 
-  const genresOptions: Option[] = genres ? optionsGenerator(genres) : [];
+  const genresOptions: DropDownOption[] = genres
+    ? optionsGenerator(genres)
+    : [];
 
-  const platformsOptions: Option[] = platforms
+  const platformsOptions: DropDownOption[] = platforms
     ? optionsGenerator(platforms)
     : [];
 
-  const tagsOptions: Option[] = tags ? optionsGenerator(tags) : [];
+  const tagsOptions: DropDownOption[] = tags ? optionsGenerator(tags) : [];
 
   return tagsOptions.length === 0 ||
     genresOptions.length === 0 ||
@@ -49,6 +59,7 @@ export default function FilterWrapper() {
         <>
           <FilterField
             fieldName="Genres"
+            customCascaderStyle={styles.cascaderStyle}
             options={genresOptions}
             onChange={onChange}
             changeOnSelect
@@ -56,6 +67,7 @@ export default function FilterWrapper() {
 
           <FilterField
             fieldName="Platforms"
+            customCascaderStyle={styles.cascaderStyle}
             options={platformsOptions}
             onChange={onChange}
             changeOnSelect
@@ -65,12 +77,14 @@ export default function FilterWrapper() {
             options={tagsOptions}
             onChange={onChange}
             changeOnSelect
+            customCascaderStyle={styles.cascaderStyle}
           />
           <FilterField
             fieldName="Year"
             options={[]}
             onChange={onChange}
             changeOnSelect
+            customCascaderStyle={styles.cascaderStyle}
           />
         </>
       ) : (
@@ -83,7 +97,7 @@ export default function FilterWrapper() {
             className={styles.searchFiltersWrapperSearch}
             placeholder="input search text"
             size="large"
-            onSearch={(value) => {
+            onSearch={() => {
               // console.log(value);
             }}
             enterButton="Search"

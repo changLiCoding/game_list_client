@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Col, Card, Popover, Tag, Button, Divider } from 'antd';
 import {
   PlusCircleOutlined,
@@ -10,6 +11,7 @@ import { Link } from 'react-router-dom';
 
 import styles from '@/components/AllGames/GamesList/Game/Game.module.scss';
 import { Game as GameType } from '@/graphql/__generated__/graphql';
+import ListEditor from '@/components/ListEditor';
 
 export default function Game({
   game,
@@ -20,16 +22,15 @@ export default function Game({
 }) {
   const { Meta } = Card;
 
+  const [open, setOpen] = useState(false);
+
   const getRatingIcon = (avgScore: number, color: string) => {
     if (avgScore > 8.5) {
       return (
         <SmileOutlined
+          className={styles.ratingIcon}
           style={{
-            fontSize: '2.5rem',
             color: `${color}`,
-            position: 'absolute',
-            left: '80%',
-            top: '20%',
           }}
         />
       );
@@ -37,24 +38,18 @@ export default function Game({
     if (avgScore > 6.5) {
       return (
         <MehOutlined
+          className={styles.ratingIcon}
           style={{
-            fontSize: '2.5rem',
             color: `${color}`,
-            position: 'absolute',
-            left: '80%',
-            top: '20%',
           }}
         />
       );
     }
     return (
       <FrownOutlined
+        className={styles.ratingIcon}
         style={{
-          fontSize: '2.5rem',
           color: `${color}`,
-          position: 'absolute',
-          left: '80%',
-          top: '20%',
         }}
       />
     );
@@ -70,7 +65,7 @@ export default function Game({
       }
       format="hex"
     >
-      {({ data, loading, error }) => (
+      {({ data, error }) => (
         <Col
           className={styles.colGameCardContainer}
           xs={{ span: 12 }}
@@ -88,10 +83,11 @@ export default function Game({
                   <p>{`Released: ${game.releaseDate.slice(0, 10)}`}</p>
                 )}
 
-                <p>{`Average Score: ${game.avgScore}`}</p>
+                <p>{`Score: ${game.avgScore}`}</p>
 
                 {/* Conditional rendering icon */}
-                {game.avgScore && data && getRatingIcon(game.avgScore, data)}
+                {game.avgScore &&
+                  getRatingIcon(game.avgScore, data as string | '#6927d3')}
 
                 <Divider> Tags</Divider>
                 {game.tags.map((tag: string) => (
@@ -108,7 +104,6 @@ export default function Game({
               <Link to={`/game-detail/${game.id}/${game.name}`}>
                 {game.imageURL && (
                   <Card
-                    loading={loading}
                     className={styles.cardGameContainer}
                     bordered={false}
                     style={{
@@ -128,17 +123,19 @@ export default function Game({
             <Button
               onClick={(e) => {
                 e.stopPropagation();
+                setOpen(!open);
                 // console.log(game.id);
               }}
-              size="large"
+              size="middle"
               type="ghost"
               className={styles.buttonGameHovershow}
               style={{
                 color: `${data}`,
               }}
-              icon={<PlusCircleOutlined style={{ fontSize: '1.2rem' }} />}
+              icon={<PlusCircleOutlined style={{ fontSize: '1rem' }} />}
               shape="circle"
             />
+            <ListEditor open={open} setOpen={setOpen} game={game} />
           </Popover>
         </Col>
       )}

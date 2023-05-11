@@ -79,24 +79,15 @@ vi.mock('../../services/game/useGame', async () => {
   };
 });
 
-vi.mock('react-router-dom', async () => {
-  const actual: unknown = await vi.importActual('react-router-dom');
-  if (typeof actual !== 'object')
-    throw new Error('Import Actual did not return not an object');
-  return {
-    ...actual,
-    useNavigate: vi.fn().mockReturnValue((value: string) => value),
-  };
-});
-
 describe('Home Page', () => {
   it('Render Home Page without loading', async () => {
-    render(
+    const { queryByLabelText } = render(
       <ContextWrapper>
         <Home />
       </ContextWrapper>
     );
-    expect(screen.getByText('InfoBar')).toBeInTheDocument();
+    const tagIcon = queryByLabelText('tags') as HTMLElement;
+    expect(tagIcon).toBeInTheDocument();
     expect(screen.getByText('Search')).toBeInTheDocument();
     expect(screen.getByText('All Games')).toBeInTheDocument();
 

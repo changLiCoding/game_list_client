@@ -1,13 +1,17 @@
 import { Button, Layout, Dropdown, Space } from 'antd';
 import type { MenuProps } from 'antd';
+import { useState } from 'react';
 
 import { HeartOutlined, DownCircleOutlined } from '@ant-design/icons';
 
 import { Content } from 'antd/es/layout/layout';
+import ListEditor from '@/components/ListEditor';
 import { Game as GameType } from '@/graphql/__generated__/graphql';
 import styles from '@/components/GameDetailHeader/GameDetailHeaderInfo/GameDetailHeaderInfo.module.scss';
 
 function GameDetailHeaderInfo({ game }: { game: GameType }) {
+  const [open, setOpen] = useState(false);
+
   const items: MenuProps['items'] = [
     {
       key: '1',
@@ -22,7 +26,20 @@ function GameDetailHeaderInfo({ game }: { game: GameType }) {
     },
     {
       key: '3',
-      label: <Button type="text">Open List Editor</Button>,
+      label: (
+        <>
+          <Button
+            type="text"
+            onClick={(e) => {
+              e.preventDefault();
+              setOpen(!open);
+            }}
+          >
+            Open List Editor
+          </Button>
+          <ListEditor open={open} setOpen={setOpen} game={game} />
+        </>
+      ),
     },
   ];
 
@@ -61,8 +78,8 @@ function GameDetailHeaderInfo({ game }: { game: GameType }) {
           </div>
         </div>
         <div className={styles.infoInfo}>
-          <h1>{game?.name}</h1>
-          <p>{game?.description}</p>
+          <h1>{game.name}</h1>
+          <p>{game.description}</p>
           <div className={styles.infoInfoTags}>
             <a href="/">Overview</a>
             <a href="/">Reviews</a>

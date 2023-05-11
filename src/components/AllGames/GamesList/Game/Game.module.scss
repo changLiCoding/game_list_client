@@ -5,12 +5,13 @@
   .buttonGameHovershow {
     display: none;
     position: absolute;
-    top: 86%;
-    left: 82%;
+    bottom: 14px;
+    right: 9px;
   }
   &:hover .buttonGameHovershow {
     display: block;
   }
+
   & .cardGameContainer {
     box-shadow: none;
     transition: box-shadow 0.3s ease-in-out;
@@ -27,4 +28,13 @@
       }
     }
   }
+}
+
+:global(span.anticon-smile),
+:global(span.anticon-frown),
+:global(span.anticon-meh) {
+  position: absolute;
+  top: 20%;
+  left: 80%;
+  font-size: 2rem;
 }

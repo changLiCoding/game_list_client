@@ -5,14 +5,13 @@ describe('Get All Games By Platforms Query', () => {
   it('Successful queries games objects by platform ID', async () => {
     const query = await apolloClient.query({
       query: GET_ALL_GAMES_BY_PLATFORM,
-      variables: { platform: { ID: 1 } },
+      variables: { platform: { ID: 3 } },
       context: {
         headers: {
           Authorization: `Bearer ${import.meta.env.VITE_TOKEN_TEST}`,
         },
       },
     });
-
     const gameData = query.data.getAllGamesByPlatform[0];
     expect(gameData.__typename).toBe('Game');
     expect(gameData.name).toBeDefined();
@@ -21,7 +20,7 @@ describe('Get All Games By Platforms Query', () => {
   it('Successful queries games objects by platform name', async () => {
     const query = await apolloClient.query({
       query: GET_ALL_GAMES_BY_PLATFORM,
-      variables: { platform: { name: 'Xbox' } },
+      variables: { platform: { name: 'Xbox One' } },
       context: {
         headers: {
           Authorization: `Bearer ${import.meta.env.VITE_TOKEN_TEST}`,
@@ -37,7 +36,7 @@ describe('Get All Games By Platforms Query', () => {
   it('Successful queries a certain amount of games based on the limit field provided', async () => {
     const query = await apolloClient.query({
       query: GET_ALL_GAMES_BY_PLATFORM,
-      variables: { platform: { name: 'Xbox' }, limit: 1 },
+      variables: { platform: { name: 'Xbox One' }, limit: 1 },
       context: {
         headers: {
           Authorization: `Bearer ${import.meta.env.VITE_TOKEN_TEST}`,

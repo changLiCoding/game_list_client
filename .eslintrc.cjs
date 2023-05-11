@@ -50,6 +50,10 @@ module.exports = {
         packageDir: ['./'],
       },
     ],
+    'react/require-default-props': [
+      'error',
+      { ignoreFunctionalComponents: true },
+    ],
   },
   ignorePatterns: [
     'coverage/*.js',
