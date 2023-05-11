@@ -16,11 +16,22 @@ function Home() {
     { id: '2', value: 'Dark Souls II' },
     { id: '3', value: 'Dark Souls III' },
   ]);
+
+  const [isCardView, setIsCardView] = useState<boolean>(true);
   return (
     <div className={styles.homeContainer}>
-      <div className={styles.gamesContainer}>
+      <div
+        className={`${styles.gamesContainer} ${
+          isCardView ? null : styles.listsContainer
+        }`}
+      >
         <FiltersWrapper setTagsArr={setTagsArr} />
-        <AllGames tagsArr={tagsArr} setTagsArr={setTagsArr} />
+        <AllGames
+          tagsArr={tagsArr}
+          setTagsArr={setTagsArr}
+          isCardView={isCardView}
+          setIsCardView={setIsCardView}
+        />
       </div>
     </div>
   );

@@ -1,5 +1,4 @@
 import { Layout } from 'antd';
-import { useState } from 'react';
 import GamesList from '@/components/AllGames/GamesList';
 import InfoBar from '@/components/AllGames/InfoBar';
 import styles from '@/components/AllGames/AllGames.module.scss';
@@ -8,6 +7,8 @@ import { OnChangeCascaderType } from '@/types/global';
 export default function AllGames({
   tagsArr,
   setTagsArr,
+  isCardView,
+  setIsCardView,
 }: {
   tagsArr: { id: string; value: string | OnChangeCascaderType }[];
   setTagsArr: React.Dispatch<
@@ -18,11 +19,15 @@ export default function AllGames({
       }[]
     >
   >;
+  isCardView: boolean;
+  setIsCardView: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-  const [isCardView, setIsCardView] = useState<boolean>(true);
-
   return (
-    <Layout className={styles.layoutAllGamesContainer}>
+    <Layout
+      className={`${styles.layoutAllGamesContainer} ${
+        !isCardView ? styles.layoutAllListsContainer : null
+      }`}
+    >
       <InfoBar
         tagsArr={tagsArr}
         setTagsArr={setTagsArr}

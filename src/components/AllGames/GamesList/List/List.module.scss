@@ -2,6 +2,7 @@
 @use '../../../../styles/mixin.scss' as mixin;
 
 .gameListContainer {
+  margin-left: 80px;
   animation: showAnimation 0.3s linear;
   @keyframes showAnimation {
     0% {

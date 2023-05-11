@@ -28,4 +28,11 @@
       padding-right: 100px;
     }
   }
+
+  .listsContainer {
+    @include mixin.desktopLarge;
+    @include mixin.desktop {
+      max-width: 1140px;
+    }
+  }
 }
