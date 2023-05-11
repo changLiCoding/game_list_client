@@ -1,4 +1,5 @@
 import { Layout } from 'antd';
+import { useState } from 'react';
 import GamesList from '@/components/AllGames/GamesList';
 import InfoBar from '@/components/AllGames/InfoBar';
 import styles from '@/components/AllGames/AllGames.module.scss';
@@ -18,10 +19,17 @@ export default function AllGames({
     >
   >;
 }) {
+  const [isCardView, setIsCardView] = useState<boolean>(true);
+
   return (
     <Layout className={styles.layoutAllGamesContainer}>
-      <InfoBar tagsArr={tagsArr} setTagsArr={setTagsArr} />
-      <GamesList />
+      <InfoBar
+        tagsArr={tagsArr}
+        setTagsArr={setTagsArr}
+        isCardView={isCardView}
+        setIsCardView={setIsCardView}
+      />
+      <GamesList isCardView={isCardView} />
     </Layout>
   );
 }

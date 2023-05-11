@@ -8,6 +8,8 @@ import { OnChangeCascaderType } from '@/types/global';
 export default function InfoBar({
   tagsArr,
   setTagsArr,
+  isCardView,
+  setIsCardView,
 }: {
   setTagsArr: React.Dispatch<
     React.SetStateAction<
@@ -18,11 +20,13 @@ export default function InfoBar({
     >
   >;
   tagsArr: { id: string; value: string | number | OnChangeCascaderType }[];
+  isCardView: boolean;
+  setIsCardView: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   return (
     <Layout className={styles.infoBarContainer}>
       <FilterTags tagsArr={tagsArr} setTagsArr={setTagsArr} />
-      <SelectorsWrapper />
+      <SelectorsWrapper setIsCardView={setIsCardView} isCardView={isCardView} />
     </Layout>
   );
 }

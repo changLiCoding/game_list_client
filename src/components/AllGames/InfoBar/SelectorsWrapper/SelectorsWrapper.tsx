@@ -9,7 +9,13 @@ import type { MenuProps } from 'antd';
 import { Dropdown } from 'antd';
 import styles from '@/components/AllGames/InfoBar/SelectorsWrapper/SelectorsWrapper.module.scss';
 
-function SelectorsWrapper() {
+function SelectorsWrapper({
+  isCardView,
+  setIsCardView,
+}: {
+  isCardView: boolean;
+  setIsCardView: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   const [sortBy, setSortBy] = useState('Average Score');
 
   const sortItems: MenuProps['items'] = [
@@ -56,8 +62,14 @@ function SelectorsWrapper() {
         </div>
       </Dropdown>
       <div className={styles.wrapper}>
-        <AppstoreFilled className={styles.selectorIcon} />
-        <UnorderedListOutlined className={styles.selectorIcon} />
+        <AppstoreFilled
+          onClick={() => setIsCardView(true)}
+          className={`${styles.selectorIcon} ${isCardView && styles.selected}`}
+        />
+        <UnorderedListOutlined
+          onClick={() => setIsCardView(false)}
+          className={`${styles.selectorIcon} ${!isCardView && styles.selected}`}
+        />
       </div>
     </div>
   );
