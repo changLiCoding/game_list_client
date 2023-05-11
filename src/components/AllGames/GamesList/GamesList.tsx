@@ -1,7 +1,7 @@
 import { theme, Card, Row } from 'antd';
 import { Content } from 'antd/es/layout/layout';
 
-import Game from '@/components/AllGames/GamesList/Game';
+import GameCard from '@/components/AllGames/GamesList/GameCard';
 import useAllGames from '@/services/games/useAllGames';
 
 // import styles from '@/components/AllGames/GamesList/Game/Game.module.scss';
@@ -25,7 +25,7 @@ export default function GamesList() {
           }}
         >
           {games.map((game) => (
-            <Game
+            <GameCard
               key={game.id}
               game={game}
               colorBgContainer={colorBgContainer}
