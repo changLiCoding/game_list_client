@@ -6,9 +6,10 @@ import { useAppSelector } from '@/app/hooks';
 
 function UserGameList() {
   const listOrder = useAppSelector((state) => state.userGames.selectedLists);
-  const { gamesByTagForAUserLoading, gamesByTagForAUser } = useGamesByStatus();
+  const { gamesByStatusForAUserLoading, gamesByStatusForAUser } =
+    useGamesByStatus();
 
-  if (gamesByTagForAUserLoading) {
+  if (gamesByStatusForAUserLoading) {
     return <div>Loading...</div>;
   }
 
@@ -20,7 +21,7 @@ function UserGameList() {
           return (
             <UserGamesTable
               key={list}
-              gamesData={gamesByTagForAUser?.gamesByStatusForAUser[list]}
+              gamesData={gamesByStatusForAUser?.gamesByStatusForAUser[list]}
               title={list[0].toUpperCase() + list.slice(1)}
             />
           );
