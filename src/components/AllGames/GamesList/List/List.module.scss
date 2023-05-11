@@ -1,0 +1,85 @@
+@use '../../../../styles/variables.scss' as variables;
+@use '../../../../styles/mixin.scss' as mixin;
+
+.gameListContainer {
+  animation: showAnimation 0.3s linear;
+  @keyframes showAnimation {
+    0% {
+      opacity: 0;
+      transform: scale(0.96);
+    }
+
+    60% {
+      opacity: 1;
+    }
+    100% {
+      transform: none;
+    }
+  }
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  background: rgb(251, 251, 251);
+  border-radius: 4px;
+  padding: 10px;
+  box-shadow: 0 14px 30px rgba(103, 132, 187, 0.15),
+    0 4px 4px rgba(103, 132, 187, 0.05);
+  display: inline-grid;
+  grid-template-columns: 48px auto;
+  position: relative;
+  text-align: left;
+  min-height: 80px;
+
+  .gameRankNumber {
+    color: rgb(139, 160, 178);
+    display: flex;
+    font-size: 1.4rem;
+    font-weight: 900;
+    height: 50px;
+    left: -70px;
+    line-height: 0;
+    padding: 10px;
+    position: absolute;
+    text-align: left;
+    top: 18px;
+    width: 50px;
+    z-index: 2;
+    align-items: center;
+    border-radius: 50%;
+
+    & .gameRankHash {
+      font-size: 1.8rem;
+      padding-top: 4px;
+      color: rgba(139, 160, 178, 0.7);
+
+      line-height: 0;
+    }
+  }
+
+  .gameLink {
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+    background-color: transparent;
+    .gameImage {
+      opacity: 1;
+      height: 100%;
+      left: 0;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+      transition: opacity 0.3s ease-in-out;
+      width: 100%;
+      vertical-align: text-top;
+    }
+  }
+
+  .gameContent {
+    padding: 8px 16px;
+    padding-right: 8px;
+    min-width: 0;
+    align-items: center;
+    display: grid;
+    grid-template-columns: minmax(auto, calc(100% - 440px)) 130px 130px 150px;
+    grid-gap: 10px;
+  }
+}
