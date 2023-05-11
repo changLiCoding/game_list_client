@@ -20,6 +20,7 @@ function TextAreaInput({
       onChange={(e) => onChange(e)}
       placeholder={fieldName}
       className={customCascaderStyle}
+      data-testid={`text-area-${fieldName}`}
     />
   );
 }
