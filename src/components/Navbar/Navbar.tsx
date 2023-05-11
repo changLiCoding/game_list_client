@@ -20,7 +20,6 @@ export default function Navbar() {
   const { loading, userState } = useTokenAuth();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
   const screens = useBreakpoint();
 
   const logout = () => {
@@ -97,6 +96,7 @@ export default function Navbar() {
                   <MenuOutlined
                     className={styles['mobile-nav__hamburger']}
                     onClick={showDrawer}
+                    data-testId="mobile-nav__hamburger"
                   />
                   <Drawer
                     className={styles['mobile-nav__header-drawer']}
@@ -153,6 +153,7 @@ export default function Navbar() {
                     {!loading && userState?.user?.username ? (
                       <Popover content={content}>
                         <Image
+                          data-testid="profile-image"
                           width={38}
                           height={38}
                           preview={false}
