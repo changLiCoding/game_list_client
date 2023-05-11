@@ -9,18 +9,7 @@ import type { DropDownOption, OnChangeCascaderType } from '@/types/global';
 
 const { Search } = Input;
 
-export default function FilterWrapper({
-  setTagsArr,
-}: {
-  setTagsArr: React.Dispatch<
-    React.SetStateAction<
-      {
-        id: string;
-        value: string | OnChangeCascaderType;
-      }[]
-    >
-  >;
-}) {
+export default function FilterWrapper({ setTagsArr }: FilterWrapperType) {
   const [collapsed, setCollapsed] = useState(false);
 
   const { useBreakpoint } = Grid;
