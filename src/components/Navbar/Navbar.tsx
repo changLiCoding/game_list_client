@@ -109,10 +109,10 @@ export default function Navbar() {
                         <a href="/">Home</a>
                       </li>
                       <li className={styles['mobile-nav__header-drawer-item']}>
-                        <a href="/">Profile</a>
+                        <a href="/profile">Profile</a>
                       </li>
                       <li className={styles['mobile-nav__header-drawer-item']}>
-                        <a href="/">Game List</a>
+                        <a href="/game-list">Game List</a>
                       </li>
                       {!loading && userState?.user?.username ? (
                         <li
@@ -145,7 +145,7 @@ export default function Navbar() {
                       <a href="/profile">Profile</a>
                     </li>
                     <li className={styles['desktop-nav__nav-item']}>
-                      <a href="/list">Game List</a>
+                      <a href="/game-list">Game List</a>
                     </li>
                   </ul>
 
