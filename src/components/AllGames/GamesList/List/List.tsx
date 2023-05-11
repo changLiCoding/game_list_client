@@ -1,3 +1,6 @@
+import { Tag } from 'antd';
+import { FrownOutlined, MehOutlined, SmileOutlined } from '@ant-design/icons';
+
 import { Game as GameType } from '@/graphql/__generated__/graphql';
 import styles from '@/components/AllGames/GamesList/List/List.module.scss';
 
@@ -8,6 +11,36 @@ function List({
   game: GameType;
   colorBgContainer: string;
 }): JSX.Element {
+  const getRatingIcon = (avgScore: number, color: string) => {
+    if (avgScore > 8.5) {
+      return (
+        <SmileOutlined
+          className={styles.listRatingIcon}
+          style={{
+            color: `${color}`,
+          }}
+        />
+      );
+    }
+    if (avgScore > 6.5) {
+      return (
+        <MehOutlined
+          className={styles.listRatingIcon}
+          style={{
+            color: `${color}`,
+          }}
+        />
+      );
+    }
+    return (
+      <FrownOutlined
+        className={styles.listRatingIcon}
+        style={{
+          color: `${color}`,
+        }}
+      />
+    );
+  };
   return (
     <div
       className={styles.gameListContainer}
@@ -29,7 +62,46 @@ function List({
           />
         )}
       </a>
-      <div className={styles.gameContent}>{game.name}</div>
+      <div className={styles.gameContent}>
+        <div className={styles.gameTitle}>
+          <div>
+            <a href={`/game-detail/${game.id}/${game.name}`}>{game.name}</a>
+          </div>
+          <div className={styles.gameGenres}>
+            {game.genres.map((genre: string) => (
+              <Tag
+                bordered={false}
+                color="geekblue"
+                key={`${game.name}-${genre}`}
+              >
+                {genre}
+              </Tag>
+            ))}
+          </div>
+        </div>
+        <div className={styles.gameRating}>
+          {game.avgScore && getRatingIcon(game.avgScore, '#91caff')}
+          <div>
+            Rating: {game.avgScore}
+            <div>99999 users</div>
+          </div>
+        </div>
+        <div className={styles.gamePlatforms}>
+          {game.platforms.map((platform: string) => (
+            <Tag
+              key={`${platform}-${game.name}`}
+              className={styles.gamePlatform}
+              color="geekblue"
+              style={{ maxWidth: '90px', overflow: 'hidden' }}
+            >
+              {platform}
+            </Tag>
+          ))}
+        </div>
+        <div className={styles.gameReleaseDate}>
+          {new Date(game.releaseDate).toISOString().slice(0, 10)}
+        </div>
+      </div>
     </div>
   );
 }

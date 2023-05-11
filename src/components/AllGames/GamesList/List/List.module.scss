@@ -82,5 +82,55 @@
     display: grid;
     grid-template-columns: minmax(auto, calc(100% - 440px)) 130px 130px 150px;
     grid-gap: 10px;
+    color: rgb(100, 115, 128);
+    font-size: 0.7rem;
+    font-weight: 600;
+
+    .gameTitle {
+      div:first-child {
+        color: rgb(81, 97, 112);
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 8px;
+        a {
+          color: inherit;
+          text-decoration: none;
+          transition: 0.15s ease-in-out;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+      }
+
+      .gameGenres {
+        align-items: center;
+        display: flex;
+        flex-wrap: wrap;
+        height: 18px;
+        overflow: hidden;
+        margin-left: -2px;
+      }
+    }
+
+    .gameRating {
+      & span {
+        position: relative;
+        top: auto;
+        left: auto;
+        font-size: 0.9rem;
+        vertical-align: top;
+        width: 1.25em;
+      }
+
+      & div {
+        display: inline-block;
+        padding-left: 5px;
+        & div {
+          margin-top: 5px;
+          padding-left: 0px;
+          display: block;
+        }
+      }
+    }
   }
 }
