@@ -26,7 +26,6 @@ const useTokenAuth = () => {
     }
   }, [data, dispatch]);
 
-  console.log('hello');
   return { loading, userState };
 };
 

@@ -1,6 +1,5 @@
 import { describe, it, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { render } from '@testing-library/react';
 import Navbar from '@/components/Navbar/Navbar';
 import ContextWrapper from '@/ContextWrapper';
 
