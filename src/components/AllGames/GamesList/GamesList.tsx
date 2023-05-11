@@ -5,7 +5,7 @@ import GameCard from '@/components/AllGames/GamesList/GameCard';
 import List from '@/components/AllGames/GamesList/List';
 import useAllGames from '@/services/games/useAllGames';
 
-// import styles from '@/components/AllGames/GamesList/Game/Game.module.scss';
+import styles from '@/components/AllGames/GamesList/GamesList.module.scss';
 
 export default function GamesList({ isCardView }: { isCardView: boolean }) {
   const { games } = useAllGames();
@@ -16,32 +16,39 @@ export default function GamesList({ isCardView }: { isCardView: boolean }) {
 
   return (
     <Content>
-      <Card title="All Games">
-        <Row
-          gutter={{
-            xs: 8,
-            sm: 16,
-            md: 24,
-            xl: 32,
-          }}
-        >
-          {games.map((game) => {
-            return isCardView ? (
+      {isCardView ? (
+        <Card title="All Games">
+          <Row
+            gutter={{
+              xs: 8,
+              sm: 16,
+              md: 24,
+              xl: 32,
+            }}
+          >
+            {games.map((game) => (
               <GameCard
                 key={game.id}
                 game={game}
                 colorBgContainer={colorBgContainer}
               />
-            ) : (
+            ))}
+          </Row>
+        </Card>
+      ) : (
+        <div className={styles.allListContainer}>
+          <div className={styles.allListTitle}>All Games</div>
+          <div className={styles.allListDivider}>
+            {games.map((game) => (
               <List
                 key={game.id}
                 game={game}
                 colorBgContainer={colorBgContainer}
               />
-            );
-          })}
-        </Row>
-      </Card>
+            ))}
+          </div>
+        </div>
+      )}
     </Content>
   );
 }
