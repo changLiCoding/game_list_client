@@ -7,6 +7,8 @@ import { OnChangeCascaderType } from '@/types/global';
 export default function AllGames({
   tagsArr,
   setTagsArr,
+  isCardView,
+  setIsCardView,
 }: {
   tagsArr: { id: string; value: string | OnChangeCascaderType }[];
   setTagsArr: React.Dispatch<
@@ -17,11 +19,22 @@ export default function AllGames({
       }[]
     >
   >;
+  isCardView: boolean;
+  setIsCardView: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   return (
-    <Layout className={styles.layoutAllGamesContainer}>
-      <InfoBar tagsArr={tagsArr} setTagsArr={setTagsArr} />
-      <GamesList />
+    <Layout
+      className={`${styles.layoutAllGamesContainer} ${
+        !isCardView ? styles.layoutAllListsContainer : null
+      }`}
+    >
+      <InfoBar
+        tagsArr={tagsArr}
+        setTagsArr={setTagsArr}
+        isCardView={isCardView}
+        setIsCardView={setIsCardView}
+      />
+      <GamesList isCardView={isCardView} />
     </Layout>
   );
 }

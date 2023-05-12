@@ -9,11 +9,11 @@ import {
 import Color from 'color-thief-react';
 import { Link } from 'react-router-dom';
 
-import styles from '@/components/AllGames/GamesList/Game/Game.module.scss';
+import styles from '@/components/AllGames/GamesList/GameCard/GameCard.module.scss';
 import { Game as GameType } from '@/graphql/__generated__/graphql';
 import ListEditor from '@/components/ListEditor';
 
-export default function Game({
+export default function GameCard({
   game,
   colorBgContainer,
 }: {
