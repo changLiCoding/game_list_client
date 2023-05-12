@@ -6,7 +6,6 @@ import List from '@/components/AllGames/GamesList/List';
 import useAllGames from '@/services/games/useAllGames';
 
 import styles from '@/components/AllGames/GamesList/GamesList.module.scss';
-import { Game as GameType } from '@/graphql/__generated__/graphql';
 
 export default function GamesList({ isCardView }: { isCardView: boolean }) {
   const { games } = useAllGames();

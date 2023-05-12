@@ -57,7 +57,7 @@ describe('Games List Component', () => {
   it('should render the games list', async () => {
     const { queryByText, queryByLabelText } = render(
       <ContextWrapper>
-        <GamesList />
+        <GamesList isCardView />
       </ContextWrapper>
     );
 
