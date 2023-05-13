@@ -1,6 +1,7 @@
 import { Tag } from 'antd';
 import { FrownOutlined, MehOutlined, SmileOutlined } from '@ant-design/icons';
 import Color from 'color-thief-react';
+import { useEffect } from 'react';
 
 import { Game as GameType } from '@/graphql/__generated__/graphql';
 import styles from '@/components/AllGames/GamesList/List/List.module.scss';
@@ -12,6 +13,10 @@ function List({
   game: GameType;
   colorBgContainer: string;
 }): JSX.Element {
+  useEffect(() => {
+    console.log('Here is the width of screen!!!: ', window.innerWidth);
+  }, []);
+
   const getRatingIcon = (avgScore: number, color: string) => {
     if (avgScore > 8.5) {
       return (
@@ -97,7 +102,7 @@ function List({
                 <div>99999 users</div>
               </div>
             </div>
-            <div className={styles.gamePlatforms}>
+            <div className={styles.gamePlatforms} data-testid="gamePlatforms">
               {game.platforms.map((platform: string) => (
                 <Tag
                   key={`${platform}-${game.name}`}
