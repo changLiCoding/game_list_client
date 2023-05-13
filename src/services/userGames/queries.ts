@@ -107,6 +107,7 @@ export const GET_GAMES_BY_STATUS = gql`
       pausedCount
       droppedCount
       totalCount
+      listsOrder
       errors
     }
   }

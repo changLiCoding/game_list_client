@@ -1,13 +1,28 @@
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import styles from './UserGameListStyle.module.scss';
 import useGamesByStatus from '@/services/userGames/useGamesByStatus';
 import FilterColumn from '@/components/UserListFilterColumn';
 import UserGamesTable from '@/components/GamesListTable';
 import { useAppSelector } from '@/app/hooks';
+import { setListOrder } from '@/features/userUserGamesListSlice';
 
 function UserGameList() {
+  const dispatch = useDispatch();
   const listOrder = useAppSelector((state) => state.userGames.selectedLists);
   const { gamesByStatusForAUserLoading, gamesByStatusForAUser } =
     useGamesByStatus();
+
+  // Initialize the listsOrder in redux toolkit
+  useEffect(() => {
+    if (gamesByStatusForAUser?.gamesByStatusForAUser?.listsOrder) {
+      dispatch(
+        setListOrder(
+          gamesByStatusForAUser?.gamesByStatusForAUser?.listsOrder.split(',')
+        )
+      );
+    }
+  }, [dispatch, gamesByStatusForAUser?.gamesByStatusForAUser?.listsOrder]);
 
   if (gamesByStatusForAUserLoading) {
     return <div>Loading...</div>;
