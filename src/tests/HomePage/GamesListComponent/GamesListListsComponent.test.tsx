@@ -1,5 +1,5 @@
 import { describe, it, vi } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, toHaveStyle } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import ContextWrapper from '@/ContextWrapper';
 import GamesList from '@/components/AllGames/GamesList/index';
@@ -61,7 +61,9 @@ vi.mock('../../../services/games/useAllGames', async () => {
 
 describe('Games List Component', () => {
   beforeEach(() => {
-    window.innerWidth = 800;
+    // window.innerWidth = 800;
+    global.innerWidth = 550;
+    global.dispatchEvent(new Event('resize'));
   });
 
   // afterEach(() => {
@@ -89,17 +91,21 @@ describe('Games List Component', () => {
     // Object.defineProperty(window, 'innerWidth', {
     //   writable: true,
     //   configurable: true,
-    //   value: 150,
+    //   value: 550,
     // });
 
     // window.dispatchEvent(new Event('resize'));
 
-    // expect(window.innerWidth).toBe(150);
+    // expect(window.innerWidth).toBe(550);
 
     const platforms = screen.queryAllByTestId('gamePlatforms') as HTMLElement[];
     const platformOne = platforms[0];
     expect(platformOne).toHaveTextContent('PC');
     debug(platformOne);
-    // expect(platformOne).toHaveStyle('display: none;');
+    const style = window.getComputedStyle(platformOne);
+    console.log('style of platformOne: ', style);
+    expect(style.display).toBe('none');
+
+    expect(platformOne).toHaveStyleRule('display: none');
   });
 });

@@ -24,12 +24,17 @@ describe('ListEditor Component', () => {
 
     const setOpenMock = vi.fn();
 
-    const { queryByText, queryByAltText, queryByTestId, queryAllByRole } =
-      render(
-        <ContextWrapper>
-          <ListEditor game={game} open setOpen={setOpenMock} />
-        </ContextWrapper>
-      );
+    const {
+      queryByText,
+      queryByAltText,
+      queryByTestId,
+      queryAllByRole,
+      debug,
+    } = render(
+      <ContextWrapper>
+        <ListEditor game={game} open setOpen={setOpenMock} />
+      </ContextWrapper>
+    );
     expect(queryByText('Game 1')).toBeInTheDocument();
     const coverElement = queryByAltText('Game 1') as HTMLImageElement;
     expect(coverElement).toBeInTheDocument();
@@ -57,6 +62,8 @@ describe('ListEditor Component', () => {
     await waitFor(async () => {
       const todayButton = queryByText('Today') as HTMLElement;
       expect(todayButton).toBeInTheDocument();
+
+      debug(todayButton);
 
       await userEvent.click(todayButton);
       expect(startDateElement).toHaveValue(
