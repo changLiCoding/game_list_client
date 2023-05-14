@@ -5,7 +5,7 @@ import useGamesByStatus from '@/services/userGames/useGamesByStatus';
 import FilterColumn from '@/components/UserListFilterColumn';
 import UserGamesTable from '@/components/GamesListTable';
 import { useAppSelector } from '@/app/hooks';
-import { setListOrder } from '@/features/userUserGamesListSlice';
+import { setInitialState } from '@/features/userUserGamesListSlice';
 
 function UserGameList() {
   const dispatch = useDispatch();
@@ -17,7 +17,7 @@ function UserGameList() {
   useEffect(() => {
     if (gamesByStatusForAUser?.gamesByStatusForAUser?.listsOrder) {
       dispatch(
-        setListOrder(
+        setInitialState(
           gamesByStatusForAUser?.gamesByStatusForAUser?.listsOrder.split(',')
         )
       );

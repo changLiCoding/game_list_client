@@ -8,7 +8,7 @@ import type {
   StatusListType,
 } from '@/components/UserListFilterColumn/types';
 import StatusItem from '@/components/UserListFilterColumn/Desktop/StatusItem';
-import { setListOrder } from '@/features/userUserGamesListSlice';
+import { setLocalListOrder } from '@/features/userUserGamesListSlice';
 import { useAppSelector } from '@/app/hooks';
 
 const reorder = (
@@ -25,7 +25,7 @@ const reorder = (
 
 function ReorderLists() {
   const dispatch = useDispatch();
-  const listState = useAppSelector((state) => state.userGames.listOrder);
+  const listState = useAppSelector((state) => state.userGames.localListOrder);
 
   const formattedListState = listState.map((item) => ({
     id: item,
@@ -47,7 +47,7 @@ function ReorderLists() {
       result.destination.index
     );
 
-    dispatch(setListOrder(newStatusOrder.map((item) => item.id)));
+    dispatch(setLocalListOrder(newStatusOrder.map((item) => item.id)));
   };
 
   return (

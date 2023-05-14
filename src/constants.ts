@@ -47,4 +47,5 @@ export const INITIAL_USER_GAME_LISTS = {
   selectedList: 'all',
   selectedLists: ['planning', 'playing', 'paused', 'completed', 'dropped'],
   listOrder: ['planning', 'playing', 'paused', 'completed', 'dropped'],
+  localListOrder: ['planning', 'playing', 'paused', 'completed', 'dropped'],
 };
