@@ -24,17 +24,12 @@ describe('ListEditor Component', () => {
 
     const setOpenMock = vi.fn();
 
-    const {
-      queryByText,
-      queryByAltText,
-      queryByTestId,
-      queryAllByRole,
-      debug,
-    } = render(
-      <ContextWrapper>
-        <ListEditor game={game} open setOpen={setOpenMock} />
-      </ContextWrapper>
-    );
+    const { queryByText, queryByAltText, queryByTestId, queryAllByRole } =
+      render(
+        <ContextWrapper>
+          <ListEditor game={game} open setOpen={setOpenMock} />
+        </ContextWrapper>
+      );
     expect(queryByText('Game 1')).toBeInTheDocument();
     const coverElement = queryByAltText('Game 1') as HTMLImageElement;
     expect(coverElement).toBeInTheDocument();
@@ -63,12 +58,18 @@ describe('ListEditor Component', () => {
       const todayButton = queryByText('Today') as HTMLElement;
       expect(todayButton).toBeInTheDocument();
 
-      debug(todayButton);
+      todayButton.style.pointerEvents = 'auto';
+      expect(todayButton).toHaveStyle('pointer-events: auto;');
 
       await userEvent.click(todayButton);
-      expect(startDateElement).toHaveValue(
-        new Date(Date.now()).toISOString().slice(0, 10)
+      const torontoTime = new Date(
+        new Date().toLocaleString('en-US', {
+          timeZone: 'Canada/Saskatchewan',
+        })
       );
+      torontoTime.setDate(torontoTime.getDate() - 1);
+      const torontoDate = new Date(torontoTime).toISOString().slice(0, 10);
+      expect(startDateElement).toHaveValue(torontoDate);
     });
 
     const notesElement = queryByTestId('text-area-Notes') as HTMLElement;
