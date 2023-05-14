@@ -4,7 +4,7 @@ import Color from 'color-thief-react';
 import { useEffect } from 'react';
 
 import { Game as GameType } from '@/graphql/__generated__/graphql';
-// import styles from '@/components/AllGames/GamesList/List/List.module.scss';
+import styles from '@/components/AllGames/GamesList/List/List.module.scss';
 import './List.css';
 
 function List({
@@ -22,7 +22,7 @@ function List({
     if (avgScore > 8.5) {
       return (
         <SmileOutlined
-          className="listRatingIcon"
+          className={styles.listRatingIcon}
           style={{
             color: `${color}`,
           }}
@@ -32,7 +32,7 @@ function List({
     if (avgScore > 6.5) {
       return (
         <MehOutlined
-          className="istRatingIcon"
+          className={styles.listRatingIcon}
           style={{
             color: `${color}`,
           }}
@@ -41,7 +41,7 @@ function List({
     }
     return (
       <FrownOutlined
-        className="listRatingIcon"
+        className={styles.listRatingIcon}
         style={{
           color: `${color}`,
         }}
@@ -58,26 +58,33 @@ function List({
       }
       format="hex"
     >
-      {({ data, error }) => (
+      {({ data }) => (
         <div
-          className="gameListContainer"
+          className={styles.gameListContainer}
           style={{ backgroundColor: `${colorBgContainer}` }}
         >
-          <div className="gameRankNumber">
-            <span className="gameRankHash">#</span>
+          <div className={styles.gameRankNumber}>
+            <span className={styles.gameRankHash}>#</span>
             {game.id}
           </div>
-          <a href={`/game-detail/${game.id}/${game.name}`} className="gameLink">
+          <a
+            href={`/game-detail/${game.id}/${game.name}`}
+            className={styles.gameLink}
+          >
             {game.imageURL && (
-              <img src={game?.imageURL} className="gameImage" alt={game.name} />
+              <img
+                src={game?.imageURL}
+                className={styles.gameImage}
+                alt={game.name}
+              />
             )}
           </a>
-          <div className="gameContent">
-            <div className="gameTitle">
+          <div className={styles.gameContent}>
+            <div className={styles.gameTitle}>
               <div>
                 <a href={`/game-detail/${game.id}/${game.name}`}>{game.name}</a>
               </div>
-              <div className="gameGenres">
+              <div className={styles.gameGenres}>
                 {game.genres.map((genre: string) => (
                   <Tag
                     bordered={false}
@@ -89,18 +96,18 @@ function List({
                 ))}
               </div>
             </div>
-            <div className="gameRating">
+            <div className={styles.gameRating}>
               {game.avgScore && getRatingIcon(game.avgScore, '#91caff')}
               <div>
                 Rating: {game.avgScore}
                 <div>99999 users</div>
               </div>
             </div>
-            <div className="gamePlatforms" data-testid="gamePlatforms">
+            <div className={styles.gamePlatforms} data-testid="gamePlatforms">
               {game.platforms.map((platform: string) => (
                 <Tag
                   key={`${platform}-${game.name}`}
-                  className="gamePlatform"
+                  className={styles.gamePlatform}
                   color="geekblue"
                   style={{
                     marginBottom: '5px',
@@ -113,7 +120,7 @@ function List({
                 </Tag>
               ))}
             </div>
-            <div className="gameReleaseDate">
+            <div className={styles.gameReleaseDate}>
               <div>Release Date: </div>
               {new Date(game.releaseDate).toISOString().slice(0, 10)}
             </div>
