@@ -9,7 +9,9 @@ import { setInitialState } from '@/features/userUserGamesListSlice';
 
 function UserGameList() {
   const dispatch = useDispatch();
-  const listOrder = useAppSelector((state) => state.userGames.selectedLists);
+  const selectedLists = useAppSelector(
+    (state) => state.userGames.selectedLists
+  );
   const { gamesByStatusForAUserLoading, gamesByStatusForAUser } =
     useGamesByStatus();
 
@@ -32,7 +34,7 @@ function UserGameList() {
     <div className={styles.mainContainer}>
       <FilterColumn />
       <div>
-        {listOrder.map((list) => {
+        {selectedLists.map((list) => {
           return (
             <UserGamesTable
               key={list}

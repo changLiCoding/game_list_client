@@ -14,8 +14,8 @@ vi.mock('../../services/userGames/useGamesByStatus', async () => {
   return {
     ...actual,
     default: () => ({
-      gamesByTagForAUserLoading: false,
-      gamesByTagForAUser: {
+      gamesByStatusForAUserLoading: false,
+      gamesByStatusForAUser: {
         gamesByStatusForAUser: {
           playing: [
             {
