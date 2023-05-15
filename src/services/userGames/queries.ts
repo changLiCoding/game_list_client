@@ -72,6 +72,8 @@ export const GET_GAMES_BY_STATUS = gql`
         imageURL
         avgScore
         platforms
+        tags
+        genres
       }
       planning {
         id
@@ -79,6 +81,8 @@ export const GET_GAMES_BY_STATUS = gql`
         imageURL
         avgScore
         platforms
+        tags
+        genres
       }
       completed {
         id
@@ -86,6 +90,8 @@ export const GET_GAMES_BY_STATUS = gql`
         imageURL
         avgScore
         platforms
+        tags
+        genres
       }
       paused {
         id
@@ -93,6 +99,8 @@ export const GET_GAMES_BY_STATUS = gql`
         imageURL
         avgScore
         platforms
+        tags
+        genres
       }
       dropped {
         id
@@ -100,6 +108,8 @@ export const GET_GAMES_BY_STATUS = gql`
         imageURL
         avgScore
         platforms
+        tags
+        genres
       }
       playingCount
       planningCount

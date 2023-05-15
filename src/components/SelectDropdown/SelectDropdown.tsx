@@ -11,7 +11,7 @@ function SelectDropdown({
 }: {
   fieldName: string;
   options: DropDownOption[];
-  onChange: (value: OnChangeCascaderType) => void;
+  onChange: (value: OnChangeCascaderType, fieldName: string) => void;
   changeOnSelect: boolean;
   customCascaderStyle: string;
 }) {
@@ -20,7 +20,7 @@ function SelectDropdown({
       className={customCascaderStyle}
       placeholder={fieldName}
       options={options}
-      onChange={(e: OnChangeCascaderType) => onChange(e)}
+      onChange={(e: OnChangeCascaderType) => onChange(e, fieldName)}
       changeOnSelect={changeOnSelect}
       data-testid={`dropdown-${fieldName}`}
       dropdownMenuColumnStyle={{ width: '190px' }}

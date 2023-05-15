@@ -1,4 +1,4 @@
-@use "../../styles/mixin" as mixin;
+@use '../../styles/mixin' as mixin;
 
 .Title {
   max-width: 1000px;
@@ -11,13 +11,32 @@
   }
 }
 
-.TableContainer{
+.TableContainer {
   display: flex;
   justify-content: center;
   align-items: center;
   max-width: 1000px;
   background-color: white;
-  box-shadow: 0 0 40px rgba(0,0,0,0.16);
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.16);
+  overflow: hidden;
+  margin: 0 auto;
+  border-radius: 12px;
+  @include mixin.tablet {
+    max-width: 95%;
+  }
+  @include mixin.phone {
+    display: none;
+  }
+}
+
+.placeholderStyle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 1000px;
+  width: 66vw;
+  background-color: white;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.16);
   overflow: hidden;
   margin: 0 auto;
   border-radius: 12px;

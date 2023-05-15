@@ -34,6 +34,15 @@ export const userGamesListSlice = createSlice({
     resetLocalListOrder: (state) => {
       state.localListOrder = state.listOrder;
     },
+    setFilters: (state, action) => {
+      if (action.payload.type === 'Platform') {
+        state.filters.platform = action.payload.value;
+      } else if (action.payload.type === 'Status') {
+        state.filters.tag = action.payload.value;
+      } else if (action.payload.type === 'Genres') {
+        state.filters.genre = action.payload.value;
+      }
+    },
   },
 });
 
@@ -43,6 +52,7 @@ export const {
   setListOrder,
   setLocalListOrder,
   resetLocalListOrder,
+  setFilters,
 } = userGamesListSlice.actions;
 
 export default userGamesListSlice.reducer;
