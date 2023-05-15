@@ -1,0 +1,23 @@
+@use '../../styles/mixin' as mixin;
+
+.Hello {
+  color: aqua;
+  font-size: larger;
+  @include mixin.tablet {
+    display: none;
+  }
+  @include mixin.phone {
+    display: none;
+  }
+}
+
+.Hi {
+  display: none;
+
+  color: red;
+  font-size: x-large;
+  @include mixin.tablet {
+    display: flex;
+    margin-left: 2rem;
+  }
+}
