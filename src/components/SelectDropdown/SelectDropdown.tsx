@@ -1,5 +1,5 @@
 import { Cascader } from 'antd';
-// import styles from './SelectDropdownStyle.module.scss';
+import styles from './SelectDropdownStyle.module.scss';
 import type { DropDownOption, OnChangeCascaderType } from '@/types/global';
 
 function SelectDropdown({
@@ -23,6 +23,7 @@ function SelectDropdown({
       onChange={(e: OnChangeCascaderType) => onChange(e)}
       changeOnSelect={changeOnSelect}
       data-testid={`dropdown-${fieldName}`}
+      dropdownMenuColumnStyle={{ width: '190px' }}
     />
   );
 }

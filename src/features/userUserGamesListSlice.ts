@@ -16,16 +16,33 @@ export const userGamesListSlice = createSlice({
         state.selectedLists = [action.payload];
       }
     },
-    setListOrder: (state, action) => {
+    setInitialState: (state, action) => {
       state.listOrder = action.payload;
+      state.localListOrder = action.payload;
+      state.selectedLists = action.payload;
+    },
+    setListOrder: (state) => {
+      state.listOrder = state.localListOrder;
 
       if (state.selectedList === 'all') {
-        state.selectedLists = action.payload;
+        state.selectedLists = state.localListOrder;
       }
+    },
+    setLocalListOrder: (state, action) => {
+      state.localListOrder = action.payload;
+    },
+    resetLocalListOrder: (state) => {
+      state.localListOrder = state.listOrder;
     },
   },
 });
 
-export const { setSelectedList, setListOrder } = userGamesListSlice.actions;
+export const {
+  setSelectedList,
+  setInitialState,
+  setListOrder,
+  setLocalListOrder,
+  resetLocalListOrder,
+} = userGamesListSlice.actions;
 
 export default userGamesListSlice.reducer;

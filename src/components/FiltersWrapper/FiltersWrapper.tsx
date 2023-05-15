@@ -9,18 +9,7 @@ import type { DropDownOption, OnChangeCascaderType } from '@/types/global';
 
 const { Search } = Input;
 
-export default function FilterWrapper({
-  setTagsArr,
-}: {
-  setTagsArr: React.Dispatch<
-    React.SetStateAction<
-      {
-        id: string;
-        value: string | OnChangeCascaderType;
-      }[]
-    >
-  >;
-}) {
+export default function FilterWrapper({ setTagsArr }: FilterWrapperType) {
   const [collapsed, setCollapsed] = useState(false);
 
   const { useBreakpoint } = Grid;
@@ -31,12 +20,10 @@ export default function FilterWrapper({
   };
   const { genres, platforms, tags } = useGame();
 
-  const optionsGenerator = (
-    typeArray: Array<{ name: string }>
-  ): DropDownOption[] =>
-    typeArray.map((type: { name: string }) => ({
-      value: type.name,
-      label: type.name,
+  const optionsGenerator = (typeArray: string[]): DropDownOption[] =>
+    typeArray.map((name) => ({
+      value: name,
+      label: name,
     }));
 
   const genresOptions: DropDownOption[] = genres

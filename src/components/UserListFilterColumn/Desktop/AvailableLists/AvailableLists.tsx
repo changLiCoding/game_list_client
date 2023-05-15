@@ -4,34 +4,72 @@ import { useDispatch } from 'react-redux';
 import styles from './AvailableListsStyle.module.scss';
 import { setSelectedList } from '@/features/userUserGamesListSlice';
 import { useAppSelector } from '@/app/hooks';
+import useGamesByStatus from '@/services/userGames/useGamesByStatus';
 
 function AvailableLists() {
   const dispatch = useDispatch();
-  // const [selectedItem, setSelectedItem] = useState<string>('All');
   const selectedItem = useAppSelector((state) => state.userGames.selectedList);
-  const data = ['All', 'Planning', 'Playing'];
+
+  const { gamesByStatusForAUser } = useGamesByStatus();
+
+  const data = [];
+  if (gamesByStatusForAUser?.gamesByStatusForAUser?.totalCount) {
+    data.push({
+      name: 'All',
+      count: gamesByStatusForAUser?.gamesByStatusForAUser?.totalCount,
+    });
+  }
+  if (gamesByStatusForAUser?.gamesByStatusForAUser?.planningCount) {
+    data.push({
+      name: 'Planning',
+      count: gamesByStatusForAUser?.gamesByStatusForAUser?.planningCount,
+    });
+  }
+  if (gamesByStatusForAUser?.gamesByStatusForAUser?.playingCount) {
+    data.push({
+      name: 'Playing',
+      count: gamesByStatusForAUser?.gamesByStatusForAUser?.playingCount,
+    });
+  }
+  if (gamesByStatusForAUser?.gamesByStatusForAUser?.completedCount) {
+    data.push({
+      name: 'Completed',
+      count: gamesByStatusForAUser?.gamesByStatusForAUser?.completedCount,
+    });
+  }
+  if (gamesByStatusForAUser?.gamesByStatusForAUser?.pausedCount) {
+    data.push({
+      name: 'Paused',
+      count: gamesByStatusForAUser?.gamesByStatusForAUser?.pausedCount,
+    });
+  }
+  if (gamesByStatusForAUser?.gamesByStatusForAUser?.droppedCount) {
+    data.push({
+      name: 'Dropped',
+      count: gamesByStatusForAUser?.gamesByStatusForAUser?.droppedCount,
+    });
+  }
 
   const handleItemClick = (item: string) => {
-    // setSelectedItem(item);
     dispatch(setSelectedList(item.toLowerCase()));
   };
+
   return (
     <List
       dataSource={data}
       className={styles.listStyle}
       renderItem={(item) => (
         <List.Item
-          // className={styles.listItem}
-          onClick={() => handleItemClick(item)}
+          onClick={() => handleItemClick(item.name)}
           style={
-            selectedItem === item.toLowerCase()
+            selectedItem === item.name.toLowerCase()
               ? { backgroundColor: '#f7f5f5' }
               : {}
           }
         >
           <div className={styles.listName}>
-            <p>{item}</p>
-            <Badge count={11} showZero color="#d4cfc1" />
+            <p>{item.name}</p>
+            <Badge count={item.count} showZero color="#d4cfc1" />
           </div>
         </List.Item>
       )}

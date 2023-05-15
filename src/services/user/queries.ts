@@ -9,3 +9,14 @@ export const USER = gql`
     }
   }
 `;
+
+export const EDIT_LISTS_ORDER = gql`
+  mutation editListsOrder($payload: Scalar!, $action: String!) {
+    updateUser(input: { payload: $payload, action: $action }) {
+      user {
+        listsOrder
+      }
+      errors
+    }
+  }
+`;

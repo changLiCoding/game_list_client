@@ -14,36 +14,9 @@ vi.mock('../../../services/game/useGame', async () => {
   return {
     ...actual,
     default: () => ({
-      genres: [
-        {
-          __typename: 'Genre',
-          name: 'Genre 1',
-        },
-        {
-          __typename: 'Genre',
-          name: 'Genre 2',
-        },
-      ],
-      platforms: [
-        {
-          __typename: 'Platform',
-          name: 'Platform 1',
-        },
-        {
-          __typename: 'Platform',
-          name: 'Platform 2',
-        },
-      ],
-      tags: [
-        {
-          __typename: 'Tag',
-          name: 'Tag 1',
-        },
-        {
-          __typename: 'Tag',
-          name: 'Tag 2',
-        },
-      ],
+      genres: ['Genre 1', 'Genre 2'],
+      platforms: ['Platform 1', 'Platform 2'],
+      tags: ['Tag 1', 'Tag 2'],
     }),
   };
 });

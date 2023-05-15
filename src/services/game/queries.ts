@@ -40,26 +40,13 @@ export const GET_ALL_GAMES_BY_TAG: TypedDocumentNode<
   }
 `;
 
-export const GET_ALL_GENRES = gql`
-  query GetAllGenres {
-    getAllGenres {
-      name
-    }
-  }
-`;
-
-export const GET_ALL_PLATFORMS = gql`
-  query GetAllPlatforms {
-    getAllPlatforms {
-      name
-    }
-  }
-`;
-
-export const GET_ALL_TAGS = gql`
-  query GetAllTags {
-    getAllTags {
-      name
+export const GET_GENRES_PLATFORMS_TAGS = gql`
+  query GetGenresPlatformsTags {
+    getGenresPlatformsTags {
+      genres
+      platforms
+      tags
+      errors
     }
   }
 `;

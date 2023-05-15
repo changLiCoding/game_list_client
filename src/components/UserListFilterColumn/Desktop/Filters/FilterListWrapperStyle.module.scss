@@ -1,4 +1,3 @@
-
 // .listStyle {
 //   div {
 //     div {
@@ -26,9 +25,10 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  width: 200px;
 }
 
-.multiFilterStyle{
+.multiFilterStyle {
   display: flex;
   flex-direction: column;
   margin: 10px 0px;

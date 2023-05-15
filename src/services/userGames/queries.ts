@@ -101,6 +101,14 @@ export const GET_GAMES_BY_STATUS = gql`
         avgScore
         platforms
       }
+      playingCount
+      planningCount
+      completedCount
+      pausedCount
+      droppedCount
+      totalCount
+      listsOrder
+      errors
     }
   }
 `;
