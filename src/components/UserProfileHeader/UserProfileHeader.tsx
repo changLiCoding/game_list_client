@@ -11,7 +11,6 @@ function UserProfileHeader({ userState }: { userState: InitialStateType }) {
 
   return (
     <div>
-      UserProfileHeader for {user.username}
       <UserBanner userState={userState} />
       <UserLinks />
     </div>

@@ -1,0 +1,59 @@
+@use '../../../styles/variables.scss' as variables;
+@use '../../../styles/mixin.scss' as mixin;
+
+.bannerContainerNull {
+  background-color: #242538;
+  background-position: 50% 35%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 330px;
+  position: relative;
+
+  @include mixin.phoneSmall {
+    margin: 0;
+    height: 220px;
+  }
+  .bannerShadow {
+    background: linear-gradient(
+      180deg,
+      rgba(6, 13, 34, 0.5) 40%,
+      rgba(6, 13, 34, 0.8)
+    );
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+  .imageContainer {
+    align-items: flex-end;
+    display: flex;
+    height: 100%;
+    position: relative;
+    margin: 0 auto;
+    min-width: 320px;
+    width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+
+    @include mixin.phoneLarge {
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+    @include mixin.desktop {
+      max-width: 1140px;
+      padding-left: 50px;
+      padding-right: 50px;
+    }
+    @include mixin.desktopUltroLarge {
+      max-width: 1520px;
+      padding-left: 100px;
+      padding-right: 100px;
+    }
+    .userInfoContainer {
+      align-items: flex-end;
+      display: flex;
+      width: 100%;
+    }
+  }
+}
