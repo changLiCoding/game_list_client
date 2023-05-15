@@ -20,7 +20,6 @@ const documents = {
     "\n  query GetAllGamesByTag($tag: EntityIdNameAttributes!, $limit: Int) {\n    getAllGamesByTag(tag: $tag, limit: $limit) {\n      name\n    }\n  }\n": types.GetAllGamesByTagDocument,
     "\n  query GetGenresPlatformsTags {\n    getGenresPlatformsTags {\n      genres\n      platforms\n      tags\n      errors\n    }\n  }\n": types.GetGenresPlatformsTagsDocument,
     "\n  query GetAllGames {\n    allGames {\n      id\n      name\n      description\n      bannerURL\n      imageURL\n      releaseDate\n      avgScore\n      totalRating\n      genres\n      tags\n      platforms\n    }\n  }\n": types.GetAllGamesDocument,
-    "\n  query User {\n    getUserById {\n      username\n      bannerPicture\n      userPicture\n    }\n  }\n": types.UserDocument,
     "\n  mutation DeleteUserGames($gameId: ID!) {\n    deleteUserGames(input: { gameId: $gameId }) {\n      userGame {\n        id\n        game {\n          id\n          name\n          description\n          imageURL\n          bannerURL\n          releaseDate\n          avgScore\n          genres\n          platforms\n          tags\n        }\n      }\n      errors\n    }\n  }\n": types.DeleteUserGamesDocument,
     "\n  mutation AddUserGames($gameId: ID!) {\n    addUserGames(input: { gameId: $gameId }) {\n      userGame {\n        id\n        game {\n          id\n          name\n          description\n          imageURL\n          bannerURL\n          releaseDate\n          avgScore\n          genres\n          platforms\n          tags\n        }\n      }\n      errors\n    }\n  }\n": types.AddUserGamesDocument,
     "\n  query GamesForAUser {\n    gamesForAUser {\n      id\n      name\n      description\n      imageURL\n      bannerURL\n      releaseDate\n      avgScore\n      genres\n      platforms\n      tags\n    }\n  }\n": types.GamesForAUserDocument,
@@ -69,10 +68,6 @@ export function gql(source: "\n  query GetGenresPlatformsTags {\n    getGenresPl
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\n  query GetAllGames {\n    allGames {\n      id\n      name\n      description\n      bannerURL\n      imageURL\n      releaseDate\n      avgScore\n      totalRating\n      genres\n      tags\n      platforms\n    }\n  }\n"): (typeof documents)["\n  query GetAllGames {\n    allGames {\n      id\n      name\n      description\n      bannerURL\n      imageURL\n      releaseDate\n      avgScore\n      totalRating\n      genres\n      tags\n      platforms\n    }\n  }\n"];
-/**
- * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
-export function gql(source: "\n  query User {\n    getUserById {\n      username\n      bannerPicture\n      userPicture\n    }\n  }\n"): (typeof documents)["\n  query User {\n    getUserById {\n      username\n      bannerPicture\n      userPicture\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

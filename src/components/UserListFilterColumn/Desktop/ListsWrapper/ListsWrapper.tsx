@@ -8,13 +8,19 @@ import {
   resetLocalListOrder,
   setListOrder,
 } from '@/features/userUserGamesListSlice';
+import useEditListsOrder from '@/services/user/useEditListsOrder';
+import { useAppSelector } from '@/app/hooks';
 
 function ListsWrapper() {
   const dispatch = useDispatch();
+  const { editNewListsOrder } = useEditListsOrder();
+  const localListOrder = useAppSelector(
+    (state) => state.userGames.localListOrder
+  );
   const [listStyles, setListStyles] = React.useState<boolean>(false);
 
   const handleSaveListOrder = () => {
-    // TODO: Send request to backend to save list order
+    editNewListsOrder(localListOrder.join(','), 'lists_order');
     dispatch(setListOrder());
   };
 

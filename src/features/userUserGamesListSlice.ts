@@ -19,6 +19,7 @@ export const userGamesListSlice = createSlice({
     setInitialState: (state, action) => {
       state.listOrder = action.payload;
       state.localListOrder = action.payload;
+      state.selectedLists = action.payload;
     },
     setListOrder: (state) => {
       state.listOrder = state.localListOrder;
