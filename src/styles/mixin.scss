@@ -8,6 +8,7 @@ $color-primary: #ff4d4f;
     @content;
   }
 }
+
 @mixin phone {
   @media screen and (max-width: 850px) {
     @content;
