@@ -16,6 +16,7 @@ function UserGamesTable({
   const { platform, tag, genre } = useAppSelector(
     (state) => state.userGames.filters
   );
+  const search = useAppSelector((state) => state.userGames.search);
 
   let games = gamesData.map((val: Game) => ({
     key: val.id,
@@ -32,6 +33,20 @@ function UserGamesTable({
 
   if (genre) {
     games = games.filter((val) => val.genres.includes(genre));
+  }
+
+  if (search) {
+    games = games.filter((val) =>
+      (
+        val.name +
+        val.platforms.join(',') +
+        val.genres.join(',') +
+        val.tags.join(',') +
+        val.avgScore
+      )
+        .toLowerCase()
+        .includes(search.toLowerCase())
+    );
   }
 
   return (

@@ -24,4 +24,5 @@ export type InitialStateUserGamesListType = {
     tag: string;
     genre: string;
   };
+  search: string;
 };

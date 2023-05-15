@@ -53,4 +53,5 @@ export const INITIAL_USER_GAME_LISTS = {
     tag: '',
     genre: '',
   },
+  search: '',
 };

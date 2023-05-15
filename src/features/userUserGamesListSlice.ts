@@ -43,6 +43,9 @@ export const userGamesListSlice = createSlice({
         state.filters.genre = action.payload.value;
       }
     },
+    setSearch: (state, action) => {
+      state.search = action.payload;
+    },
   },
 });
 
@@ -53,6 +56,7 @@ export const {
   setLocalListOrder,
   resetLocalListOrder,
   setFilters,
+  setSearch,
 } = userGamesListSlice.actions;
 
 export default userGamesListSlice.reducer;
