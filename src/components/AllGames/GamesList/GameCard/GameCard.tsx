@@ -124,7 +124,6 @@ export default function GameCard({
               onClick={(e) => {
                 e.stopPropagation();
                 setOpen(!open);
-                // console.log(game.id);
               }}
               size="middle"
               type="ghost"

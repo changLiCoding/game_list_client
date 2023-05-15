@@ -1,11 +1,14 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import SelectDropdown from '@/components/SelectDropdown';
 import styles from './FilterListWrapperStyle.module.scss';
 import type { Filter } from '../types';
 import type { DropDownOption, OnChangeCascaderType } from '@/types/global';
 import useGame from '@/services/game/useGame';
+import { setFilters } from '@/features/userUserGamesListSlice';
 
 function FilterList() {
+  const dispatch = useDispatch();
   const { genres, platforms, tags } = useGame();
 
   // TODO: Refactor this function since FilterWrapper.tsx also uses it
@@ -40,8 +43,13 @@ function FilterList() {
     },
   ];
 
-  const onChange = (value: OnChangeCascaderType): void => {
-    // console.log(value);
+  const onChange = (value: OnChangeCascaderType, fieldName: string): void => {
+    dispatch(
+      setFilters({
+        type: fieldName,
+        value: value ? (value as string[])[0] : '',
+      })
+    );
   };
 
   return (

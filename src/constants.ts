@@ -48,4 +48,10 @@ export const INITIAL_USER_GAME_LISTS = {
   selectedLists: ['planning', 'playing', 'paused', 'completed', 'dropped'],
   listOrder: ['planning', 'playing', 'paused', 'completed', 'dropped'],
   localListOrder: ['planning', 'playing', 'paused', 'completed', 'dropped'],
+  filters: {
+    platform: '',
+    tag: '',
+    genre: '',
+  },
+  search: '',
 };

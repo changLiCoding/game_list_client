@@ -1,14 +1,6 @@
 import styles from '@/components/FiltersWrapper/FilterField/FilterField.module.scss';
+import type { FilterFieldProps } from '@/components/FiltersWrapper/types';
 import SelectDropdown from '@/components/SelectDropdown';
-import type { OnChangeCascaderType, DropDownOption } from '@/types/global';
-
-interface FilterFieldProps {
-  fieldName: string;
-  options: DropDownOption[];
-  onChange: (value: OnChangeCascaderType) => void;
-  changeOnSelect: boolean;
-  customCascaderStyle: string;
-}
 
 export default function FilterField({
   fieldName,

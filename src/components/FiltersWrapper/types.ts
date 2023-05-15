@@ -1,4 +1,4 @@
-import { OnChangeCascaderType } from '@/types/global';
+import { DropDownOption, OnChangeCascaderType } from '@/types/global';
 
 export type FilterWrapperType = {
   setTagsArr: React.Dispatch<
@@ -10,3 +10,11 @@ export type FilterWrapperType = {
     >
   >;
 };
+
+export interface FilterFieldProps {
+  fieldName: string;
+  options: DropDownOption[];
+  onChange: (value: OnChangeCascaderType, fieldName: string) => void;
+  changeOnSelect: boolean;
+  customCascaderStyle: string;
+}

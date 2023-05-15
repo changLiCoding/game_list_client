@@ -14,7 +14,7 @@ const options: DropDownOption[] = [
 ];
 
 function SortLists() {
-  const onChange = (value: OnChangeCascaderType): void => {
+  const onChange = (value: OnChangeCascaderType, fieldName: string): void => {
     // console.log(value);
   };
   return (

@@ -14,10 +14,6 @@ function List({
   game: GameType;
   colorBgContainer: string;
 }): JSX.Element {
-  useEffect(() => {
-    console.log('Here is the width of screen!!!: ', window.innerWidth);
-  }, []);
-
   const getRatingIcon = (avgScore: number, color: string) => {
     if (avgScore > 8.5) {
       return (

@@ -19,4 +19,10 @@ export type InitialStateUserGamesListType = {
   selectedLists: string[];
   listOrder: string[];
   localListOrder: string[];
+  filters: {
+    platform: string;
+    tag: string;
+    genre: string;
+  };
+  search: string;
 };

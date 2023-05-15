@@ -1,8 +1,10 @@
+import { useEffect } from 'react';
 import { Game } from '@/graphql/__generated__/graphql';
 import UserGameListDesktop from './Desktop';
 import UserGameListMobile from './Mobile';
 import styles from './UserGamesTable.module.scss';
 import type { GameDataType } from './types';
+import { useAppSelector } from '@/app/hooks';
 
 function UserGamesTable({
   gamesData,
@@ -11,13 +13,45 @@ function UserGamesTable({
   gamesData: GameDataType[];
   title: string;
 }) {
-  const games = gamesData.map((val: Game) => ({
+  const { platform, tag, genre } = useAppSelector(
+    (state) => state.userGames.filters
+  );
+  const search = useAppSelector((state) => state.userGames.search);
+
+  let games = gamesData.map((val: Game) => ({
     key: val.id,
     ...val,
   }));
+
+  if (platform) {
+    games = games.filter((val) => val.platforms.includes(platform));
+  }
+
+  if (tag) {
+    games = games.filter((val) => val.tags.includes(tag));
+  }
+
+  if (genre) {
+    games = games.filter((val) => val.genres.includes(genre));
+  }
+
+  if (search) {
+    games = games.filter((val) =>
+      (
+        val.name +
+        val.platforms.join(',') +
+        val.genres.join(',') +
+        val.tags.join(',') +
+        val.avgScore
+      )
+        .toLowerCase()
+        .includes(search.toLowerCase())
+    );
+  }
+
   return (
     <div>
-      {games?.length > 0 && (
+      {games?.length > 0 ? (
         <>
           <h3 className={styles.Title}>{title}</h3>
           <div className={styles.TableContainer}>
@@ -27,6 +61,8 @@ function UserGamesTable({
             <UserGameListMobile data={games} />
           </div>
         </>
+      ) : (
+        <div className={styles.placeholderStyle} />
       )}
     </div>
   );
