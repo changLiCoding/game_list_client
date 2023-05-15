@@ -1,11 +1,9 @@
 import { Tag } from 'antd';
 import { FrownOutlined, MehOutlined, SmileOutlined } from '@ant-design/icons';
 import Color from 'color-thief-react';
-import { useEffect } from 'react';
 
 import { Game as GameType } from '@/graphql/__generated__/graphql';
 import styles from '@/components/AllGames/GamesList/List/List.module.scss';
-import './List.css';
 
 function List({
   game,

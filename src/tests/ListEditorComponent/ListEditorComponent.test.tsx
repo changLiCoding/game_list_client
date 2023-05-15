@@ -63,11 +63,9 @@ describe('ListEditor Component', () => {
 
       await userEvent.click(todayButton);
       const torontoTime = new Date(
-        new Date().toLocaleString('en-US', {
-          timeZone: 'Canada/Saskatchewan',
-        })
+        new Date().toLocaleString('en-US', { timeZone: 'America/Toronto' })
       );
-      torontoTime.setDate(torontoTime.getDate() - 1);
+      torontoTime.setDate(torontoTime.getDate());
       const torontoDate = new Date(torontoTime).toISOString().slice(0, 10);
       expect(startDateElement).toHaveValue(torontoDate);
     });
