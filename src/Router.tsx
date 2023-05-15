@@ -1,11 +1,12 @@
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
-import Login from './pages/Login/Login';
-import Register from './pages/Register/Register';
-import Dashboard from './pages/Dashboard/Dashboard';
+import Dashboard from './pages/Dashboard';
 import useTokenAuth from './hooks/useTokenAuth';
-import UserGameList from './pages/UserGameList/UserGameList';
+import GameDetail from './pages/GameDetail/GameDetail';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import UserGameList from './pages/UserGameList';
 
 function Router() {
   const { loading, userState } = useTokenAuth();
@@ -28,6 +29,8 @@ function Router() {
         </>
       )}
       <Route path="/home" element={<Home />} />
+      <Route path="/" element={<Navigate to="/home" />} />
+      <Route path="/game-detail/:id/:name" element={<GameDetail />} />
       <Route
         path="*"
         element={

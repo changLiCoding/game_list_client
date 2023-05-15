@@ -1,0 +1,63 @@
+import { renderHook } from '@testing-library/react';
+import { vi } from 'vitest';
+import useAddDeleteGame from '@/services/userGames/useAddDeleteGame';
+
+vi.mock('@apollo/client', async () => {
+  const actual: unknown = await vi.importActual('@apollo/client');
+  if (typeof actual !== 'object')
+    throw new Error('Import Actual did not return not an object');
+  return {
+    ...actual,
+    useMutation: vi.fn(() => [
+      vi.fn(() => ({
+        data: {
+          addUserGames: {
+            userGame: {
+              id: '52',
+              game: {
+                id: '1',
+                name: 'Pokémon Black',
+                description: 'Ex ut omnis. Quasi delectus eos.',
+                imageURL: 'https://loremflickr.com/300/300/all',
+                releaseDate: '2015-07-17T00:00:00Z',
+                avgScore: 0.3,
+                genres: ['Real-time tactics', 'Rhythm'],
+                platforms: ['PlayStation 4', 'Game Boy'],
+                tags: ['Action', 'Action'],
+              },
+            },
+            errors: [],
+          },
+        },
+      })),
+      { loading: false, error: false },
+    ]),
+    useQuery: vi.fn(() => ({
+      loading: false,
+      data: {
+        userGames: [],
+      },
+    })),
+  };
+});
+
+describe('useUserGames hook', () => {
+  it("Successful add a game to the user's list", async () => {
+    const { result } = renderHook(() => useAddDeleteGame());
+
+    const addUserGamesData = await result.current.addUserGames('17');
+    expect((addUserGamesData as { errors: string[] }).errors).toEqual([]);
+    expect(
+      parseInt(
+        (
+          addUserGamesData as {
+            userGame: {
+              id: string;
+            };
+          }
+        ).userGame.id,
+        10
+      )
+    ).toBeGreaterThan(0);
+  });
+});

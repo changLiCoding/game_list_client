@@ -1,0 +1,23 @@
+.layoutFiltersWrapperContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+  height: 110px;
+}
+
+.spaceFiltersWrapperContainer {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.searchFiltersWrapperSearch {
+  width: 80vw;
+  flex-grow: 1;
+}
+
+.cascaderStyle {
+  margin-bottom: 1.5rem;
+}

@@ -19,3 +19,32 @@ export const INITIAL_USER_STATE = {
     __typename: '',
   },
 };
+
+export const USER_LISTS = [
+  {
+    id: 'planning',
+    content: 'Planning',
+  },
+  {
+    id: 'playing',
+    content: 'Playing',
+  },
+  {
+    id: 'completed',
+    content: 'Completed',
+  },
+  {
+    id: 'paused',
+    content: 'Paused',
+  },
+  {
+    id: 'dropped',
+    content: 'Dropped',
+  },
+];
+
+export const INITIAL_USER_GAME_LISTS = {
+  selectedList: 'all',
+  selectedLists: ['planning', 'playing', 'paused', 'completed', 'dropped'],
+  listOrder: ['planning', 'playing', 'paused', 'completed', 'dropped'],
+};

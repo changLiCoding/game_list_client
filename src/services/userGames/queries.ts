@@ -10,6 +10,7 @@ export const DELETE_USER_GAMES = gql`
           name
           description
           imageURL
+          bannerURL
           releaseDate
           avgScore
           genres
@@ -32,6 +33,7 @@ export const ADD_USER_GAMES = gql`
           name
           description
           imageURL
+          bannerURL
           releaseDate
           avgScore
           genres
@@ -51,11 +53,54 @@ export const GAMES_FOR_A_USER = gql`
       name
       description
       imageURL
+      bannerURL
       releaseDate
       avgScore
       genres
       platforms
       tags
+    }
+  }
+`;
+
+export const GET_GAMES_BY_STATUS = gql`
+  query GamesByTagsForAUser {
+    gamesByStatusForAUser {
+      playing {
+        id
+        name
+        imageURL
+        avgScore
+        platforms
+      }
+      planning {
+        id
+        name
+        imageURL
+        avgScore
+        platforms
+      }
+      completed {
+        id
+        name
+        imageURL
+        avgScore
+        platforms
+      }
+      paused {
+        id
+        name
+        imageURL
+        avgScore
+        platforms
+      }
+      dropped {
+        id
+        name
+        imageURL
+        avgScore
+        platforms
+      }
     }
   }
 `;
