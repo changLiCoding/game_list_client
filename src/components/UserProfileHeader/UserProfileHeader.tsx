@@ -1,4 +1,6 @@
 import { InitialStateType } from '@/features/types';
+import UserBanner from '@/components/UserProfileHeader/UserBanner/UserBanner';
+import UserLinks from '@/components/UserProfileHeader/UserLinks/UserLinks';
 
 function UserProfileHeader({ userState }: { userState: InitialStateType }) {
   const { user, loading } = userState;
@@ -7,7 +9,13 @@ function UserProfileHeader({ userState }: { userState: InitialStateType }) {
     return <div>Loading...</div>;
   }
 
-  return <div>UserProfileHeader for {user.username}</div>;
+  return (
+    <div>
+      UserProfileHeader for {user.username}
+      <UserBanner userState={userState} />
+      <UserLinks />
+    </div>
+  );
 }
 
 export default UserProfileHeader;

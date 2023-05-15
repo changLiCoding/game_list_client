@@ -18,9 +18,6 @@ function UserProfile() {
     <Layout>
       <Content>
         <UserProfileHeader userState={userState} />
-        <div>
-          <div>{userState.user.username} header </div>
-        </div>
 
         <div>
           <div>{userState.user.username} content</div>
