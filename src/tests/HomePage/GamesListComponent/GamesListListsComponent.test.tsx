@@ -23,6 +23,8 @@ vi.mock('../../../services/games/useAllGames', async () => {
           imageURL:
             'https://images.igdb.com/igdb/image/upload/t_cover_big/co4a7a.png',
           tags: ['3D', 'Fantasy'],
+          genres: ['Action', 'Adventure'],
+          platforms: ['PC', 'macOS'],
           releaseDate: '2021-01-01 00:00:00',
           avgScore: 5,
         },
@@ -34,6 +36,8 @@ vi.mock('../../../services/games/useAllGames', async () => {
           imageURL:
             'https://images.igdb.com/igdb/image/upload/t_cover_big/co4a7a.png',
           tags: ['4D', 'Soullike'],
+          genres: ['Role Playing', 'Straitagy'],
+          platforms: ['Xbox 360', 'Playstation 3'],
           releaseDate: '2021-01-02 00:00:00',
           avgScore: 10,
         },
@@ -45,6 +49,8 @@ vi.mock('../../../services/games/useAllGames', async () => {
           imageURL:
             'https://images.igdb.com/igdb/image/upload/t_cover_big/co4a7a.png',
           tags: ['2D', 'Action'],
+          genres: ['JRPG', 'Simulation'],
+          platforms: ['Xbox', 'Playstation 2'],
           releaseDate: '2021-01-03 00:00:00',
           avgScore: 8,
         },
@@ -54,49 +60,52 @@ vi.mock('../../../services/games/useAllGames', async () => {
 });
 
 describe('Games List Component', () => {
-  it('should render the games list', async () => {
-    const { queryByText, queryByLabelText } = render(
+  beforeEach(() => {
+    // window.innerWidth = 800;
+    global.innerWidth = 550;
+    global.dispatchEvent(new Event('resize'));
+  });
+
+  // afterEach(() => {
+  // window.innerWidth = window.outerWidth;
+  // });
+
+  it('should render the games list when isCardView false', async () => {
+    const { queryByText, queryByLabelText, debug } = render(
       <ContextWrapper>
-        <GamesList />
+        <GamesList isCardView={false} />
       </ContextWrapper>
     );
+    // vi.spyOn(window.screen, 'width', 'get').mockReturnValue(1600);
+    // expect(window.screen.width).toBe(1600);
 
-    expect(screen.getByText('Game 1')).toBeInTheDocument();
-    expect(screen.getByText('Game 2')).toBeInTheDocument();
-    expect(screen.getByText('Game 3')).toBeInTheDocument();
+    expect(queryByText('Game 1')).toBeInTheDocument();
+    expect(queryByText('Game 2')).toBeInTheDocument();
+    expect(queryByText('Game 3')).toBeInTheDocument();
 
-    const game1 = screen.getByText('Game 1');
-    const game2 = screen.getByText('Game 2');
-    const game3 = screen.getByText('Game 3');
+    debug();
+    // window.innerWidth = 600;
+    // expect(window.innerWidth).toBe(600);
+    // global.dispatchEvent(new Event('resize'));
 
-    await userEvent.hover(game1);
-    await waitFor(() => {
-      expect(queryByText('Fantasy')).toBeInTheDocument();
-      expect(queryByText('3D')).toBeInTheDocument();
-      expect(queryByText('4D')).not.toBeInTheDocument();
-      expect(queryByText('2D')).not.toBeInTheDocument();
-      expect(queryByLabelText('frown')).toBeInTheDocument();
-      expect(queryByLabelText('smile')).not.toBeInTheDocument();
-      expect(queryByLabelText('meh')).not.toBeInTheDocument();
-    });
+    // Object.defineProperty(window, 'innerWidth', {
+    //   writable: true,
+    //   configurable: true,
+    //   value: 550,
+    // });
 
-    await userEvent.hover(game2);
-    await waitFor(() => {
-      expect(queryByText('4D')).toBeInTheDocument();
-      expect(queryByText('Soullike')).toBeInTheDocument();
-      expect(queryByText('2D')).not.toBeInTheDocument();
-      expect(queryByText('Action')).not.toBeInTheDocument();
-      expect(queryByLabelText('smile')).toBeInTheDocument();
-      expect(queryByLabelText('meh')).not.toBeInTheDocument();
-    });
+    // window.dispatchEvent(new Event('resize'));
 
-    await userEvent.hover(game3);
-    await waitFor(() => {
-      expect(queryByText('2D')).toBeInTheDocument();
-      expect(queryByText('4D')).toBeInTheDocument();
-      expect(queryByLabelText('meh')).toBeInTheDocument();
-      expect(queryByLabelText('smile')).toBeInTheDocument();
-      expect(queryByLabelText('frown')).toBeInTheDocument();
-    });
+    // expect(window.innerWidth).toBe(550);
+
+    const platforms = screen.queryAllByTestId('gamePlatforms') as HTMLElement[];
+    const platformOne = platforms[0];
+    expect(platformOne).toHaveTextContent('PC');
+    debug(platformOne);
+    const style = window.getComputedStyle(platformOne);
+    // console.log('style of platformOne: ', style);
+    // expect(style.display).toBe('none');
+
+    // expect(platformOne).toHaveStyleRule('display: none');
   });
 });

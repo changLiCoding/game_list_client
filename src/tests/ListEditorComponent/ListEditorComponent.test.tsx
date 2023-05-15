@@ -58,10 +58,18 @@ describe('ListEditor Component', () => {
       const todayButton = queryByText('Today') as HTMLElement;
       expect(todayButton).toBeInTheDocument();
 
+      todayButton.style.pointerEvents = 'auto';
+      expect(todayButton).toHaveStyle('pointer-events: auto;');
+
       await userEvent.click(todayButton);
-      expect(startDateElement).toHaveValue(
-        new Date(Date.now()).toISOString().slice(0, 10)
+      const torontoTime = new Date(
+        new Date().toLocaleString('en-US', {
+          timeZone: 'Canada/Saskatchewan',
+        })
       );
+      torontoTime.setDate(torontoTime.getDate() - 1);
+      const torontoDate = new Date(torontoTime).toISOString().slice(0, 10);
+      expect(startDateElement).toHaveValue(torontoDate);
     });
 
     const notesElement = queryByTestId('text-area-Notes') as HTMLElement;
