@@ -17,6 +17,10 @@ function UserBanner({ userState }: { userState: InitialStateType }) {
         <div className={styles.imageContainer}>
           <div className={styles.userInfoContainer}>
             <img src={user.userPicture} alt={user.username} />
+            <div className={styles.name}>
+              <h1>{user.username}</h1>
+            </div>
+            <div className={styles.actions} />
           </div>
         </div>
       </div>
