@@ -5,7 +5,7 @@ function MainSection() {
   return (
     <div className={styles.mainSection}>
       <ListStatistic />
-      <div>Game List Activity</div>
+      <div style={{ marginTop: '30px' }}>Game List Activity</div>
     </div>
   );
 }

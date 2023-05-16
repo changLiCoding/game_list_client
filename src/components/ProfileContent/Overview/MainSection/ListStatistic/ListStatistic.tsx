@@ -1,4 +1,4 @@
-import { Button, Col, Row, Statistic } from 'antd';
+import { Button, Col, Row, Statistic, Divider } from 'antd';
 
 import styles from '@/components/ProfileContent/Overview/MainSection/ListStatistic/ListStatistic.module.scss';
 
@@ -13,21 +13,47 @@ function ListStatistic() {
         />
       </Col>
       <Col span={4}>
-        <Statistic title="Playing" value={5} />
+        <Statistic
+          title="Playing"
+          value={5}
+          valueStyle={{ color: '#b368e6', fontSize: '14px' }}
+        />
       </Col>
       <Col span={4}>
-        <Statistic title="Planning" value={2} />
+        <Statistic
+          title="Planning"
+          value={2}
+          valueStyle={{ color: '#b368e6', fontSize: '14px' }}
+        />
       </Col>
       <Col span={4}>
-        <Statistic title="Completed" value={1} />
+        <Statistic
+          title="Completed"
+          value={1}
+          valueStyle={{ color: '#b368e6', fontSize: '14px' }}
+        />
       </Col>
       <Col span={4}>
-        <Statistic title="Dropped" value={2} />
+        <Statistic
+          title="Dropped"
+          value={2}
+          valueStyle={{ color: '#b368e6', fontSize: '14px' }}
+        />
       </Col>
 
       <Col span={4}>
-        <Statistic title="Paused" value={5} />
+        <Statistic
+          title="Paused"
+          value={5}
+          valueStyle={{ color: '#b368e6', fontSize: '14px' }}
+        />
       </Col>
+      <Divider
+        style={{ fontSize: '12px', color: 'rgb(92, 114, 138)' }}
+        orientation="left"
+      >
+        Activities
+      </Divider>
       <Col span={18}>
         <Statistic title="Active Users" value={1153} loading />
       </Col>
