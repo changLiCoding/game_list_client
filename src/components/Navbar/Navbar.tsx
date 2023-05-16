@@ -96,7 +96,7 @@ export default function Navbar() {
                   <MenuOutlined
                     className={styles['mobile-nav__hamburger']}
                     onClick={showDrawer}
-                    data-testId="mobile-nav__hamburger"
+                    data-testid="mobile-nav__hamburger"
                   />
                   <Drawer
                     className={styles['mobile-nav__header-drawer']}

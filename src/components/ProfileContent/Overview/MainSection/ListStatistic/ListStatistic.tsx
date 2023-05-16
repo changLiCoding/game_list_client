@@ -1,8 +1,11 @@
 import { Button, Col, Row, Statistic, Divider } from 'antd';
 
 import styles from '@/components/ProfileContent/Overview/MainSection/ListStatistic/ListStatistic.module.scss';
+import type { UserGamesType } from '@/types/global';
 
-function ListStatistic() {
+function ListStatistic({ gamesByStatus }: { gamesByStatus?: UserGamesType }) {
+  console.log(gamesByStatus);
+
   return (
     <Row gutter={16} className={styles.statisticContainer}>
       <Col span={4}>

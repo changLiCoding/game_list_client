@@ -6,7 +6,7 @@ function ListCards({
   gameData,
 }: {
   status: string;
-  gameData: GameType[] | string[];
+  gameData: GameType[];
 }) {
   return (
     <div className={styles.listContainer}>
@@ -15,20 +15,6 @@ function ListCards({
         {Array.isArray(gameData) &&
           gameData.length > 0 &&
           gameData.map((game) => {
-            if (typeof game === 'string') {
-              return (
-                <span className={styles.listCard} key={game}>
-                  {game}
-                </span>
-              );
-            }
-            if (typeof game === 'number') {
-              return (
-                <span className={styles.listCard} key={game}>
-                  {game}
-                </span>
-              );
-            }
             return (
               <a
                 className={styles.listCard}
