@@ -6,7 +6,7 @@ function ListCards({
   gameData,
 }: {
   status: string;
-  gameData: GameType[] | number | string;
+  gameData: GameType[] | string[];
 }) {
   return (
     <div className={styles.listContainer}>
@@ -14,15 +14,31 @@ function ListCards({
       <div className={styles.listCards}>
         {Array.isArray(gameData) &&
           gameData.length > 0 &&
-          gameData.map((game) => (
-            <a
-              className={styles.listCard}
-              key={game.id}
-              href={`/game-detail/${game.id}/${game.name}`}
-            >
-              <img src={game.imageURL} alt={game.name} />
-            </a>
-          ))}
+          gameData.map((game) => {
+            if (typeof game === 'string') {
+              return (
+                <span className={styles.listCard} key={game}>
+                  {game}
+                </span>
+              );
+            }
+            if (typeof game === 'number') {
+              return (
+                <span className={styles.listCard} key={game}>
+                  {game}
+                </span>
+              );
+            }
+            return (
+              <a
+                className={styles.listCard}
+                key={game.id}
+                href={`/game-detail/${game.id}/${game.name}`}
+              >
+                {game.imageURL && <img src={game.imageURL} alt={game.name} />}
+              </a>
+            );
+          })}
       </div>
     </div>
   );
