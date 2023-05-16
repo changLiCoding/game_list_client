@@ -21,7 +21,18 @@ function Router() {
         <>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/game-list" element={<UserGameList />} />
-          <Route path="/user-profile/:username" element={<UserProfile />} />
+          <Route path="/user-profile/:username">
+            <Route path="" element={<UserProfile routeName="overview" />} />
+            <Route
+              path="overview"
+              element={<UserProfile routeName="overview" />}
+            />
+
+            <Route
+              path="reviews"
+              element={<UserProfile routeName="reviews" />}
+            />
+          </Route>
         </>
       ) : (
         <>

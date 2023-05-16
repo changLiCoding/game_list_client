@@ -3,8 +3,9 @@ import { Layout } from 'antd';
 
 import useTokenAuth from '@/hooks/useTokenAuth';
 import UserProfileHeader from '@/components/UserProfileHeader';
+import ProfileContent from '@/components/ProfileContent';
 
-function UserProfile() {
+function UserProfile({ routeName }: { routeName: string }) {
   const { username } = useParams();
   const { loading, userState } = useTokenAuth();
   const { Content } = Layout;
@@ -18,10 +19,7 @@ function UserProfile() {
     <Layout>
       <Content>
         <UserProfileHeader userState={userState} />
-
-        <div>
-          <div>{userState.user.username} content</div>
-        </div>
+        <ProfileContent routeName={routeName} />
       </Content>
     </Layout>
   );
