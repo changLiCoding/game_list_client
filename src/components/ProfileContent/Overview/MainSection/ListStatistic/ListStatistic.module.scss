@@ -1,0 +1,8 @@
+@use '../../../../../styles/mixin.scss' as mixin;
+@use '../../../../../styles/variables.scss' as variables;
+
+.statisticContainer {
+  background-color: variables.$color-foreground;
+  border-radius: 4px;
+  font-size: 0.4rem;
+}

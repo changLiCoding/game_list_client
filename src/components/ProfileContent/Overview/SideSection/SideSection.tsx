@@ -28,17 +28,9 @@ function SideSection() {
     return res;
   };
 
-  if (!gamesByStatusForAUserLoading && gamesByStatus !== undefined) {
-    gamesExtractor(gamesByStatus);
-  }
-
   return (
     <div className={styles.sideSectionContainer}>
-      SideSection
       {gamesByStatusForAUserLoading && <div>Loading...</div>}
-      {gamesByStatus?.playing && (
-        <ListCards status="Playing" gameData={gamesByStatus?.playing} />
-      )}
       {gamesByStatus &&
         !gamesByStatusForAUserLoading &&
         gamesExtractor(gamesByStatus)}
