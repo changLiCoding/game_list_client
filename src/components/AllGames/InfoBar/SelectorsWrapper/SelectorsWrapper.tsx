@@ -7,14 +7,9 @@ import { useState } from 'react';
 import type { MenuProps } from 'antd';
 import { Dropdown } from 'antd';
 import styles from '@/components/AllGames/InfoBar/SelectorsWrapper/SelectorsWrapper.module.scss';
+import type { SelectorsWrapperType } from '@/components/AllGames/InfoBar/types';
 
-function SelectorsWrapper({
-  isCardView,
-  setIsCardView,
-}: {
-  isCardView: boolean;
-  setIsCardView: React.Dispatch<React.SetStateAction<boolean>>;
-}) {
+function SelectorsWrapper({ isCardView, setIsCardView }: SelectorsWrapperType) {
   const [sortBy, setSortBy] = useState('Average Score');
 
   const sortItems: MenuProps['items'] = [

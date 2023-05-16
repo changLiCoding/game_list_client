@@ -8,18 +8,11 @@ import {
 } from '@ant-design/icons';
 import Color from 'color-thief-react';
 import { Link } from 'react-router-dom';
-
 import styles from '@/components/AllGames/GamesList/GameCard/GameCard.module.scss';
-import type { Game as GameType } from '@/graphql/__generated__/graphql';
 import ListEditor from '@/components/ListEditor';
+import type { GameCardType } from '@/components/AllGames/GamesList/types';
 
-export default function GameCard({
-  game,
-  colorBgContainer,
-}: {
-  game: GameType;
-  colorBgContainer: string;
-}) {
+export default function GameCard({ game, colorBgContainer }: GameCardType) {
   const { Meta } = Card;
 
   const [open, setOpen] = useState(false);

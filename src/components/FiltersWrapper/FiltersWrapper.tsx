@@ -6,6 +6,7 @@ import styles from '@/components/FiltersWrapper/FiltersWrapper.module.scss';
 import FilterField from '@/components/FiltersWrapper/FilterField';
 import useGame from '@/services/game/useGame';
 import type { DropDownOption, OnChangeCascaderType } from '@/types/global';
+import type { FilterWrapperType } from '@/components/FiltersWrapper/types';
 
 const { Search } = Input;
 

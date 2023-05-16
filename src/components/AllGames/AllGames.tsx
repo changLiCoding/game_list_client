@@ -2,26 +2,14 @@ import { Layout } from 'antd';
 import GamesList from '@/components/AllGames/GamesList';
 import InfoBar from '@/components/AllGames/InfoBar';
 import styles from '@/components/AllGames/AllGames.module.scss';
-import type { OnChangeCascaderType } from '@/types/global';
+import type { AllGamesType } from '@/components/AllGames/types';
 
 export default function AllGames({
   tagsArr,
   setTagsArr,
   isCardView,
   setIsCardView,
-}: {
-  tagsArr: { id: string; value: string | OnChangeCascaderType }[];
-  setTagsArr: React.Dispatch<
-    React.SetStateAction<
-      {
-        id: string;
-        value: string | OnChangeCascaderType;
-      }[]
-    >
-  >;
-  isCardView: boolean;
-  setIsCardView: React.Dispatch<React.SetStateAction<boolean>>;
-}) {
+}: AllGamesType) {
   return (
     <Layout
       className={`${styles.layoutAllGamesContainer} ${

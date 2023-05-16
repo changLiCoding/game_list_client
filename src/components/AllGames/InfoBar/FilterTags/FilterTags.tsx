@@ -1,22 +1,10 @@
 import { TagsTwoTone } from '@ant-design/icons';
 import { Tag } from 'antd';
 import styles from '@/components/AllGames/InfoBar/FilterTags/FilterTags.module.scss';
-import { OnChangeCascaderType } from '@/types/global';
+import type { OnChangeCascaderType } from '@/types/global';
+import type { FilterTagsType } from '@/components/AllGames/InfoBar/types';
 
-function FilterTags({
-  tagsArr,
-  setTagsArr,
-}: {
-  setTagsArr: React.Dispatch<
-    React.SetStateAction<
-      {
-        id: string;
-        value: string | OnChangeCascaderType;
-      }[]
-    >
-  >;
-  tagsArr: { id: string; value: string | number | OnChangeCascaderType }[];
-}) {
+function FilterTags({ tagsArr, setTagsArr }: FilterTagsType) {
   const handleClose = (removedTag: string | OnChangeCascaderType) => {
     const newTags = tagsArr.filter((tag) => tag.value !== removedTag);
     setTagsArr(newTags);

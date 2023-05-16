@@ -1,17 +1,11 @@
 import { Tag } from 'antd';
 import { FrownOutlined, MehOutlined, SmileOutlined } from '@ant-design/icons';
 import Color from 'color-thief-react';
-import type { Game as GameType } from '@/graphql/__generated__/graphql';
 import styles from '@/components/AllGames/GamesList/List/List.module.scss';
 import './List.css';
+import type { ListType } from '@/components/AllGames/GamesList/types';
 
-function List({
-  game,
-  colorBgContainer,
-}: {
-  game: GameType;
-  colorBgContainer: string;
-}): JSX.Element {
+function List({ game, colorBgContainer }: ListType): JSX.Element {
   const getRatingIcon = (avgScore: number, color: string) => {
     if (avgScore > 8.5) {
       return (

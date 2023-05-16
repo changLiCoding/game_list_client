@@ -1,13 +1,12 @@
 import { theme, Card, Row } from 'antd';
 import { Content } from 'antd/es/layout/layout';
-
 import GameCard from '@/components/AllGames/GamesList/GameCard';
 import List from '@/components/AllGames/GamesList/List';
 import useAllGames from '@/services/games/useAllGames';
-
 import styles from '@/components/AllGames/GamesList/GamesList.module.scss';
+import type { GamesListType } from '@/components/AllGames/GamesList/types';
 
-export default function GamesList({ isCardView }: { isCardView: boolean }) {
+export default function GamesList({ isCardView }: GamesListType) {
   const { games } = useAllGames();
 
   const {
