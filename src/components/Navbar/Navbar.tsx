@@ -43,7 +43,7 @@ export default function Navbar() {
         <li>
           <a
             className={styles['desktop-nav__popover-dropdown-item']}
-            href="/profile"
+            href={`/user-profile/${userState?.user?.username}`}
           >
             <UserOutlined className="desktop-nav__header-popover-icon" />
             Profile
@@ -109,7 +109,9 @@ export default function Navbar() {
                         <a href="/">Home</a>
                       </li>
                       <li className={styles['mobile-nav__header-drawer-item']}>
-                        <a href="/profile">Profile</a>
+                        <a href={`/user-profile/${userState?.user?.username}`}>
+                          Profile
+                        </a>
                       </li>
                       <li className={styles['mobile-nav__header-drawer-item']}>
                         <a href="/game-list">Game List</a>
@@ -142,7 +144,9 @@ export default function Navbar() {
                       <a href="/">Home</a>
                     </li>
                     <li className={styles['desktop-nav__nav-item']}>
-                      <a href="/profile">Profile</a>
+                      <a href={`/user-profile/${userState?.user?.username}`}>
+                        Profile
+                      </a>
                     </li>
                     <li className={styles['desktop-nav__nav-item']}>
                       <a href="/game-list">Game List</a>

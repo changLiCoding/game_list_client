@@ -1,9 +1,9 @@
 import { Tag } from 'antd';
-import { FrownOutlined, MehOutlined, SmileOutlined } from '@ant-design/icons';
 import Color from 'color-thief-react';
 
 import { Game as GameType } from '@/graphql/__generated__/graphql';
 import styles from '@/components/AllGames/GamesList/List/List.module.scss';
+import { getRatingIcon } from '@/components/AllGames/GamesList/GameCard/GameCard';
 
 function List({
   game,
@@ -12,36 +12,6 @@ function List({
   game: GameType;
   colorBgContainer: string;
 }): JSX.Element {
-  const getRatingIcon = (avgScore: number, color: string) => {
-    if (avgScore > 8.5) {
-      return (
-        <SmileOutlined
-          className={styles.listRatingIcon}
-          style={{
-            color: `${color}`,
-          }}
-        />
-      );
-    }
-    if (avgScore > 6.5) {
-      return (
-        <MehOutlined
-          className={styles.listRatingIcon}
-          style={{
-            color: `${color}`,
-          }}
-        />
-      );
-    }
-    return (
-      <FrownOutlined
-        className={styles.listRatingIcon}
-        style={{
-          color: `${color}`,
-        }}
-      />
-    );
-  };
   return (
     <Color
       crossOrigin="anonymous"

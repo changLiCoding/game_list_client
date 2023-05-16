@@ -1,4 +1,3 @@
-import React from 'react';
 import { useParams } from 'react-router-dom';
 
 import styles from '@/components/UserProfileHeader/UserLinks/UserLink/UserLink.module.scss';
