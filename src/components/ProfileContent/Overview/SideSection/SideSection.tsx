@@ -1,40 +1,36 @@
 import styles from '@/components/ProfileContent/Overview/SideSection/SideSection.module.scss';
 import ListCards from '@/components/ProfileContent/Overview/SideSection/ListCards';
-import type { UserGamesType } from '@/types/global';
-import type { Game as GameType } from '@/graphql/__generated__/graphql';
+import type { UserGamesByStatus } from '@/graphql/__generated__/graphql';
 
 function SideSection({
   gamesByStatusForAUserLoading,
   gamesByStatus,
 }: {
   gamesByStatusForAUserLoading: boolean;
-  gamesByStatus?: UserGamesType;
+  gamesByStatus?: UserGamesByStatus;
 }) {
-  const gamesExtractor = (gamesObjData: UserGamesType) => {
+  const gamesExtractor = (gamesObjData: UserGamesByStatus) => {
     const res: JSX.Element[] = [];
 
-    gamesObjData.listsOrder.split(',').forEach((status) => {
-      if (Array.isArray(gamesObjData[status]) && gamesObjData[status]) {
-        const gameData = gamesObjData[status];
-        if (
-          Array.isArray(gameData) &&
-          gameData.length > 0 &&
-          typeof gameData[0] !== 'string'
-        ) {
-          const games: GameType[] = gameData;
-          res.push(
-            <ListCards
-              key={gameData[0].name}
-              status={status}
-              gameData={games}
-            />
-          );
-        }
+    gamesObjData?.listsOrder?.split(',').forEach((status: string) => {
+      const gameData =
+        gamesObjData[
+          status as 'playing' | 'completed' | 'paused' | 'dropped' | 'planning'
+        ];
+      if (gameData && gameData.length > 0) {
+        res.push(
+          <ListCards
+            key={gameData[0].name}
+            status={status}
+            gameData={gameData}
+          />
+        );
       }
     });
 
     return res;
   };
+
   return (
     <div className={styles.sideSectionContainer}>
       {gamesByStatusForAUserLoading && <div>Loading...</div>}
