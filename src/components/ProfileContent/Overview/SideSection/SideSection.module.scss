@@ -1,0 +1,7 @@
+@use '../../../../styles/mixin.scss' as mixin;
+
+.sideSectionContainer {
+  @include mixin.loginTablet {
+    display: none;
+  }
+}

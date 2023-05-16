@@ -12,41 +12,41 @@ import styles from '@/components/AllGames/GamesList/GameCard/GameCard.module.scs
 import ListEditor from '@/components/ListEditor';
 import type { GameCardType } from '@/components/AllGames/GamesList/types';
 
-export default function GameCard({ game, colorBgContainer }: GameCardType) {
-  const { Meta } = Card;
-
-  const [open, setOpen] = useState(false);
-
-  const getRatingIcon = (avgScore: number, color: string) => {
-    if (avgScore > 8.5) {
-      return (
-        <SmileOutlined
-          className={styles.ratingIcon}
-          style={{
-            color: `${color}`,
-          }}
-        />
-      );
-    }
-    if (avgScore > 6.5) {
-      return (
-        <MehOutlined
-          className={styles.ratingIcon}
-          style={{
-            color: `${color}`,
-          }}
-        />
-      );
-    }
+export function getRatingIcon(avgScore: number, color: string) {
+  if (avgScore > 8.5) {
     return (
-      <FrownOutlined
+      <SmileOutlined
         className={styles.ratingIcon}
         style={{
           color: `${color}`,
         }}
       />
     );
-  };
+  }
+  if (avgScore > 6.5) {
+    return (
+      <MehOutlined
+        className={styles.ratingIcon}
+        style={{
+          color: `${color}`,
+        }}
+      />
+    );
+  }
+  return (
+    <FrownOutlined
+      className={styles.ratingIcon}
+      style={{
+        color: `${color}`,
+      }}
+    />
+  );
+}
+
+export default function GameCard({ game, colorBgContainer }: GameCardType) {
+  const { Meta } = Card;
+
+  const [open, setOpen] = useState(false);
 
   return (
     <Color
