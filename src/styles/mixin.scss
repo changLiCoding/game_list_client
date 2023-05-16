@@ -3,14 +3,19 @@
 $color-primary: #ff4d4f;
 // $color-red: red;
 
+@mixin phoneSmall {
+  @media screen and (max-width: 760px) {
+    @content;
+  }
+}
+
 @mixin phone {
   @media screen and (max-width: 850px) {
     @content;
   }
 }
-
-@mixin phoneSmall {
-  @media screen and (max-width: 600px) {
+@mixin phoneLarge {
+  @media screen and (min-width: 850px) {
     @content;
   }
 }

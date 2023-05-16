@@ -1,0 +1,16 @@
+@use '../../../../../styles/mixin.scss' as mixin;
+@use '../../../../../styles/variables.scss' as variables;
+
+.statisticContainer {
+  background-color: variables.$color-foreground;
+  border-radius: 5px;
+  padding-top: 10px;
+  div {
+    div {
+      :global(div.ant-statistic-title) {
+        font-size: 14px;
+        color: variables.$color-text;
+      }
+    }
+  }
+}

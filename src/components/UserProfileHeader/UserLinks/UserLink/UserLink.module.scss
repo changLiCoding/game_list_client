@@ -1,0 +1,10 @@
+@use '../../../../styles/variables.scss' as variables;
+@use '../../../../styles/mixin.scss' as mixin;
+
+.userLink {
+  color: variables.$color-text-light;
+  display: inline-block;
+  margin: 0 10px;
+  padding: 15px;
+  font-size: 0.9rem;
+}
