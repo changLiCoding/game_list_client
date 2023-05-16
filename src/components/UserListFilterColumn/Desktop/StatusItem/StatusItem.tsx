@@ -3,15 +3,9 @@ import React from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import { DragOutlined } from '@ant-design/icons';
 import styles from './StatusItemStyle.module.scss';
-import type { StatusContentType } from '@/components/UserListFilterColumn/types';
+import { StatusItemType } from '@/components/UserListFilterColumn/Desktop/types';
 
-function StatusItem({
-  status,
-  index,
-}: {
-  status: StatusContentType;
-  index: number;
-}) {
+function StatusItem({ status, index }: StatusItemType) {
   return (
     <Draggable draggableId={status.id} index={index}>
       {(provided) => (
