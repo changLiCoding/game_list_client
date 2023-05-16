@@ -24,10 +24,7 @@ function ProfileContent({ routeName }: { routeName: string }) {
   };
 
   return (
-    <div className={styles.profileContent}>
-      ProfileContent
-      {contentGenerator(routeName)}
-    </div>
+    <div className={styles.profileContent}>{contentGenerator(routeName)}</div>
   );
 }
 
