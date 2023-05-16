@@ -25,5 +25,24 @@
       padding-bottom: 4px;
       padding-right: 0;
     }
+    .listCard {
+      margin-bottom: 20px;
+      margin-right: 21px;
+      border-radius: 4px;
+      @include mixin.desktopLarge {
+        margin-bottom: 12px;
+        margin-right: 17px;
+      }
+      img {
+        background-position: 50%;
+        background-repeat: no-repeat;
+        background-size: cover;
+        cursor: pointer;
+        display: inline-block;
+        height: 115px;
+        position: relative;
+        width: 85px;
+      }
+    }
   }
 }

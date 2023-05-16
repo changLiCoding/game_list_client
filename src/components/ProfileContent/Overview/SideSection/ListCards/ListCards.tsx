@@ -11,7 +11,19 @@ function ListCards({
   return (
     <div className={styles.listContainer}>
       <h2>{status}</h2>
-      <div className={styles.listCards}>cards</div>
+      <div className={styles.listCards}>
+        {Array.isArray(gameData) &&
+          gameData.length > 0 &&
+          gameData.map((game) => (
+            <a
+              className={styles.listCard}
+              key={game.id}
+              href={`/game-detail/${game.id}/${game.name}`}
+            >
+              <img src={game.imageURL} alt={game.name} />
+            </a>
+          ))}
+      </div>
     </div>
   );
 }
