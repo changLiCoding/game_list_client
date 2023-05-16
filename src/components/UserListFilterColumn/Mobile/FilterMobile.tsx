@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button, Space, Input } from 'antd';
 import { CloseOutlined, MenuOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';

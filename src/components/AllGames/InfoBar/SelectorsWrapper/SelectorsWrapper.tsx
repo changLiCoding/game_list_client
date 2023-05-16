@@ -2,7 +2,6 @@ import {
   EllipsisOutlined,
   AppstoreFilled,
   UnorderedListOutlined,
-  MoreOutlined,
 } from '@ant-design/icons';
 import { useState } from 'react';
 import type { MenuProps } from 'antd';

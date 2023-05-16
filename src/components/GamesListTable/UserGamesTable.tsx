@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { Game } from '@/graphql/__generated__/graphql';
 import UserGameListDesktop from './Desktop';
 import UserGameListMobile from './Mobile';
