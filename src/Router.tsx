@@ -27,6 +27,15 @@ function Router() {
               path="overview"
               element={<UserProfile routeName="overview" />}
             />
+            <Route
+              path="favorites"
+              element={<UserProfile routeName="favorites" />}
+            />
+            <Route
+              path="game list"
+              element={<UserProfile routeName="gameList" />}
+            />
+            <Route path="social" element={<UserProfile routeName="social" />} />
 
             <Route
               path="reviews"
