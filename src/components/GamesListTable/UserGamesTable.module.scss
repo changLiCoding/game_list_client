@@ -21,6 +21,7 @@
   overflow: hidden;
   margin: 0 auto;
   border-radius: 12px;
+  width: 66vw;
   @include mixin.tablet {
     max-width: 95%;
   }
