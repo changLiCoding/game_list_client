@@ -4,11 +4,28 @@ import styles from '@/components/ProfileContent/Overview/MainSection/ListStatist
 import type { UserGamesType } from '@/types/global';
 
 function ListStatistic({ gamesByStatus }: { gamesByStatus?: UserGamesType }) {
-  console.log(gamesByStatus);
+  const gameStatusExtractor = (gamesObjData: UserGamesType) => {
+    const result: JSX.Element[] = [];
+    Object.keys(gamesObjData).forEach((key) => {
+      if (key.includes('Count')) {
+        result.push(
+          <Col span={4}>
+            <Statistic
+              valueStyle={{ color: '#b368e6', fontSize: '14px' }}
+              title={key.replace('Count', '').toUpperCase()}
+              value={gamesObjData[key]}
+            />
+          </Col>
+        );
+      }
+    });
+    return result;
+  };
 
   return (
     <Row gutter={16} className={styles.statisticContainer}>
-      <Col span={4}>
+      {gamesByStatus && gameStatusExtractor(gamesByStatus)}
+      {/* <Col span={4}>
         <Statistic
           valueStyle={{ color: '#b368e6', fontSize: '14px' }}
           title="Games"
@@ -50,7 +67,7 @@ function ListStatistic({ gamesByStatus }: { gamesByStatus?: UserGamesType }) {
           value={5}
           valueStyle={{ color: '#b368e6', fontSize: '14px' }}
         />
-      </Col>
+      </Col> */}
       <Divider
         style={{ fontSize: '12px', color: 'rgb(92, 114, 138)' }}
         orientation="left"
