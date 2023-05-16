@@ -1,7 +1,7 @@
 import { useMutation } from '@apollo/client';
 import { LOGIN, REGISTER } from './queries';
 import useNotification from '@/hooks/useNotification';
-import {
+import type {
   LoginUserPayload,
   RegisterUserPayload,
 } from '@/graphql/__generated__/graphql';

@@ -1,5 +1,5 @@
 import { DatePicker } from 'antd';
-import { OnChangeDatePickerType } from '@/types/global';
+import type { OnChangeDatePickerType } from '@/types/global';
 
 // import styles from '@/components/DatePickerField/DatePickerField.module.scss';
 

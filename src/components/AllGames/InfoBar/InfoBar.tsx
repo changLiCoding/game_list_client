@@ -3,7 +3,7 @@ import { Layout } from 'antd';
 import styles from '@/components/AllGames/InfoBar/InfoBar.module.scss';
 import FilterTags from '@/components/AllGames/InfoBar/FilterTags';
 import SelectorsWrapper from '@/components/AllGames/InfoBar/SelectorsWrapper';
-import { OnChangeCascaderType } from '@/types/global';
+import type { OnChangeCascaderType } from '@/types/global';
 
 export default function InfoBar({
   tagsArr,

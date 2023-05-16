@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import styles from './FilterColumn.module.scss';
 import FilterDesktop from './Desktop';
 import FilterMobile from './Mobile';
-
 import YearSlider from '@/components/UserListFilterColumn/CommonFilters/YearSlider';
 import SortListsWrapper from '@/components/UserListFilterColumn/CommonFilters/SortLists';
 import ListsWrapper from '@/components/UserListFilterColumn/CommonFilters/ListsWrapper';

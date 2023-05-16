@@ -10,7 +10,7 @@ import Color from 'color-thief-react';
 import { Link } from 'react-router-dom';
 
 import styles from '@/components/AllGames/GamesList/GameCard/GameCard.module.scss';
-import { Game as GameType } from '@/graphql/__generated__/graphql';
+import type { Game as GameType } from '@/graphql/__generated__/graphql';
 import ListEditor from '@/components/ListEditor';
 
 export default function GameCard({

@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client';
 import { GET_GAMES_BY_STATUS } from './queries';
 import { getTokenFromLocalStorage } from '@/constants';
-import { UserGamesByStatus } from '@/graphql/__generated__/graphql';
+import type { UserGamesByStatus } from '@/graphql/__generated__/graphql';
 
 const useGamesByStatus = (): {
   gamesByStatusForAUser: {

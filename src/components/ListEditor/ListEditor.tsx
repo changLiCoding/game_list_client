@@ -2,7 +2,7 @@ import { Modal, Button, Checkbox } from 'antd';
 import { HeartOutlined } from '@ant-design/icons';
 import useAddDeleteGame from '@/services/userGames/useAddDeleteGame';
 import useNotification from '@/hooks/useNotification';
-import { Game as GameType } from '@/graphql/__generated__/graphql';
+import type { Game as GameType } from '@/graphql/__generated__/graphql';
 import type {
   DropDownOption,
   OnChangeCascaderType,

@@ -3,7 +3,7 @@ import React from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import { DragOutlined } from '@ant-design/icons';
 import styles from './StatusItemStyle.module.scss';
-import { StatusItemType } from '@/components/UserListFilterColumn/Desktop/types';
+import type { StatusItemType } from '@/components/UserListFilterColumn/Desktop/types';
 
 function StatusItem({ status, index }: StatusItemType) {
   return (

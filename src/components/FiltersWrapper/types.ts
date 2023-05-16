@@ -1,4 +1,4 @@
-import { DropDownOption, OnChangeCascaderType } from '@/types/global';
+import type { DropDownOption, OnChangeCascaderType } from '@/types/global';
 
 export type FilterWrapperType = {
   setTagsArr: React.Dispatch<

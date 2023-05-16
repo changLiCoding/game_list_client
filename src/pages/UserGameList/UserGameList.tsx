@@ -6,7 +6,7 @@ import FilterColumn from '@/components/UserListFilterColumn';
 import UserGamesTable from '@/components/GamesListTable';
 import { useAppSelector } from '@/app/hooks';
 import { setInitialState } from '@/features/userUserGamesListSlice';
-import { Game } from '@/graphql/__generated__/graphql';
+import type { Game } from '@/graphql/__generated__/graphql';
 
 function UserGameList() {
   const dispatch = useDispatch();

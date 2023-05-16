@@ -1,12 +1,10 @@
 import { Button, Layout, Dropdown, Space } from 'antd';
 import type { MenuProps } from 'antd';
 import { useState } from 'react';
-
 import { HeartOutlined, DownCircleOutlined } from '@ant-design/icons';
-
 import { Content } from 'antd/es/layout/layout';
 import ListEditor from '@/components/ListEditor';
-import { Game as GameType } from '@/graphql/__generated__/graphql';
+import type { Game as GameType } from '@/graphql/__generated__/graphql';
 import styles from '@/components/GameDetailHeader/GameDetailHeaderInfo/GameDetailHeaderInfo.module.scss';
 
 function GameDetailHeaderInfo({ game }: { game: GameType }) {

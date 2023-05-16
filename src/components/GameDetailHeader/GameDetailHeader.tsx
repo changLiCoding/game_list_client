@@ -1,6 +1,6 @@
 import { Layout } from 'antd';
 
-import { Game as GameType } from '@/graphql/__generated__/graphql';
+import type { Game as GameType } from '@/graphql/__generated__/graphql';
 import GameDetailHeaderBanner from '@/components/GameDetailHeader/GameDetailHeaderBanner';
 import GameDetailHeaderInfo from '@/components/GameDetailHeader/GameDetailHeaderInfo';
 

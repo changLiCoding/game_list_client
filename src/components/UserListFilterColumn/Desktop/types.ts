@@ -1,4 +1,4 @@
-import { StatusContentType } from '@/components/UserListFilterColumn/types';
+import type { StatusContentType } from '@/components/UserListFilterColumn/types';
 import type { DropDownOption } from '@/types/global';
 
 export type Filter = {
