@@ -6,6 +6,7 @@ import FilterColumn from '@/components/UserListFilterColumn';
 import UserGamesTable from '@/components/GamesListTable';
 import { useAppSelector } from '@/app/hooks';
 import { setInitialState } from '@/features/userUserGamesListSlice';
+import { Game } from '@/graphql/__generated__/graphql';
 
 function UserGameList() {
   const dispatch = useDispatch();
@@ -38,7 +39,16 @@ function UserGameList() {
           return (
             <UserGamesTable
               key={list}
-              gamesData={gamesByStatusForAUser?.gamesByStatusForAUser[list]}
+              gamesData={
+                gamesByStatusForAUser?.gamesByStatusForAUser[
+                  list as
+                    | 'playing'
+                    | 'completed'
+                    | 'dropped'
+                    | 'paused'
+                    | 'planning'
+                ] as Game[]
+              }
               title={list[0].toUpperCase() + list.slice(1)}
             />
           );
