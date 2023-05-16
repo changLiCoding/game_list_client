@@ -2,9 +2,9 @@ import { Tag } from 'antd';
 import Color from 'color-thief-react';
 import styles from '@/components/AllGames/GamesList/List/List.module.scss';
 import { getRatingIcon } from '@/components/AllGames/GamesList/GameCard/GameCard';
-import type { ListType } from '@/components/AllGames/GamesList/types';
+import type { GameCardType } from '@/components/AllGames/GamesList/types';
 
-function List({ game, colorBgContainer }: ListType): JSX.Element {
+function List({ game, colorBgContainer }: GameCardType): JSX.Element {
   return (
     <Color
       crossOrigin="anonymous"
