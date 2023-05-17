@@ -83,7 +83,7 @@ describe('Games List Component', () => {
     expect(queryByText('Game 2')).toBeInTheDocument();
     expect(queryByText('Game 3')).toBeInTheDocument();
 
-    debug();
+    // debug();
     // window.innerWidth = 600;
     // expect(window.innerWidth).toBe(600);
     // global.dispatchEvent(new Event('resize'));
@@ -101,7 +101,7 @@ describe('Games List Component', () => {
     const platforms = screen.queryAllByTestId('gamePlatforms') as HTMLElement[];
     const platformOne = platforms[0];
     expect(platformOne).toHaveTextContent('PC');
-    debug(platformOne);
+    // debug(platformOne);
     // const style = window.getComputedStyle(platformOne);
     // console.log('style of platformOne: ', style);
     // expect(style.display).toBe('none');

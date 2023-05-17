@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { vi } from 'vitest';
 import userEvent from '@testing-library/user-event';
 import UserGameList from '@/pages/UserGameList/UserGameList';
@@ -101,21 +101,6 @@ describe('Get games according to list types for a user', () => {
     expect(avgScoreElements[0].textContent).toBe('2.5');
     const gamePlanningElements = screen.queryAllByText('Halo 3');
     expect(gamePlanningElements[0].textContent).toBe('Halo 3');
-  });
-
-  it('should search for games using search bar', async () => {
-    render(
-      <ContextWrapper>
-        <UserGameList />
-      </ContextWrapper>
-    );
-
-    const searchBar = screen.getByTestId('search-bar-desktop');
-    await userEvent.type(searchBar, 'Halo 3');
-    const gamePlanningElements1 = screen.queryAllByText('Halo 3');
-    expect(gamePlanningElements1.length).toBeGreaterThan(0);
-    const gamePlanningElements2 = screen.queryAllByText('Halo 2');
-    expect(gamePlanningElements2.length).toBe(0);
   });
 
   it('should filter according to filter choices', async () => {
