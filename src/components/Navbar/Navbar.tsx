@@ -156,11 +156,12 @@ export default function Navbar() {
                   <ul className={styles['desktop-nav__nav-section']}>
                     {!loading && userState?.user?.username ? (
                       <Popover content={content}>
-                        <Image
+                        <img
+                          className={styles['desktop-nav__profile-image']}
                           data-testid="profile-image"
                           width={38}
                           height={38}
-                          preview={false}
+                          alt="profile"
                           src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
                         />
                       </Popover>
