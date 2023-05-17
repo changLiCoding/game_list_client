@@ -32,7 +32,7 @@ describe('useUserGames hook', () => {
   it("Fail to delete a game from the user's list", async () => {
     const { result } = renderHook(() => useAddDeleteGame());
 
-    const deleteUserGamesData = await result.current.deleteUserGames(17);
+    const deleteUserGamesData = await result.current.deleteUserGames('17');
     expect((deleteUserGamesData as { errors: string[] }).errors[0]).toEqual(
       'User Game not found'
     );

@@ -5,66 +5,145 @@ import UserGameList from '@/pages/UserGameList/UserGameList';
 import ContextWrapper from '@/ContextWrapper';
 import FilterColumn from '@/components/UserListFilterColumn';
 
-vi.mock('../../services/userGames/useGamesByStatus', async () => {
+vi.mock('@/services/userGames/useGamesByStatus', async () => {
   const actual: unknown = await vi.importActual(
-    '../../services/userGames/useGamesByStatus'
+    '@/services/userGames/useGamesByStatus'
   );
   if (typeof actual !== 'object')
     throw new Error('Import Actual did not return not an object');
   return {
     ...actual,
     default: () => ({
-      gamesByStatusForAUserLoading: false,
       gamesByStatusForAUser: {
         gamesByStatusForAUser: {
-          playing: [
-            {
-              avgScore: 6.9,
-              description: 'Maiores cupiditate ut. Qui et tempore.',
-              genres: ['Survival', 'Trivia'],
-              id: '26',
-              imageURL: 'https://loremflickr.com/300/300/game',
-              name: 'Mega Man Battle Network',
-              platforms: ['PlayStation Portable', 'PlayStation Vita'],
-              releaseDate: '2017-04-25T00:00:00Z',
-              tags: ['Singleplayer', 'Fantasy'],
-              __typename: 'Game',
-            },
-            {
-              avgScore: 1.7,
-              description: 'Aut ab accusantium. Molestiae ut ea.',
-              genres: ['Platformer', 'Survival horror'],
-              id: '27',
-              imageURL: 'https://loremflickr.com/300/300/game',
-              name: 'Halo 2',
-              platforms: ['PlayStation', 'Sega Dreamcast'],
-              releaseDate: '2019-08-01T00:00:00Z',
-              tags: ['2D', 'Adventure'],
-              __typename: 'Game',
-            },
-          ],
+          playingCount: 2,
+          planningCount: 1,
+          completedCount: 0,
+          pausedCount: 0,
+          droppedCount: 0,
+          totalCount: 3,
+          completed: [],
+          dropped: [],
+          errors: [],
+          listsOrder: 'playing,planning,completed,dropped,paused',
+          paused: [],
           planning: [
             {
-              avgScore: 1.8,
-              description: 'Aut ab accusantium. Molestiae ut ea.',
-              genres: ['Platformer', 'Survival horror'],
-              id: '28',
-              imageURL: 'https://loremflickr.com/300/300/game',
-              name: 'Halo 3',
-              platforms: ['Pokemon Y'],
-              releaseDate: '2019-08-01T00:00:00Z',
-              tags: ['Adventure'],
+              avgScore: 2.5,
+              genres: ['Roguelike', 'Puzzle'],
+              id: '39',
+              imageURL:
+                'https://images.igdb.com/igdb/image/upload/t_cover_big/co5esn.png',
+              name: 'Pokemon Alpha Sapphire',
+              platforms: ['PlayStation 5', 'Sega Genesis'],
+              tags: ['Indie', 'Fantasy'],
               __typename: 'Game',
             },
           ],
-          completed: [],
-          paused: [],
-          dropped: [],
+          playing: [
+            {
+              avgScore: 7.9,
+              genres: ['Real-time strategy', 'Real-time strategy'],
+              id: '40',
+              imageURL:
+                'https://images.igdb.com/igdb/image/upload/t_cover_big/co1r76.png',
+              name: 'Halo 2',
+              platforms: ['Sega Dreamcast', 'PlayStation 5'],
+              tags: ['3D', 'Multiplayer'],
+              __typename: 'Game',
+            },
+            {
+              avgScore: 5.6,
+              genres: ['Real-time strategy', 'Turn-based strategy'],
+              id: '41',
+              imageURL:
+                'https://images.igdb.com/igdb/image/upload/t_cover_big/co3p2d.png',
+              name: 'Halo 3',
+              platforms: ['Sega Dreamcast', 'PlayStation 3'],
+              tags: ['Indie', 'Adventure'],
+              __typename: 'Game',
+            },
+          ],
         },
       },
     }),
   };
 });
+
+vi.mock('@/services/game/useGame', async () => {
+  const actual: unknown = await vi.importActual('@/services/game/useGame');
+  if (typeof actual !== 'object')
+    throw new Error('Import Actual did not return not an object');
+  return {
+    ...actual,
+    default: () => ({
+      genres: ['First-person shooter', 'Puzzle', 'Trivia'],
+      platforms: ['Xbox', 'macOS'],
+      tags: ['Action', 'Adventure'],
+    }),
+  };
+});
+
+// vi.mock('../../services/userGames/useGamesByStatus', async () => {
+//   const actual: unknown = await vi.importActual(
+//     '../../services/userGames/useGamesByStatus'
+//   );
+//   if (typeof actual !== 'object')
+//     throw new Error('Import Actual did not return not an object');
+//   return {
+//     ...actual,
+//     default: () => ({
+//       gamesByStatusForAUserLoading: false,
+//       gamesByStatusForAUser: {
+//         gamesByStatusForAUser: {
+//           playing: [
+//             {
+//               avgScore: 6.9,
+//               description: 'Maiores cupiditate ut. Qui et tempore.',
+//               genres: ['Survival', 'Trivia'],
+//               id: '26',
+//               imageURL: 'https://loremflickr.com/300/300/game',
+//               name: 'Mega Man Battle Network',
+//               platforms: ['PlayStation Portable', 'PlayStation Vita'],
+//               releaseDate: '2017-04-25T00:00:00Z',
+//               tags: ['Singleplayer', 'Fantasy'],
+//               __typename: 'Game',
+//             },
+//             {
+//               avgScore: 1.7,
+//               description: 'Aut ab accusantium. Molestiae ut ea.',
+//               genres: ['Platformer', 'Survival horror'],
+//               id: '27',
+//               imageURL: 'https://loremflickr.com/300/300/game',
+//               name: 'Halo 2',
+//               platforms: ['PlayStation', 'Sega Dreamcast'],
+//               releaseDate: '2019-08-01T00:00:00Z',
+//               tags: ['2D', 'Adventure'],
+//               __typename: 'Game',
+//             },
+//           ],
+//           planning: [
+//             {
+//               avgScore: 1.8,
+//               description: 'Aut ab accusantium. Molestiae ut ea.',
+//               genres: ['Platformer', 'Survival horror'],
+//               id: '28',
+//               imageURL: 'https://loremflickr.com/300/300/game',
+//               name: 'Halo 3',
+//               platforms: ['Pokemon Y'],
+//               releaseDate: '2019-08-01T00:00:00Z',
+//               tags: ['Adventure'],
+//               __typename: 'Game',
+//             },
+//           ],
+//           completed: [],
+//           paused: [],
+//           dropped: [],
+//         },
+//       },
+//     }),
+//   };
+// });
 
 const { getComputedStyle } = window;
 window.getComputedStyle = (elt) => getComputedStyle(elt);
@@ -77,12 +156,12 @@ describe('Get games according to list types for a user', () => {
       </ContextWrapper>
     );
 
-    const gameElements = screen.queryAllByText('Halo 2');
-    expect(gameElements[0].textContent).toBe('Halo 2');
-    const avgScoreElements = screen.queryAllByText('1.7');
-    expect(avgScoreElements[0].textContent).toBe('1.7');
-    const gamePlanningElements = screen.queryAllByText('Pokemon Y');
-    expect(gamePlanningElements[0].textContent).toBe('Pokemon Y');
+    const gameElements = screen.queryAllByText('Pokemon Alpha Sapphire');
+    expect(gameElements[0].textContent).toBe('Pokemon Alpha Sapphire');
+    const avgScoreElements = screen.queryAllByText('2.5');
+    expect(avgScoreElements[0].textContent).toBe('2.5');
+    const gamePlanningElements = screen.queryAllByText('Halo 3');
+    expect(gamePlanningElements[0].textContent).toBe('Halo 3');
   });
 
   it('should render filter column for user', async () => {

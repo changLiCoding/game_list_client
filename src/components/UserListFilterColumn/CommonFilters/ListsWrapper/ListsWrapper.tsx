@@ -1,5 +1,5 @@
 import { DownOutlined, SaveOutlined, UpOutlined } from '@ant-design/icons';
-import React from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import styles from './ListsWrapperStyle.module.scss';
 import {
@@ -17,7 +17,7 @@ function ListsWrapper() {
   const localListOrder = useAppSelector(
     (state) => state.userGames.localListOrder
   );
-  const [listStyles, setListStyles] = React.useState<boolean>(false);
+  const [listStyles, setListStyles] = useState<boolean>(false);
 
   const handleSaveListOrder = () => {
     editNewListsOrder(localListOrder.join(','), 'lists_order');

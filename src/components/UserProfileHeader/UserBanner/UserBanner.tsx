@@ -1,12 +1,13 @@
-import { InitialStateType } from '@/features/types';
 import styles from '@/components/UserProfileHeader/UserBanner/UserBanner.module.scss';
+import type { UserProfileHeaderType } from '@/components/UserProfileHeader/types';
 
-function UserBanner({ userState }: { userState: InitialStateType }) {
-  const { user, loading } = userState;
+function UserBanner({ userState }: UserProfileHeaderType) {
+  const { user } = userState;
 
-  if (loading || !user) {
-    return <div>Loading...</div>;
-  }
+  // if (loading || !user) {
+  //   return <div>Loading...</div>;
+  // }
+
   return (
     <div
       className={styles.bannerContainerNull}

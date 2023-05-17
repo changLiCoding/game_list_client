@@ -1,4 +1,3 @@
-import React from 'react';
 import { Slider } from 'antd';
 import styles from './YearSliderStyle.module.scss';
 

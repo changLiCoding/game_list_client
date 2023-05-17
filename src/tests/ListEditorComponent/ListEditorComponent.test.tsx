@@ -60,12 +60,11 @@ describe('ListEditor Component', () => {
 
       todayButton.style.pointerEvents = 'auto';
       expect(todayButton).toHaveStyle('pointer-events: auto;');
-
       await userEvent.click(todayButton);
-      const torontoTime = new Date(
-        new Date().toLocaleString('en-US', { timeZone: 'America/Toronto' })
-      );
-      torontoTime.setDate(torontoTime.getDate());
+      const torontoTime = new Date().toLocaleDateString('en-US', {
+        timeZone: 'America/Toronto',
+      });
+
       const torontoDate = new Date(torontoTime).toISOString().slice(0, 10);
       expect(startDateElement).toHaveValue(torontoDate);
     });

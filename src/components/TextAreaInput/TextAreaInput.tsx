@@ -1,17 +1,11 @@
 import { Input } from 'antd';
-import React from 'react';
+import type { TextAreaInputType } from '@/components/TextAreaInput/types';
 
 function TextAreaInput({
   fieldName,
   customCascaderStyle,
   onChange,
-}: {
-  fieldName: string;
-  customCascaderStyle: string;
-  onChange: (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => void;
-}) {
+}: TextAreaInputType) {
   const { TextArea } = Input;
   return (
     <TextArea

@@ -60,7 +60,7 @@ describe('Navbar on Desktop', () => {
     expect(getByText('Home')).toBeDefined();
     expect(getByText('Profile')).toBeDefined();
     expect(getByText('Game List')).toBeDefined();
-    expect(userProfile.firstElementChild?.getAttribute('src')).toEqual(
+    expect(userProfile.getAttribute('src')).toEqual(
       'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
     );
 

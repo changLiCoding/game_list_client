@@ -10,7 +10,7 @@ import type { FilterWrapperType } from '@/components/FiltersWrapper/types';
 
 const { Search } = Input;
 
-export default function FilterWrapper({ setTagsArr }: FilterWrapperType) {
+export default function FiltersWrapper({ setTagsArr }: FilterWrapperType) {
   const [collapsed, setCollapsed] = useState(false);
 
   const { useBreakpoint } = Grid;

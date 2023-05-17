@@ -45,7 +45,7 @@ describe('useUserGames hook', () => {
   it("Successfully delete a game from the user's list", async () => {
     const { result } = renderHook(() => useAddDeleteGame());
 
-    const deleteUserGamesData = await result.current.deleteUserGames(17);
+    const deleteUserGamesData = await result.current.deleteUserGames('17');
     expect((deleteUserGamesData as { errors: string[] }).errors).toEqual([]);
   });
 });
