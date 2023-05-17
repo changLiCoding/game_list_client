@@ -1,4 +1,3 @@
-import React from 'react';
 import styles from './FilterDesktop.module.scss';
 import SortListsWrapper from '../CommonFilters/SortLists';
 import YearSlider from '../CommonFilters/YearSlider';

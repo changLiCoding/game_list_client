@@ -1,4 +1,3 @@
-import React from 'react';
 import FilterList from './FilterList';
 import styles from './FilterListWrapperStyle.module.scss';
 

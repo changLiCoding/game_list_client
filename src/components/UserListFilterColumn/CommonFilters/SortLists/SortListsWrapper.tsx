@@ -1,4 +1,3 @@
-import React from 'react';
 import SortLists from './SortLists';
 import styles from './SortListsStyle.module.scss';
 

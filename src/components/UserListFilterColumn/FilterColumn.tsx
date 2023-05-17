@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styles from './FilterColumn.module.scss';
 import FilterDesktop from './Desktop';
 import FilterMobile from './Mobile';
