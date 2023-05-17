@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Drawer, Image, Popover, Grid } from 'antd';
+import { Drawer, Popover, Grid } from 'antd';
 import {
   EnterOutlined,
   MenuOutlined,
