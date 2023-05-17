@@ -21,10 +21,10 @@ function ListEditor({ open, setOpen, game }: ListEditorType) {
     // console.log(date, dateString);
   };
 
-  const { userGame, userGameLoading } = useUserGameById(Number(game.id));
-  if (!userGameLoading) {
-    console.log(userGame);
-  }
+  const { userGameLoading, userGame } = useUserGameById(game.id);
+
+  const userGameData = userGameLoading ? [] : userGame.getUserGameByGameId;
+  !userGameLoading && console.log(userGameData);
 
   const { contextHolder, info } = useNotification();
 
@@ -89,6 +89,11 @@ function ListEditor({ open, setOpen, game }: ListEditorType) {
         <div className={styles.bodyInput}>
           <div style={{ gridArea: 'status' }}>
             <FilterField
+              defaultValue={
+                userGameData.length > 0
+                  ? userGameData[0]?.gameStatus
+                  : undefined
+              }
               onChange={(value: OnChangeCascaderType): void => {
                 // console.log(value);
               }}
@@ -100,6 +105,11 @@ function ListEditor({ open, setOpen, game }: ListEditorType) {
           </div>
           <div style={{ gridArea: 'score' }}>
             <FilterField
+              defaultValue={
+                userGameData[0]?.rating
+                  ? userGameData[0]?.rating.toString()
+                  : undefined
+              }
               fieldName="Score"
               changeOnSelect
               customCascaderStyle={styles.cascaderStyle}
@@ -113,6 +123,12 @@ function ListEditor({ open, setOpen, game }: ListEditorType) {
             <div>
               <h3 className={styles.h3FilterFieldTitle}>Start</h3>
               <DatePickerField
+                // value={
+                //   userGameData[0]?.startDate
+                //     ? userGameData[0].startDate
+                //     : undefined
+                // }
+                value="2023-05-17T03:02:48Z"
                 onChange={onChange}
                 fieldName="Start"
                 customCascaderStyle={styles.cascaderStyle}
