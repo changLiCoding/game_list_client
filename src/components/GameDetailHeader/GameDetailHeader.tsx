@@ -1,10 +1,9 @@
 import { Layout } from 'antd';
-
-import type { Game as GameType } from '@/graphql/__generated__/graphql';
 import GameDetailHeaderBanner from '@/components/GameDetailHeader/GameDetailHeaderBanner';
 import GameDetailHeaderInfo from '@/components/GameDetailHeader/GameDetailHeaderInfo';
+import type { GameDetailsType } from '@/components/GameDetailHeader/types';
 
-function GameDetailHeader({ game }: { game: GameType }) {
+function GameDetailHeader({ game }: GameDetailsType) {
   return (
     <Layout>
       <GameDetailHeaderBanner game={game} />

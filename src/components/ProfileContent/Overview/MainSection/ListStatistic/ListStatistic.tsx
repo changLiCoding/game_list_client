@@ -8,7 +8,6 @@ function ListStatistic({
 }: {
   gamesByStatus?: UserGamesByStatus;
 }) {
-  console.log('gamesByStatus', gamesByStatus);
   const gameStatusExtractor = (gamesObjData: UserGamesByStatus) => {
     const result: JSX.Element[] = [];
     Object.keys(gamesObjData).forEach((key) => {
