@@ -37,9 +37,9 @@ export const userGamesListSlice = createSlice({
     setFilters: (state, action) => {
       if (action.payload.type === 'Platform') {
         state.filters.platform = action.payload.value;
-      } else if (action.payload.type === 'Status') {
+      } else if (action.payload.type === 'Tag') {
         state.filters.tag = action.payload.value;
-      } else if (action.payload.type === 'Genres') {
+      } else if (action.payload.type === 'Genre') {
         state.filters.genre = action.payload.value;
       }
     },
