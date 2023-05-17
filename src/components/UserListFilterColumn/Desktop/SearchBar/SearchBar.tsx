@@ -20,6 +20,7 @@ function SearchBar() {
       placeholder="input games"
       onChange={(e) => onSearch(e.target.value)}
       value={search}
+      data-testid="search-bar-desktop"
     />
   );
 }
