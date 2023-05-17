@@ -42,9 +42,10 @@ vi.mock('antd', async () => {
 
 describe('Filters Wrapper Component', () => {
   it('Render Filters Wrapper Component in Tablet Screen', async () => {
+    const mockFunc = vi.fn();
     const { queryByText, queryAllByText } = render(
       <ContextWrapper>
-        <FiltersWrapper />
+        <FiltersWrapper setTagsArr={mockFunc} />
       </ContextWrapper>
     );
 
