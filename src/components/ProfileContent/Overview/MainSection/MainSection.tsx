@@ -1,13 +1,13 @@
 import ListStatistic from '@/components/ProfileContent/Overview/MainSection/ListStatistic/ListStatistic';
 import styles from '@/components/ProfileContent/Overview/MainSection/MainSection.module.scss';
-import type { UserGamesType } from '@/types/global';
+import type { UserGamesByStatus } from '@/graphql/__generated__/graphql';
 
 function MainSection({
   gamesByStatusForAUserLoading,
   gamesByStatus,
 }: {
   gamesByStatusForAUserLoading: boolean;
-  gamesByStatus?: UserGamesType;
+  gamesByStatus?: UserGamesByStatus;
 }) {
   if (gamesByStatusForAUserLoading) return <div>Loading...</div>;
 

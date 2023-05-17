@@ -8,19 +8,20 @@ import type { Game as GameType } from '@/graphql/__generated__/graphql';
 function Overview() {
   const { gamesByStatusForAUserLoading, gamesByStatusForAUser } =
     useGamesByStatus();
-  const { gamesByStatusForAUser: gamesByStatus } = !gamesByStatusForAUserLoading
-    ? gamesByStatusForAUser
-    : { gamesByStatusForAUser: null };
+
+  if (gamesByStatusForAUserLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className={styles.overview}>
       <SideSection
         gamesByStatusForAUserLoading={gamesByStatusForAUserLoading}
-        gamesByStatus={gamesByStatus}
+        gamesByStatus={gamesByStatusForAUser.gamesByStatusForAUser}
       />
       <MainSection
         gamesByStatusForAUserLoading={gamesByStatusForAUserLoading}
-        gamesByStatus={gamesByStatus}
+        gamesByStatus={gamesByStatusForAUser.gamesByStatusForAUser}
       />
     </div>
   );

@@ -1,16 +1,15 @@
-import { useEffect } from 'react';
-import { Game } from '@/graphql/__generated__/graphql';
 import UserGameListDesktop from './Desktop';
 import UserGameListMobile from './Mobile';
 import styles from './UserGamesTable.module.scss';
-import type { GameDataType } from './types';
 import { useAppSelector } from '@/app/hooks';
+import type { Game } from '@/graphql/__generated__/graphql';
+import type { GameDataType } from '@/components/GamesListTable/types';
 
 function UserGamesTable({
   gamesData,
   title,
 }: {
-  gamesData: GameDataType[];
+  gamesData: Game[];
   title: string;
 }) {
   const { platform, tag, genre } = useAppSelector(
@@ -18,7 +17,7 @@ function UserGamesTable({
   );
   const search = useAppSelector((state) => state.userGames.search);
 
-  let games = gamesData.map((val: Game) => ({
+  let games: GameDataType[] = gamesData.map((val: Game) => ({
     key: val.id,
     ...val,
   }));

@@ -1,8 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { Layout } from 'antd';
 import { Content } from 'antd/es/layout/layout';
-
-import { Game as GameType } from '@/graphql/__generated__/graphql';
+import type { Game as GameType } from '@/graphql/__generated__/graphql';
 import useAllGames from '@/services/games/useAllGames';
 import GameDetailHeader from '@/components/GameDetailHeader';
 

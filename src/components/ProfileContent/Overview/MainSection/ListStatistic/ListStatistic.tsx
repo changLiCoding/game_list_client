@@ -1,10 +1,14 @@
-import { Button, Col, Row, Statistic, Divider } from 'antd';
+import { Col, Row, Statistic, Divider } from 'antd';
 
 import styles from '@/components/ProfileContent/Overview/MainSection/ListStatistic/ListStatistic.module.scss';
-import type { UserGamesType } from '@/types/global';
+import type { UserGamesByStatus } from '@/graphql/__generated__/graphql';
 
-function ListStatistic({ gamesByStatus }: { gamesByStatus?: UserGamesType }) {
-  const gameStatusExtractor = (gamesObjData: UserGamesType) => {
+function ListStatistic({
+  gamesByStatus,
+}: {
+  gamesByStatus?: UserGamesByStatus;
+}) {
+  const gameStatusExtractor = (gamesObjData: UserGamesByStatus) => {
     const result: JSX.Element[] = [];
     Object.keys(gamesObjData).forEach((key) => {
       if (key.includes('Count')) {
@@ -13,7 +17,16 @@ function ListStatistic({ gamesByStatus }: { gamesByStatus?: UserGamesType }) {
             <Statistic
               valueStyle={{ color: '#b368e6', fontSize: '14px' }}
               title={key.replace('Count', '').toUpperCase()}
-              value={gamesObjData[key]}
+              value={
+                gamesObjData[
+                  key as
+                    | 'playingCount'
+                    | 'completedCount'
+                    | 'pausedCount'
+                    | 'droppedCount'
+                    | 'planningCount'
+                ] || undefined
+              }
             />
           </Col>
         );

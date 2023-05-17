@@ -1,6 +1,6 @@
 import { describe, it, vi } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { render, screen } from '@testing-library/react';
+// import userEvent from '@testing-library/user-event';
 import ContextWrapper from '@/ContextWrapper';
 import GamesList from '@/components/AllGames/GamesList/index';
 
@@ -71,7 +71,7 @@ describe('Games List Component', () => {
   // });
 
   it('should render the games list when isCardView false', async () => {
-    const { queryByText, queryByLabelText, debug } = render(
+    const { queryByText, debug } = render(
       <ContextWrapper>
         <GamesList isCardView={false} />
       </ContextWrapper>
@@ -102,7 +102,7 @@ describe('Games List Component', () => {
     const platformOne = platforms[0];
     expect(platformOne).toHaveTextContent('PC');
     debug(platformOne);
-    const style = window.getComputedStyle(platformOne);
+    // const style = window.getComputedStyle(platformOne);
     // console.log('style of platformOne: ', style);
     // expect(style.display).toBe('none');
 

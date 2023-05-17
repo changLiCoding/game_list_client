@@ -1,6 +1,6 @@
 import { TypedDocumentNode } from '@graphql-typed-document-node/core';
 import { gql } from '@apollo/client';
-import {
+import type {
   Game,
   QueryGetAllGamesByGenreArgs,
   QueryGetAllGamesByPlatformArgs,

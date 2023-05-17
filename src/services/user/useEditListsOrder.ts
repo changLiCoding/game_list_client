@@ -1,6 +1,6 @@
 import { useMutation } from '@apollo/client';
 import { EDIT_LISTS_ORDER } from '@/services/user/queries';
-import { UpdateUserPayload } from '@/graphql/__generated__/graphql';
+import type { UpdateUserPayload } from '@/graphql/__generated__/graphql';
 import { getTokenFromLocalStorage } from '@/constants';
 
 const useEditListsOrder = () => {

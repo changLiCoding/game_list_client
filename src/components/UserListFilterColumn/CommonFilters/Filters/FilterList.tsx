@@ -2,13 +2,15 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import SelectDropdown from '@/components/SelectDropdown';
 import styles from './FilterListWrapperStyle.module.scss';
-import type { Filter } from '../types';
-import type { DropDownOption, OnChangeCascaderType } from '@/types/global';
 import useGame from '@/services/game/useGame';
 import { setFilters } from '@/features/userUserGamesListSlice';
+import type { DropDownOption, OnChangeCascaderType } from '@/types/global';
+import type { Filter } from '@/components/UserListFilterColumn/Desktop/types';
+import { useAppSelector } from '@/app/hooks';
 
 function FilterList() {
   const dispatch = useDispatch();
+  const filterValues = useAppSelector((state) => state.userGames.filters);
   const { genres, platforms, tags } = useGame();
 
   // TODO: Refactor this function since FilterWrapper.tsx also uses it
@@ -34,11 +36,11 @@ function FilterList() {
       options: platformsOptions,
     },
     {
-      name: 'Status',
+      name: 'Tag',
       options: tagsOptions,
     },
     {
-      name: 'Genres',
+      name: 'Genre',
       options: genresOptions,
     },
   ];
@@ -54,16 +56,23 @@ function FilterList() {
 
   return (
     <div className={styles.dropdownList}>
-      {filters.map((filter) => (
-        <SelectDropdown
-          key={filter.name}
-          customCascaderStyle={styles.cascaderStyle}
-          fieldName={filter.name}
-          options={filter.options}
-          onChange={onChange}
-          changeOnSelect
-        />
-      ))}
+      {filters.map((filter) => {
+        const filterVal =
+          filterValues[
+            filter.name.toLowerCase() as 'platform' | 'tag' | 'genre'
+          ];
+        return (
+          <SelectDropdown
+            key={filter.name}
+            customCascaderStyle={styles.cascaderStyle}
+            fieldName={filter.name}
+            options={filter.options}
+            onChange={onChange}
+            changeOnSelect
+            value={filterVal ? [filterVal] : undefined}
+          />
+        );
+      })}
     </div>
   );
 }

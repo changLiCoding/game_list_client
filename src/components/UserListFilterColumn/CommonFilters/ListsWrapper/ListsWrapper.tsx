@@ -1,8 +1,6 @@
 import { DownOutlined, SaveOutlined, UpOutlined } from '@ant-design/icons';
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import ReorderLists from '../ReorderLists';
-import AvailableLists from '../AvailableLists';
 import styles from './ListsWrapperStyle.module.scss';
 import {
   resetLocalListOrder,
@@ -10,6 +8,8 @@ import {
 } from '@/features/userUserGamesListSlice';
 import useEditListsOrder from '@/services/user/useEditListsOrder';
 import { useAppSelector } from '@/app/hooks';
+import ReorderLists from '@/components/UserListFilterColumn/Desktop/ReorderLists';
+import AvailableLists from '@/components/UserListFilterColumn/Desktop/AvailableLists';
 
 function ListsWrapper() {
   const dispatch = useDispatch();
