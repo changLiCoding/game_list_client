@@ -25,7 +25,7 @@ const useUserGameById = (
     }
 
     return {
-      userGame: userGame.userGame,
+      userGame: userGame.userGame.getUserGameByGameId,
       userGameLoading,
     };
   } catch (error: unknown) {

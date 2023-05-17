@@ -14,11 +14,17 @@ import styles from '@/components/ListEditor/ListEditor.module.scss';
 import DatePickerField from '../DatePickerField';
 import TextAreaInput from '../TextAreaInput';
 import type { ListEditorType } from '@/components/ListEditor/types';
+import useUserGameById from '@/services/userGames/useUserGameById';
 
 function ListEditor({ open, setOpen, game }: ListEditorType) {
   const onChange = (value: OnChangeDatePickerType, dateString: string) => {
     // console.log(date, dateString);
   };
+
+  const { userGame, userGameLoading } = useUserGameById(Number(game.id));
+  if (!userGameLoading) {
+    console.log(userGame);
+  }
 
   const { contextHolder, info } = useNotification();
 

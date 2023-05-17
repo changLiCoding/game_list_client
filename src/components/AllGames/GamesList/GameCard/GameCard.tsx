@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom';
 import styles from '@/components/AllGames/GamesList/GameCard/GameCard.module.scss';
 import ListEditor from '@/components/ListEditor';
 import type { GameCardType } from '@/components/AllGames/GamesList/types';
+import useUserGameById from '@/services/userGames/useUserGameById';
 
 export function getRatingIcon(avgScore: number, color: string) {
   if (avgScore > 8.5) {
