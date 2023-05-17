@@ -152,6 +152,9 @@ function ListEditor({
             <div>
               <h3 className={styles.h3FilterFieldTitle}>Notes</h3>
               <TextAreaInput
+                defaultValue={
+                  userGame?.gameNote ? userGame.gameNote : undefined
+                }
                 fieldName="Notes"
                 customCascaderStyle={styles.cascaderStyle}
                 onChange={(value: OnChangeTextAreaType) => {
@@ -167,6 +170,7 @@ function ListEditor({
             <span>No custom game lists</span>
           </div>
           <Checkbox
+            checked={userGame?.private ? userGame.private : false}
             onChange={(e: OnChangeCheckboxType) => {
               // console.log(`checked = ${e.target.checked}`);
             }}

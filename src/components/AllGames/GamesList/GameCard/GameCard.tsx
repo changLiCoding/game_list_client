@@ -118,7 +118,7 @@ export default function GameCard({ game, colorBgContainer }: GameCardType) {
               </Link>
             )}
             <Button
-              onClick={async (e) => {
+              onClick={(e) => {
                 e.stopPropagation();
                 fetchUserGame();
                 setOpen(!open);
