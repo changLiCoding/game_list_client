@@ -2,7 +2,6 @@ import { Modal, Button, Checkbox } from 'antd';
 import { HeartOutlined } from '@ant-design/icons';
 import useAddDeleteGame from '@/services/userGames/useAddDeleteGame';
 import useNotification from '@/hooks/useNotification';
-import type { Game as GameType } from '@/graphql/__generated__/graphql';
 import type {
   DropDownOption,
   OnChangeCascaderType,
@@ -14,16 +13,9 @@ import FilterField from '../FiltersWrapper/FilterField';
 import styles from '@/components/ListEditor/ListEditor.module.scss';
 import DatePickerField from '../DatePickerField';
 import TextAreaInput from '../TextAreaInput';
+import type { ListEditorType } from '@/components/ListEditor/types';
 
-function ListEditor({
-  open,
-  setOpen,
-  game,
-}: {
-  open: boolean;
-  setOpen: (open: boolean) => void;
-  game: GameType;
-}) {
+function ListEditor({ open, setOpen, game }: ListEditorType) {
   const onChange = (value: OnChangeDatePickerType, dateString: string) => {
     // console.log(date, dateString);
   };
