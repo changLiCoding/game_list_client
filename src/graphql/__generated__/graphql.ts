@@ -183,7 +183,7 @@ export type Query = {
   /** Get user by id */
   getUserById: User;
   /** Get a user game by game id and user id (current user) */
-  getUserGameByGameId: Array<UserGame>;
+  getUserGameByGameId?: Maybe<UserGame>;
 };
 
 
@@ -386,7 +386,7 @@ export type GetUserGameByGameIdQueryVariables = Exact<{
 }>;
 
 
-export type GetUserGameByGameIdQuery = { __typename?: 'Query', getUserGameByGameId: Array<{ __typename?: 'UserGame', gameNote?: string | null, gameStatus: string, id: string, review?: string | null, startDate?: any | null, completedDate?: any | null, rating?: number | null, private: boolean, createdAt: any, updatedAt: any }> };
+export type GetUserGameByGameIdQuery = { __typename?: 'Query', getUserGameByGameId?: { __typename?: 'UserGame', gameNote?: string | null, gameStatus: string, id: string, review?: string | null, startDate?: any | null, completedDate?: any | null, rating?: number | null, private: boolean, createdAt: any, updatedAt: any } | null };
 
 export type GamesByTagsForAUserQueryVariables = Exact<{ [key: string]: never; }>;
 

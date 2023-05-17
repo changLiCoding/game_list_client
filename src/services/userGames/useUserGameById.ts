@@ -33,10 +33,13 @@ import type { UserGame as UserGameType } from '@/graphql/__generated__/graphql';
 const useUserGameById = (
   gameId: string
 ): {
-  userGame: { getUserGameByGameId: UserGameType[] };
+  userGame: UserGameType;
   userGameLoading: boolean;
+  errors: string[];
 } => {
-  const { loading: userGameLoading, data: userGame } = useQuery(
+  let userGame: UserGameType = {} as UserGameType;
+  const errors: string[] = [];
+  const { loading: userGameLoading, data: userGameData } = useQuery(
     GET_USER_GAME_BY_GAME_ID,
     {
       variables: { gameId },
@@ -44,30 +47,25 @@ const useUserGameById = (
     }
   );
 
-  // console.log('userGame', userGame);
+  // console.log('userGame', userGameData);
 
   try {
-    if (
-      !userGame ||
-      !userGame.getUserGameByGameId ||
-      userGame.getUserGameByGameId.errors[0]
-    ) {
+    if (!userGameData || !userGameData.getUserGameByGameId) {
       throw new Error('Error getting user game by id');
     }
-
+    userGame = userGameData.getUserGameByGameId;
     return {
       userGame,
+      errors,
       userGameLoading,
     };
   } catch (error: unknown) {
     if (error instanceof Error) {
-      return {
-        userGame,
-        userGameLoading,
-      };
+      return error && { userGame, errors: [error.message], userGameLoading };
     }
     return {
       userGame,
+      errors: ['Unknown error'],
       userGameLoading,
     };
   }

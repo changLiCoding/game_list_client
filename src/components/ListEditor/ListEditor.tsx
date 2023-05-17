@@ -1,5 +1,6 @@
 import { Modal, Button, Checkbox } from 'antd';
 import { HeartOutlined } from '@ant-design/icons';
+
 import useAddDeleteGame from '@/services/userGames/useAddDeleteGame';
 import useNotification from '@/hooks/useNotification';
 import type {
@@ -23,8 +24,7 @@ function ListEditor({ open, setOpen, game }: ListEditorType) {
 
   const { userGameLoading, userGame } = useUserGameById(game.id);
 
-  const userGameData = userGameLoading ? [] : userGame.getUserGameByGameId;
-  !userGameLoading && console.log(userGameData);
+  console.log(userGame);
 
   const { contextHolder, info } = useNotification();
 
@@ -49,6 +49,10 @@ function ListEditor({ open, setOpen, game }: ListEditorType) {
     label: score.toString(),
     value: score.toString(),
   }));
+
+  if (userGameLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <Modal
@@ -89,11 +93,7 @@ function ListEditor({ open, setOpen, game }: ListEditorType) {
         <div className={styles.bodyInput}>
           <div style={{ gridArea: 'status' }}>
             <FilterField
-              defaultValue={
-                userGameData.length > 0
-                  ? userGameData[0]?.gameStatus
-                  : undefined
-              }
+              defaultValue={userGame ? userGame.gameStatus : undefined}
               onChange={(value: OnChangeCascaderType): void => {
                 // console.log(value);
               }}
@@ -106,9 +106,7 @@ function ListEditor({ open, setOpen, game }: ListEditorType) {
           <div style={{ gridArea: 'score' }}>
             <FilterField
               defaultValue={
-                userGameData[0]?.rating
-                  ? userGameData[0]?.rating.toString()
-                  : undefined
+                userGame?.rating ? userGame.rating.toString() : undefined
               }
               fieldName="Score"
               changeOnSelect
@@ -123,12 +121,9 @@ function ListEditor({ open, setOpen, game }: ListEditorType) {
             <div>
               <h3 className={styles.h3FilterFieldTitle}>Start</h3>
               <DatePickerField
-                // value={
-                //   userGameData[0]?.startDate
-                //     ? userGameData[0].startDate
-                //     : undefined
-                // }
-                value="2023-05-17T03:02:48Z"
+                defaultValue={
+                  userGame?.startDate ? userGame.startDate : undefined
+                }
                 onChange={onChange}
                 fieldName="Start"
                 customCascaderStyle={styles.cascaderStyle}
@@ -139,6 +134,9 @@ function ListEditor({ open, setOpen, game }: ListEditorType) {
             <div>
               <h3 className={styles.h3FilterFieldTitle}>Finish</h3>
               <DatePickerField
+                defaultValue={
+                  userGame?.completedDate ? userGame.completedDate : undefined
+                }
                 fieldName="Finish"
                 customCascaderStyle={styles.cascaderStyle}
                 onChange={onChange}
