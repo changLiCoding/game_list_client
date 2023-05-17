@@ -18,10 +18,10 @@ vi.mock('@/services/userGames/useGamesByStatus', async () => {
         gamesByStatusForAUser: {
           playingCount: 2,
           planningCount: 1,
-          completedCount: 0,
-          pausedCount: 0,
-          droppedCount: 0,
-          totalCount: 3,
+          completedCount: 3,
+          pausedCount: 4,
+          droppedCount: 5,
+          totalCount: 15,
           completed: [],
           dropped: [],
           errors: [],
@@ -162,6 +162,21 @@ describe('Get games according to list types for a user', () => {
     expect(avgScoreElements[0].textContent).toBe('2.5');
     const gamePlanningElements = screen.queryAllByText('Halo 3');
     expect(gamePlanningElements[0].textContent).toBe('Halo 3');
+  });
+
+  it('should search for games using search bar', async () => {
+    render(
+      <ContextWrapper>
+        <UserGameList />
+      </ContextWrapper>
+    );
+
+    const searchBar = screen.getByTestId('search-bar-desktop');
+    await userEvent.type(searchBar, 'Halo 3');
+    const gamePlanningElements1 = screen.queryAllByText('Halo 3');
+    expect(gamePlanningElements1.length).toBeGreaterThan(0);
+    const gamePlanningElements2 = screen.queryAllByText('Halo 2');
+    expect(gamePlanningElements2.length).toBe(0);
   });
 
   it('should render filter column for user', async () => {
