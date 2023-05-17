@@ -1,4 +1,3 @@
-import React from 'react';
 import { Input } from 'antd';
 import { useDispatch } from 'react-redux';
 import styles from './SearchBarStyle.module.scss';

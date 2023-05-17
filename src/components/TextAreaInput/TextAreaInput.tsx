@@ -1,5 +1,4 @@
 import { Input } from 'antd';
-import React from 'react';
 import type { TextAreaInputType } from '@/components/TextAreaInput/types';
 
 function TextAreaInput({
