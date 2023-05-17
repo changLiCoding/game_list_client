@@ -13,7 +13,7 @@ function ListStatistic({
     Object.keys(gamesObjData).forEach((key) => {
       if (key.includes('Count')) {
         result.push(
-          <Col span={4}>
+          <Col span={4} key={key}>
             <Statistic
               valueStyle={{ color: '#b368e6', fontSize: '14px' }}
               title={key.replace('Count', '').toUpperCase()}

@@ -6,9 +6,14 @@ import { Content } from 'antd/es/layout/layout';
 import ListEditor from '@/components/ListEditor';
 import styles from '@/components/GameDetailHeader/GameDetailHeaderInfo/GameDetailHeaderInfo.module.scss';
 import type { GameDetailsType } from '@/components/GameDetailHeader/types';
+import useUserGameById from '@/services/userGames/useUserGameById';
 
 function GameDetailHeaderInfo({ game }: GameDetailsType) {
   const [open, setOpen] = useState(false);
+
+  const { userGame, userGameLoading, errors, fetchUserGame } = useUserGameById(
+    game.id
+  );
 
   const items: MenuProps['items'] = [
     {
@@ -30,12 +35,19 @@ function GameDetailHeaderInfo({ game }: GameDetailsType) {
             type="text"
             onClick={(e) => {
               e.preventDefault();
+              fetchUserGame();
               setOpen(!open);
             }}
           >
             Open List Editor
           </Button>
-          <ListEditor open={open} setOpen={setOpen} game={game} />
+          <ListEditor
+            userGame={userGame}
+            userGameLoading={userGameLoading}
+            open={open}
+            setOpen={setOpen}
+            game={game}
+          />
         </>
       ),
     },

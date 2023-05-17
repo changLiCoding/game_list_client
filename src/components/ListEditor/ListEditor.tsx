@@ -1,7 +1,6 @@
 import { Modal, Button, Checkbox } from 'antd';
 import { HeartOutlined } from '@ant-design/icons';
 
-import { useEffect } from 'react';
 import useAddDeleteGame from '@/services/userGames/useAddDeleteGame';
 import useNotification from '@/hooks/useNotification';
 import type {
@@ -16,7 +15,6 @@ import styles from '@/components/ListEditor/ListEditor.module.scss';
 import DatePickerField from '../DatePickerField';
 import TextAreaInput from '../TextAreaInput';
 import type { ListEditorType } from '@/components/ListEditor/types';
-import useUserGameById from '@/services/userGames/useUserGameById';
 
 function ListEditor({
   userGame,
@@ -28,8 +26,6 @@ function ListEditor({
   const onChange = (value: OnChangeDatePickerType, dateString: string) => {
     // console.log(date, dateString);
   };
-
-  console.log(userGame);
 
   const { contextHolder, info } = useNotification();
 

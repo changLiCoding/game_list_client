@@ -17,6 +17,7 @@ function SideSection({
         gamesObjData[
           status as 'playing' | 'completed' | 'paused' | 'dropped' | 'planning'
         ];
+
       if (gameData && gameData.length > 0) {
         res.push(
           <ListCards

@@ -48,10 +48,7 @@ export default function GameCard({ game, colorBgContainer }: GameCardType) {
   const { Meta } = Card;
 
   const [open, setOpen] = useState(false);
-  const { userGame, userGameLoading, errors, fetchUserGame } = useUserGameById(
-    game.id
-  );
-  console.log(errors);
+  const { userGame, userGameLoading, fetchUserGame } = useUserGameById(game.id);
   return (
     <Color
       crossOrigin="anonymous"
