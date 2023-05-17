@@ -48,7 +48,10 @@ export default function GameCard({ game, colorBgContainer }: GameCardType) {
   const { Meta } = Card;
 
   const [open, setOpen] = useState(false);
-
+  const { userGame, userGameLoading, errors, fetchUserGame } = useUserGameById(
+    game.id
+  );
+  console.log(errors);
   return (
     <Color
       crossOrigin="anonymous"
@@ -115,8 +118,9 @@ export default function GameCard({ game, colorBgContainer }: GameCardType) {
               </Link>
             )}
             <Button
-              onClick={(e) => {
+              onClick={async (e) => {
                 e.stopPropagation();
+                fetchUserGame();
                 setOpen(!open);
               }}
               size="middle"
@@ -128,7 +132,13 @@ export default function GameCard({ game, colorBgContainer }: GameCardType) {
               icon={<PlusCircleOutlined style={{ fontSize: '1rem' }} />}
               shape="circle"
             />
-            <ListEditor open={open} setOpen={setOpen} game={game} />
+            <ListEditor
+              userGame={userGame}
+              userGameLoading={userGameLoading}
+              open={open}
+              setOpen={setOpen}
+              game={game}
+            />
           </Popover>
         </Col>
       )}

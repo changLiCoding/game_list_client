@@ -1,6 +1,7 @@
 import { Modal, Button, Checkbox } from 'antd';
 import { HeartOutlined } from '@ant-design/icons';
 
+import { useEffect } from 'react';
 import useAddDeleteGame from '@/services/userGames/useAddDeleteGame';
 import useNotification from '@/hooks/useNotification';
 import type {
@@ -17,12 +18,16 @@ import TextAreaInput from '../TextAreaInput';
 import type { ListEditorType } from '@/components/ListEditor/types';
 import useUserGameById from '@/services/userGames/useUserGameById';
 
-function ListEditor({ open, setOpen, game }: ListEditorType) {
+function ListEditor({
+  userGame,
+  userGameLoading,
+  open,
+  setOpen,
+  game,
+}: ListEditorType) {
   const onChange = (value: OnChangeDatePickerType, dateString: string) => {
     // console.log(date, dateString);
   };
-
-  const { userGameLoading, userGame } = useUserGameById(game.id);
 
   console.log(userGame);
 
