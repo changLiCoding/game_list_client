@@ -3,8 +3,8 @@ import { TypedDocumentNode } from '@graphql-typed-document-node/core';
 import type { Game } from '../../graphql/__generated__/graphql';
 
 export const GET_ALL_GAMES: TypedDocumentNode<{ allGames: Game[] }, void> = gql`
-  query GetAllGames {
-    allGames {
+  query GetAllGames($genre: [String!], $tag: [String!], $platform: [String!]) {
+    allGames(genre: $genre, tag: $tag, platform: $platform) {
       id
       name
       description
