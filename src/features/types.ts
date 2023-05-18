@@ -49,3 +49,16 @@ export type HomeSearchSlice = {
     genres: string;
   };
 };
+
+export type HomeSearchSlice = {
+  filters: {
+    platforms: string[];
+    tags: string[];
+    genres: string[];
+  };
+  lastSelected: {
+    platforms: string;
+    tags: string;
+    genres: string;
+  };
+};

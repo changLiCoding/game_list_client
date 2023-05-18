@@ -6,7 +6,9 @@ import { useDispatch } from 'react-redux';
 import styles from '@/components/FiltersWrapper/FiltersWrapper.module.scss';
 import FilterField from '@/components/FiltersWrapper/FilterField';
 import type { DropDownOption, OnChangeCascaderType } from '@/types/global';
+
 import useGetFilters from '@/services/game/useGetFilters';
+
 import { FilterWrapperType } from './types';
 import { addFilter, removeFilter } from '@/features/homeSearchSlice';
 
