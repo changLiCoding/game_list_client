@@ -8,8 +8,6 @@ import {
 } from '@ant-design/icons';
 import Color from 'color-thief-react';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { setUserGame } from '@/features/userGameSlice';
 
 import styles from '@/components/AllGames/GamesList/GameCard/GameCard.module.scss';
 import ListEditor from '@/components/ListEditor';
@@ -49,8 +47,6 @@ export function getRatingIcon(avgScore: number, color: string) {
 
 export default function GameCard({ game, colorBgContainer }: GameCardType) {
   const { Meta } = Card;
-
-  const dispatch = useDispatch();
 
   const [open, setOpen] = useState(false);
   const { userGame, userGameLoading, fetchUserGame } = useUserGameById(game.id);
@@ -120,11 +116,9 @@ export default function GameCard({ game, colorBgContainer }: GameCardType) {
               </Link>
             )}
             <Button
-              onClick={async (e) => {
+              onClick={(e) => {
                 e.stopPropagation();
-                await fetchUserGame();
-                console.log(userGame, 'in the button clicked');
-                dispatch(setUserGame(userGame));
+                fetchUserGame();
                 setOpen(true);
               }}
               size="middle"

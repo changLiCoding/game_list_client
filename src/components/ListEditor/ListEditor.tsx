@@ -133,7 +133,7 @@ function ListEditor({
           <div style={{ gridArea: 'score' }}>
             <FilterField
               defaultValue={
-                userGame?.rating ? userGame.rating.toString() : undefined
+                selectedRating ? selectedRating.toString() : undefined
               }
               fieldName="Score"
               changeOnSelect
@@ -141,6 +141,7 @@ function ListEditor({
               options={scoreOptions}
               onChange={(value: OnChangeCascaderType): void => {
                 // console.log(value);
+                dispatch(setUserGameRating(value[0]));
               }}
             />
           </div>
@@ -148,9 +149,7 @@ function ListEditor({
             <div>
               <h3 className={styles.h3FilterFieldTitle}>Start</h3>
               <DatePickerField
-                defaultValue={
-                  userGame?.startDate ? userGame.startDate : undefined
-                }
+                defaultValue={selectedStart || undefined}
                 onChange={onChange}
                 fieldName="Start"
                 customCascaderStyle={styles.cascaderStyle}
