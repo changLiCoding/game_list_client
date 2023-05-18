@@ -53,10 +53,12 @@ export default function FiltersWrapper({ setTagsArr }: FilterWrapperType) {
             customCascaderStyle={styles.cascaderStyle}
             options={genresOptions}
             onChange={(e) => {
+              const options = e as string[];
+              const selected = options[0] as string;
               dispatch(
                 addFilter({
                   type: 'Genre',
-                  value: e[0],
+                  value: selected,
                 })
               );
             }}
@@ -68,10 +70,12 @@ export default function FiltersWrapper({ setTagsArr }: FilterWrapperType) {
             customCascaderStyle={styles.cascaderStyle}
             options={platformsOptions}
             onChange={(e) => {
+              const options = e as string[];
+              const selected = options[0] as string;
               dispatch(
                 addFilter({
                   type: 'Platform',
-                  value: e[0] as string,
+                  value: selected,
                 })
               );
             }}
@@ -81,10 +85,12 @@ export default function FiltersWrapper({ setTagsArr }: FilterWrapperType) {
             fieldName="Tags"
             options={tagsOptions}
             onChange={(e) => {
+              const options = e as string[];
+              const selected = options[0] as string;
               dispatch(
                 addFilter({
                   type: 'Tag',
-                  value: e[0],
+                  value: selected,
                 })
               );
             }}
