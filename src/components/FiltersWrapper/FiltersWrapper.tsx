@@ -9,6 +9,7 @@ import type { OnChangeCascaderType } from '@/types/global';
 import type { FilterWrapperType } from '@/components/FiltersWrapper/types';
 import useGetFilters from '@/services/game/useGetFilters';
 import useFilterOptions from '@/hooks/useFilterOptions';
+
 import { addFilter, removeFilter } from '@/features/homeSearchSlice';
 
 const { Search } = Input;
