@@ -3,6 +3,7 @@ import { HeartOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
 
 import useAddDeleteGame from '@/services/userGames/useAddDeleteGame';
+import useEditUserGame from '@/services/userGames/useEditUserGame';
 import useNotification from '@/hooks/useNotification';
 import type {
   DropDownOption,
@@ -37,9 +38,13 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
     private: selectedPrivate,
   } = useAppSelector((state) => state.userGame);
 
+  const { userGame } = useAppSelector((state) => state);
+  console.log(userGame);
+
   const { contextHolder, info } = useNotification();
 
   const { addUserGames } = useAddDeleteGame();
+  const { editUserGame } = useEditUserGame();
 
   const onAddGameHandler = (gameId: string) => {
     addUserGames(gameId);
@@ -96,7 +101,13 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
             />
           </div>
           <div className={styles.contentSave}>
-            <Button type="primary" onClick={() => {}}>
+            <Button
+              type="primary"
+              onClick={async () => {
+                await editUserGame({ ...userGame, gameId: game?.id });
+                info(`Edit game ${game.name} successfully`);
+              }}
+            >
               Save
             </Button>
           </div>

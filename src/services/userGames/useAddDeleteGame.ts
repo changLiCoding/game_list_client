@@ -1,5 +1,8 @@
 import { useMutation } from '@apollo/client';
-import { ADD_USER_GAMES, DELETE_USER_GAMES } from './queries';
+import {
+  ADD_USER_GAMES,
+  DELETE_USER_GAMES,
+} from '@/services/userGames/queries';
 import { getTokenFromLocalStorage } from '@/constants';
 import type {
   AddUserGamesPayload,
