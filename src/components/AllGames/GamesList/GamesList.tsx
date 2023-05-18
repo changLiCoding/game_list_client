@@ -26,7 +26,7 @@ export default function GamesList({ isCardView }: { isCardView: boolean }) {
     client.refetchQueries({
       include: [GET_ALL_GAMES],
     });
-  }, [homeSearchState.filters]);
+  }, [client, homeSearchState.filters]);
 
   const {
     token: { colorBgContainer },
