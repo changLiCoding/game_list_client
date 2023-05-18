@@ -139,3 +139,23 @@ export const GET_GAMES_BY_STATUS = gql`
     }
   }
 `;
+
+export const EDIT_USER_GAME_BY_GAME_ID = gql`
+  mutation EditUserGameByGameId($input: EditUserGamesInput!) {
+    editUserGames(input: $input) {
+      userGame {
+        id
+        gameNote
+        gameStatus
+        review
+        startDate
+        completedDate
+        rating
+        private
+        createdAt
+        updatedAt
+      }
+      errors
+    }
+  }
+`;
