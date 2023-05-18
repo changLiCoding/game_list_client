@@ -26,17 +26,7 @@ import DatePickerField from '../DatePickerField';
 import TextAreaInput from '../TextAreaInput';
 import type { ListEditorType } from '@/components/ListEditor/types';
 
-function ListEditor({
-  userGame,
-  userGameLoading,
-  open,
-  setOpen,
-  game,
-}: ListEditorType) {
-  const onChange = (value: OnChangeDatePickerType, dateString: string) => {
-    // console.log(date, dateString);
-  };
-
+function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
   const dispatch = useDispatch();
   const {
     gameStatus: selectedStatus,
@@ -46,11 +36,6 @@ function ListEditor({
     completedDate: selectedCompleted,
     private: selectedPrivate,
   } = useAppSelector((state) => state.userGame);
-  console.log(' gameStatus in state', selectedStatus);
-  console.log(
-    'UserGame state: ',
-    useAppSelector((state) => state.userGame)
-  );
 
   const { contextHolder, info } = useNotification();
 
@@ -111,7 +96,9 @@ function ListEditor({
             />
           </div>
           <div className={styles.contentSave}>
-            <Button type="primary">Save</Button>
+            <Button type="primary" onClick={() => {}}>
+              Save
+            </Button>
           </div>
         </div>
       </div>
@@ -121,7 +108,6 @@ function ListEditor({
             <FilterField
               defaultValue={selectedStatus || undefined}
               onChange={(value: OnChangeCascaderType): void => {
-                console.log(value);
                 dispatch(setUserGameStatus(value[0]));
               }}
               options={statusOptions}
@@ -140,7 +126,6 @@ function ListEditor({
               customCascaderStyle={styles.cascaderStyle}
               options={scoreOptions}
               onChange={(value: OnChangeCascaderType): void => {
-                // console.log(value);
                 dispatch(setUserGameRating(value[0]));
               }}
             />
@@ -150,7 +135,9 @@ function ListEditor({
               <h3 className={styles.h3FilterFieldTitle}>Start</h3>
               <DatePickerField
                 defaultValue={selectedStart || undefined}
-                onChange={onChange}
+                onChange={(value: OnChangeDatePickerType) => {
+                  dispatch(setUserGameStartDate(value?.toISOString()));
+                }}
                 fieldName="Start"
                 customCascaderStyle={styles.cascaderStyle}
               />
@@ -160,12 +147,12 @@ function ListEditor({
             <div>
               <h3 className={styles.h3FilterFieldTitle}>Finish</h3>
               <DatePickerField
-                defaultValue={
-                  userGame?.completedDate ? userGame.completedDate : undefined
-                }
+                defaultValue={selectedCompleted || undefined}
                 fieldName="Finish"
                 customCascaderStyle={styles.cascaderStyle}
-                onChange={onChange}
+                onChange={(value: OnChangeDatePickerType) => {
+                  dispatch(setUserGameCompletedDate(value?.toISOString()));
+                }}
               />
             </div>
           </div>
@@ -173,13 +160,11 @@ function ListEditor({
             <div>
               <h3 className={styles.h3FilterFieldTitle}>Notes</h3>
               <TextAreaInput
-                defaultValue={
-                  userGame?.gameNote ? userGame.gameNote : undefined
-                }
+                defaultValue={selectedNote || undefined}
                 fieldName="Notes"
                 customCascaderStyle={styles.cascaderStyle}
                 onChange={(value: OnChangeTextAreaType) => {
-                  // console.log(value?.target.value)
+                  dispatch(setUserGameNote(value.target.value));
                 }}
               />
             </div>
@@ -191,9 +176,9 @@ function ListEditor({
             <span>No custom game lists</span>
           </div>
           <Checkbox
-            checked={userGame?.private ? userGame.private : false}
+            checked={selectedPrivate || false}
             onChange={(e: OnChangeCheckboxType) => {
-              // console.log(`checked = ${e.target.checked}`);
+              dispatch(setUserGamePrivate(e.target.checked));
             }}
           >
             Private

@@ -131,7 +131,6 @@ export default function GameCard({ game, colorBgContainer }: GameCardType) {
               shape="circle"
             />
             <ListEditor
-              userGame={userGame}
               userGameLoading={userGameLoading}
               open={open}
               setOpen={setOpen}

@@ -30,8 +30,6 @@ export const userGameSlice = createSlice({
       state.review = action.payload;
     },
     setUserGame: (state, action) => {
-      console.log(action.payload);
-
       const {
         gameStatus,
         gameNote,
