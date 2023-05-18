@@ -16,11 +16,7 @@ export default function useAllGames(
       tag,
       platform,
     },
-    context: {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-    },
+    ...getTokenFromLocalStorage,
   });
 
   try {
