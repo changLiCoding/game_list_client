@@ -59,6 +59,7 @@ function AvailableLists() {
       className={styles.listStyle}
       renderItem={(item) => (
         <List.Item
+          data-testid={`listitem-${item.name}`}
           onClick={() => handleItemClick(item.name)}
           style={
             selectedItem === item.name.toLowerCase()

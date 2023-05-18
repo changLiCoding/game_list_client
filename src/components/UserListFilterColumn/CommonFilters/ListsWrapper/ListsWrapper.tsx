@@ -39,7 +39,10 @@ function ListsWrapper() {
               data-testid="up-arrow"
               onClick={() => setListStyles((prev) => !prev)}
             />
-            <SaveOutlined onClick={handleSaveListOrder} />
+            <SaveOutlined
+              data-testid="save-button"
+              onClick={handleSaveListOrder}
+            />
           </div>
         ) : (
           <DownOutlined
