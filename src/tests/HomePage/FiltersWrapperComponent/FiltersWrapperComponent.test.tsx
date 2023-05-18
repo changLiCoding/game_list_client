@@ -5,9 +5,9 @@ import userEvent from '@testing-library/user-event';
 import ContextWrapper from '@/ContextWrapper';
 import FiltersWrapper from '@/components/FiltersWrapper';
 
-vi.mock('../../../services/game/useGame', async () => {
+vi.mock('../../../services/game/useGetFilters', async () => {
   const actual: unknown = await vi.importActual(
-    '../../../services/game/useGame'
+    '../../../services/game/useGetFilters'
   );
   if (typeof actual !== 'object')
     throw new Error('Import Actual did not return not an object');

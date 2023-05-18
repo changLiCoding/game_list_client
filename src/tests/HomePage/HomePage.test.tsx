@@ -37,9 +37,11 @@ vi.mock('../../services/games/useAllGames', async () => {
   };
 });
 
-// Mock useGame hook for testing
-vi.mock('../../services/game/useGame', async () => {
-  const actual: unknown = await vi.importActual('../../services/game/useGame');
+// Mock useGetFilters hook for testing
+vi.mock('../../services/game/useGetFilters', async () => {
+  const actual: unknown = await vi.importActual(
+    '../../services/game/useGetFilters'
+  );
   if (typeof actual !== 'object')
     throw new Error('Import Actual did not return not an object');
   return {

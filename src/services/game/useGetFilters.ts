@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/client';
 import { getTokenFromLocalStorage } from '@/constants';
 import { GET_GENRES_PLATFORMS_TAGS } from './queries';
 
-export default function useGame() {
+export default function useGetFilters() {
   const { data } = useQuery(
     GET_GENRES_PLATFORMS_TAGS,
     getTokenFromLocalStorage

@@ -71,7 +71,10 @@ describe('Games List Component', () => {
   // });
 
   it('should render the games list when isCardView false', async () => {
-    const { queryByText, debug } = render(
+    const {
+      queryByText,
+      // debug
+    } = render(
       <ContextWrapper>
         <GamesList isCardView={false} />
       </ContextWrapper>
