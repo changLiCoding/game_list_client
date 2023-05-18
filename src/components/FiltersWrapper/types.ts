@@ -12,6 +12,7 @@ export type FilterWrapperType = {
 };
 
 export interface FilterFieldProps {
+  defaultValue?: string | undefined;
   fieldName: string;
   options: DropDownOption[];
   onChange: (value: OnChangeCascaderType, fieldName: string) => void;

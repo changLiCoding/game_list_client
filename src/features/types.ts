@@ -26,3 +26,13 @@ export type InitialStateUserGamesListType = {
   };
   search: string;
 };
+
+export type InitialStateUserGameType = {
+  completedDate: string;
+  gameNote: string;
+  gameStatus: string;
+  review: string;
+  startDate: string;
+  private: boolean;
+  rating: number;
+};

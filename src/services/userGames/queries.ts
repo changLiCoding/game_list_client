@@ -63,6 +63,23 @@ export const GAMES_FOR_A_USER = gql`
   }
 `;
 
+export const GET_USER_GAME_BY_GAME_ID = gql`
+  query GetUserGameByGameId($gameId: ID!) {
+    getUserGameByGameId(gameId: $gameId) {
+      gameNote
+      gameStatus
+      id
+      review
+      startDate
+      completedDate
+      rating
+      private
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
 export const GET_GAMES_BY_STATUS = gql`
   query GamesByTagsForAUser {
     gamesByStatusForAUser {
