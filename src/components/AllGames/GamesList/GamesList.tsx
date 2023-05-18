@@ -1,14 +1,13 @@
 import { theme, Card, Row } from 'antd';
 import { Content } from 'antd/es/layout/layout';
 
-import { useApolloClient, useQuery } from '@apollo/client';
+import { useApolloClient } from '@apollo/client';
 import { useEffect } from 'react';
 
 import GameCard from '@/components/AllGames/GamesList/GameCard';
 import List from '@/components/AllGames/GamesList/List';
 import useAllGames from '@/services/games/useAllGames';
 import styles from '@/components/AllGames/GamesList/GamesList.module.scss';
-
 import { useAppSelector } from '@/app/hooks';
 import { GET_ALL_GAMES } from '@/services/games/queries';
 
