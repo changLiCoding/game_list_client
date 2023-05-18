@@ -57,18 +57,11 @@ export const INITIAL_USER_GAME_LISTS = {
 };
 
 export const INITIAL_USER_GAME_BY_ID_STATE = {
-  loading: true,
-  userGame: {
-    __typename: '',
-    completedDate: '',
-    createdAt: '',
-    gameNote: '',
-    gameStatus: '',
-    id: '',
-    private: false,
-    rating: 0,
-    review: '',
-    startDate: '',
-    updatedAt: '',
-  },
+  completedDate: '',
+  gameNote: '',
+  gameStatus: '',
+  private: false,
+  rating: 0,
+  review: '',
+  startDate: '',
 };

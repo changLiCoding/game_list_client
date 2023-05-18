@@ -1,5 +1,6 @@
 import { Modal, Button, Checkbox } from 'antd';
 import { HeartOutlined } from '@ant-design/icons';
+import { useDispatch } from 'react-redux';
 
 import useAddDeleteGame from '@/services/userGames/useAddDeleteGame';
 import useNotification from '@/hooks/useNotification';
@@ -10,6 +11,15 @@ import type {
   OnChangeDatePickerType,
   OnChangeTextAreaType,
 } from '@/types/global';
+import {
+  setUserGameCompletedDate,
+  setUserGameNote,
+  setUserGameStatus,
+  setUserGamePrivate,
+  setUserGameRating,
+  setUserGameStartDate,
+} from '@/features/userGameSlice';
+import { useAppSelector } from '@/app/hooks';
 import FilterField from '../FiltersWrapper/FilterField';
 import styles from '@/components/ListEditor/ListEditor.module.scss';
 import DatePickerField from '../DatePickerField';
@@ -26,6 +36,21 @@ function ListEditor({
   const onChange = (value: OnChangeDatePickerType, dateString: string) => {
     // console.log(date, dateString);
   };
+
+  const dispatch = useDispatch();
+  const {
+    gameStatus: selectedStatus,
+    rating: selectedRating,
+    gameNote: selectedNote,
+    startDate: selectedStart,
+    completedDate: selectedCompleted,
+    private: selectedPrivate,
+  } = useAppSelector((state) => state.userGame);
+  console.log(' gameStatus in state', selectedStatus);
+  console.log(
+    'UserGame state: ',
+    useAppSelector((state) => state.userGame)
+  );
 
   const { contextHolder, info } = useNotification();
 
@@ -94,9 +119,10 @@ function ListEditor({
         <div className={styles.bodyInput}>
           <div style={{ gridArea: 'status' }}>
             <FilterField
-              defaultValue={userGame ? userGame.gameStatus : undefined}
+              defaultValue={selectedStatus || undefined}
               onChange={(value: OnChangeCascaderType): void => {
-                // console.log(value);
+                console.log(value);
+                dispatch(setUserGameStatus(value[0]));
               }}
               options={statusOptions}
               fieldName="Status"
