@@ -2,15 +2,19 @@ import { Layout, Grid, Input, Space, Button } from 'antd';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import { v4 as uuidv4 } from 'uuid';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import styles from '@/components/FiltersWrapper/FiltersWrapper.module.scss';
 import FilterField from '@/components/FiltersWrapper/FilterField';
 import useGame from '@/services/game/useGame';
 import type { DropDownOption, OnChangeCascaderType } from '@/types/global';
+import { FilterWrapperType } from './types';
+import { addFilter } from '@/features/homeSearchSlice';
 
 const { Search } = Input;
 
 export default function FilterWrapper({ setTagsArr }: FilterWrapperType) {
   const [collapsed, setCollapsed] = useState(false);
+  const dispatch = useDispatch();
 
   const { useBreakpoint } = Grid;
   const screens = useBreakpoint();
@@ -48,7 +52,14 @@ export default function FilterWrapper({ setTagsArr }: FilterWrapperType) {
             fieldName="Genres"
             customCascaderStyle={styles.cascaderStyle}
             options={genresOptions}
-            onChange={onChange}
+            onChange={(e) => {
+              dispatch(
+                addFilter({
+                  type: 'Genre',
+                  value: e[0],
+                })
+              );
+            }}
             changeOnSelect
           />
 
@@ -56,13 +67,27 @@ export default function FilterWrapper({ setTagsArr }: FilterWrapperType) {
             fieldName="Platforms"
             customCascaderStyle={styles.cascaderStyle}
             options={platformsOptions}
-            onChange={onChange}
+            onChange={(e) => {
+              dispatch(
+                addFilter({
+                  type: 'Platform',
+                  value: e[0] as string,
+                })
+              );
+            }}
             changeOnSelect
           />
           <FilterField
             fieldName="Tags"
             options={tagsOptions}
-            onChange={onChange}
+            onChange={(e) => {
+              dispatch(
+                addFilter({
+                  type: 'Tag',
+                  value: e[0],
+                })
+              );
+            }}
             changeOnSelect
             customCascaderStyle={styles.cascaderStyle}
           />
