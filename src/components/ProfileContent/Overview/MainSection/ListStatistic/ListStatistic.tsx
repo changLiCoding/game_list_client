@@ -13,7 +13,7 @@ function ListStatistic({
     Object.keys(gamesObjData).forEach((key) => {
       if (key.includes('Count')) {
         result.push(
-          <Col span={4}>
+          <Col span={4} key={key}>
             <Statistic
               valueStyle={{ color: '#b368e6', fontSize: '14px' }}
               title={key.replace('Count', '').toUpperCase()}
@@ -38,49 +38,7 @@ function ListStatistic({
   return (
     <Row gutter={16} className={styles.statisticContainer}>
       {gamesByStatus && gameStatusExtractor(gamesByStatus)}
-      {/* <Col span={4}>
-        <Statistic
-          valueStyle={{ color: '#b368e6', fontSize: '14px' }}
-          title="Games"
-          value={15}
-        />
-      </Col>
-      <Col span={4}>
-        <Statistic
-          title="Playing"
-          value={5}
-          valueStyle={{ color: '#b368e6', fontSize: '14px' }}
-        />
-      </Col>
-      <Col span={4}>
-        <Statistic
-          title="Planning"
-          value={2}
-          valueStyle={{ color: '#b368e6', fontSize: '14px' }}
-        />
-      </Col>
-      <Col span={4}>
-        <Statistic
-          title="Completed"
-          value={1}
-          valueStyle={{ color: '#b368e6', fontSize: '14px' }}
-        />
-      </Col>
-      <Col span={4}>
-        <Statistic
-          title="Dropped"
-          value={2}
-          valueStyle={{ color: '#b368e6', fontSize: '14px' }}
-        />
-      </Col>
 
-      <Col span={4}>
-        <Statistic
-          title="Paused"
-          value={5}
-          valueStyle={{ color: '#b368e6', fontSize: '14px' }}
-        />
-      </Col> */}
       <Divider
         style={{ fontSize: '12px', color: 'rgb(92, 114, 138)' }}
         orientation="left"

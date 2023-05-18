@@ -1,5 +1,7 @@
 import { Modal, Button, Checkbox } from 'antd';
 import { HeartOutlined } from '@ant-design/icons';
+import { useDispatch } from 'react-redux';
+
 import useAddDeleteGame from '@/services/userGames/useAddDeleteGame';
 import useNotification from '@/hooks/useNotification';
 import type {
@@ -9,16 +11,31 @@ import type {
   OnChangeDatePickerType,
   OnChangeTextAreaType,
 } from '@/types/global';
+import {
+  setUserGameCompletedDate,
+  setUserGameNote,
+  setUserGameStatus,
+  setUserGamePrivate,
+  setUserGameRating,
+  setUserGameStartDate,
+} from '@/features/userGameSlice';
+import { useAppSelector } from '@/app/hooks';
 import FilterField from '../FiltersWrapper/FilterField';
 import styles from '@/components/ListEditor/ListEditor.module.scss';
 import DatePickerField from '../DatePickerField';
 import TextAreaInput from '../TextAreaInput';
 import type { ListEditorType } from '@/components/ListEditor/types';
 
-function ListEditor({ open, setOpen, game }: ListEditorType) {
-  const onChange = (value: OnChangeDatePickerType, dateString: string) => {
-    // console.log(date, dateString);
-  };
+function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
+  const dispatch = useDispatch();
+  const {
+    gameStatus: selectedStatus,
+    rating: selectedRating,
+    gameNote: selectedNote,
+    startDate: selectedStart,
+    completedDate: selectedCompleted,
+    private: selectedPrivate,
+  } = useAppSelector((state) => state.userGame);
 
   const { contextHolder, info } = useNotification();
 
@@ -43,6 +60,10 @@ function ListEditor({ open, setOpen, game }: ListEditorType) {
     label: score.toString(),
     value: score.toString(),
   }));
+
+  if (userGameLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <Modal
@@ -75,7 +96,9 @@ function ListEditor({ open, setOpen, game }: ListEditorType) {
             />
           </div>
           <div className={styles.contentSave}>
-            <Button type="primary">Save</Button>
+            <Button type="primary" onClick={() => {}}>
+              Save
+            </Button>
           </div>
         </div>
       </div>
@@ -83,8 +106,9 @@ function ListEditor({ open, setOpen, game }: ListEditorType) {
         <div className={styles.bodyInput}>
           <div style={{ gridArea: 'status' }}>
             <FilterField
+              defaultValue={selectedStatus || undefined}
               onChange={(value: OnChangeCascaderType): void => {
-                // console.log(value);
+                dispatch(setUserGameStatus(value[0]));
               }}
               options={statusOptions}
               fieldName="Status"
@@ -94,12 +118,15 @@ function ListEditor({ open, setOpen, game }: ListEditorType) {
           </div>
           <div style={{ gridArea: 'score' }}>
             <FilterField
+              defaultValue={
+                selectedRating ? selectedRating.toString() : undefined
+              }
               fieldName="Score"
               changeOnSelect
               customCascaderStyle={styles.cascaderStyle}
               options={scoreOptions}
               onChange={(value: OnChangeCascaderType): void => {
-                // console.log(value);
+                dispatch(setUserGameRating(value[0]));
               }}
             />
           </div>
@@ -107,7 +134,10 @@ function ListEditor({ open, setOpen, game }: ListEditorType) {
             <div>
               <h3 className={styles.h3FilterFieldTitle}>Start</h3>
               <DatePickerField
-                onChange={onChange}
+                defaultValue={selectedStart || undefined}
+                onChange={(value: OnChangeDatePickerType) => {
+                  dispatch(setUserGameStartDate(value?.toISOString()));
+                }}
                 fieldName="Start"
                 customCascaderStyle={styles.cascaderStyle}
               />
@@ -117,9 +147,12 @@ function ListEditor({ open, setOpen, game }: ListEditorType) {
             <div>
               <h3 className={styles.h3FilterFieldTitle}>Finish</h3>
               <DatePickerField
+                defaultValue={selectedCompleted || undefined}
                 fieldName="Finish"
                 customCascaderStyle={styles.cascaderStyle}
-                onChange={onChange}
+                onChange={(value: OnChangeDatePickerType) => {
+                  dispatch(setUserGameCompletedDate(value?.toISOString()));
+                }}
               />
             </div>
           </div>
@@ -127,10 +160,11 @@ function ListEditor({ open, setOpen, game }: ListEditorType) {
             <div>
               <h3 className={styles.h3FilterFieldTitle}>Notes</h3>
               <TextAreaInput
+                defaultValue={selectedNote || undefined}
                 fieldName="Notes"
                 customCascaderStyle={styles.cascaderStyle}
                 onChange={(value: OnChangeTextAreaType) => {
-                  // console.log(value?.target.value)
+                  dispatch(setUserGameNote(value.target.value));
                 }}
               />
             </div>
@@ -142,8 +176,9 @@ function ListEditor({ open, setOpen, game }: ListEditorType) {
             <span>No custom game lists</span>
           </div>
           <Checkbox
+            checked={selectedPrivate || false}
             onChange={(e: OnChangeCheckboxType) => {
-              // console.log(`checked = ${e.target.checked}`);
+              dispatch(setUserGamePrivate(e.target.checked));
             }}
           >
             Private

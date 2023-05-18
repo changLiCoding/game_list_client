@@ -8,9 +8,11 @@ import {
 } from '@ant-design/icons';
 import Color from 'color-thief-react';
 import { Link } from 'react-router-dom';
+
 import styles from '@/components/AllGames/GamesList/GameCard/GameCard.module.scss';
 import ListEditor from '@/components/ListEditor';
 import type { GameCardType } from '@/components/AllGames/GamesList/types';
+import useUserGameById from '@/services/userGames/useUserGameById';
 
 export function getRatingIcon(avgScore: number, color: string) {
   if (avgScore > 8.5) {
@@ -47,7 +49,7 @@ export default function GameCard({ game, colorBgContainer }: GameCardType) {
   const { Meta } = Card;
 
   const [open, setOpen] = useState(false);
-
+  const { userGame, userGameLoading, fetchUserGame } = useUserGameById(game.id);
   return (
     <Color
       crossOrigin="anonymous"
@@ -116,7 +118,8 @@ export default function GameCard({ game, colorBgContainer }: GameCardType) {
             <Button
               onClick={(e) => {
                 e.stopPropagation();
-                setOpen(!open);
+                fetchUserGame();
+                setOpen(true);
               }}
               size="middle"
               type="ghost"
@@ -127,7 +130,12 @@ export default function GameCard({ game, colorBgContainer }: GameCardType) {
               icon={<PlusCircleOutlined style={{ fontSize: '1rem' }} />}
               shape="circle"
             />
-            <ListEditor open={open} setOpen={setOpen} game={game} />
+            <ListEditor
+              userGameLoading={userGameLoading}
+              open={open}
+              setOpen={setOpen}
+              game={game}
+            />
           </Popover>
         </Col>
       )}
