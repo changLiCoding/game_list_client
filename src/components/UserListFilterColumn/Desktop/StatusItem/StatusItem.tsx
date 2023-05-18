@@ -13,6 +13,7 @@ function StatusItem({ status, index }: StatusItemType) {
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           className={styles.statusItem}
+          data-testid="status-item"
         >
           <p>{status.content}</p>
           <DragOutlined />

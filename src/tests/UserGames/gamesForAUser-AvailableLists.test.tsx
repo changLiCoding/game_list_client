@@ -88,18 +88,23 @@ vi.mock('@/services/game/useGetFilters', async () => {
 const { getComputedStyle } = window;
 window.getComputedStyle = (elt) => getComputedStyle(elt);
 
-describe('Get games according to list types for a user', () => {
-  it('should search for games using search bar', async () => {
+describe('Get games according to available list filters', () => {
+  it('should only display games according to available filter', async () => {
     render(
       <ContextWrapper>
         <UserGameList />
       </ContextWrapper>
     );
 
-    const searchBar = screen.getByTestId('search-bar-desktop');
-    await userEvent.type(searchBar, 'Halo 3');
+    const planningFilter = screen.getByTestId('listitem-Planning');
+    await userEvent.click(planningFilter);
+
+    const gamePlanningElements = screen.queryAllByText(
+      'Pokemon Alpha Sapphire'
+    );
+    expect(gamePlanningElements.length).toBeGreaterThan(0);
     const gamePlanningElements1 = screen.queryAllByText('Halo 3');
-    expect(gamePlanningElements1.length).toBeGreaterThan(0);
+    expect(gamePlanningElements1.length).toBe(0);
     const gamePlanningElements2 = screen.queryAllByText('Halo 2');
     expect(gamePlanningElements2.length).toBe(0);
   });

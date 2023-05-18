@@ -4,9 +4,9 @@ import { v4 as uuidv4 } from 'uuid';
 import { useState } from 'react';
 import styles from '@/components/FiltersWrapper/FiltersWrapper.module.scss';
 import FilterField from '@/components/FiltersWrapper/FilterField';
-import useGame from '@/services/game/useGame';
 import type { DropDownOption, OnChangeCascaderType } from '@/types/global';
 import type { FilterWrapperType } from '@/components/FiltersWrapper/types';
+import useGetFilters from '@/services/game/useGetFilters';
 
 const { Search } = Input;
 
@@ -19,7 +19,7 @@ export default function FiltersWrapper({ setTagsArr }: FilterWrapperType) {
   const onChange = (value: string | OnChangeCascaderType) => {
     setTagsArr((prev) => [...prev, { id: uuidv4(), value }]);
   };
-  const { genres, platforms, tags } = useGame();
+  const { genres, platforms, tags } = useGetFilters();
 
   const optionsGenerator = (typeArray: string[]): DropDownOption[] =>
     typeArray.map((name) => ({
