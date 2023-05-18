@@ -8,7 +8,7 @@ import FilterField from '@/components/FiltersWrapper/FilterField';
 import useGame from '@/services/game/useGame';
 import type { DropDownOption, OnChangeCascaderType } from '@/types/global';
 import { FilterWrapperType } from './types';
-import { addFilter } from '@/features/homeSearchSlice';
+import { addFilter, removeFilter } from '@/features/homeSearchSlice';
 
 const { Search } = Input;
 
@@ -53,14 +53,20 @@ export default function FilterWrapper({ setTagsArr }: FilterWrapperType) {
             customCascaderStyle={styles.cascaderStyle}
             options={genresOptions}
             onChange={(e) => {
-              const options = e as string[];
-              const selected = options[0] as string;
-              dispatch(
-                addFilter({
-                  type: 'Genre',
-                  value: selected,
-                })
-              );
+              if (e) {
+                dispatch(
+                  addFilter({
+                    type: 'Genre',
+                    value: e,
+                  })
+                );
+              } else {
+                dispatch(
+                  removeFilter({
+                    type: 'Genre',
+                  })
+                );
+              }
             }}
             changeOnSelect
           />
@@ -70,14 +76,20 @@ export default function FilterWrapper({ setTagsArr }: FilterWrapperType) {
             customCascaderStyle={styles.cascaderStyle}
             options={platformsOptions}
             onChange={(e) => {
-              const options = e as string[];
-              const selected = options[0] as string;
-              dispatch(
-                addFilter({
-                  type: 'Platform',
-                  value: selected,
-                })
-              );
+              if (e) {
+                dispatch(
+                  addFilter({
+                    type: 'Platform',
+                    value: e,
+                  })
+                );
+              } else {
+                dispatch(
+                  removeFilter({
+                    type: 'Platform',
+                  })
+                );
+              }
             }}
             changeOnSelect
           />
@@ -85,14 +97,20 @@ export default function FilterWrapper({ setTagsArr }: FilterWrapperType) {
             fieldName="Tags"
             options={tagsOptions}
             onChange={(e) => {
-              const options = e as string[];
-              const selected = options[0] as string;
-              dispatch(
-                addFilter({
-                  type: 'Tag',
-                  value: selected,
-                })
-              );
+              if (e) {
+                dispatch(
+                  addFilter({
+                    type: 'Tag',
+                    value: e,
+                  })
+                );
+              } else {
+                dispatch(
+                  removeFilter({
+                    type: 'Tag',
+                  })
+                );
+              }
             }}
             changeOnSelect
             customCascaderStyle={styles.cascaderStyle}
