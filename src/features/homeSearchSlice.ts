@@ -1,18 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { HomeSearchSlice } from './types';
 
-type HomeSliceProps = {
-  filters: {
-    platforms: string[];
-    tags: string[];
-    genres: string[];
-  };
-};
-
-const initialState: HomeSliceProps = {
+const initialState: HomeSearchSlice = {
   filters: {
     platforms: [],
     tags: [],
     genres: [],
+  },
+  lastSelected: {
+    platforms: '',
+    tags: '',
+    genres: '',
   },
 };
 
@@ -21,27 +19,46 @@ export const homeSearchSlice = createSlice({
   initialState,
   reducers: {
     addFilter: (state, action) => {
+      const payloadValue = action.payload.value[0] as string;
+      console.log('payloadValue', payloadValue);
       if (action.payload.type === 'Platform') {
-        state.filters.platforms.push(action.payload.value);
+        state.filters.platforms.push(payloadValue);
+        state.lastSelected.platforms = payloadValue;
       } else if (action.payload.type === 'Tag') {
-        state.filters.tags.push(action.payload.value);
+        state.filters.tags.push(payloadValue);
+        state.lastSelected.tags = payloadValue;
       } else if (action.payload.type === 'Genre') {
-        state.filters.genres.push(action.payload.value);
+        state.filters.genres.push(payloadValue);
+        state.lastSelected.genres = payloadValue;
       }
     },
 
     removeFilter: (state, action) => {
+      let payloadValue = action.payload.value;
+      console.log('removeFilter payloadValue', payloadValue);
       if (action.payload.type === 'Platform') {
+        if (!payloadValue) {
+          payloadValue = state.lastSelected.platforms;
+          state.lastSelected.platforms = '';
+        }
         state.filters.platforms = state.filters.platforms.filter(
-          (platform) => platform !== action.payload.value
+          (platform) => platform !== payloadValue
         );
       } else if (action.payload.type === 'Tag') {
+        if (!payloadValue) {
+          payloadValue = state.lastSelected.tags;
+          state.lastSelected.tags = '';
+        }
         state.filters.tags = state.filters.tags.filter(
-          (tag) => tag !== action.payload.value
+          (tag) => tag !== payloadValue
         );
       } else if (action.payload.type === 'Genre') {
+        if (!payloadValue) {
+          payloadValue = state.lastSelected.genres;
+          state.lastSelected.genres = '';
+        }
         state.filters.genres = state.filters.genres.filter(
-          (genre) => genre !== action.payload.value
+          (genre) => genre !== payloadValue
         );
       }
     },
