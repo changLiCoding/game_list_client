@@ -37,7 +37,6 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
   } = useAppSelector((state) => state.userGame);
 
   const { userGame } = useAppSelector((state) => state);
-  console.log(userGame);
 
   const { contextHolder, info } = useNotification();
 
@@ -120,6 +119,7 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
             <div>
               <h3 className={styles.h3FilterFieldTitle}>Status</h3>
               <Select
+                data-testId="dropdown-Status"
                 defaultValue={selectedStatus || undefined}
                 onChange={(value: string): void => {
                   dispatch(setUserGameStatus(value));
@@ -134,6 +134,7 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
             <div>
               <h3 className={styles.h3FilterFieldTitle}>Score</h3>
               <Select
+                data-testId="dropdown-Score"
                 defaultValue={selectedRating || undefined}
                 onChange={(value: number): void => {
                   dispatch(setUserGameRating(value));

@@ -24,12 +24,22 @@ describe('ListEditor Component', () => {
 
     const setOpenMock = vi.fn();
 
-    const { queryByText, queryByAltText, queryByTestId, queryAllByRole } =
-      render(
-        <ContextWrapper>
-          <ListEditor game={game} open setOpen={setOpenMock} />
-        </ContextWrapper>
-      );
+    const {
+      queryByText,
+      queryByAltText,
+      queryByTestId,
+      queryAllByRole,
+      debug,
+    } = render(
+      <ContextWrapper>
+        <ListEditor
+          userGameLoading={false}
+          game={game}
+          open
+          setOpen={setOpenMock}
+        />
+      </ContextWrapper>
+    );
     expect(queryByText('Game 1')).toBeInTheDocument();
     const coverElement = queryByAltText('Game 1') as HTMLImageElement;
     expect(coverElement).toBeInTheDocument();
@@ -41,13 +51,14 @@ describe('ListEditor Component', () => {
     const statusElement = queryByTestId('dropdown-Status') as HTMLElement;
     expect(statusElement).toBeInTheDocument();
     expect(statusElement).toHaveTextContent('Status');
-
     const statusInput = queryAllByRole('combobox')['0'] as HTMLInputElement;
+    expect(statusInput).toBeInTheDocument();
+    debug(statusInput);
     await userEvent.click(statusInput);
     await waitFor(() => {
-      const tag = queryAllByRole('menuitemcheckbox')['0'] as HTMLElement;
+      const tag = queryAllByRole('option')['0'] as HTMLElement;
       expect(tag).toBeInTheDocument();
-      expect(queryByText('Playing')).toBeInTheDocument();
+      expect(tag).toHaveTextContent('Playing');
     });
 
     const startDateElement = queryByTestId('date-picker-Start') as HTMLElement;
@@ -96,7 +107,12 @@ describe('ListEditor Component', () => {
 
     const { queryByText, queryByTestId } = render(
       <ContextWrapper>
-        <ListEditor game={game} open={false} setOpen={setOpenMock} />
+        <ListEditor
+          userGameLoading={false}
+          game={game}
+          open={false}
+          setOpen={setOpenMock}
+        />
       </ContextWrapper>
     );
 
