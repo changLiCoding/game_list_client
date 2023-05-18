@@ -20,7 +20,6 @@ export const homeSearchSlice = createSlice({
   reducers: {
     addFilter: (state, action) => {
       const payloadValue = action.payload.value[0] as string;
-      console.log('payloadValue', payloadValue);
       if (action.payload.type === 'Platform') {
         state.filters.platforms.push(payloadValue);
         state.lastSelected.platforms = payloadValue;
@@ -35,7 +34,6 @@ export const homeSearchSlice = createSlice({
 
     removeFilter: (state, action) => {
       let payloadValue = action.payload.value;
-      console.log('removeFilter payloadValue', payloadValue);
       if (action.payload.type === 'Platform') {
         if (!payloadValue) {
           payloadValue = state.lastSelected.platforms;
