@@ -1,4 +1,4 @@
-import { Modal, Button, Checkbox } from 'antd';
+import { Modal, Button, Checkbox, Select } from 'antd';
 import { HeartOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
 
@@ -7,7 +7,6 @@ import useEditUserGame from '@/services/userGames/useEditUserGame';
 import useNotification from '@/hooks/useNotification';
 import type {
   DropDownOption,
-  OnChangeCascaderType,
   OnChangeCheckboxType,
   OnChangeDatePickerType,
   OnChangeTextAreaType,
@@ -21,7 +20,6 @@ import {
   setUserGameStartDate,
 } from '@/features/userGameSlice';
 import { useAppSelector } from '@/app/hooks';
-import FilterField from '../FiltersWrapper/FilterField';
 import styles from '@/components/ListEditor/ListEditor.module.scss';
 import DatePickerField from '../DatePickerField';
 import TextAreaInput from '../TextAreaInput';
@@ -119,30 +117,32 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
       <div className={styles.listEditorBody}>
         <div className={styles.bodyInput}>
           <div style={{ gridArea: 'status' }}>
-            <FilterField
-              defaultValue={selectedStatus || undefined}
-              onChange={(value: OnChangeCascaderType): void => {
-                dispatch(setUserGameStatus(value[0]));
-              }}
-              options={statusOptions}
-              fieldName="Status"
-              changeOnSelect
-              customCascaderStyle={styles.cascaderStyle}
-            />
+            <div>
+              <h3 className={styles.h3FilterFieldTitle}>Status</h3>
+              <Select
+                defaultValue={selectedStatus || undefined}
+                onChange={(value: string): void => {
+                  dispatch(setUserGameStatus(value));
+                }}
+                options={statusOptions}
+                placeholder="Status"
+                allowClear
+              />
+            </div>
           </div>
           <div style={{ gridArea: 'score' }}>
-            <FilterField
-              defaultValue={
-                selectedRating ? selectedRating.toString() : undefined
-              }
-              fieldName="Score"
-              changeOnSelect
-              customCascaderStyle={styles.cascaderStyle}
-              options={scoreOptions}
-              onChange={(value: OnChangeCascaderType): void => {
-                dispatch(setUserGameRating(value[0]));
-              }}
-            />
+            <div>
+              <h3 className={styles.h3FilterFieldTitle}>Score</h3>
+              <Select
+                defaultValue={selectedRating || undefined}
+                onChange={(value: number): void => {
+                  dispatch(setUserGameRating(value));
+                }}
+                options={scoreOptions}
+                placeholder="Score"
+                allowClear
+              />
+            </div>
           </div>
           <div style={{ gridArea: 'start' }}>
             <div>
