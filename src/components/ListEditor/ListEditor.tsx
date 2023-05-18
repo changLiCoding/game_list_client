@@ -104,8 +104,11 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
             <Button
               type="primary"
               onClick={async () => {
+                await onAddGameHandler(game?.id);
                 await editUserGame({ ...userGame, gameId: game?.id });
+
                 info(`Edit game ${game.name} successfully`);
+                setOpen(false);
               }}
             >
               Save
