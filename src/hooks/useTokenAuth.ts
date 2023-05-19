@@ -4,8 +4,9 @@ import { useDispatch } from 'react-redux';
 import { useAppSelector } from '@/app/hooks';
 import { setLoading, setUser } from '@/features/userSlice';
 import useGetUser from '@/services/user/useGetUser';
+import type { UseTokenAuthType } from '@/hooks/types';
 
-const useTokenAuth = () => {
+const useTokenAuth = (): UseTokenAuthType => {
   const authToken = localStorage.getItem('token');
   const dispatch = useDispatch();
   const { getUser, loading, data } = useGetUser();

@@ -11,9 +11,7 @@ import useUserGameById from '@/services/userGames/useUserGameById';
 function GameDetailHeaderInfo({ game }: GameDetailsType) {
   const [open, setOpen] = useState(false);
 
-  const { userGame, userGameLoading, errors, fetchUserGame } = useUserGameById(
-    game.id
-  );
+  const { userGame, userGameLoading, fetchUserGame } = useUserGameById(game.id);
 
   const items: MenuProps['items'] = [
     {

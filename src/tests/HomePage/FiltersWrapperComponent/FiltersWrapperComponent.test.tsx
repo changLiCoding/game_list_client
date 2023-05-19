@@ -49,9 +49,9 @@ describe('Filters Wrapper Component', () => {
       </ContextWrapper>
     );
 
-    expect(queryAllByText('Genres')[0]).toBeInTheDocument();
+    expect(queryAllByText('Genre')[0]).toBeInTheDocument();
 
-    const genres = screen.getByTestId('dropdown-Genres')
+    const genres = screen.getByTestId('dropdown-Genre')
       .firstElementChild as Element;
     await userEvent.click(genres);
 
@@ -60,9 +60,9 @@ describe('Filters Wrapper Component', () => {
       expect(queryByText('Genre 2')).toBeInTheDocument();
     });
 
-    expect(queryAllByText('Tags')[0]).toBeInTheDocument();
+    expect(queryAllByText('Tag')[0]).toBeInTheDocument();
 
-    const tags = screen.getByTestId('dropdown-Tags')
+    const tags = screen.getByTestId('dropdown-Tag')
       .firstElementChild as Element;
     await userEvent.click(tags);
 
@@ -71,7 +71,7 @@ describe('Filters Wrapper Component', () => {
       expect(queryByText('Tag 2')).toBeInTheDocument();
     });
 
-    const platforms = screen.getByTestId('dropdown-Platforms')
+    const platforms = screen.getByTestId('dropdown-Platform')
       .firstElementChild as Element;
     await userEvent.click(platforms);
 
