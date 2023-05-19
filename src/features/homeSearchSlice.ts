@@ -12,6 +12,7 @@ const initialState: HomeSearchSlice = {
     tags: '',
     genres: '',
   },
+  view: 'grid',
 };
 
 export const homeSearchSlice = createSlice({
@@ -61,12 +62,17 @@ export const homeSearchSlice = createSlice({
       }
     },
 
+    setView(state, action: { payload: 'grid' | 'list' }) {
+      state.view = action.payload;
+    },
+
     clearAll() {
       return initialState;
     },
   },
 });
 
-export const { addFilter, removeFilter, clearAll } = homeSearchSlice.actions;
+export const { addFilter, removeFilter, setView, clearAll } =
+  homeSearchSlice.actions;
 
 export default homeSearchSlice.reducer;

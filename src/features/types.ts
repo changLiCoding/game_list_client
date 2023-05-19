@@ -48,4 +48,5 @@ export type HomeSearchSlice = {
     tags: string;
     genres: string;
   };
+  view: 'grid' | 'list';
 };

@@ -12,7 +12,7 @@ import styles from '@/components/AllGames/GamesList/GamesList.module.scss';
 import { useAppSelector } from '@/app/hooks';
 import { GET_ALL_GAMES } from '@/services/games/queries';
 
-export default function GamesList({ isCardView }: { isCardView: boolean }) {
+export default function GamesList() {
   const client = useApolloClient();
   const homeSearchState = useAppSelector((state) => state.homeSearch);
 
@@ -34,7 +34,7 @@ export default function GamesList({ isCardView }: { isCardView: boolean }) {
 
   return (
     <Content>
-      {isCardView ? (
+      {homeSearchState.view === 'grid' ? (
         <Card title="All Games">
           <Row
             gutter={{
@@ -46,7 +46,7 @@ export default function GamesList({ isCardView }: { isCardView: boolean }) {
           >
             {games.map((game) => (
               <GameCard
-                key={game.id}
+                key={`grid-${game.id}`}
                 game={game}
                 colorBgContainer={colorBgContainer}
               />
@@ -63,7 +63,7 @@ export default function GamesList({ isCardView }: { isCardView: boolean }) {
               })
               .map((game) => (
                 <List
-                  key={game.id}
+                  key={`list-${game.id}`}
                   game={game}
                   colorBgContainer={colorBgContainer}
                 />

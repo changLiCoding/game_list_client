@@ -3,17 +3,10 @@ import { Tag } from 'antd';
 import { useDispatch } from 'react-redux';
 import styles from '@/components/AllGames/InfoBar/FilterTags/FilterTags.module.scss';
 
-import type { OnChangeCascaderType } from '@/types/global';
-import type { FilterTagsType } from '@/components/AllGames/InfoBar/types';
 import { useAppSelector } from '@/app/hooks';
 import { clearAll, removeFilter } from '@/features/homeSearchSlice';
 
-function FilterTags({ tagsArr, setTagsArr }: FilterTagsType) {
-  const handleClose = (removedTag: string | OnChangeCascaderType) => {
-    const newTags = tagsArr.filter((tag) => tag.value !== removedTag);
-    setTagsArr(newTags);
-  };
-
+function FilterTags() {
   const dispatch = useDispatch();
   const homeSearchState = useAppSelector((state) => state.homeSearch);
   const filtersLength =
