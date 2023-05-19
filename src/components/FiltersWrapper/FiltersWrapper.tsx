@@ -11,9 +11,6 @@ import useGetFilters from '@/services/game/useGetFilters';
 import { FilterWrapperType } from './types';
 import { addFilter, removeFilter } from '@/features/homeSearchSlice';
 
-import { FilterWrapperType } from './types';
-import { addFilter, removeFilter } from '@/features/homeSearchSlice';
-
 const { Search } = Input;
 
 export default function FiltersWrapper({ setTagsArr }: FilterWrapperType) {
