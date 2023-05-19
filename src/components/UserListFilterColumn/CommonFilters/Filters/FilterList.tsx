@@ -2,47 +2,16 @@ import { useDispatch } from 'react-redux';
 import SelectDropdown from '@/components/SelectDropdown';
 import styles from './FilterListWrapperStyle.module.scss';
 import { setFilters } from '@/features/userUserGamesListSlice';
-import type { DropDownOption, OnChangeCascaderType } from '@/types/global';
-import type { Filter } from '@/components/UserListFilterColumn/Desktop/types';
+import type { OnChangeCascaderType } from '@/types/global';
 import { useAppSelector } from '@/app/hooks';
 import useGetFilters from '@/services/game/useGetFilters';
+import useFilterOptions from '@/hooks/useFilterOptions';
 
 function FilterList() {
   const dispatch = useDispatch();
   const filterValues = useAppSelector((state) => state.userGames.filters);
   const { genres, platforms, tags } = useGetFilters();
-
-  // TODO: Refactor this function since FilterWrapper.tsx also uses it
-  const optionsGenerator = (typeArray: string[]): DropDownOption[] =>
-    typeArray.map((name) => ({
-      value: name,
-      label: name,
-    }));
-
-  const genresOptions: DropDownOption[] = genres
-    ? optionsGenerator(genres)
-    : [];
-
-  const platformsOptions: DropDownOption[] = platforms
-    ? optionsGenerator(platforms)
-    : [];
-
-  const tagsOptions: DropDownOption[] = tags ? optionsGenerator(tags) : [];
-
-  const filters: Filter[] = [
-    {
-      name: 'Platform',
-      options: platformsOptions,
-    },
-    {
-      name: 'Tag',
-      options: tagsOptions,
-    },
-    {
-      name: 'Genre',
-      options: genresOptions,
-    },
-  ];
+  const { filters } = useFilterOptions(genres, platforms, tags);
 
   const onChange = (value: OnChangeCascaderType, fieldName: string): void => {
     dispatch(

@@ -4,9 +4,10 @@ import { v4 as uuidv4 } from 'uuid';
 import { useState } from 'react';
 import styles from '@/components/FiltersWrapper/FiltersWrapper.module.scss';
 import FilterField from '@/components/FiltersWrapper/FilterField';
-import type { DropDownOption, OnChangeCascaderType } from '@/types/global';
+import type { OnChangeCascaderType } from '@/types/global';
 import type { FilterWrapperType } from '@/components/FiltersWrapper/types';
 import useGetFilters from '@/services/game/useGetFilters';
+import useFilterOptions from '@/hooks/useFilterOptions';
 
 const { Search } = Input;
 
@@ -20,53 +21,24 @@ export default function FiltersWrapper({ setTagsArr }: FilterWrapperType) {
     setTagsArr((prev) => [...prev, { id: uuidv4(), value }]);
   };
   const { genres, platforms, tags } = useGetFilters();
+  const { filters } = useFilterOptions(genres, platforms, tags);
 
-  const optionsGenerator = (typeArray: string[]): DropDownOption[] =>
-    typeArray.map((name) => ({
-      value: name,
-      label: name,
-    }));
-
-  const genresOptions: DropDownOption[] = genres
-    ? optionsGenerator(genres)
-    : [];
-
-  const platformsOptions: DropDownOption[] = platforms
-    ? optionsGenerator(platforms)
-    : [];
-
-  const tagsOptions: DropDownOption[] = tags ? optionsGenerator(tags) : [];
-
-  return tagsOptions.length === 0 ||
-    genresOptions.length === 0 ||
-    platformsOptions.length === 0 ? (
-    <Layout>Loading</Layout>
-  ) : (
+  return (
     <Layout className={styles.layoutFiltersWrapperContainer}>
       {screens.md ? (
         <>
-          <FilterField
-            fieldName="Genres"
-            customCascaderStyle={styles.cascaderStyle}
-            options={genresOptions}
-            onChange={onChange}
-            changeOnSelect
-          />
-
-          <FilterField
-            fieldName="Platforms"
-            customCascaderStyle={styles.cascaderStyle}
-            options={platformsOptions}
-            onChange={onChange}
-            changeOnSelect
-          />
-          <FilterField
-            fieldName="Tags"
-            options={tagsOptions}
-            onChange={onChange}
-            changeOnSelect
-            customCascaderStyle={styles.cascaderStyle}
-          />
+          {filters.map((filter) => {
+            return (
+              <FilterField
+                key={filter.name}
+                fieldName={filter.name}
+                customCascaderStyle={styles.cascaderStyle}
+                options={filter.options}
+                onChange={onChange}
+                changeOnSelect
+              />
+            );
+          })}
           <FilterField
             fieldName="Year"
             options={[]}

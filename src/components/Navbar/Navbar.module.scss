@@ -1,27 +1,24 @@
+@use '../../styles/variables.scss' as variables;
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
 
 $mobile-nav-width: 640px;
 
-$background-color: rgba(105, 39, 211, 0.733);
 $header-brand-color: white;
 
 // Desktop Colors
 $desktop-nav-item-color: white;
 $desktop-nav-item-hover-color: rgba(206, 215, 221, 0.548);
-
 $desktop-nav-dropdown-item-color: rgb(167, 168, 184);
-$desktop-nav-dropdown-item-hover-color: rgb(109, 49, 158);
 
 // Mobile Colors
 $mobile-hamburger-color: black;
 
 $mobile-nav-header-drawer-item-color: rgb(167, 168, 184);
-$mobile-nav-header-drawer-item-hover-color: rgb(109, 49, 158);
 
 .header {
   width: 100%;
   z-index: 30;
-  background-color: $background-color;
+  background-color: variables.$color-navbar;
   overflow: hidden;
   font-family: 'Roboto', sans-serif;
 }
@@ -114,7 +111,7 @@ $mobile-nav-header-drawer-item-hover-color: rgb(109, 49, 158);
   width: 100%;
 
   &:hover {
-    color: $desktop-nav-dropdown-item-hover-color;
+    color: variables.$color-navbar-hover;
   }
 
   .desktop-nav__header-popover-icon {
@@ -124,6 +121,7 @@ $mobile-nav-header-drawer-item-hover-color: rgb(109, 49, 158);
 
 .desktop-nav__profile-image {
   cursor: pointer;
+  border-radius: 100%;
 }
 
 // Mobile Version
@@ -183,7 +181,7 @@ $mobile-nav-header-drawer-item-hover-color: rgb(109, 49, 158);
   }
 
   button:hover {
-    color: $mobile-nav-header-drawer-item-hover-color;
+    color: variables.$color-navbar-hover;
     cursor: pointer;
   }
 
@@ -203,7 +201,7 @@ $mobile-nav-header-drawer-item-hover-color: rgb(109, 49, 158);
 
   a:hover {
     text-decoration: none;
-    color: $mobile-nav-header-drawer-item-hover-color;
+    color: variables.$color-navbar-hover;
   }
 
   a:active {

@@ -63,13 +63,13 @@ function AvailableLists() {
           onClick={() => handleItemClick(item.name)}
           style={
             selectedItem === item.name.toLowerCase()
-              ? { backgroundColor: '#f7f5f5' }
+              ? { backgroundColor: '#e0ddd3' }
               : {}
           }
         >
           <div className={styles.listName}>
             <p>{item.name}</p>
-            <Badge count={item.count} showZero color="#d4cfc1" />
+            <Badge count={item.count} showZero color="#b5b1a7" />
           </div>
         </List.Item>
       )}
