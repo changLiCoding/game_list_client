@@ -11,7 +11,7 @@ function UserLink({
 }) {
   return (
     <Link
-      to={`/user-profile/${linkName === 'Overview' ? '' : linkName}`}
+      to={`/user-profile/${linkName === 'game list' ? 'game-list' : linkName}`}
       className={styles.userLink}
     >
       {children}
