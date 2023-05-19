@@ -85,9 +85,7 @@ export default function FiltersWrapper({ setTagsArr }: FilterWrapperType) {
             className={styles.searchFiltersWrapperSearch}
             placeholder="input search text"
             size="large"
-            onSearch={() => {
-              // console.log(value);
-            }}
+            onSearch={() => {}}
             enterButton="Search"
           />
           <Button

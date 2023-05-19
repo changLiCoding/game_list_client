@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styles from '@/components/ProfileContent/Overview/SideSection/ListCards/ListCards.module.scss';
 import type { Game as GameType } from '@/graphql/__generated__/graphql';
 
@@ -16,13 +17,13 @@ function ListCards({
           gameData.length > 0 &&
           gameData.map((game) => {
             return (
-              <a
+              <Link
                 className={styles.listCard}
                 key={game.id}
-                href={`/game-detail/${game.id}/${game.name}`}
+                to={`/game-detail/${game.id}/${game.name}`}
               >
                 {game.imageURL && <img src={game.imageURL} alt={game.name} />}
-              </a>
+              </Link>
             );
           })}
       </div>

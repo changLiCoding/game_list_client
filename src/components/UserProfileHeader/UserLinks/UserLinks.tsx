@@ -5,11 +5,11 @@ function UserLinks() {
   return (
     <div className={styles.navWrap}>
       <div className={styles.navContainer}>
-        <UserLink>Overview</UserLink>
-        <UserLink>Game List</UserLink>
-        <UserLink>Favorites</UserLink>
-        <UserLink>Social</UserLink>
-        <UserLink>Reviews</UserLink>
+        <UserLink linkName="overview">Overview</UserLink>
+        <UserLink linkName="game-list">Game List</UserLink>
+        <UserLink linkName="favorites">Favorites</UserLink>
+        <UserLink linkName="social">Social</UserLink>
+        <UserLink linkName="reviews">Reviews</UserLink>
       </div>
     </div>
   );

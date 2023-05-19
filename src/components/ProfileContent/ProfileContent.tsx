@@ -1,9 +1,9 @@
 import Overview from '@/components/ProfileContent/Overview/Overview';
 import Favorites from '@/components/ProfileContent/Favorites/Favorites';
 import Reviews from '@/components/ProfileContent/Reviews/Reviews';
-import GameList from '@/components/ProfileContent/GameList/GameList';
 import Social from '@/components/ProfileContent/Social/Social';
 import styles from '@/components/ProfileContent/ProfileContent.module.scss';
+import UserGameList from '@/pages/UserGameList';
 
 function ProfileContent({ routeName }: { routeName: string }) {
   const contentGenerator = (route: string) => {
@@ -15,7 +15,7 @@ function ProfileContent({ routeName }: { routeName: string }) {
       case 'reviews':
         return <Reviews />;
       case 'gameList':
-        return <GameList />;
+        return <UserGameList />;
       case 'social':
         return <Social />;
       default:

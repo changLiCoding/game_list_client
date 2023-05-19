@@ -1,14 +1,17 @@
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import styles from '@/components/UserProfileHeader/UserLinks/UserLink/UserLink.module.scss';
 
-function UserLink({ children }: { children: string }) {
-  const { username } = useParams();
+function UserLink({
+  linkName,
+  children,
+}: {
+  linkName: string;
+  children: string;
+}) {
   return (
     <Link
-      to={`/user-profile/${username}/${
-        children === 'Overview' ? '' : children
-      }`}
+      to={`/user-profile/${linkName === 'Overview' ? '' : linkName}`}
       className={styles.userLink}
     >
       {children}
