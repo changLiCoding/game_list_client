@@ -24,22 +24,17 @@ describe('ListEditor Component', () => {
 
     const setOpenMock = vi.fn();
 
-    const {
-      queryByText,
-      queryByAltText,
-      queryByTestId,
-      queryAllByRole,
-      debug,
-    } = render(
-      <ContextWrapper>
-        <ListEditor
-          userGameLoading={false}
-          game={game}
-          open
-          setOpen={setOpenMock}
-        />
-      </ContextWrapper>
-    );
+    const { queryByText, queryByAltText, queryByTestId, queryAllByRole } =
+      render(
+        <ContextWrapper>
+          <ListEditor
+            userGameLoading={false}
+            game={game}
+            open
+            setOpen={setOpenMock}
+          />
+        </ContextWrapper>
+      );
     expect(queryByText('Game 1')).toBeInTheDocument();
     const coverElement = queryByAltText('Game 1') as HTMLImageElement;
     expect(coverElement).toBeInTheDocument();
@@ -53,7 +48,7 @@ describe('ListEditor Component', () => {
     expect(statusElement).toHaveTextContent('Status');
     const statusInput = queryAllByRole('combobox')['0'] as HTMLInputElement;
     expect(statusInput).toBeInTheDocument();
-    debug(statusInput);
+
     await userEvent.click(statusInput);
     await waitFor(() => {
       const tag = queryAllByRole('option')['0'] as HTMLElement;

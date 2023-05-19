@@ -119,7 +119,7 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
             <div>
               <h3 className={styles.h3FilterFieldTitle}>Status</h3>
               <Select
-                data-testId="dropdown-Status"
+                data-testid="dropdown-Status"
                 defaultValue={selectedStatus || undefined}
                 onChange={(value: string): void => {
                   dispatch(setUserGameStatus(value));
@@ -134,7 +134,7 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
             <div>
               <h3 className={styles.h3FilterFieldTitle}>Score</h3>
               <Select
-                data-testId="dropdown-Score"
+                data-testid="dropdown-Score"
                 defaultValue={selectedRating || undefined}
                 onChange={(value: number): void => {
                   dispatch(setUserGameRating(value));
