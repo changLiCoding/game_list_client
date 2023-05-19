@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-
 import { HomeSearchSlice } from './types';
 
 const initialState: HomeSearchSlice = {

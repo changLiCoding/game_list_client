@@ -1,7 +1,7 @@
 import { theme, Card, Row } from 'antd';
 import { Content } from 'antd/es/layout/layout';
 
-import { useApolloClient, useQuery } from '@apollo/client';
+import { useApolloClient } from '@apollo/client';
 import { useEffect } from 'react';
 
 import GameCard from '@/components/AllGames/GamesList/GameCard';
