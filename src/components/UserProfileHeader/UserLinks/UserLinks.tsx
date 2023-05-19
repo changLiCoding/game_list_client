@@ -27,15 +27,51 @@ function UserLinks() {
 
   const [selected, setSelected] = useState<string>('');
 
+  const handleItemClick = (itemId: string) => (): void | boolean => {
+    if (dragging) {
+      return false;
+    }
+    setSelected(selected !== itemId ? itemId : '');
+  };
+
+  const onWheel = (
+    apiObj: ScrollVisibilityApiType,
+    ev: React.WheelEvent
+  ): void => {
+    const isThouchpad = Math.abs(ev.deltaX) !== 0 || Math.abs(ev.deltaY) < 15;
+
+    if (isThouchpad) {
+      ev.stopPropagation();
+      return;
+    }
+
+    if (ev.deltaY < 0) {
+      apiObj.scrollNext();
+    } else if (ev.deltaY > 0) {
+      apiObj.scrollPrev();
+    }
+  };
+
   return (
-    <div className={styles.navWrap}>
-      <div className={styles.navContainer}>
+    <div className={styles.navWrap} onMouseLeave={dragStop}>
+      <ScrollMenu
+        scrollContainerClassName={styles.navContainer}
+        onWheel={onWheel}
+        onMouseDown={() => dragStart}
+        onMouseUp={() => dragStop}
+        onMouseMove={handleDrag}
+      >
         {linksArray.map((link) => (
-          <UserLink key={link} linkName={link.toLowerCase()}>
+          <UserLink
+            key={link}
+            linkName={link.toLowerCase()}
+            onClick={handleItemClick(link)}
+            selected={link === selected}
+          >
             {link}
           </UserLink>
         ))}
-      </div>
+      </ScrollMenu>
     </div>
   );
 }
