@@ -2,6 +2,7 @@ import { TagsTwoTone } from '@ant-design/icons';
 import { Tag } from 'antd';
 import { useDispatch } from 'react-redux';
 import styles from '@/components/AllGames/InfoBar/FilterTags/FilterTags.module.scss';
+
 import type { OnChangeCascaderType } from '@/types/global';
 import type { FilterTagsType } from '@/components/AllGames/InfoBar/types';
 
