@@ -16,6 +16,7 @@
     @include mixin.phoneSmall {
       overflow-x: auto;
       white-space: nowrap;
+      -webkit-overflow-scrolling: touch;
     }
     @include mixin.phoneLarge {
       padding-left: 30px;
