@@ -3,13 +3,9 @@ import { Link, useLocation } from 'react-router-dom';
 import styles from '@/components/UserProfileHeader/UserLinks/UserLink/UserLink.module.scss';
 
 function UserLink({
-  selected,
-  onClick,
   linkName,
   children,
 }: {
-  selected: boolean;
-  onClick: () => void;
   linkName: string;
   children: string;
 }) {
