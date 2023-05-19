@@ -11,8 +11,11 @@ function FilterTags({ tagsArr, setTagsArr }: FilterTagsType) {
   };
 
   return (
-    <div className={styles.tagsContainer}>
-      {tagsArr.length > 0 && <TagsTwoTone className={styles.tagsIcon} />}
+    <div
+      className={styles.tagsContainer}
+      style={{ display: `${tagsArr.length > 0 ? null : 'none'}` }}
+    >
+      <TagsTwoTone className={styles.tagsIcon} />
       {tagsArr &&
         tagsArr.map((tag) => (
           <Tag

@@ -1,4 +1,5 @@
 @use '../../../../styles/variables.scss' as variables;
+@use '../../../../styles/mixin.scss' as mixin;
 
 .tagsContainer {
   z-index: 5;
@@ -7,11 +8,20 @@
   align-items: center;
   display: flex;
   flex-wrap: wrap;
+  max-height: 27px;
+  overflow: hidden;
+
+  @include mixin.phoneSmall {
+    max-height: 22px;
+  }
 
   .tagsIcon {
     font-size: 1.6rem;
     transform: scale(-1) rotate(90deg);
     margin-right: 16px;
+    @include mixin.phoneSmall {
+      font-size: 1.2rem;
+    }
   }
 
   .tagsText {
@@ -37,8 +47,15 @@
     font-weight: 600;
     line-height: 13px;
     margin-right: 12px;
+    margin-bottom: 3px;
     padding: 5px 8px;
     text-transform: capitalize;
+
+    @include mixin.phoneSmall {
+      font-size: 0.5rem;
+      margin-right: 8px;
+      padding: 3px 6px;
+    }
 
     & span {
       display: none;

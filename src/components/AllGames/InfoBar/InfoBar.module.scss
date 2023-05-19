@@ -16,5 +16,6 @@
 
   @include mixin.phoneSmall {
     padding: 0 10px;
+    display: block;
   }
 }
