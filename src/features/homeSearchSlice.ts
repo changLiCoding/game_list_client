@@ -21,7 +21,7 @@ export const homeSearchSlice = createSlice({
   initialState,
   reducers: {
     addFilter: (state, action) => {
-      const payloadValue = action.payload.value[0];
+      const payloadValue = action.payload.value[0] as string;
       if (action.payload.type === 'Platform') {
         state.filters.platforms.push(payloadValue);
         state.lastSelected.platforms = payloadValue;
@@ -32,7 +32,7 @@ export const homeSearchSlice = createSlice({
         state.filters.genres.push(payloadValue);
         state.lastSelected.genres = payloadValue;
       } else if (action.payload.type === 'Year') {
-        state.filters.year = payloadValue;
+        state.filters.year = Number(payloadValue);
       }
     },
 
