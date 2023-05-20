@@ -6,11 +6,13 @@ import type {
   GameDataType,
   UserGameListDataType,
 } from '@/components/GamesListTable/types';
+import useUserGameByIdv2 from '@/services/userGames/useUserGameByIdv2';
 
 function UserGameListDesktop({ data }: UserGameListDataType) {
-  const handleClick = (id: string, name: string) => {
-    console.log('id', id);
-    console.log('name', name);
+  const { userGameLoading, fetchUserGame } = useUserGameByIdv2();
+  const handleClick = async (id: string) => {
+    const fetchData = await fetchUserGame({ variables: { gameId: id } });
+    console.log('data', fetchData);
   };
 
   const columns: ColumnsType<GameDataType> = [
@@ -38,7 +40,7 @@ function UserGameListDesktop({ data }: UserGameListDataType) {
             <button
               type="button"
               className={styles.popButton}
-              onClick={() => handleClick(record.id, record.name)}
+              onClick={() => handleClick(record.id)}
             >
               <img className={styles.Image} src={imageURL} alt="game" />
             </button>

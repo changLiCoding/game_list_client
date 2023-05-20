@@ -6,9 +6,11 @@ import List from '@/components/AllGames/GamesList/List';
 import useAllGames from '@/services/games/useAllGames';
 import styles from '@/components/AllGames/GamesList/GamesList.module.scss';
 import { useAppSelector } from '@/app/hooks';
+import useUserGameByIdv2 from '@/services/userGames/useUserGameByIdv2';
 
 export default function GamesList() {
   const homeSearchState = useAppSelector((state) => state.homeSearch);
+  const { userGameLoading, fetchUserGame } = useUserGameByIdv2();
 
   const { games, refetch } = useAllGames(
     homeSearchState.filters.genres,
@@ -43,6 +45,8 @@ export default function GamesList() {
                 key={`grid-${game.id}`}
                 game={game}
                 colorBgContainer={colorBgContainer}
+                userGameLoading={userGameLoading}
+                fetchUserGame={fetchUserGame}
               />
             ))}
           </Row>
