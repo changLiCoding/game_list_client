@@ -104,7 +104,7 @@ describe('Games List Component', () => {
     const platforms = screen.queryAllByTestId('gamePlatforms') as HTMLElement[];
     const platformOne = platforms[0];
 
-    expect(platformOne).toHaveTextContent('PC');
+    expect(platformOne).toHaveTextContent('Windows');
     // debug(platformOne);
     // const style = window.getComputedStyle(platformOne);
     // console.log('style of platformOne: ', style);
