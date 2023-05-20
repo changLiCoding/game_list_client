@@ -29,13 +29,11 @@ const useFilterOptions = (
   const yearOptions = useMemo(() => {
     const currentYear = new Date().getFullYear();
     const years = [];
-    let temp;
     // 1958 is the year of the first video game
-    for (let i = 1958; i <= currentYear; i += 1) {
-      temp = i.toString();
+    for (let i = currentYear; i >= 1958; i -= 1) {
       years.push({
-        value: temp,
-        label: temp,
+        value: i,
+        label: i.toString(),
       });
     }
 
