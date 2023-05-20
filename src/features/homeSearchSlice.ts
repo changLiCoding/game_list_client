@@ -6,6 +6,7 @@ const initialState: HomeSearchSlice = {
     platforms: [],
     tags: [],
     genres: [],
+    year: -1,
   },
   lastSelected: {
     platforms: '',
@@ -20,7 +21,7 @@ export const homeSearchSlice = createSlice({
   initialState,
   reducers: {
     addFilter: (state, action) => {
-      const payloadValue = action.payload.value[0] as string;
+      const payloadValue = action.payload.value[0];
       if (action.payload.type === 'Platform') {
         state.filters.platforms.push(payloadValue);
         state.lastSelected.platforms = payloadValue;
@@ -30,6 +31,8 @@ export const homeSearchSlice = createSlice({
       } else if (action.payload.type === 'Genre') {
         state.filters.genres.push(payloadValue);
         state.lastSelected.genres = payloadValue;
+      } else if (action.payload.type === 'Year') {
+        state.filters.year = payloadValue;
       }
     },
 
@@ -59,6 +62,8 @@ export const homeSearchSlice = createSlice({
         state.filters.genres = state.filters.genres.filter(
           (genre) => genre !== payloadValue
         );
+      } else if (action.payload.type === 'Year') {
+        state.filters.year = -1;
       }
     },
 
