@@ -20,7 +20,7 @@ export default function useAllGames(
       genre,
       tag,
       platform,
-      ...(year !== -1 && { year }), // TODO: Find a better way to do this? We need to optionally include the variable if it's not -1
+      year: year === -1 ? null : year,
     },
     ...getTokenFromLocalStorage,
   });
