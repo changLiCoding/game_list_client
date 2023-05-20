@@ -36,3 +36,17 @@ export type InitialStateUserGameType = {
   private: boolean;
   rating: number;
 };
+
+export type HomeSearchSlice = {
+  filters: {
+    platforms: string[];
+    tags: string[];
+    genres: string[];
+  };
+  lastSelected: {
+    platforms: string;
+    tags: string;
+    genres: string;
+  };
+  view: 'grid' | 'list';
+};

@@ -3,13 +3,21 @@ import { getTokenFromLocalStorage } from '@/constants';
 import { GET_ALL_GAMES } from './queries';
 import type { Game as GameType } from '@/graphql/__generated__/graphql';
 
-export default function useAllGames() {
+export default function useAllGames(
+  genre: string[] = [],
+  tag: string[] = [],
+  platform: string[] = []
+) {
   let games: GameType[] = [];
   const errors: string[] = [];
-  const { data: allGames, loading } = useQuery(
-    GET_ALL_GAMES,
-    getTokenFromLocalStorage
-  );
+  const { data: allGames, loading } = useQuery(GET_ALL_GAMES, {
+    variables: {
+      genre,
+      tag,
+      platform,
+    },
+    ...getTokenFromLocalStorage,
+  });
 
   try {
     if (!allGames || !allGames.allGames) {

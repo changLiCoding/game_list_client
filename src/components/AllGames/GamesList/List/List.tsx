@@ -1,5 +1,6 @@
 import { Tag } from 'antd';
 import Color from 'color-thief-react';
+import { v4 as uuidv4 } from 'uuid';
 import styles from '@/components/AllGames/GamesList/List/List.module.scss';
 import { getRatingIcon } from '@/components/AllGames/GamesList/GameCard/GameCard';
 import type { GameCardType } from '@/components/AllGames/GamesList/types';
@@ -43,11 +44,7 @@ function List({ game, colorBgContainer }: GameCardType): JSX.Element {
               </div>
               <div className={styles.gameGenres}>
                 {game.genres.map((genre: string) => (
-                  <Tag
-                    bordered={false}
-                    color={data}
-                    key={`${game.name}-${genre}`}
-                  >
+                  <Tag bordered={false} color={data} key={uuidv4()}>
                     {genre}
                   </Tag>
                 ))}
@@ -63,7 +60,7 @@ function List({ game, colorBgContainer }: GameCardType): JSX.Element {
             <div className={styles.gamePlatforms} data-testid="gamePlatforms">
               {game.platforms.map((platform: string) => (
                 <Tag
-                  key={`${platform}-${game.name}`}
+                  key={uuidv4()}
                   className={styles.gamePlatform}
                   color="geekblue"
                   style={{

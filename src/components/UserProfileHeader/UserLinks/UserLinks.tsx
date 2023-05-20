@@ -2,14 +2,25 @@ import styles from '@/components/UserProfileHeader/UserLinks/UserLinks.module.sc
 import UserLink from '@/components/UserProfileHeader/UserLinks/UserLink/UserLink';
 
 function UserLinks() {
+  const linksArray = [
+    'Overview',
+    'Game List',
+    'Favorites',
+    'Social',
+    'Reviews',
+  ];
+
   return (
     <div className={styles.navWrap}>
       <div className={styles.navContainer}>
-        <UserLink linkName="overview">Overview</UserLink>
-        <UserLink linkName="game-list">Game List</UserLink>
-        <UserLink linkName="favorites">Favorites</UserLink>
-        <UserLink linkName="social">Social</UserLink>
-        <UserLink linkName="reviews">Reviews</UserLink>
+        {linksArray.map((link) => (
+          <UserLink
+            key={link}
+            linkName={link === 'Game List' ? 'game-list' : link.toLowerCase()}
+          >
+            {link}
+          </UserLink>
+        ))}
       </div>
     </div>
   );

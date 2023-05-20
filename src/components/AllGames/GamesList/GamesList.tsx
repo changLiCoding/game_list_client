@@ -1,13 +1,32 @@
 import { theme, Card, Row } from 'antd';
 import { Content } from 'antd/es/layout/layout';
+
+import { useApolloClient } from '@apollo/client';
+import { useEffect } from 'react';
+
 import GameCard from '@/components/AllGames/GamesList/GameCard';
 import List from '@/components/AllGames/GamesList/List';
 import useAllGames from '@/services/games/useAllGames';
 import styles from '@/components/AllGames/GamesList/GamesList.module.scss';
-import type { GamesListType } from '@/components/AllGames/GamesList/types';
 
-export default function GamesList({ isCardView }: GamesListType) {
-  const { games } = useAllGames();
+import { useAppSelector } from '@/app/hooks';
+import { GET_ALL_GAMES } from '@/services/games/queries';
+
+export default function GamesList() {
+  const client = useApolloClient();
+  const homeSearchState = useAppSelector((state) => state.homeSearch);
+
+  const { games } = useAllGames(
+    homeSearchState.filters.genres,
+    homeSearchState.filters.tags,
+    homeSearchState.filters.platforms
+  );
+
+  useEffect(() => {
+    client.refetchQueries({
+      include: [GET_ALL_GAMES],
+    });
+  }, [client, homeSearchState.filters]);
 
   const {
     token: { colorBgContainer },
@@ -15,7 +34,7 @@ export default function GamesList({ isCardView }: GamesListType) {
 
   return (
     <Content>
-      {isCardView ? (
+      {homeSearchState.view === 'grid' ? (
         <Card title="All Games">
           <Row
             gutter={{
@@ -27,7 +46,7 @@ export default function GamesList({ isCardView }: GamesListType) {
           >
             {games.map((game) => (
               <GameCard
-                key={game.id}
+                key={`grid-${game.id}`}
                 game={game}
                 colorBgContainer={colorBgContainer}
               />
@@ -44,7 +63,7 @@ export default function GamesList({ isCardView }: GamesListType) {
               })
               .map((game) => (
                 <List
-                  key={game.id}
+                  key={`list-${game.id}`}
                   game={game}
                   colorBgContainer={colorBgContainer}
                 />

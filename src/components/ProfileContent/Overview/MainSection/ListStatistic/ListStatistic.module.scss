@@ -10,6 +10,9 @@
       :global(div.ant-statistic-title) {
         font-size: 14px;
         color: variables.$color-text;
+        @include mixin.phoneSmall {
+          font-size: 8px;
+        }
       }
     }
   }

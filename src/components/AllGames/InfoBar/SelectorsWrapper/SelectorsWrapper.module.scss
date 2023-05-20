@@ -28,6 +28,10 @@
       white-space: nowrap;
       transition: color 0.3s ease;
       background-color: variables.$color-background;
+
+      @include mixin.phoneSmall {
+        font-size: 0.7rem;
+      }
     }
 
     :global(span.anticon) {
@@ -61,6 +65,10 @@
       color: rgb(173, 192, 210);
       transition: color 0.3s ease;
       font-size: 1.8rem;
+
+      @include mixin.phoneSmall {
+        font-size: 1.4rem;
+      }
       svg {
         width: 0.625em;
         overflow: visible;
@@ -72,7 +80,7 @@
     }
 
     & .selected {
-      color: rgb(139, 160, 178);
+      color: rgb(10, 119, 214);
       transform: scale(1.05);
       transition: transform 0.3s ease;
     }
