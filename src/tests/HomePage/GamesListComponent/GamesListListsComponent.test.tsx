@@ -76,7 +76,7 @@ describe('Games List Component', () => {
       // debug
     } = render(
       <ContextWrapper>
-        <GamesList isCardView={false} />
+        <GamesList />
       </ContextWrapper>
     );
     // vi.spyOn(window.screen, 'width', 'get').mockReturnValue(1600);

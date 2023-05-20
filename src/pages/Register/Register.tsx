@@ -19,7 +19,7 @@ function Register() {
 
     if (registerData.token) {
       localStorage.setItem('token', registerData.token);
-      navigate('/dashboard');
+      navigate('/user-profile/overview');
     } else {
       info(registerData.errors[0]);
     }

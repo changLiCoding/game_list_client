@@ -18,7 +18,7 @@ function Login() {
     if (loginData.token) {
       localStorage.setItem('token', loginData.token);
       dispatch(setUser(loginData.user));
-      navigate('/dashboard');
+      navigate('/user-profile/overview');
     } else {
       info(loginData.errors[0]);
     }
@@ -41,7 +41,7 @@ function Login() {
             // onFinishFailed={onFinishFailed}
           >
             <p className={styles.formTitle}>Welcome back</p>
-            <p>Login to the Dashboard</p>
+            <p>Login to the your profile</p>
             <Form.Item
               name="email"
               rules={[
