@@ -1,3 +1,5 @@
+@use '../../../styles/variables.scss' as variables;
+
 .layoutFilterFieldContainer {
   display: flex;
   flex-direction: column;
@@ -11,4 +13,5 @@
   font-weight: 500;
   margin-top: 1.5rem;
   margin-bottom: 1rem;
+  color: variables.$color-text-title;
 }

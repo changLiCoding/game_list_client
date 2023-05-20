@@ -13,7 +13,7 @@ function ContextWrapper({ children }: { children: React.ReactNode }) {
         <ConfigProvider
           theme={{
             token: {
-              colorPrimary: '#91caff',
+              colorPrimary: 'rgb(63, 114, 175)',
             },
           }}
         >

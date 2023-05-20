@@ -15,7 +15,9 @@
     position: relative;
     user-select: none;
     :hover {
-      color: rgb(116, 136, 153);
+      // color: rgb(116, 136, 153);
+      color: variables.$color-icon-hover;
+
       transform: scale(1.05);
       transition: transform 0.5s ease;
     }
@@ -46,7 +48,8 @@
         transition: color 0.3s ease;
       }
       :hover {
-        color: rgb(116, 136, 153);
+        color: variables.$color-icon-hover;
+        // color: rgb(116, 136, 153);
         transform: scale(1.07);
         transition: transform 0.3s ease;
       }
@@ -61,7 +64,7 @@
     grid-template-columns: 1fr 1fr 1fr;
     & .selectorIcon {
       cursor: pointer;
-      color: rgb(173, 192, 210);
+      color: variables.$color-icon;
       transition: color 0.3s ease;
       font-size: 1.8rem;
 
@@ -79,12 +82,12 @@
     }
 
     & .selected {
-      color: rgb(10, 119, 214);
+      color: variables.$color-icon-selected;
       transform: scale(1.05);
       transition: transform 0.3s ease;
     }
     :hover {
-      color: rgb(116, 136, 153);
+      color: variables.$color-icon-hover;
       transform: scale(1.05);
       transition: transform 0.3s ease;
     }

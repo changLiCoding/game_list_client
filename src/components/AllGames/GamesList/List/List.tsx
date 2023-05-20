@@ -40,7 +40,12 @@ function List({ game, colorBgContainer }: GameCardType): JSX.Element {
           <div className={styles.gameContent}>
             <div className={styles.gameTitle}>
               <div>
-                <a href={`/game-detail/${game.id}/${game.name}`}>{game.name}</a>
+                <a
+                  href={`/game-detail/${game.id}/${game.name}`}
+                  style={{ color: `${data}` }}
+                >
+                  {game.name}
+                </a>
               </div>
               <div className={styles.gameGenres}>
                 {game.genres.map((genre: string) => (
@@ -51,8 +56,8 @@ function List({ game, colorBgContainer }: GameCardType): JSX.Element {
               </div>
             </div>
             <div className={styles.gameRating}>
-              {game.avgScore && getRatingIcon(game.avgScore, '#91caff')}
-              <div>
+              {game.avgScore && getRatingIcon(game.avgScore, `${data}`)}
+              <div style={{ color: `${data}` }}>
                 Rating: {game.avgScore}
                 <div>99999 users</div>
               </div>
@@ -62,7 +67,7 @@ function List({ game, colorBgContainer }: GameCardType): JSX.Element {
                 <Tag
                   key={uuidv4()}
                   className={styles.gamePlatform}
-                  color="geekblue"
+                  color="rgb(17, 45, 78)"
                   style={{
                     marginBottom: '5px',
                     maxWidth: '125px',
