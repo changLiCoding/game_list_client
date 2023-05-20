@@ -90,6 +90,7 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
           <div className={styles.contentTitle}>{game?.name}</div>
           <div className={styles.contentFavourite}>
             <Button
+              className={styles.favouriteButton}
               type="ghost"
               onClick={() => {
                 onAddGameHandler(game?.id);
@@ -101,12 +102,13 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
             <Button
               type="primary"
               onClick={async () => {
-                await onAddGameHandler(game?.id);
+                onAddGameHandler(game?.id);
                 await editUserGame({ ...userGame, gameId: game?.id });
 
                 info(`Edit game ${game.name} successfully`);
                 setOpen(false);
               }}
+              className={styles.saveButton}
             >
               Save
             </Button>

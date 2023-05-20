@@ -1,5 +1,6 @@
 import { Popover, Table, Tag } from 'antd';
 import { ColumnsType } from 'antd/es/table';
+import { Link } from 'react-router-dom';
 import styles from '@/components/GamesListTable/Desktop/UserGameListDesktop.module.scss';
 import type {
   GameDataType,
@@ -38,6 +39,14 @@ const columns: ColumnsType<GameDataType> = [
       compare: (a, b) => a.name.localeCompare(b.name),
       multiple: 3,
     },
+    render: (name: string, record) => (
+      <Link
+        to={`/game-detail/${record.id}/${name}`}
+        className={styles.nameContainer}
+      >
+        {name}
+      </Link>
+    ),
   },
   {
     title: 'Score',
