@@ -52,13 +52,6 @@ export default function FiltersWrapper() {
               />
             );
           })}
-          <FilterField
-            fieldName="Year"
-            options={[]}
-            onChange={() => {}}
-            changeOnSelect
-            customCascaderStyle={styles.cascaderStyle}
-          />
         </>
       ) : (
         <Space
