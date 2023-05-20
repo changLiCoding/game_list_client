@@ -106,13 +106,19 @@ export default function Navbar() {
                   >
                     <ul>
                       <li className={styles['mobile-nav__header-drawer-item']}>
-                        <Link to="/">Home</Link>
+                        <Link to="/" onClick={onClose}>
+                          Home
+                        </Link>
                       </li>
                       <li className={styles['mobile-nav__header-drawer-item']}>
-                        <Link to="/user-profile">Profile</Link>
+                        <Link to="/user-profile" onClick={onClose}>
+                          Profile
+                        </Link>
                       </li>
                       <li className={styles['mobile-nav__header-drawer-item']}>
-                        <Link to="/game-list">Game List</Link>
+                        <Link to="/user-profile/game-list" onClick={onClose}>
+                          Game List
+                        </Link>
                       </li>
                       {!loading && userState?.user?.username ? (
                         <li

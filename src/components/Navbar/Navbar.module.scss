@@ -110,7 +110,7 @@ $mobile-nav-header-drawer-item-color: rgb(167, 168, 184);
   width: 100%;
 
   &:hover {
-    color: variables.$color-navbar-hover;
+    color: variables.$color-text;
   }
 
   .desktop-nav__header-popover-icon {
@@ -132,7 +132,7 @@ $mobile-nav-header-drawer-item-color: rgb(167, 168, 184);
 }
 
 .mobile-nav__hamburger {
-  color: $mobile-hamburger-color;
+  color: white;
   font-size: 20px;
 }
 
