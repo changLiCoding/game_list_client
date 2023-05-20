@@ -24,8 +24,15 @@
 .searchFiltersWrapperSearch {
   width: 80vw;
   flex-grow: 1;
+  :global(.ant-btn) {
+    background-color: variables.$color-navbar;
+  }
 }
 
 .cascaderStyle {
   margin-bottom: 1.5rem;
+}
+
+.buttonFiltersWrapperButton {
+  background-color: variables.$color-navbar;
 }

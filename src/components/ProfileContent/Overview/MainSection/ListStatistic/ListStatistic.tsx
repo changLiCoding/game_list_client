@@ -21,7 +21,7 @@ function ListStatistic({
           <Col span={4} key={key}>
             <Statistic
               valueStyle={{
-                color: '#b368e6',
+                color: 'rgb(17, 45, 78)',
                 fontSize: `${screens.xs ? '10px' : '14px'}`,
               }}
               title={key.replace('Count', '').toUpperCase()}
