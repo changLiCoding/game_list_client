@@ -1,3 +1,5 @@
+@use '../../../../styles/variables.scss' as variables;
+
 .multiFilterStyle {
   display: flex;
   flex-direction: column;
@@ -6,7 +8,7 @@
 }
 
 .slideColor {
-  div:nth-child(2){
-    background-color: #7a1f8f;
+  div:nth-child(2) {
+    background-color: variables.$color-navbar;
   }
 }

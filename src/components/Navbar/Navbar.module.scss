@@ -7,7 +7,6 @@ $header-brand-color: white;
 
 // Desktop Colors
 $desktop-nav-item-color: white;
-$desktop-nav-item-hover-color: rgba(206, 215, 221, 0.548);
 $desktop-nav-dropdown-item-color: rgb(167, 168, 184);
 
 // Mobile Colors
@@ -83,7 +82,7 @@ $mobile-nav-header-drawer-item-color: rgb(167, 168, 184);
 
   a:hover {
     text-decoration: none;
-    color: $desktop-nav-item-hover-color;
+    color: variables.$color-text;
   }
 
   a:active {
