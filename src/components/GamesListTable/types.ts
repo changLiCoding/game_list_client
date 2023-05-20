@@ -1,7 +1,7 @@
 import type { Game } from '@/graphql/__generated__/graphql';
 
 export type GameDataType = Game & {
-  key: React.Key;
+  key?: React.Key;
 };
 
 export type UserGameListDataType = {

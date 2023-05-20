@@ -1,18 +1,23 @@
 import { Popover, Table, Tag } from 'antd';
 import { ColumnsType } from 'antd/es/table';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import styles from '@/components/GamesListTable/Desktop/UserGameListDesktop.module.scss';
 import type {
   GameDataType,
   UserGameListDataType,
 } from '@/components/GamesListTable/types';
 import useUserGameByIdv2 from '@/services/userGames/useUserGameByIdv2';
+import ListEditor from '@/components/ListEditor';
 
 function UserGameListDesktop({ data }: UserGameListDataType) {
+  const [open, setOpen] = useState(false);
   const { userGameLoading, fetchUserGame } = useUserGameByIdv2();
-  const handleClick = async (id: string) => {
-    const fetchData = await fetchUserGame({ variables: { gameId: id } });
-    console.log('data', fetchData);
+  const [chosenGame, setChosenGame] = useState<GameDataType>();
+  const handleClick = async (game: GameDataType) => {
+    setChosenGame(game);
+    await fetchUserGame({ variables: { gameId: game.id } });
+    setOpen(true);
   };
 
   const columns: ColumnsType<GameDataType> = [
@@ -40,7 +45,7 @@ function UserGameListDesktop({ data }: UserGameListDataType) {
             <button
               type="button"
               className={styles.popButton}
-              onClick={() => handleClick(record.id)}
+              onClick={() => handleClick(record)}
             >
               <img className={styles.Image} src={imageURL} alt="game" />
             </button>
@@ -103,12 +108,20 @@ function UserGameListDesktop({ data }: UserGameListDataType) {
   // };
 
   return (
-    <Table
-      className={styles.Table}
-      columns={columns}
-      dataSource={data}
-      // onChange={onChange}
-    />
+    <>
+      <Table
+        className={styles.Table}
+        columns={columns}
+        dataSource={data}
+        // onChange={onChange}
+      />
+      <ListEditor
+        userGameLoading={userGameLoading}
+        open={open}
+        setOpen={setOpen}
+        game={chosenGame as GameDataType}
+      />
+    </>
   );
 }
 
