@@ -1,5 +1,3 @@
-import { Layout } from 'antd';
-
 import useTokenAuth from '@/hooks/useTokenAuth';
 import UserProfileHeader from '@/components/UserProfileHeader';
 import ProfileContent from '@/components/ProfileContent';
