@@ -6,8 +6,7 @@
   display: grid;
   grid-template-columns: auto -webkit-min-content;
   grid-template-columns: auto min-content;
-  // margin-bottom: 30px;
-  min-height: 23px;
+  margin-bottom: 25px;
   position: relative;
 
   @include mixin.loginTablet {
@@ -16,5 +15,7 @@
 
   @include mixin.phoneSmall {
     padding: 0 10px;
+    display: block;
+    margin-bottom: 8px;
   }
 }

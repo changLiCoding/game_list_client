@@ -16,6 +16,7 @@
     @include mixin.phoneSmall {
       overflow-x: auto;
       white-space: nowrap;
+      -webkit-overflow-scrolling: touch;
     }
     @include mixin.phoneLarge {
       padding-left: 30px;
@@ -34,4 +35,16 @@
       padding-right: 100px;
     }
   }
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #c8c8c8;
 }
