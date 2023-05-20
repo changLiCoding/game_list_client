@@ -42,6 +42,7 @@ export type HomeSearchSlice = {
     platforms: string[];
     tags: string[];
     genres: string[];
+    year: number;
   };
   lastSelected: {
     platforms: string;
