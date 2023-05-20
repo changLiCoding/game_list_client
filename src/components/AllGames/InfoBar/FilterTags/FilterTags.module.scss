@@ -67,6 +67,11 @@
       display: inline;
     }
   }
+
+  .clearAll {
+    @extend .tagsText;
+    background: rgb(133, 164, 180);
+  }
 }
 
 ::-webkit-scrollbar {
