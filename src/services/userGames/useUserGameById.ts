@@ -5,7 +5,7 @@ import { GET_USER_GAME_BY_GAME_ID } from '@/services/userGames/queries';
 import { getTokenFromLocalStorage } from '@/constants';
 import type { GetUserGameByGameIdQuery } from '@/graphql/__generated__/graphql';
 
-const useUserGameById = (): {
+type UseUserGameByIdType = {
   userGameLoading: boolean;
   errors: string[];
   fetchUserGame: ({
@@ -15,7 +15,9 @@ const useUserGameById = (): {
       gameId: string;
     };
   }) => Promise<QueryResult<GetUserGameByGameIdQuery, OperationVariables>>;
-} => {
+};
+
+const useUserGameById = (): UseUserGameByIdType => {
   const dispatch = useDispatch();
   const errors: string[] = [];
   const [fetchUserGame, { loading: userGameLoading, error }] = useLazyQuery(
