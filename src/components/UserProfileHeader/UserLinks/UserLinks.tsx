@@ -14,7 +14,10 @@ function UserLinks() {
     <div className={styles.navWrap}>
       <div className={styles.navContainer}>
         {linksArray.map((link) => (
-          <UserLink key={link} linkName={link.toLowerCase()}>
+          <UserLink
+            key={link}
+            linkName={link === 'Game List' ? 'game-list' : link.toLowerCase()}
+          >
             {link}
           </UserLink>
         ))}
