@@ -39,7 +39,7 @@
         transform: none;
       }
     }
-    background: rgb(61, 180, 242);
+    background: variables.$color-navbar;
     border-radius: 6px;
     color: variables.$color-white;
     display: inline-block;
@@ -70,7 +70,7 @@
 
   .clearAll {
     @extend .tagsText;
-    background: rgb(133, 164, 180);
+    background: variables.$color-text-lighter;
   }
 }
 
