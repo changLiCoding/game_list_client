@@ -2,11 +2,10 @@
 @use '../../styles/variables.scss' as variables;
 
 .profileContent {
-  margin: 0 auto;
   min-width: 320px;
   padding-left: 20px;
   padding-right: 20px;
-  width: 100%;
+
   background-color: variables.$color-background;
   height: 100%;
 
