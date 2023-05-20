@@ -10,13 +10,12 @@
     min-height: 56px;
     margin-bottom: -1px;
     padding: 0 24px;
-    color: rgba(0, 0, 0, 0.88);
     font-weight: 600;
     font-size: 16px;
     background: transparent;
     border-bottom: 1px solid #f0f0f0;
     border-radius: 8px 8px 0 0;
-    color: rgb(100, 115, 128);
+    color: variables.$color-text-title;
   }
 
   .allListDivider {

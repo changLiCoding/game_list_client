@@ -191,6 +191,7 @@ export type QueryAllGamesArgs = {
   genre?: InputMaybe<Array<Scalars['String']>>;
   platform?: InputMaybe<Array<Scalars['String']>>;
   tag?: InputMaybe<Array<Scalars['String']>>;
+  year?: InputMaybe<Scalars['Int']>;
 };
 
 
