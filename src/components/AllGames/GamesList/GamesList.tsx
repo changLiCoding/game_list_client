@@ -6,11 +6,11 @@ import List from '@/components/AllGames/GamesList/List';
 import useAllGames from '@/services/games/useAllGames';
 import styles from '@/components/AllGames/GamesList/GamesList.module.scss';
 import { useAppSelector } from '@/app/hooks';
-import useUserGameByIdv2 from '@/services/userGames/useUserGameByIdv2';
+import useUserGameById from '@/services/userGames/useUserGameById';
 
 export default function GamesList() {
   const homeSearchState = useAppSelector((state) => state.homeSearch);
-  const { userGameLoading, fetchUserGame } = useUserGameByIdv2();
+  const { userGameLoading, fetchUserGame } = useUserGameById();
 
   const { games, refetch } = useAllGames(
     homeSearchState.filters.genres,

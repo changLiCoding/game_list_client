@@ -1,8 +1,18 @@
-import type { Game } from '@/graphql/__generated__/graphql';
+import type { OperationVariables, QueryResult } from '@apollo/client';
+import type {
+  Game,
+  GetUserGameByGameIdQuery,
+} from '@/graphql/__generated__/graphql';
 
 export type GameCardType = {
   game: Game;
   colorBgContainer: string;
   userGameLoading?: boolean;
-  fetchUserGame?: any;
+  fetchUserGame?: ({
+    variables,
+  }: {
+    variables: {
+      gameId: string;
+    };
+  }) => Promise<QueryResult<GetUserGameByGameIdQuery, OperationVariables>>;
 };

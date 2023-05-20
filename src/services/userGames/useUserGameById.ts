@@ -1,96 +1,79 @@
-import { useLazyQuery } from '@apollo/client';
+import { OperationVariables, QueryResult, useLazyQuery } from '@apollo/client';
 import { useDispatch } from 'react-redux';
-
 import { setUserGame } from '@/features/userGameSlice';
 import { GET_USER_GAME_BY_GAME_ID } from '@/services/userGames/queries';
 import { getTokenFromLocalStorage } from '@/constants';
-import type { UserGame as UserGameType } from '@/graphql/__generated__/graphql';
+import type { GetUserGameByGameIdQuery } from '@/graphql/__generated__/graphql';
 
-const useUserGameById = (
-  gameId: string
-): {
-  userGame: UserGameType;
+const useUserGameById = (): {
   userGameLoading: boolean;
   errors: string[];
-  fetchUserGame: () => void;
+  fetchUserGame: ({
+    variables,
+  }: {
+    variables: {
+      gameId: string;
+    };
+  }) => Promise<QueryResult<GetUserGameByGameIdQuery, OperationVariables>>;
 } => {
   const dispatch = useDispatch();
-  let userGame: UserGameType = {} as UserGameType;
   const errors: string[] = [];
-  const [
-    fetchUserGame,
-    { loading: userGameLoading, data: userGameData, error },
-  ] = useLazyQuery(GET_USER_GAME_BY_GAME_ID, {
-    variables: { gameId },
-    context: getTokenFromLocalStorage.context,
-    onCompleted: (data) => {
-      dispatch(setUserGame(data.getUserGameByGameId));
-    },
-  });
-
-  if (userGameData && userGameData.getUserGameByGameId) {
-    userGame = userGameData.getUserGameByGameId;
-  }
+  const [fetchUserGame, { loading: userGameLoading, error }] = useLazyQuery(
+    GET_USER_GAME_BY_GAME_ID,
+    {
+      context: getTokenFromLocalStorage.context,
+      onCompleted: (data) => {
+        dispatch(setUserGame(data.getUserGameByGameId));
+      },
+    }
+  );
 
   if (error) {
     errors.push(error.message);
   }
 
   return {
-    userGame,
     errors,
     userGameLoading,
     fetchUserGame,
   };
 };
 
-// const useUserGameById = (
-//   gameId: string
-// ): {
+export default useUserGameById;
+
+// const useUserGameByIdv2 = (): {
 //   userGame: UserGameType;
 //   userGameLoading: boolean;
 //   errors: string[];
-//   fetchUserGame: () => Promise<void>;
+//   fetchUserGame: () => void;
 // } => {
-//   let userGame: UserGameType = {} as UserGameType;
-//   const errors: string[] = [];
-//   const [
-//     fetchUserGameQuery,
-//     { loading: userGameLoading, data: userGameData, error: queryError },
-//   ] = useLazyQuery(GET_USER_GAME_BY_GAME_ID, {
-//     variables: { gameId },
-//     context: getTokenFromLocalStorage.context,
-//     onCompleted: (data) => {
-//       console.log('data on completed in hook: ', data.getUserGameByGameId);
-//     },
-//   });
+//   const dispatch = useDispatch();
+//   const { data, loading, refetch } = useQuery(
+//     GET_USER_GAME_BY_GAME_ID,
+//     getTokenFromLocalStorage
+//   );
 
-//   const fetchUserGame = async (): Promise<void> => {
+//   const getUserGameById = async (gameId: string, name: string) => {
 //     try {
-//       await fetchUserGameQuery();
+//       const response = await refetch({
+//         variables: { gameId, name },
+//       });
+//       if (
+//         !response ||
+//         !response.data ||
+//         !response.data.addUserGames ||
+//         response.data.addUserGames.errors[0]
+//       ) {
+//         throw new Error(response.data.addUserGames.errors[0]);
+//       }
+//       return response.data.addUserGames;
 //     } catch (error: unknown) {
 //       if (error instanceof Error) {
-//         errors.push(error.message);
-//       } else {
-//         errors.push('Unknown error');
+//         return error && { errors: [error.message] };
 //       }
+//       return { errors: ['Unknown'] };
 //     }
-//   };
-
-//   if (userGameData && userGameData.getUserGameByGameId) {
-//     userGame = userGameData.getUserGameByGameId;
-//   }
-
-//   if (queryError) {
-//     errors.push(queryError.message);
-//   }
-
-//   return {
-//     userGame,
-//     errors,
-//     userGameLoading,
-//     fetchUserGame,
 //   };
 // };
 
-export default useUserGameById;
+// export default useUserGameByIdv2;

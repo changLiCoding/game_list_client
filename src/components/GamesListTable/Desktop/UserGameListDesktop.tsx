@@ -7,12 +7,12 @@ import type {
   GameDataType,
   UserGameListDataType,
 } from '@/components/GamesListTable/types';
-import useUserGameByIdv2 from '@/services/userGames/useUserGameByIdv2';
 import ListEditor from '@/components/ListEditor';
+import useUserGameById from '@/services/userGames/useUserGameById';
 
 function UserGameListDesktop({ data }: UserGameListDataType) {
   const [open, setOpen] = useState(false);
-  const { userGameLoading, fetchUserGame } = useUserGameByIdv2();
+  const { userGameLoading, fetchUserGame } = useUserGameById();
   const [chosenGame, setChosenGame] = useState<GameDataType>();
   const handleClick = async (game: GameDataType) => {
     setChosenGame(game);

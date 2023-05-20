@@ -121,9 +121,11 @@ export default function GameCard({
             <Button
               onClick={async (e) => {
                 e.stopPropagation();
-                await fetchUserGame({
-                  variables: { gameId: game.id },
-                });
+                if (fetchUserGame) {
+                  await fetchUserGame({
+                    variables: { gameId: game.id },
+                  });
+                }
 
                 setOpen(true);
               }}
