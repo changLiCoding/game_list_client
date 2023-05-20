@@ -8,7 +8,6 @@ import {
 } from '@ant-design/icons';
 import Color from 'color-thief-react';
 import { Link } from 'react-router-dom';
-
 import styles from '@/components/AllGames/GamesList/GameCard/GameCard.module.scss';
 import ListEditor from '@/components/ListEditor';
 import type { GameCardType } from '@/components/AllGames/GamesList/types';
@@ -50,6 +49,7 @@ export default function GameCard({ game, colorBgContainer }: GameCardType) {
 
   const [open, setOpen] = useState(false);
   const { userGameLoading, fetchUserGame } = useUserGameById(game.id);
+
   return (
     <Color
       crossOrigin="anonymous"
