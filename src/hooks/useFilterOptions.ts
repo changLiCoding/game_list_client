@@ -30,10 +30,12 @@ const useFilterOptions = (
     const currentYear = new Date().getFullYear();
     const years = [];
     // 1958 is the year of the first video game
+    let temp;
     for (let i = currentYear; i >= 1958; i -= 1) {
+      temp = i.toString();
       years.push({
-        value: i,
-        label: i.toString(),
+        value: temp,
+        label: temp,
       });
     }
 
