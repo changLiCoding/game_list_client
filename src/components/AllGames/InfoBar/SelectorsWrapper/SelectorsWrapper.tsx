@@ -6,10 +6,14 @@ import {
 import { useState } from 'react';
 import type { MenuProps } from 'antd';
 import { Dropdown } from 'antd';
+import { useDispatch } from 'react-redux';
 import styles from '@/components/AllGames/InfoBar/SelectorsWrapper/SelectorsWrapper.module.scss';
-import type { SelectorsWrapperType } from '@/components/AllGames/InfoBar/types';
+import { useAppSelector } from '@/app/hooks';
+import { setView } from '@/features/homeSearchSlice';
 
-function SelectorsWrapper({ isCardView, setIsCardView }: SelectorsWrapperType) {
+function SelectorsWrapper() {
+  const homeSearchState = useAppSelector((state) => state.homeSearch);
+  const dispatch = useDispatch();
   const [sortBy, setSortBy] = useState('Average Score');
 
   const sortItems: MenuProps['items'] = [
@@ -57,12 +61,16 @@ function SelectorsWrapper({ isCardView, setIsCardView }: SelectorsWrapperType) {
       </Dropdown>
       <div className={styles.wrapper}>
         <AppstoreFilled
-          onClick={() => setIsCardView(true)}
-          className={`${styles.selectorIcon} ${isCardView && styles.selected}`}
+          onClick={() => dispatch(setView('grid'))}
+          className={`${styles.selectorIcon} ${
+            homeSearchState.view === 'grid' && styles.selected
+          }`}
         />
         <UnorderedListOutlined
-          onClick={() => setIsCardView(false)}
-          className={`${styles.selectorIcon} ${!isCardView && styles.selected}`}
+          onClick={() => dispatch(setView('list'))}
+          className={`${styles.selectorIcon} ${
+            homeSearchState.view === 'list' && styles.selected
+          }`}
         />
       </div>
     </div>

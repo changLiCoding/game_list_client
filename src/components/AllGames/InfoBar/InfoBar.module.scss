@@ -6,7 +6,7 @@
   display: grid;
   grid-template-columns: auto -webkit-min-content;
   grid-template-columns: auto min-content;
-  min-height: 23px;
+  margin-bottom: 25px;
   position: relative;
   background-color: variables.$color-background;
 
@@ -16,5 +16,7 @@
 
   @include mixin.phoneSmall {
     padding: 0 10px;
+    display: block;
+    margin-bottom: 8px;
   }
 }
