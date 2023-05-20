@@ -1,6 +1,5 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import Home from '@/pages/Home';
-import Dashboard from '@/pages/Dashboard';
 import useTokenAuth from '@/hooks/useTokenAuth';
 import GameDetail from '@/pages/GameDetail/GameDetail';
 import Login from '@/pages/Login';
@@ -17,30 +16,24 @@ function Router() {
   return (
     <Routes>
       {userState?.user?.username ? (
-        <>
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/user-profile">
-            <Route path="" element={<UserProfile routeName="overview" />} />
-            <Route
-              path="overview"
-              element={<UserProfile routeName="overview" />}
-            />
-            <Route
-              path="favorites"
-              element={<UserProfile routeName="favorites" />}
-            />
-            <Route
-              path="game-list"
-              element={<UserProfile routeName="gameList" />}
-            />
-            <Route path="social" element={<UserProfile routeName="social" />} />
+        <Route path="/user-profile">
+          <Route path="" element={<UserProfile routeName="overview" />} />
+          <Route
+            path="overview"
+            element={<UserProfile routeName="overview" />}
+          />
+          <Route
+            path="favorites"
+            element={<UserProfile routeName="favorites" />}
+          />
+          <Route
+            path="game-list"
+            element={<UserProfile routeName="gameList" />}
+          />
+          <Route path="social" element={<UserProfile routeName="social" />} />
 
-            <Route
-              path="reviews"
-              element={<UserProfile routeName="reviews" />}
-            />
-          </Route>
-        </>
+          <Route path="reviews" element={<UserProfile routeName="reviews" />} />
+        </Route>
       ) : (
         <>
           <Route path="/login" element={<Login />} />
@@ -54,7 +47,7 @@ function Router() {
         path="*"
         element={
           userState?.user?.username ? (
-            <Navigate to="/dashboard" />
+            <Navigate to="/user-profile/overview" />
           ) : (
             <Navigate to="/home" />
           )

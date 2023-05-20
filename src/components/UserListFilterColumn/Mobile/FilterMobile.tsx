@@ -27,6 +27,7 @@ function FilterMobile({ collapsed, setCollapsed }: FilterMobileType) {
         value={search}
       />
       <Button
+        className={styles.mobileSearchButton}
         size="large"
         type="primary"
         onClick={() => {

@@ -57,7 +57,7 @@ describe('Games List Component', () => {
   it('should render the games card when isCardView true', async () => {
     const { queryByText, queryByLabelText } = render(
       <ContextWrapper>
-        <GamesList isCardView />
+        <GamesList />
       </ContextWrapper>
     );
 

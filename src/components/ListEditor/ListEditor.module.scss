@@ -4,9 +4,7 @@
 .listEditorContainer {
   :global(.ant-modal-content) {
     padding: 0px;
-    button {
-      color: rgba(variables.$color-white, 0.45);
-    }
+
     .listEditorHeader {
       background-position: 50%;
       background-repeat: no-repeat;
@@ -114,6 +112,14 @@
           }
         }
       }
+    }
+
+    .favouriteButton {
+      color: rgba(variables.$color-white, 0.45);
+    }
+
+    .saveButton {
+      background-color: variables.$color-navbar;
     }
   }
 }

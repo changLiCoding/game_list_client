@@ -10,7 +10,11 @@ export default function useAllGames(
 ) {
   let games: GameType[] = [];
   const errors: string[] = [];
-  const { data: allGames, loading } = useQuery(GET_ALL_GAMES, {
+  const {
+    data: allGames,
+    loading,
+    refetch,
+  } = useQuery(GET_ALL_GAMES, {
     variables: {
       genre,
       tag,
@@ -24,11 +28,11 @@ export default function useAllGames(
       throw new Error('No games found');
     }
     games = allGames?.allGames;
-    return { games, loading, errors };
+    return { games, loading, errors, refetch };
   } catch (error: unknown) {
     if (error instanceof Error) {
       return error && { games, loading, errors: [error.message] };
     }
-    return { games, loading, errors: ['Unknown'] };
+    return { games, loading, errors: ['Unknown'], refetch };
   }
 }

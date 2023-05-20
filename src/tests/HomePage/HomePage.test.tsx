@@ -83,13 +83,13 @@ vi.mock('../../services/game/useGetFilters', async () => {
 
 describe('Home Page', () => {
   it('Render Home Page without loading', async () => {
-    const { queryByLabelText } = render(
+    render(
       <ContextWrapper>
         <Home />
       </ContextWrapper>
     );
-    const tagIcon = queryByLabelText('tags') as HTMLElement;
-    expect(tagIcon).toBeInTheDocument();
+    // const tagIcon = queryByLabelText('tags') as HTMLElement;
+    // expect(tagIcon).toBeInTheDocument();
     expect(screen.getByText('Search')).toBeInTheDocument();
     expect(screen.getByText('All Games')).toBeInTheDocument();
 

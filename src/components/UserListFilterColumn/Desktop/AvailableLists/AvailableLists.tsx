@@ -69,7 +69,7 @@ function AvailableLists() {
         >
           <div className={styles.listName}>
             <p>{item.name}</p>
-            <Badge count={item.count} showZero color="#b5b1a7" />
+            <Badge count={item.count} showZero color="rgb(63, 114, 175)" />
           </div>
         </List.Item>
       )}

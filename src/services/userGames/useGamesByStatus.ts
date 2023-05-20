@@ -3,12 +3,14 @@ import { GET_GAMES_BY_STATUS } from './queries';
 import { getTokenFromLocalStorage } from '@/constants';
 import type { UserGamesByStatus } from '@/graphql/__generated__/graphql';
 
-const useGamesByStatus = (): {
+type UseGamesByStatusType = {
   gamesByStatusForAUser: {
     gamesByStatusForAUser: UserGamesByStatus;
   };
   gamesByStatusForAUserLoading: boolean;
-} => {
+};
+
+const useGamesByStatus = (): UseGamesByStatusType => {
   const { loading: gamesByStatusForAUserLoading, data: gamesByStatusForAUser } =
     useQuery(GET_GAMES_BY_STATUS, {
       context: getTokenFromLocalStorage.context,

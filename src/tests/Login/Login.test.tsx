@@ -71,7 +71,7 @@ describe('Login', () => {
 
     // Expect the following texts to be present
     expect(screen.getByText('Welcome back')).toBeInTheDocument();
-    expect(screen.getByText('Login to the Dashboard')).toBeInTheDocument();
+    expect(screen.getByText('Login to the your profile')).toBeInTheDocument();
 
     // Expect all input fields (including Email and Password) to be present
     const inputEmail = screen.getByPlaceholderText('Email');
@@ -102,6 +102,6 @@ describe('Login', () => {
     const textPassword = screen.queryByText('Please input your password!');
     expect(textPassword).toBeNull();
 
-    expect(navigate('/dashboard')).toBe('/dashboard');
+    expect(navigate('/user-profile/overview')).toBe('/user-profile/overview');
   });
 });

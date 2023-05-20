@@ -11,7 +11,7 @@ import useUserGameById from '@/services/userGames/useUserGameById';
 function GameDetailHeaderInfo({ game }: GameDetailsType) {
   const [open, setOpen] = useState(false);
 
-  const { userGame, userGameLoading, fetchUserGame } = useUserGameById(game.id);
+  const { userGameLoading, fetchUserGame } = useUserGameById();
 
   const items: MenuProps['items'] = [
     {
@@ -33,14 +33,14 @@ function GameDetailHeaderInfo({ game }: GameDetailsType) {
             type="text"
             onClick={(e) => {
               e.preventDefault();
-              fetchUserGame();
+              fetchUserGame({ variables: { gameId: game.id } });
               setOpen(!open);
             }}
           >
             Open List Editor
           </Button>
           <ListEditor
-            userGame={userGame}
+            // userGame={userGame}
             userGameLoading={userGameLoading}
             open={open}
             setOpen={setOpen}

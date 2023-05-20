@@ -142,6 +142,6 @@ describe('Register Input Fields', () => {
     expect(textPasswordConfirmation).toBeNull();
 
     // Check if navigate is functioning
-    expect(navigate('/dashboard')).toBe('/dashboard');
+    expect(navigate('/user-profile/overview')).toBe('/user-profile/overview');
   });
 });

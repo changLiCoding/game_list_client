@@ -79,6 +79,7 @@ export default function FiltersWrapper() {
             onClick={() => {
               setCollapsed(!collapsed);
             }}
+            className={styles.buttonFiltersWrapperButton}
           >
             {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
           </Button>

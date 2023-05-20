@@ -76,7 +76,7 @@ describe('Games List Component', () => {
       // debug
     } = render(
       <ContextWrapper>
-        <GamesList isCardView={false} />
+        <GamesList />
       </ContextWrapper>
     );
     // vi.spyOn(window.screen, 'width', 'get').mockReturnValue(1600);
@@ -103,7 +103,8 @@ describe('Games List Component', () => {
 
     const platforms = screen.queryAllByTestId('gamePlatforms') as HTMLElement[];
     const platformOne = platforms[0];
-    expect(platformOne).toHaveTextContent('PC');
+
+    expect(platformOne).toHaveTextContent('Windows');
     // debug(platformOne);
     // const style = window.getComputedStyle(platformOne);
     // console.log('style of platformOne: ', style);

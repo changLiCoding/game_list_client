@@ -1,7 +1,8 @@
-import AllGames from '@/components/AllGames';
 import FiltersWrapper from '@/components/FiltersWrapper';
 import styles from '@/pages/Home/Home.module.scss';
 import { useAppSelector } from '@/app/hooks';
+import InfoBar from '@/components/AllGames/InfoBar';
+import GamesList from '@/components/AllGames/GamesList';
 
 function Home() {
   const homeSearchState = useAppSelector((state) => state.homeSearch);
@@ -13,7 +14,8 @@ function Home() {
         }`}
       >
         <FiltersWrapper />
-        <AllGames />
+        <InfoBar />
+        <GamesList />
       </div>
     </div>
   );
