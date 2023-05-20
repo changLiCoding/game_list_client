@@ -19,7 +19,8 @@ export default function GamesList() {
   const { games } = useAllGames(
     homeSearchState.filters.genres,
     homeSearchState.filters.tags,
-    homeSearchState.filters.platforms
+    homeSearchState.filters.platforms,
+    homeSearchState.filters.year
   );
 
   useEffect(() => {
