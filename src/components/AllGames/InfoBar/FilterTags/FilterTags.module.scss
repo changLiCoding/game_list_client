@@ -7,11 +7,13 @@
   align-items: center;
   display: flex;
   flex-wrap: wrap;
+  background-color: variables.$color-background;
 
   .tagsIcon {
     font-size: 1.6rem;
     transform: scale(-1) rotate(90deg);
     margin-right: 16px;
+    color: variables.$color-navbar;
   }
 
   .tagsText {
@@ -45,6 +47,7 @@
       font-size: 0.7rem;
       color: variables.$color-white;
     }
+
     &:hover span {
       display: inline;
     }

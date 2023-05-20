@@ -12,12 +12,10 @@ function UserProfile({ routeName }: { routeName: string }) {
   }
 
   return (
-    <Layout>
-      <Content>
-        <UserProfileHeader userState={userState} />
-        <ProfileContent routeName={routeName} />
-      </Content>
-    </Layout>
+    <div>
+      <UserProfileHeader userState={userState} />
+      <ProfileContent routeName={routeName} />
+    </div>
   );
 }
 

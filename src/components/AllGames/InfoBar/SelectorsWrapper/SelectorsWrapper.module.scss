@@ -4,7 +4,7 @@
 .selectorsContainer {
   display: flex;
   align-items: center;
-
+  background-color: variables.$color-background;
   .sortSelector {
     border-right: solid 1px rgb(201, 215, 227);
     padding-right: 10px;
@@ -27,6 +27,7 @@
       padding-left: 8px;
       white-space: nowrap;
       transition: color 0.3s ease;
+      background-color: variables.$color-background;
     }
 
     :global(span.anticon) {

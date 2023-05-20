@@ -6,9 +6,9 @@
   display: grid;
   grid-template-columns: auto -webkit-min-content;
   grid-template-columns: auto min-content;
-  // margin-bottom: 30px;
   min-height: 23px;
   position: relative;
+  background-color: variables.$color-background;
 
   @include mixin.loginTablet {
     padding: 0 20px;
