@@ -36,3 +36,8 @@
 .buttonFiltersWrapperButton {
   background-color: variables.$color-navbar;
 }
+
+:global(ul.ant-cascader-menu) {
+  color: variables.$color-text-title;
+  background-color: variables.$color-background;
+}

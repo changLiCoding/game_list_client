@@ -54,8 +54,8 @@
   font-size: 2rem;
 }
 
-:global(main.antloyout-content) {
-  & div.ant-card {
+:global(main.ant-layout-content) {
+  div:first-child {
     background: none;
   }
 }
