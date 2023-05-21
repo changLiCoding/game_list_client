@@ -6,6 +6,7 @@ const initialState: HomeSearchSlice = {
     platforms: [],
     tags: [],
     genres: [],
+    year: -1,
   },
   lastSelected: {
     platforms: '',
@@ -15,6 +16,13 @@ const initialState: HomeSearchSlice = {
   view: 'grid',
 };
 
+const remove = (array: any[], value: any) => {
+  const index = array.indexOf(value);
+  if (index > -1) {
+    array.splice(index, 1);
+  }
+};
+
 export const homeSearchSlice = createSlice({
   name: 'homeSearchSlice',
   initialState,
@@ -22,14 +30,28 @@ export const homeSearchSlice = createSlice({
     addFilter: (state, action) => {
       const payloadValue = action.payload.value[0] as string;
       if (action.payload.type === 'Platform') {
+        if (state.filters.platforms.includes(payloadValue)) {
+          remove(state.filters.platforms, payloadValue);
+          return;
+        }
         state.filters.platforms.push(payloadValue);
         state.lastSelected.platforms = payloadValue;
       } else if (action.payload.type === 'Tag') {
+        if (state.filters.tags.includes(payloadValue)) {
+          remove(state.filters.tags, payloadValue);
+          return;
+        }
         state.filters.tags.push(payloadValue);
         state.lastSelected.tags = payloadValue;
       } else if (action.payload.type === 'Genre') {
+        if (state.filters.genres.includes(payloadValue)) {
+          remove(state.filters.genres, payloadValue);
+          return;
+        }
         state.filters.genres.push(payloadValue);
         state.lastSelected.genres = payloadValue;
+      } else if (action.payload.type === 'Year') {
+        state.filters.year = Number(payloadValue);
       }
     },
 
@@ -59,6 +81,8 @@ export const homeSearchSlice = createSlice({
         state.filters.genres = state.filters.genres.filter(
           (genre) => genre !== payloadValue
         );
+      } else if (action.payload.type === 'Year') {
+        state.filters.year = -1;
       }
     },
 
