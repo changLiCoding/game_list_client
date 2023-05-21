@@ -1,4 +1,5 @@
 @use '../../../styles/mixin' as mixin;
+@use '../../../styles/variables' as variables;
 
 .infoContainer {
   position: relative;
@@ -146,6 +147,19 @@
           font-size: 0.9rem;
           padding: 15px;
         }
+      }
+    }
+  }
+}
+
+:global(
+    ul.ant-dropdown-menu.ant-dropdown-menu-root.ant-dropdown-menu-vertical.ant-dropdown-menu-light.css-dev-only-do-not-override-hzjksd
+  ) {
+  text-align: center;
+  :global(li.ant-dropdown-menu-item) {
+    :global(span.ant-dropdown-menu-title-content) {
+      :global(button.ant-btn) {
+        width: 100%;
       }
     }
   }

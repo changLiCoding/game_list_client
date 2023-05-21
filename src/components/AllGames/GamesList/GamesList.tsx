@@ -44,11 +44,7 @@ export default function GamesList() {
   return (
     <Content>
       {homeSearchState.view === 'grid' ? (
-        <Card
-          title="All Games"
-          headStyle={{ color: 'rgb(100, 115,128)' }}
-          // className={styles}
-        >
+        <Card title="All Games" headStyle={{ color: 'rgb(100, 115,128)' }}>
           <Row
             gutter={{
               xs: 8,

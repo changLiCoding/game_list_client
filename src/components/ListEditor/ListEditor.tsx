@@ -38,6 +38,8 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
 
   const { userGame } = useAppSelector((state) => state);
 
+  console.log('userGame in the editor main page', userGame);
+
   const { contextHolder, info } = useNotification();
 
   const { addUserGames } = useAddDeleteGame();
@@ -59,8 +61,8 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
     { length: 10 },
     (_, index) => index + 1
   ).map((score) => ({
-    label: score.toString(),
-    value: score.toString(),
+    label: score,
+    value: score,
   }));
 
   if (userGameLoading) {
@@ -102,11 +104,14 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
             <Button
               type="primary"
               onClick={async () => {
+                console.log('userGame in the editor before save', userGame);
+
                 onAddGameHandler(game?.id);
                 await editUserGame({ ...userGame, gameId: game?.id });
 
                 info(`Edit game ${game.name} successfully`);
                 setOpen(false);
+                console.log('userGame in the editor after save', userGame);
               }}
               className={styles.saveButton}
             >
@@ -119,7 +124,7 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
         <div className={styles.bodyInput}>
           <div style={{ gridArea: 'status' }}>
             <div>
-              <h3 className={styles.h3FilterFieldTitle}>Status</h3>
+              <h3>Status</h3>
               <Select
                 data-testid="dropdown-Status"
                 defaultValue={selectedStatus || undefined}
@@ -134,7 +139,7 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
           </div>
           <div style={{ gridArea: 'score' }}>
             <div>
-              <h3 className={styles.h3FilterFieldTitle}>Score</h3>
+              <h3>Score</h3>
               <Select
                 data-testid="dropdown-Score"
                 defaultValue={selectedRating || undefined}
@@ -149,7 +154,7 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
           </div>
           <div style={{ gridArea: 'start' }}>
             <div>
-              <h3 className={styles.h3FilterFieldTitle}>Start</h3>
+              <h3>Start</h3>
               <DatePickerField
                 defaultValue={selectedStart || undefined}
                 onChange={(value: OnChangeDatePickerType) => {
@@ -162,7 +167,7 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
           </div>
           <div style={{ gridArea: 'finish' }}>
             <div>
-              <h3 className={styles.h3FilterFieldTitle}>Finish</h3>
+              <h3>Finish</h3>
               <DatePickerField
                 defaultValue={selectedCompleted || undefined}
                 fieldName="Finish"
@@ -175,7 +180,7 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
           </div>
           <div style={{ gridArea: 'notes' }}>
             <div>
-              <h3 className={styles.h3FilterFieldTitle}>Notes</h3>
+              <h3>Notes</h3>
               <TextAreaInput
                 defaultValue={selectedNote || undefined}
                 fieldName="Notes"
