@@ -17,13 +17,13 @@
     }
   }
 
-  .buttonGameHovershow {
+  .buttonGameHoverShow {
     display: none;
     position: absolute;
     bottom: 14px;
     right: 17px;
   }
-  &:hover .buttonGameHovershow {
+  &:hover .buttonGameHoverShow {
     display: block;
   }
 
