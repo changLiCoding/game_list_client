@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Col, Card, Popover, Tag, Button, Divider } from 'antd';
 import {
   PlusCircleOutlined,
@@ -9,7 +8,6 @@ import {
 import Color from 'color-thief-react';
 import { Link } from 'react-router-dom';
 import styles from '@/components/AllGames/GamesList/GameCard/GameCard.module.scss';
-import ListEditor from '@/components/ListEditor';
 import type { GameCardType } from '@/components/AllGames/GamesList/types';
 
 export function getRatingIcon(avgScore: number, color: string) {
@@ -46,12 +44,9 @@ export function getRatingIcon(avgScore: number, color: string) {
 export default function GameCard({
   game,
   colorBgContainer,
-  userGameLoading,
-  fetchUserGame,
+  openGameListEditor,
 }: GameCardType) {
   const { Meta } = Card;
-
-  const [open, setOpen] = useState(false);
 
   return (
     <Color
@@ -119,30 +114,19 @@ export default function GameCard({
               </Link>
             )}
             <Button
-              onClick={async (e) => {
-                e.stopPropagation();
-                if (fetchUserGame) {
-                  await fetchUserGame({
-                    variables: { gameId: game.id },
-                  });
+              onClick={() => {
+                if (openGameListEditor) {
+                  openGameListEditor(game);
                 }
-
-                setOpen(true);
               }}
               size="middle"
               type="ghost"
-              className={styles.buttonGameHovershow}
+              className={styles.buttonGameHoverShow}
               style={{
                 color: `${data}`,
               }}
               icon={<PlusCircleOutlined style={{ fontSize: '1rem' }} />}
               shape="circle"
-            />
-            <ListEditor
-              userGameLoading={userGameLoading}
-              open={open}
-              setOpen={setOpen}
-              game={game}
             />
           </Popover>
         </Col>

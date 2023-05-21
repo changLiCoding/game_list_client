@@ -1,22 +1,35 @@
 import { theme, Card, Row } from 'antd';
 import { Content } from 'antd/es/layout/layout';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import GameCard from '@/components/AllGames/GamesList/GameCard';
 import List from '@/components/AllGames/GamesList/List';
 import useAllGames from '@/services/games/useAllGames';
 import styles from '@/components/AllGames/GamesList/GamesList.module.scss';
 import { useAppSelector } from '@/app/hooks';
 import useUserGameById from '@/services/userGames/useUserGameById';
+import ListEditor from '@/components/ListEditor';
+import type { GameDataType } from '@/components/GamesListTable/types';
 
 export default function GamesList() {
   const homeSearchState = useAppSelector((state) => state.homeSearch);
-  const { userGameLoading, fetchUserGame } = useUserGameById();
-
   const { games, refetch } = useAllGames(
     homeSearchState.filters.genres,
     homeSearchState.filters.tags,
     homeSearchState.filters.platforms
   );
+
+  // States for modal to edit list
+  const { userGameLoading, fetchUserGame } = useUserGameById();
+  const [open, setOpen] = useState(false);
+  const [selectedGame, setSelectedGame] = useState<GameDataType>();
+
+  const openGameListEditor = async (game: GameDataType) => {
+    setSelectedGame(game);
+    await fetchUserGame({
+      variables: { gameId: game.id },
+    });
+    setOpen(true);
+  };
 
   useEffect(() => {
     if (refetch) {
@@ -45,8 +58,7 @@ export default function GamesList() {
                 key={`grid-${game.id}`}
                 game={game}
                 colorBgContainer={colorBgContainer}
-                userGameLoading={userGameLoading}
-                fetchUserGame={fetchUserGame}
+                openGameListEditor={openGameListEditor}
               />
             ))}
           </Row>
@@ -69,6 +81,12 @@ export default function GamesList() {
           </div>
         </div>
       )}
+      <ListEditor
+        userGameLoading={userGameLoading}
+        open={open}
+        setOpen={setOpen}
+        game={selectedGame as GameDataType}
+      />
     </Content>
   );
 }
