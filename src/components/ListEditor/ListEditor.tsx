@@ -27,6 +27,8 @@ import type { ListEditorType } from '@/components/ListEditor/types';
 
 function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
   const dispatch = useDispatch();
+  const { userGame } = useAppSelector((state) => state);
+
   const {
     gameStatus: selectedStatus,
     rating: selectedRating,
@@ -34,9 +36,7 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
     startDate: selectedStart,
     completedDate: selectedCompleted,
     private: selectedPrivate,
-  } = useAppSelector((state) => state.userGame);
-
-  const { userGame } = useAppSelector((state) => state);
+  } = userGame;
 
   const { contextHolder, info } = useNotification();
 
@@ -102,8 +102,12 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
             <Button
               type="primary"
               onClick={async () => {
-                onAddGameHandler(game?.id);
-                await editUserGame({ ...userGame, gameId: game?.id });
+                // Have to parse rating to int before send the request
+                await editUserGame({
+                  ...userGame,
+                  rating: parseInt(userGame?.rating.toString(), 10),
+                  gameId: game?.id,
+                });
 
                 info(`Edit game ${game.name} successfully`);
                 setOpen(false);

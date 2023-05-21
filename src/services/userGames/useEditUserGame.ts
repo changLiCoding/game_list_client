@@ -13,10 +13,14 @@ const useEditUserGame = () => {
     input: EditUserGamesInput
   ): Promise<EditUserGamesPayload> => {
     try {
+      console.log('first-here');
+      console.log('input', input);
       const response = await editUserGameRequest({
         variables: { input },
         context: getTokenFromLocalStorage.context,
       });
+      console.log('response', response);
+      console.log('second-here');
       if (
         !response ||
         !response.data ||

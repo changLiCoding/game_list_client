@@ -87,6 +87,7 @@ export const GET_GAMES_BY_STATUS = gql`
         id
         name
         imageURL
+        bannerURL
         avgScore
         platforms
         tags
@@ -96,6 +97,7 @@ export const GET_GAMES_BY_STATUS = gql`
         id
         name
         imageURL
+        bannerURL
         avgScore
         platforms
         tags
@@ -105,6 +107,7 @@ export const GET_GAMES_BY_STATUS = gql`
         id
         name
         imageURL
+        bannerURL
         avgScore
         platforms
         tags
@@ -114,6 +117,7 @@ export const GET_GAMES_BY_STATUS = gql`
         id
         name
         imageURL
+        bannerURL
         avgScore
         platforms
         tags
@@ -123,6 +127,7 @@ export const GET_GAMES_BY_STATUS = gql`
         id
         name
         imageURL
+        bannerURL
         avgScore
         platforms
         tags
