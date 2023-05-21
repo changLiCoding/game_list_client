@@ -53,3 +53,9 @@
   left: 80%;
   font-size: 2rem;
 }
+
+:global(main.antloyout-content) {
+  & div.ant-card {
+    background: none;
+  }
+}
