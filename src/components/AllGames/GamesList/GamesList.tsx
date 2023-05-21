@@ -32,7 +32,13 @@ export default function GamesList() {
   };
 
   useEffect(() => {
-    if (refetch) {
+    // Refetch games only when filters change. Make sure the filters are not empty
+    if (
+      refetch &&
+      homeSearchState.filters.genres.length > 0 &&
+      homeSearchState.filters.tags.length > 0 &&
+      homeSearchState.filters.platforms.length > 0
+    ) {
       refetch();
     }
   }, [refetch, homeSearchState.filters]);

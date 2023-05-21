@@ -26,9 +26,10 @@ import TextAreaInput from '../TextAreaInput';
 import type { ListEditorType } from '@/components/ListEditor/types';
 
 function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
+  const { contextHolder, info } = useNotification();
   const dispatch = useDispatch();
-  const { userGame } = useAppSelector((state) => state);
 
+  const { userGame } = useAppSelector((state) => state);
   const {
     gameStatus: selectedStatus,
     rating: selectedRating,
@@ -38,14 +39,24 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
     private: selectedPrivate,
   } = userGame;
 
-  const { contextHolder, info } = useNotification();
-
   const { addUserGames } = useAddDeleteGame();
   const { editUserGame } = useEditUserGame();
 
   const onAddGameHandler = (gameId: string) => {
     addUserGames(gameId);
     info(`Game ${game?.name} added to your list`);
+  };
+
+  const onEditGameHandler = async () => {
+    // Have to parse rating to int before send the request
+    await editUserGame({
+      ...userGame,
+      rating: parseInt(userGame?.rating.toString(), 10),
+      gameId: game?.id,
+    });
+
+    info(`Edit game ${game.name} successfully`);
+    setOpen(false);
   };
 
   const statusOptions: DropDownOption[] = [
@@ -55,6 +66,7 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
     { label: 'Dropped', value: 'Dropped' },
     { label: 'Planning', value: 'Planning' },
   ];
+
   const scoreOptions: DropDownOption[] = Array.from(
     { length: 10 },
     (_, index) => index + 1
@@ -101,17 +113,7 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
           <div className={styles.contentSave}>
             <Button
               type="primary"
-              onClick={async () => {
-                // Have to parse rating to int before send the request
-                await editUserGame({
-                  ...userGame,
-                  rating: parseInt(userGame?.rating.toString(), 10),
-                  gameId: game?.id,
-                });
-
-                info(`Edit game ${game.name} successfully`);
-                setOpen(false);
-              }}
+              onClick={onEditGameHandler}
               className={styles.saveButton}
             >
               Save
