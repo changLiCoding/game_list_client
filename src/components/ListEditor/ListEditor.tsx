@@ -38,6 +38,8 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
 
   const { userGame } = useAppSelector((state) => state);
 
+  console.log('userGame in the editor main page', userGame);
+
   const { contextHolder, info } = useNotification();
 
   const { addUserGames } = useAddDeleteGame();
@@ -59,8 +61,8 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
     { length: 10 },
     (_, index) => index + 1
   ).map((score) => ({
-    label: score.toString(),
-    value: score.toString(),
+    label: score,
+    value: score,
   }));
 
   if (userGameLoading) {
@@ -102,11 +104,14 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
             <Button
               type="primary"
               onClick={async () => {
+                console.log('userGame in the editor before save', userGame);
+
                 onAddGameHandler(game?.id);
                 await editUserGame({ ...userGame, gameId: game?.id });
 
                 info(`Edit game ${game.name} successfully`);
                 setOpen(false);
+                console.log('userGame in the editor after save', userGame);
               }}
               className={styles.saveButton}
             >
