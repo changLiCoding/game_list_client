@@ -56,7 +56,7 @@ function ListEditor({
   const { contextHolder, info } = useNotification();
 
   const { addUserGames } = useAddDeleteGame();
-  const { editUserGame } = useEditUserGame();
+  const { editUserGame, editAndFetchUserGame } = useEditUserGame();
 
   const onAddGameHandler = async (gameId: string) => {
     await addUserGames(gameId);
@@ -119,13 +119,13 @@ function ListEditor({
               onClick={async () => {
                 await onAddGameHandler(game.id);
                 console.log('userGame in the editor before save', userGame);
-                // await fetchUserGame(variable: { gameId: game.id });
-                console.log('UserGame input in the editUserGame: ', {
+                // fetchUserGame({ gameId: game?.id });
+                console.log('UserGame input in the editAndFetchUserGame: ', {
                   ...userGame,
                   gameId: game.id,
                 });
 
-                await editUserGame({ ...userGame, gameId: game.id });
+                await editAndFetchUserGame({ ...userGame, gameId: game.id });
 
                 info(`Edit game ${game.name} successfully`);
                 setOpen(false);

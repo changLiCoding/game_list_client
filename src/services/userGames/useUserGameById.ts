@@ -28,6 +28,11 @@ const useUserGameById = (): UseUserGameByIdType => {
     {
       context: getTokenFromLocalStorage.context,
       onCompleted: (data) => {
+        console.log(
+          'fetchUserGame useUserGameById onCompleted log: data',
+          data
+        );
+
         // When user game is not found, clear out redux slice
         if (data.getUserGameByGameId) {
           dispatch(setUserGame(data.getUserGameByGameId));

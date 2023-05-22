@@ -161,6 +161,10 @@ export const EDIT_USER_GAME_BY_GAME_ID = gql`
         private
         createdAt
         updatedAt
+        game {
+          id
+          name
+        }
       }
       errors
     }
