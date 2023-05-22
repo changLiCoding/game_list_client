@@ -28,6 +28,13 @@ export const ADD_USER_GAMES = gql`
     addUserGames(input: { gameId: $gameId }) {
       userGame {
         id
+        gameStatus
+        gameNote
+        review
+        startDate
+        completedDate
+        rating
+        private
         game {
           id
           name

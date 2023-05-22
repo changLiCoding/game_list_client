@@ -25,7 +25,14 @@ import DatePickerField from '../DatePickerField';
 import TextAreaInput from '../TextAreaInput';
 import type { ListEditorType } from '@/components/ListEditor/types';
 
-function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
+function ListEditor({
+  fetchUserGame,
+  setGame,
+  userGameLoading,
+  open,
+  setOpen,
+  game,
+}: ListEditorType) {
   const dispatch = useDispatch();
   const {
     gameStatus: selectedStatus,
@@ -36,17 +43,23 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
     private: selectedPrivate,
   } = useAppSelector((state) => state.userGame);
 
+  console.log('selectedStatus in main editor component', selectedStatus);
+
+  console.log('selectedRating in main editor component', selectedRating);
+
   const { userGame } = useAppSelector((state) => state);
 
-  console.log('userGame in the editor main page', userGame);
+  console.log('Game in the editor main page', game);
+
+  // console.log('userGame in the editor main page', userGame);
 
   const { contextHolder, info } = useNotification();
 
   const { addUserGames } = useAddDeleteGame();
   const { editUserGame } = useEditUserGame();
 
-  const onAddGameHandler = (gameId: string) => {
-    addUserGames(gameId);
+  const onAddGameHandler = async (gameId: string) => {
+    await addUserGames(gameId);
     info(`Game ${game?.name} added to your list`);
   };
 
@@ -94,8 +107,8 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
             <Button
               className={styles.favouriteButton}
               type="ghost"
-              onClick={() => {
-                onAddGameHandler(game?.id);
+              onClick={async () => {
+                await onAddGameHandler(game?.id);
               }}
               icon={<HeartOutlined />}
             />
@@ -104,10 +117,15 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
             <Button
               type="primary"
               onClick={async () => {
+                await onAddGameHandler(game.id);
                 console.log('userGame in the editor before save', userGame);
+                // await fetchUserGame(variable: { gameId: game.id });
+                console.log('UserGame input in the editUserGame: ', {
+                  ...userGame,
+                  gameId: game.id,
+                });
 
-                onAddGameHandler(game?.id);
-                await editUserGame({ ...userGame, gameId: game?.id });
+                await editUserGame({ ...userGame, gameId: game.id });
 
                 info(`Edit game ${game.name} successfully`);
                 setOpen(false);
@@ -127,8 +145,10 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
               <h3>Status</h3>
               <Select
                 data-testid="dropdown-Status"
-                defaultValue={selectedStatus || undefined}
+                value={selectedStatus || undefined}
                 onChange={(value: string): void => {
+                  console.log('setuserGamestatus value in selecter', value);
+
                   dispatch(setUserGameStatus(value));
                 }}
                 options={statusOptions}
@@ -142,8 +162,9 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
               <h3>Score</h3>
               <Select
                 data-testid="dropdown-Score"
-                defaultValue={selectedRating || undefined}
+                value={selectedRating || undefined}
                 onChange={(value: number): void => {
+                  console.log('setuserGameRating value in selecter', value);
                   dispatch(setUserGameRating(value));
                 }}
                 options={scoreOptions}

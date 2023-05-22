@@ -82,10 +82,12 @@ export default function GamesList() {
         </div>
       )}
       <ListEditor
+        fetchUserGame={fetchUserGame}
         userGameLoading={userGameLoading}
         open={open}
         setOpen={setOpen}
         game={selectedGame as GameDataType}
+        setGame={setSelectedGame}
       />
     </Content>
   );
