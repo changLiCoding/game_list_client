@@ -44,10 +44,10 @@ const useAddDeleteGame = () => {
               gameId: data.addUserGames.userGame.game.id,
             });
 
-            await editUserGame({
-              ...userGame,
-              gameId: data.addUserGames.userGame.game.id,
-            });
+            // await editUserGame({
+            //   ...userGame,
+            //   gameId: data.addUserGames.userGame.game.id,
+            // });
           }
 
           console.log(
