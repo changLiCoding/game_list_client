@@ -9,7 +9,6 @@ import Color from 'color-thief-react';
 import { Link } from 'react-router-dom';
 import styles from '@/components/AllGames/GamesList/GameCard/GameCard.module.scss';
 import type { GameCardType } from '@/components/AllGames/GamesList/types';
-import { useAppSelector } from '@/app/hooks';
 
 export function getRatingIcon(avgScore: number, color: string) {
   if (avgScore > 8.5) {
@@ -48,8 +47,6 @@ export default function GameCard({
   openGameListEditor,
 }: GameCardType) {
   const { Meta } = Card;
-
-  const { userGame } = useAppSelector((state) => state);
 
   return (
     <Color
