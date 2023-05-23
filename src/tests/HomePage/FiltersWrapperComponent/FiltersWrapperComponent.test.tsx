@@ -5,6 +5,8 @@ import userEvent from '@testing-library/user-event';
 import ContextWrapper from '@/ContextWrapper';
 import FiltersWrapper from '@/components/FiltersWrapper';
 
+// TODO: Rewrite this test when new design is implemented
+
 vi.mock('../../../services/game/useGetFilters', async () => {
   const actual: unknown = await vi.importActual(
     '../../../services/game/useGetFilters'
@@ -17,6 +19,8 @@ vi.mock('../../../services/game/useGetFilters', async () => {
       genres: ['Genre 1', 'Genre 2'],
       platforms: ['Platform 1', 'Platform 2'],
       tags: ['Tag 1', 'Tag 2'],
+      year: 2025,
+      errors: [],
     }),
   };
 });
