@@ -25,9 +25,7 @@ export default function GamesList() {
 
   const openGameListEditor = async (game: GameDataType) => {
     setSelectedGame(game);
-    await fetchUserGame({
-      variables: { gameId: game.id },
-    });
+    await fetchUserGame({ variables: { gameId: game.id } });
     setOpen(true);
   };
 
@@ -82,7 +80,6 @@ export default function GamesList() {
         </div>
       )}
       <ListEditor
-        fetchUserGame={fetchUserGame}
         userGameLoading={userGameLoading}
         open={open}
         setOpen={setOpen}

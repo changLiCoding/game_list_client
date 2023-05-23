@@ -25,14 +25,7 @@ import DatePickerField from '../DatePickerField';
 import TextAreaInput from '../TextAreaInput';
 import type { ListEditorType } from '@/components/ListEditor/types';
 
-function ListEditor({
-  fetchUserGame,
-  setGame,
-  userGameLoading,
-  open,
-  setOpen,
-  game,
-}: ListEditorType) {
+function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
   const dispatch = useDispatch();
   const {
     gameStatus: selectedStatus,
@@ -43,20 +36,12 @@ function ListEditor({
     private: selectedPrivate,
   } = useAppSelector((state) => state.userGame);
 
-  console.log('selectedStatus in main editor component', selectedStatus);
-
-  console.log('selectedRating in main editor component', selectedRating);
-
   const { userGame } = useAppSelector((state) => state);
-
-  console.log('Game in the editor main page', game);
-
-  // console.log('userGame in the editor main page', userGame);
 
   const { contextHolder, info } = useNotification();
 
   const { addUserGames } = useAddDeleteGame();
-  const { editUserGame, editAndFetchUserGame } = useEditUserGame();
+  const { editUserGame } = useEditUserGame();
 
   const onAddGameHandler = async (gameId: string) => {
     await addUserGames(gameId);
@@ -118,18 +103,11 @@ function ListEditor({
               type="primary"
               onClick={async () => {
                 await onAddGameHandler(game.id);
-                console.log('userGame in the editor before save', userGame);
-                // fetchUserGame({ gameId: game?.id });
-                console.log('UserGame input in the editAndFetchUserGame: ', {
-                  ...userGame,
-                  gameId: game.id,
-                });
 
-                await editAndFetchUserGame({ ...userGame, gameId: game.id });
+                await editUserGame({ ...userGame, gameId: game.id });
 
                 info(`Edit game ${game.name} successfully`);
                 setOpen(false);
-                console.log('userGame in the editor after save', userGame);
               }}
               className={styles.saveButton}
             >
@@ -147,8 +125,6 @@ function ListEditor({
                 data-testid="dropdown-Status"
                 value={selectedStatus || undefined}
                 onChange={(value: string): void => {
-                  console.log('setuserGamestatus value in selecter', value);
-
                   dispatch(setUserGameStatus(value));
                 }}
                 options={statusOptions}
@@ -164,7 +140,6 @@ function ListEditor({
                 data-testid="dropdown-Score"
                 value={selectedRating || undefined}
                 onChange={(value: number): void => {
-                  console.log('setuserGameRating value in selecter', value);
                   dispatch(setUserGameRating(value));
                 }}
                 options={scoreOptions}

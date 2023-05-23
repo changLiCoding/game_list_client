@@ -119,16 +119,7 @@ export default function GameCard({
             <Button
               onClick={() => {
                 if (openGameListEditor) {
-                  console.log(
-                    'userGame in the editor before modal open',
-                    userGame
-                  );
                   openGameListEditor(game);
-
-                  console.log(
-                    'userGame in the editor after modal open',
-                    userGame
-                  );
                 }
               }}
               size="middle"
