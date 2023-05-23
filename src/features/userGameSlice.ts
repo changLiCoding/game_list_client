@@ -21,10 +21,10 @@ export const userGameSlice = createSlice({
       state.private = action.payload;
     },
     setUserGameCompletedDate: (state, action) => {
-      state.completedDate = action.payload;
+      state.completedDate = action.payload === '' ? null : action.payload;
     },
     setUserGameStartDate: (state, action) => {
-      state.startDate = action.payload;
+      state.startDate = action.payload === '' ? null : action.payload;
     },
     setUserGameReview: (state, action) => {
       state.review = action.payload;
@@ -44,8 +44,8 @@ export const userGameSlice = createSlice({
       state.gameNote = gameNote;
       state.rating = rating;
       state.private = isPrivate;
-      state.completedDate = completedDate;
-      state.startDate = startDate;
+      state.completedDate = completedDate === '' ? null : completedDate;
+      state.startDate = startDate === '' ? null : startDate;
       state.review = review;
     },
   },
