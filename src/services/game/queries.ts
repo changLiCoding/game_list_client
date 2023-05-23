@@ -2,6 +2,8 @@ import { TypedDocumentNode } from '@graphql-typed-document-node/core';
 import { gql } from '@apollo/client';
 import type {
   Game,
+  GameFilters,
+  GetGameFiltersQuery,
   QueryGetAllGamesByGenreArgs,
   QueryGetAllGamesByPlatformArgs,
   QueryGetAllGamesByTagArgs,
@@ -40,12 +42,16 @@ export const GET_ALL_GAMES_BY_TAG: TypedDocumentNode<
   }
 `;
 
-export const GET_GENRES_PLATFORMS_TAGS = gql`
-  query GetGenresPlatformsTags {
-    getGenresPlatformsTags {
+export const GET_GAME_FILTERS: TypedDocumentNode<
+  { getGameFilters: GameFilters },
+  GetGameFiltersQuery
+> = gql`
+  query GetGameFilters {
+    getGameFilters {
       genres
       platforms
       tags
+      year
       errors
     }
   }
