@@ -35,6 +35,7 @@ export type InitialStateUserGameType = {
   startDate: string | null;
   private: boolean;
   rating: number;
+  isGameAdded: boolean;
 };
 
 export type HomeSearchSlice = {

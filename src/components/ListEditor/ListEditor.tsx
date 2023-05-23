@@ -28,6 +28,7 @@ import type { ListEditorType } from '@/components/ListEditor/types';
 function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
   const dispatch = useDispatch();
   const {
+    isGameAdded: selectedIsGameAdded,
     gameStatus: selectedStatus,
     rating: selectedRating,
     gameNote: selectedNote,
@@ -37,6 +38,7 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
   } = useAppSelector((state) => state.userGame);
 
   const { userGame } = useAppSelector((state) => state);
+  console.log('userGame states in the Redux state of usergame', userGame);
 
   const { contextHolder, info } = useNotification();
 
@@ -201,6 +203,7 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
           >
             Private
           </Checkbox>
+          {selectedIsGameAdded && <Button type="primary">Delete</Button>}
         </div>
       </div>
       {contextHolder}
