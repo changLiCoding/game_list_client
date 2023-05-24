@@ -44,19 +44,19 @@ function ListEditor({
 
   const { userGame } = useAppSelector((state) => state);
 
-  const { contextHolder, info } = useNotification();
+  const { contextHolder, info, warrning, success } = useNotification();
 
   const { addUserGames, deleteUserGames } = useAddDeleteGame();
   const { editUserGame } = useEditUserGame();
 
   const onAddGameHandler = async (gameId: string) => {
     await addUserGames(gameId);
-    info(`Game ${game?.name} added to your list`);
+    success(`Game ${game?.name} added to your list`);
   };
 
   const onDeteteGameHandler = async (gameId: string) => {
     await deleteUserGames(gameId);
-    info(`Game ${game?.name} deleted from your list`);
+    warrning(`Game ${game?.name} deleted from your list`);
   };
 
   const statusOptions: DropDownOption[] = [
@@ -104,7 +104,11 @@ function ListEditor({
               className={styles.favouriteButton}
               type="ghost"
               onClick={async () => {
-                await onAddGameHandler(game?.id);
+                if (!isGameAdded) {
+                  await onAddGameHandler(game?.id);
+                } else {
+                  info(`Game ${game?.name} already added to your list`);
+                }
               }}
               icon={<HeartOutlined />}
             />
@@ -113,12 +117,10 @@ function ListEditor({
             <Button
               type="primary"
               onClick={async () => {
-                await onAddGameHandler(game.id);
-                const {
-                  // isGameAdded,
-                  ...newUserGames
-                } = userGame;
-                await editUserGame({ ...newUserGames, gameId: game.id });
+                if (!isGameAdded) {
+                  await onAddGameHandler(game.id);
+                }
+                await editUserGame({ ...userGame, gameId: game.id });
 
                 info(`Edit game ${game.name} successfully`);
                 setOpen(false);

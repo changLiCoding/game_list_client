@@ -13,7 +13,6 @@ import type {
   AddUserGamesPayload,
   DeleteUserGamesPayload,
 } from '@/graphql/__generated__/graphql';
-// import { setUserGameAdded } from '@/features/userGameSlice';
 
 const useAddDeleteGame = () => {
   const [addUserGamesRequest] = useMutation(ADD_USER_GAMES);

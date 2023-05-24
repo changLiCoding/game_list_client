@@ -1,7 +1,6 @@
 import { useQuery } from '@apollo/client';
 import { useDispatch } from 'react-redux';
 import { setAddedGames } from '@/features/addedGamesSlice';
-import { useAppSelector } from '@/app/hooks';
 
 import { getTokenFromLocalStorage } from '@/constants';
 import { GET_ALL_GAMES } from './queries';
@@ -14,7 +13,6 @@ export default function useAllGames(
   year = -1
 ) {
   const dispatch = useDispatch();
-  const { addedList } = useAppSelector((state) => state.addedGames);
 
   let games: GameType[] = [];
   const errors: string[] = [];
@@ -31,7 +29,6 @@ export default function useAllGames(
     },
     ...getTokenFromLocalStorage,
     onCompleted: (data) => {
-      console.log(data);
       const { allGames: allGamesData } = data;
       if (allGamesData) {
         allGamesData.forEach((game) => {
@@ -45,7 +42,6 @@ export default function useAllGames(
           }
         });
       }
-      console.log(addedList);
     },
   });
 

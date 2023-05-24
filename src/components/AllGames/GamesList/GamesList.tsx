@@ -1,14 +1,13 @@
 import { theme, Card, Row } from 'antd';
 import { Content } from 'antd/es/layout/layout';
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+
 import GameCard from '@/components/AllGames/GamesList/GameCard';
 import List from '@/components/AllGames/GamesList/List';
 import useAllGames from '@/services/games/useAllGames';
 import styles from '@/components/AllGames/GamesList/GamesList.module.scss';
 import { useAppSelector } from '@/app/hooks';
 import useUserGameById from '@/services/userGames/useUserGameById';
-// import { setUserGameAdded } from '@/features/userGameSlice';
 import ListEditor from '@/components/ListEditor';
 import type { GameDataType } from '@/components/GamesListTable/types';
 
@@ -21,8 +20,6 @@ export default function GamesList() {
     homeSearchState.filters.year
   );
 
-  const dispatch = useDispatch();
-
   // States for modal to edit list
   const { userGameLoading, fetchUserGame } = useUserGameById();
   const [open, setOpen] = useState(false);
@@ -32,11 +29,7 @@ export default function GamesList() {
 
   const openGameListEditor = async (game: GameDataType) => {
     setSelectedGame(game);
-    // dispatch(
-    //   setUserGameAdded({
-    //     type: 'remove',
-    //   })
-    // );
+
     await fetchUserGame({ variables: { gameId: game.id } });
     setOpen(true);
   };

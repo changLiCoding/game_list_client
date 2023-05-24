@@ -1,9 +1,6 @@
 import { OperationVariables, QueryResult, useLazyQuery } from '@apollo/client';
 import { useDispatch } from 'react-redux';
-import {
-  setUserGame,
-  // setUserGameAdded
-} from '@/features/userGameSlice';
+import { setUserGame } from '@/features/userGameSlice';
 import { GET_USER_GAME_BY_GAME_ID } from '@/services/userGames/queries';
 import {
   getTokenFromLocalStorage,
@@ -34,11 +31,6 @@ const useUserGameById = (): UseUserGameByIdType => {
         // When user game is not found, clear out redux slice
         if (data.getUserGameByGameId) {
           dispatch(setUserGame(data.getUserGameByGameId));
-          // dispatch(
-          //   setUserGameAdded({
-          //     type: 'add',
-          //   })
-          // );
         } else {
           dispatch(setUserGame(INITIAL_USER_GAME_BY_ID_STATE));
         }

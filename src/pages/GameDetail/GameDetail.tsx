@@ -5,15 +5,13 @@ import type { Game as GameType } from '@/graphql/__generated__/graphql';
 import useAllGames from '@/services/games/useAllGames';
 import GameDetailHeader from '@/components/GameDetailHeader';
 
-// import { useAppSelector } from '@/app/hooks';
-
 function GameDetail() {
   const { id } = useParams();
   const {
     games: gamesState,
     loading,
   }: { games: GameType[]; loading: boolean } = useAllGames();
-  // const gamesState = useAppSelector((state) => state.games);
+
   if (loading) return <div>Loading...</div>;
 
   const game = gamesState.find((gameEle: GameType) => gameEle.id === id);
