@@ -15,14 +15,7 @@ import type {
   OnChangeDatePickerType,
   OnChangeTextAreaType,
 } from '@/types/global';
-import {
-  setUserGameCompletedDate,
-  setUserGameNote,
-  setUserGameStatus,
-  setUserGamePrivate,
-  setUserGameRating,
-  setUserGameStartDate,
-} from '@/features/userGameSlice';
+import { setUserGameReducer } from '@/features/userGameSlice';
 import { useAppSelector } from '@/app/hooks';
 import styles from '@/components/ListEditor/ListEditor.module.scss';
 import DatePickerField from '../DatePickerField';
@@ -169,7 +162,9 @@ function ListEditor({
                 data-testid="dropdown-Status"
                 value={selectedStatus || undefined}
                 onChange={(value: string): void => {
-                  dispatch(setUserGameStatus(value));
+                  dispatch(
+                    setUserGameReducer({ type: 'gameStatus', payload: value })
+                  );
                 }}
                 options={statusOptions}
                 placeholder="Status"
@@ -184,7 +179,14 @@ function ListEditor({
                 data-testid="dropdown-Score"
                 value={selectedRating || undefined}
                 onChange={(value: number): void => {
-                  dispatch(setUserGameRating(value));
+                  dispatch(
+                    setUserGameReducer({
+                      type: 'rating',
+                      payload: value,
+                    })
+
+                    // Rating(value)
+                  );
                 }}
                 options={scoreOptions}
                 placeholder="Score"
@@ -198,7 +200,12 @@ function ListEditor({
               <DatePickerField
                 defaultValue={selectedStart || undefined}
                 onChange={(value: OnChangeDatePickerType) => {
-                  dispatch(setUserGameStartDate(value?.toISOString()));
+                  dispatch(
+                    setUserGameReducer({
+                      type: 'startDate',
+                      payload: value?.toISOString(),
+                    })
+                  );
                 }}
                 fieldName="Start"
                 customCascaderStyle={styles.cascaderStyle}
@@ -213,7 +220,12 @@ function ListEditor({
                 fieldName="Finish"
                 customCascaderStyle={styles.cascaderStyle}
                 onChange={(value: OnChangeDatePickerType) => {
-                  dispatch(setUserGameCompletedDate(value?.toISOString()));
+                  dispatch(
+                    setUserGameReducer({
+                      type: 'completedDate',
+                      payload: value?.toISOString(),
+                    })
+                  );
                 }}
               />
             </div>
@@ -226,7 +238,12 @@ function ListEditor({
                 fieldName="Notes"
                 customCascaderStyle={styles.cascaderStyle}
                 onChange={(value: OnChangeTextAreaType) => {
-                  dispatch(setUserGameNote(value.target.value));
+                  dispatch(
+                    setUserGameReducer({
+                      type: 'gameNote',
+                      payload: value.target.value,
+                    })
+                  );
                 }}
               />
             </div>
@@ -240,7 +257,12 @@ function ListEditor({
           <Checkbox
             checked={selectedPrivate || false}
             onChange={(e: OnChangeCheckboxType) => {
-              dispatch(setUserGamePrivate(e.target.checked));
+              dispatch(
+                setUserGameReducer({
+                  type: 'private',
+                  payload: e.target.checked,
+                })
+              );
             }}
           >
             Private
