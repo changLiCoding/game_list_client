@@ -85,7 +85,6 @@ export default function GamesList() {
         open={open}
         setOpen={setOpen}
         game={selectedGame as GameDataType}
-        setGame={setSelectedGame}
       />
     </Content>
   );

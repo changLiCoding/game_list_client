@@ -18,7 +18,11 @@ const documents = {
     "\n  query GetAllGamesByGenre($genre: EntityIdNameAttributes!, $limit: Int) {\n    getAllGamesByGenre(genre: $genre, limit: $limit) {\n      name\n    }\n  }\n": types.GetAllGamesByGenreDocument,
     "\n  query GetAllGamesByPlatform($platform: EntityIdNameAttributes!, $limit: Int) {\n    getAllGamesByPlatform(platform: $platform, limit: $limit) {\n      name\n    }\n  }\n": types.GetAllGamesByPlatformDocument,
     "\n  query GetAllGamesByTag($tag: EntityIdNameAttributes!, $limit: Int) {\n    getAllGamesByTag(tag: $tag, limit: $limit) {\n      name\n    }\n  }\n": types.GetAllGamesByTagDocument,
+<<<<<<< HEAD
+    "\n  query GetGenresPlatformsTags {\n    getGenresPlatformsTags {\n      genres\n      platforms\n      tags\n      errors\n    }\n  }\n": types.GetGenresPlatformsTagsDocument,
+=======
     "\n  query GetGameFilters {\n    getGameFilters {\n      genres\n      platforms\n      tags\n      year\n      errors\n    }\n  }\n": types.GetGameFiltersDocument,
+>>>>>>> a667b480ca07828bcd72707ddf7414b1df969929
     "\n  query GetAllGames(\n    $genre: [String!]\n    $tag: [String!]\n    $platform: [String!]\n    $year: Int\n  ) {\n    allGames(genre: $genre, tag: $tag, platform: $platform, year: $year) {\n      id\n      name\n      description\n      bannerURL\n      imageURL\n      releaseDate\n      avgScore\n      totalRating\n      genres\n      tags\n      platforms\n    }\n  }\n": types.GetAllGamesDocument,
     "\n  query User {\n    getUserById {\n      username\n      bannerPicture\n      userPicture\n    }\n  }\n": types.UserDocument,
     "\n  mutation editListsOrder($payload: Scalar!, $action: String!) {\n    updateUser(input: { payload: $payload, action: $action }) {\n      user {\n        listsOrder\n      }\n      errors\n    }\n  }\n": types.EditListsOrderDocument,
