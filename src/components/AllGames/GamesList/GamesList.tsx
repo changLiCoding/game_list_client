@@ -8,7 +8,7 @@ import useAllGames from '@/services/games/useAllGames';
 import styles from '@/components/AllGames/GamesList/GamesList.module.scss';
 import { useAppSelector } from '@/app/hooks';
 import useUserGameById from '@/services/userGames/useUserGameById';
-import { setUserGameAdded } from '@/features/userGameSlice';
+// import { setUserGameAdded } from '@/features/userGameSlice';
 import ListEditor from '@/components/ListEditor';
 import type { GameDataType } from '@/components/GamesListTable/types';
 
@@ -28,13 +28,15 @@ export default function GamesList() {
   const [open, setOpen] = useState(false);
   const [selectedGame, setSelectedGame] = useState<GameDataType>();
 
+  const { addedList } = useAppSelector((state) => state.addedGame);
+
   const openGameListEditor = async (game: GameDataType) => {
     setSelectedGame(game);
-    dispatch(
-      setUserGameAdded({
-        type: 'remove',
-      })
-    );
+    // dispatch(
+    //   setUserGameAdded({
+    //     type: 'remove',
+    //   })
+    // );
     await fetchUserGame({ variables: { gameId: game.id } });
     setOpen(true);
   };

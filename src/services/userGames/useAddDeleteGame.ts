@@ -11,7 +11,7 @@ import type {
   AddUserGamesPayload,
   DeleteUserGamesPayload,
 } from '@/graphql/__generated__/graphql';
-import { setUserGameAdded } from '@/features/userGameSlice';
+// import { setUserGameAdded } from '@/features/userGameSlice';
 
 const useAddDeleteGame = () => {
   const [addUserGamesRequest] = useMutation(ADD_USER_GAMES);
@@ -67,11 +67,11 @@ const useAddDeleteGame = () => {
         awaitRefetchQueries: true,
 
         onCompleted: () => {
-          dispatch(
-            setUserGameAdded({
-              type: 'remove',
-            })
-          );
+          // dispatch(
+          //   setUserGameAdded({
+          //     type: 'remove',
+          //   })
+          // );
         },
       });
       if (

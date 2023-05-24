@@ -3,6 +3,7 @@ import { setupListeners } from '@reduxjs/toolkit/query';
 import userReducer from '@/features/userSlice';
 import userGamesListReducer from '@/features/userUserGamesListSlice';
 import userGameReducer from '@/features/userGameSlice';
+import addedGameReducer from '@/features/addedGameSlice';
 import homeSearchSlice from '@/features/homeSearchSlice';
 
 const rootReducer = combineReducers({
@@ -10,6 +11,7 @@ const rootReducer = combineReducers({
   userGames: userGamesListReducer,
   userGame: userGameReducer,
   homeSearch: homeSearchSlice,
+  addedGame: addedGameReducer,
 });
 
 export const store = configureStore({

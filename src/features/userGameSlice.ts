@@ -48,13 +48,13 @@ export const userGameSlice = createSlice({
       state.startDate = startDate === '' ? null : startDate;
       state.review = review;
     },
-    setUserGameAdded: (state, action) => {
-      if (action.payload.type === 'add') {
-        state.isGameAdded = true;
-      } else if (action.payload.type === 'remove') {
-        state.isGameAdded = false;
-      }
-    },
+    // setUserGameAdded: (state, action) => {
+    //   if (action.payload.type === 'add') {
+    //     state.isGameAdded = true;
+    //   } else if (action.payload.type === 'remove') {
+    //     state.isGameAdded = false;
+    //   }
+    // },
   },
 });
 
@@ -67,7 +67,7 @@ export const {
   setUserGameReview,
   setUserGameStartDate,
   setUserGameStatus,
-  setUserGameAdded,
+  // setUserGameAdded,
 } = userGameSlice.actions;
 
 export default userGameSlice.reducer;

@@ -28,7 +28,7 @@ import type { ListEditorType } from '@/components/ListEditor/types';
 function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
   const dispatch = useDispatch();
   const {
-    isGameAdded: selectedIsGameAdded,
+    // isGameAdded: selectedIsGameAdded,
     gameStatus: selectedStatus,
     rating: selectedRating,
     gameNote: selectedNote,
@@ -109,7 +109,10 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
               type="primary"
               onClick={async () => {
                 await onAddGameHandler(game.id);
-                const { isGameAdded, ...newUserGames } = userGame;
+                const {
+                  // isGameAdded,
+                  ...newUserGames
+                } = userGame;
                 await editUserGame({ ...newUserGames, gameId: game.id });
 
                 info(`Edit game ${game.name} successfully`);
@@ -207,16 +210,16 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
           >
             Private
           </Checkbox>
-          {selectedIsGameAdded && (
-            <Button
-              type="dashed"
-              onClick={async () => {
-                await onDeteteGameHandler(game.id);
-              }}
-            >
-              Delete
-            </Button>
-          )}
+          {/* {selectedIsGameAdded && ( */}
+          <Button
+            type="dashed"
+            onClick={async () => {
+              await onDeteteGameHandler(game.id);
+            }}
+          >
+            Delete
+          </Button>
+          {/* )} */}
         </div>
       </div>
       {contextHolder}
