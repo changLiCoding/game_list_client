@@ -1,4 +1,5 @@
 import { useMutation } from '@apollo/client';
+import { useDispatch } from 'react-redux';
 
 import {
   ADD_USER_GAMES,
@@ -10,10 +11,12 @@ import type {
   AddUserGamesPayload,
   DeleteUserGamesPayload,
 } from '@/graphql/__generated__/graphql';
+import { setUserGameAdded } from '@/features/userGameSlice';
 
 const useAddDeleteGame = () => {
   const [addUserGamesRequest] = useMutation(ADD_USER_GAMES);
   const [deleteUserGamesRequest] = useMutation(DELETE_USER_GAMES);
+  const dispatch = useDispatch();
 
   const addUserGames = async (gameId: string): Promise<AddUserGamesPayload> => {
     try {
@@ -54,6 +57,22 @@ const useAddDeleteGame = () => {
       const response = await deleteUserGamesRequest({
         variables: { gameId },
         context: getTokenFromLocalStorage.context,
+        refetchQueries: [
+          {
+            query: GET_USER_GAME_BY_GAME_ID,
+            variables: { gameId },
+            context: getTokenFromLocalStorage.context,
+          },
+        ],
+        awaitRefetchQueries: true,
+
+        onCompleted: () => {
+          dispatch(
+            setUserGameAdded({
+              type: 'remove',
+            })
+          );
+        },
       });
       if (
         !response ||

@@ -42,12 +42,17 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
 
   const { contextHolder, info } = useNotification();
 
-  const { addUserGames } = useAddDeleteGame();
+  const { addUserGames, deleteUserGames } = useAddDeleteGame();
   const { editUserGame } = useEditUserGame();
 
   const onAddGameHandler = async (gameId: string) => {
     await addUserGames(gameId);
     info(`Game ${game?.name} added to your list`);
+  };
+
+  const onDeteteGameHandler = async (gameId: string) => {
+    await deleteUserGames(gameId);
+    info(`Game ${game?.name} deleted from your list`);
   };
 
   const statusOptions: DropDownOption[] = [
@@ -105,8 +110,8 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
               type="primary"
               onClick={async () => {
                 await onAddGameHandler(game.id);
-
-                await editUserGame({ ...userGame, gameId: game.id });
+                const { isGameAdded, ...newUserGames } = userGame;
+                await editUserGame({ ...newUserGames, gameId: game.id });
 
                 info(`Edit game ${game.name} successfully`);
                 setOpen(false);
@@ -203,7 +208,16 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
           >
             Private
           </Checkbox>
-          {selectedIsGameAdded && <Button type="primary">Delete</Button>}
+          {selectedIsGameAdded && (
+            <Button
+              type="dashed"
+              onClick={async () => {
+                await onDeteteGameHandler(game.id);
+              }}
+            >
+              Delete
+            </Button>
+          )}
         </div>
       </div>
       {contextHolder}
