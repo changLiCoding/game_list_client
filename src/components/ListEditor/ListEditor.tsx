@@ -38,7 +38,6 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
   } = useAppSelector((state) => state.userGame);
 
   const { userGame } = useAppSelector((state) => state);
-  console.log('userGame states in the Redux state of usergame', userGame);
 
   const { contextHolder, info } = useNotification();
 

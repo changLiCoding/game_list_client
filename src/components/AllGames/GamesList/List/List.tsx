@@ -62,7 +62,7 @@ function List({ game, colorBgContainer }: GameCardType): JSX.Element {
               {game.avgScore && getRatingIcon(game.avgScore, `${data}`)}
               <div style={{ color: `${data}` }}>
                 Rating: {game.avgScore}
-                <div>99999 users</div>
+                <div>Based on: {game.totalRating} Users</div>
               </div>
             </div>
             <div className={styles.gamePlatforms} data-testid="gamePlatforms">
