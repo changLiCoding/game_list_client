@@ -25,7 +25,13 @@ import DatePickerField from '../DatePickerField';
 import TextAreaInput from '../TextAreaInput';
 import type { ListEditorType } from '@/components/ListEditor/types';
 
-function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
+function ListEditor({
+  isGameAdded,
+  userGameLoading,
+  open,
+  setOpen,
+  game,
+}: ListEditorType) {
   const dispatch = useDispatch();
   const {
     gameStatus: selectedStatus,
@@ -209,16 +215,16 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
           >
             Private
           </Checkbox>
-          {/* {selectedIsGameAdded && ( */}
-          <Button
-            type="dashed"
-            onClick={async () => {
-              await onDeteteGameHandler(game.id);
-            }}
-          >
-            Delete
-          </Button>
-          {/* )} */}
+          {isGameAdded && (
+            <Button
+              type="dashed"
+              onClick={async () => {
+                await onDeteteGameHandler(game.id);
+              }}
+            >
+              Delete
+            </Button>
+          )}
         </div>
       </div>
       {contextHolder}
