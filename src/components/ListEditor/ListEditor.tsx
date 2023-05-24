@@ -1,5 +1,9 @@
 import { Modal, Button, Checkbox, Select } from 'antd';
-import { HeartOutlined } from '@ant-design/icons';
+import {
+  HeartOutlined,
+  ExclamationCircleFilled,
+  HeartFilled,
+} from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
 
 import useAddDeleteGame from '@/services/userGames/useAddDeleteGame';
@@ -78,6 +82,24 @@ function ListEditor({
     return <div>Loading...</div>;
   }
 
+  const { confirm } = Modal;
+
+  const showDeleteConfirm = () => {
+    confirm({
+      title: `Are you sure to remove ${game.name} from your list?`,
+      icon: <ExclamationCircleFilled />,
+      content: 'Click Yes would remove all data of this game as well.',
+      okText: 'Yes',
+      okType: 'danger',
+      cancelText: 'No',
+      onOk: async () => {
+        await onDeteteGameHandler(game.id);
+        setOpen(false);
+      },
+      zIndex: 1041,
+    });
+  };
+
   return (
     <Modal
       className={styles.listEditorContainer}
@@ -110,7 +132,13 @@ function ListEditor({
                   info(`Game ${game?.name} already added to your list`);
                 }
               }}
-              icon={<HeartOutlined />}
+              icon={
+                isGameAdded ? (
+                  <HeartFilled style={{ color: 'hotpink' }} />
+                ) : (
+                  <HeartOutlined />
+                )
+              }
             />
           </div>
           <div className={styles.contentSave}>
@@ -218,12 +246,7 @@ function ListEditor({
             Private
           </Checkbox>
           {isGameAdded && (
-            <Button
-              type="dashed"
-              onClick={async () => {
-                await onDeteteGameHandler(game.id);
-              }}
-            >
+            <Button type="dashed" onClick={showDeleteConfirm}>
               Delete
             </Button>
           )}
