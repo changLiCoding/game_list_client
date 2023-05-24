@@ -43,6 +43,7 @@ export function getRatingIcon(avgScore: number, color: string) {
 }
 
 export default function GameCard({
+  isAdded,
   game,
   colorBgContainer,
   openGameListEditor,
@@ -127,7 +128,17 @@ export default function GameCard({
               style={{
                 color: `${data}`,
               }}
-              icon={<PlusCircleOutlined style={{ fontSize: '14px' }} />}
+              icon={
+                isAdded ? (
+                  <EditOutlined
+                    style={{
+                      fontSize: '14px',
+                    }}
+                  />
+                ) : (
+                  <PlusCircleOutlined style={{ fontSize: '14px' }} />
+                )
+              }
               shape="circle"
             />
           </Popover>

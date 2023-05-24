@@ -28,7 +28,7 @@ export default function GamesList() {
   const [open, setOpen] = useState(false);
   const [selectedGame, setSelectedGame] = useState<GameDataType>();
 
-  const { addedList } = useAppSelector((state) => state.addedGame);
+  const { addedList } = useAppSelector((state) => state.addedGames);
 
   const openGameListEditor = async (game: GameDataType) => {
     setSelectedGame(game);
@@ -65,6 +65,7 @@ export default function GamesList() {
           >
             {games.map((game) => (
               <GameCard
+                isAdded={addedList.includes(game.id)}
                 key={`grid-${game.id}`}
                 game={game}
                 colorBgContainer={colorBgContainer}
@@ -96,6 +97,7 @@ export default function GamesList() {
         open={open}
         setOpen={setOpen}
         game={selectedGame as GameDataType}
+        isGameAdded={addedList.includes(selectedGame?.id as string)}
         setGame={setSelectedGame}
       />
     </Content>

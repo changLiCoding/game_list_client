@@ -28,7 +28,6 @@ import type { ListEditorType } from '@/components/ListEditor/types';
 function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
   const dispatch = useDispatch();
   const {
-    // isGameAdded: selectedIsGameAdded,
     gameStatus: selectedStatus,
     rating: selectedRating,
     gameNote: selectedNote,

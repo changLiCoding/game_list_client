@@ -6,6 +6,8 @@ import {
   DELETE_USER_GAMES,
   GET_USER_GAME_BY_GAME_ID,
 } from '@/services/userGames/queries';
+import { useAppSelector } from '@/app/hooks';
+import { setAddedGames } from '@/features/addedGamesSlice';
 import { getTokenFromLocalStorage } from '@/constants';
 import type {
   AddUserGamesPayload,
@@ -17,6 +19,7 @@ const useAddDeleteGame = () => {
   const [addUserGamesRequest] = useMutation(ADD_USER_GAMES);
   const [deleteUserGamesRequest] = useMutation(DELETE_USER_GAMES);
   const dispatch = useDispatch();
+  const { addedList } = useAppSelector((state) => state.addedGames);
 
   const addUserGames = async (gameId: string): Promise<AddUserGamesPayload> => {
     try {
@@ -31,6 +34,20 @@ const useAddDeleteGame = () => {
           },
         ],
         awaitRefetchQueries: true,
+        onCompleted: (data) => {
+          // ADD GAME IN REDUX STORE
+          if (
+            data.addUserGames.userGame.game.id &&
+            !addedList.includes(data.addUserGames.userGame.game.id)
+          ) {
+            dispatch(
+              setAddedGames({
+                type: 'add',
+                gameId: data.addUserGames.userGame.game.id,
+              })
+            );
+          }
+        },
       });
       if (
         !response ||
@@ -66,12 +83,19 @@ const useAddDeleteGame = () => {
         ],
         awaitRefetchQueries: true,
 
-        onCompleted: () => {
-          // dispatch(
-          //   setUserGameAdded({
-          //     type: 'remove',
-          //   })
-          // );
+        onCompleted: (data) => {
+          // REMOVE GAME IN REDUX STORE
+          if (
+            data.deleteUserGames.userGame.game.id &&
+            addedList.includes(data.deleteUserGames.userGame.game.id)
+          ) {
+            dispatch(
+              setAddedGames({
+                type: 'remove',
+                gameId: data.deleteUserGames.userGame.game.id,
+              })
+            );
+          }
         },
       });
       if (

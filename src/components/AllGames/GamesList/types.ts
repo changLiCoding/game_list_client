@@ -5,4 +5,5 @@ export type GameCardType = {
   colorBgContainer: string;
   userGameLoading?: boolean;
   openGameListEditor?: (game: Game) => void;
+  isAdded?: boolean;
 };

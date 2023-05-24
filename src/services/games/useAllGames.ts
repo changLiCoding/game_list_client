@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client';
 import { useDispatch } from 'react-redux';
-import { setAddedGames } from '@/features/addedGameSlice';
+import { setAddedGames } from '@/features/addedGamesSlice';
 import { useAppSelector } from '@/app/hooks';
 
 import { getTokenFromLocalStorage } from '@/constants';
@@ -14,7 +14,7 @@ export default function useAllGames(
   year = -1
 ) {
   const dispatch = useDispatch();
-  const { addedList } = useAppSelector((state) => state.addedGame);
+  const { addedList } = useAppSelector((state) => state.addedGames);
 
   let games: GameType[] = [];
   const errors: string[] = [];
