@@ -9,7 +9,7 @@
   width: 100%;
   height: 110px;
   background-color: variables.$color-background;
-
+  color: variables.$color-text;
   @include mixin.phoneSmall {
     height: 90px;
   }
@@ -35,4 +35,9 @@
 
 .buttonFiltersWrapperButton {
   background-color: variables.$color-navbar;
+}
+
+:global(ul.ant-cascader-menu) {
+  color: variables.$color-text-title;
+  background-color: variables.$color-background;
 }

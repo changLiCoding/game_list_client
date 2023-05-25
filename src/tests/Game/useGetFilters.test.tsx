@@ -10,12 +10,12 @@ vi.mock('@apollo/client', async () => {
     ...actual,
     useQuery: vi.fn(() => ({
       data: {
-        getGenresPlatformsTags: {
+        getGameFilters: {
           errors: [],
           genres: ['First-person shooter', 'Puzzle', 'Platformer'],
           platforms: ['PC', 'PlayStation 4', 'Xbox One'],
           tags: ['3D', 'Fantasy', 'Soullike'],
-          __typename: 'GenrePlatformTag',
+          year: 2025,
         },
       },
     })),
@@ -30,6 +30,8 @@ describe('useGetFilters hook', () => {
       genres: ['First-person shooter', 'Puzzle', 'Platformer'],
       platforms: ['PC', 'PlayStation 4', 'Xbox One'],
       tags: ['3D', 'Fantasy', 'Soullike'],
+      year: 2025,
+      errors: [],
     });
   });
 });

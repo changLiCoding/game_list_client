@@ -4,8 +4,8 @@ import type { Dayjs } from 'dayjs';
 import React from 'react';
 
 export interface DropDownOption {
-  value: string;
-  label: string;
+  value: string | number;
+  label: string | number;
   children?: DropDownOption[];
 }
 

@@ -1,7 +1,9 @@
 import { useMutation } from '@apollo/client';
+
 import {
   ADD_USER_GAMES,
   DELETE_USER_GAMES,
+  GET_USER_GAME_BY_GAME_ID,
 } from '@/services/userGames/queries';
 import { getTokenFromLocalStorage } from '@/constants';
 import type {
@@ -18,6 +20,14 @@ const useAddDeleteGame = () => {
       const response = await addUserGamesRequest({
         variables: { gameId },
         context: getTokenFromLocalStorage.context,
+        refetchQueries: [
+          {
+            query: GET_USER_GAME_BY_GAME_ID,
+            variables: { gameId },
+            context: getTokenFromLocalStorage.context,
+          },
+        ],
+        awaitRefetchQueries: true,
       });
       if (
         !response ||
@@ -27,6 +37,7 @@ const useAddDeleteGame = () => {
       ) {
         throw new Error(response.data.addUserGames.errors[0]);
       }
+
       return response.data.addUserGames;
     } catch (error: unknown) {
       if (error instanceof Error) {

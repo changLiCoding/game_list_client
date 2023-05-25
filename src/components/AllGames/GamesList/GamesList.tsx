@@ -15,7 +15,8 @@ export default function GamesList() {
   const { games, refetch } = useAllGames(
     homeSearchState.filters.genres,
     homeSearchState.filters.tags,
-    homeSearchState.filters.platforms
+    homeSearchState.filters.platforms,
+    homeSearchState.filters.year
   );
 
   // States for modal to edit list
@@ -25,9 +26,7 @@ export default function GamesList() {
 
   const openGameListEditor = async (game: GameDataType) => {
     setSelectedGame(game);
-    await fetchUserGame({
-      variables: { gameId: game.id },
-    });
+    await fetchUserGame({ variables: { gameId: game.id } });
     setOpen(true);
   };
 

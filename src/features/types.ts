@@ -28,11 +28,11 @@ export type InitialStateUserGamesListType = {
 };
 
 export type InitialStateUserGameType = {
-  completedDate: string;
+  completedDate: string | null;
   gameNote: string;
   gameStatus: string;
   review: string;
-  startDate: string;
+  startDate: string | null;
   private: boolean;
   rating: number;
 };
@@ -42,6 +42,7 @@ export type HomeSearchSlice = {
     platforms: string[];
     tags: string[];
     genres: string[];
+    year: number;
   };
   lastSelected: {
     platforms: string;

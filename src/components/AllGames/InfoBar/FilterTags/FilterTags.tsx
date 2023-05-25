@@ -9,13 +9,14 @@ import { clearAll, removeFilter } from '@/features/homeSearchSlice';
 function FilterTags() {
   const dispatch = useDispatch();
   const homeSearchState = useAppSelector((state) => state.homeSearch);
-  const filtersLength =
+  const shouldRenderTags =
     homeSearchState.filters.genres.length +
-    homeSearchState.filters.platforms.length +
-    homeSearchState.filters.tags.length;
+      homeSearchState.filters.platforms.length +
+      homeSearchState.filters.tags.length >
+      0 || homeSearchState.filters.year > 0;
   return (
     <div className={styles.tagsContainer}>
-      {filtersLength > 0 && (
+      {shouldRenderTags && (
         <>
           {' '}
           <TagsTwoTone className={styles.tagsIcon} />
@@ -61,10 +62,20 @@ function FilterTags() {
               </Tag>
             );
           })}
+          {homeSearchState.filters.year > 0 && (
+            <Tag
+              closable
+              onClose={() => dispatch(removeFilter({ type: 'Year' }))}
+              key={homeSearchState.filters.year}
+              className={styles.tagsText}
+            >
+              {homeSearchState.filters.year}
+            </Tag>
+          )}
           <Tag
             closable
             onClose={() => dispatch(clearAll())}
-            className={styles.tagsText}
+            className={styles.clearAll}
           >
             Clear all
           </Tag>

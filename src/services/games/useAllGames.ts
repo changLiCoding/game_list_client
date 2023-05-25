@@ -6,7 +6,8 @@ import type { Game as GameType } from '@/graphql/__generated__/graphql';
 export default function useAllGames(
   genre: string[] = [],
   tag: string[] = [],
-  platform: string[] = []
+  platform: string[] = [],
+  year = -1
 ) {
   let games: GameType[] = [];
   const errors: string[] = [];
@@ -19,6 +20,7 @@ export default function useAllGames(
       genre,
       tag,
       platform,
+      year: year === -1 ? null : year,
     },
     ...getTokenFromLocalStorage,
   });

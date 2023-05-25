@@ -11,14 +11,7 @@ import type {
   OnChangeDatePickerType,
   OnChangeTextAreaType,
 } from '@/types/global';
-import {
-  setUserGameCompletedDate,
-  setUserGameNote,
-  setUserGameStatus,
-  setUserGamePrivate,
-  setUserGameRating,
-  setUserGameStartDate,
-} from '@/features/userGameSlice';
+import { setUserGameReducer } from '@/features/userGameSlice';
 import { useAppSelector } from '@/app/hooks';
 import styles from '@/components/ListEditor/ListEditor.module.scss';
 import DatePickerField from '../DatePickerField';
@@ -42,18 +35,15 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
   const { addUserGames } = useAddDeleteGame();
   const { editUserGame } = useEditUserGame();
 
-  const onAddGameHandler = (gameId: string) => {
-    addUserGames(gameId);
+  const onAddGameHandler = async (gameId: string) => {
+    await addUserGames(gameId);
     info(`Game ${game?.name} added to your list`);
   };
 
   const onEditGameHandler = async () => {
-    // Have to parse rating to int before send the request
-    await editUserGame({
-      ...userGame,
-      rating: parseInt(userGame?.rating.toString(), 10),
-      gameId: game?.id,
-    });
+    await onAddGameHandler(game.id);
+
+    await editUserGame({ ...userGame, gameId: game.id });
 
     info(`Edit game ${game.name} successfully`);
     setOpen(false);
@@ -71,8 +61,8 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
     { length: 10 },
     (_, index) => index + 1
   ).map((score) => ({
-    label: score.toString(),
-    value: score.toString(),
+    label: score,
+    value: score,
   }));
 
   if (userGameLoading) {
@@ -104,8 +94,8 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
             <Button
               className={styles.favouriteButton}
               type="ghost"
-              onClick={() => {
-                onAddGameHandler(game?.id);
+              onClick={async () => {
+                await onAddGameHandler(game?.id);
               }}
               icon={<HeartOutlined />}
             />
@@ -125,12 +115,14 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
         <div className={styles.bodyInput}>
           <div style={{ gridArea: 'status' }}>
             <div>
-              <h3 className={styles.h3FilterFieldTitle}>Status</h3>
+              <h3>Status</h3>
               <Select
                 data-testid="dropdown-Status"
-                defaultValue={selectedStatus || undefined}
+                value={selectedStatus || undefined}
                 onChange={(value: string): void => {
-                  dispatch(setUserGameStatus(value));
+                  dispatch(
+                    setUserGameReducer({ type: 'gameStatus', payload: value })
+                  );
                 }}
                 options={statusOptions}
                 placeholder="Status"
@@ -140,12 +132,19 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
           </div>
           <div style={{ gridArea: 'score' }}>
             <div>
-              <h3 className={styles.h3FilterFieldTitle}>Score</h3>
+              <h3>Score</h3>
               <Select
                 data-testid="dropdown-Score"
-                defaultValue={selectedRating || undefined}
+                value={selectedRating || undefined}
                 onChange={(value: number): void => {
-                  dispatch(setUserGameRating(value));
+                  dispatch(
+                    setUserGameReducer({
+                      type: 'rating',
+                      payload: value,
+                    })
+
+                    // Rating(value)
+                  );
                 }}
                 options={scoreOptions}
                 placeholder="Score"
@@ -155,11 +154,16 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
           </div>
           <div style={{ gridArea: 'start' }}>
             <div>
-              <h3 className={styles.h3FilterFieldTitle}>Start</h3>
+              <h3>Start</h3>
               <DatePickerField
                 defaultValue={selectedStart || undefined}
                 onChange={(value: OnChangeDatePickerType) => {
-                  dispatch(setUserGameStartDate(value?.toISOString()));
+                  dispatch(
+                    setUserGameReducer({
+                      type: 'startDate',
+                      payload: value?.toISOString(),
+                    })
+                  );
                 }}
                 fieldName="Start"
                 customCascaderStyle={styles.cascaderStyle}
@@ -168,26 +172,36 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
           </div>
           <div style={{ gridArea: 'finish' }}>
             <div>
-              <h3 className={styles.h3FilterFieldTitle}>Finish</h3>
+              <h3>Finish</h3>
               <DatePickerField
                 defaultValue={selectedCompleted || undefined}
                 fieldName="Finish"
                 customCascaderStyle={styles.cascaderStyle}
                 onChange={(value: OnChangeDatePickerType) => {
-                  dispatch(setUserGameCompletedDate(value?.toISOString()));
+                  dispatch(
+                    setUserGameReducer({
+                      type: 'completedDate',
+                      payload: value?.toISOString(),
+                    })
+                  );
                 }}
               />
             </div>
           </div>
           <div style={{ gridArea: 'notes' }}>
             <div>
-              <h3 className={styles.h3FilterFieldTitle}>Notes</h3>
+              <h3>Notes</h3>
               <TextAreaInput
                 defaultValue={selectedNote || undefined}
                 fieldName="Notes"
                 customCascaderStyle={styles.cascaderStyle}
                 onChange={(value: OnChangeTextAreaType) => {
-                  dispatch(setUserGameNote(value.target.value));
+                  dispatch(
+                    setUserGameReducer({
+                      type: 'gameNote',
+                      payload: value.target.value,
+                    })
+                  );
                 }}
               />
             </div>
@@ -201,7 +215,12 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
           <Checkbox
             checked={selectedPrivate || false}
             onChange={(e: OnChangeCheckboxType) => {
-              dispatch(setUserGamePrivate(e.target.checked));
+              dispatch(
+                setUserGameReducer({
+                  type: 'private',
+                  payload: e.target.checked,
+                })
+              );
             }}
           >
             Private

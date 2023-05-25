@@ -53,3 +53,9 @@
   left: 80%;
   font-size: 2rem;
 }
+
+:global(main.ant-layout-content) {
+  div:first-child {
+    background: none;
+  }
+}
