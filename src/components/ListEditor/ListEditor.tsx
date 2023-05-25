@@ -1,5 +1,9 @@
 import { Modal, Button, Checkbox, Select } from 'antd';
-import { HeartOutlined } from '@ant-design/icons';
+import {
+  HeartOutlined,
+  ExclamationCircleFilled,
+  HeartFilled,
+} from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
 
 import useAddDeleteGame from '@/services/userGames/useAddDeleteGame';
@@ -18,7 +22,13 @@ import DatePickerField from '../DatePickerField';
 import TextAreaInput from '../TextAreaInput';
 import type { ListEditorType } from '@/components/ListEditor/types';
 
-function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
+function ListEditor({
+  isGameAdded,
+  userGameLoading,
+  open,
+  setOpen,
+  game,
+}: ListEditorType) {
   const dispatch = useDispatch();
   const {
     gameStatus: selectedStatus,
@@ -31,14 +41,19 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
 
   const { userGame } = useAppSelector((state) => state);
 
-  const { contextHolder, info } = useNotification();
+  const { contextHolder, info, warrning, success } = useNotification();
 
-  const { addUserGames } = useAddDeleteGame();
+  const { addUserGames, deleteUserGames } = useAddDeleteGame();
   const { editUserGame } = useEditUserGame();
 
   const onAddGameHandler = async (gameId: string) => {
     await addUserGames(gameId);
-    info(`Game ${game?.name} added to your list`);
+    success(`Game ${game?.name} added to your list`);
+  };
+
+  const onDeteteGameHandler = async (gameId: string) => {
+    await deleteUserGames(gameId);
+    warrning(`Game ${game?.name} deleted from your list`);
   };
 
   const statusOptions: DropDownOption[] = [
@@ -59,6 +74,24 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
   if (userGameLoading) {
     return <div>Loading...</div>;
   }
+
+  const { confirm } = Modal;
+
+  const showDeleteConfirm = () => {
+    confirm({
+      title: `Are you sure to remove ${game.name} from your list?`,
+      icon: <ExclamationCircleFilled />,
+      content: 'Click Yes would remove all data of this game as well.',
+      okText: 'Yes',
+      okType: 'danger',
+      cancelText: 'No',
+      onOk: async () => {
+        await onDeteteGameHandler(game.id);
+        setOpen(false);
+      },
+      zIndex: 1041,
+    });
+  };
 
   return (
     <Modal
@@ -86,17 +119,28 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
               className={styles.favouriteButton}
               type="ghost"
               onClick={async () => {
-                await onAddGameHandler(game?.id);
+                if (!isGameAdded) {
+                  await onAddGameHandler(game?.id);
+                } else {
+                  info(`Game ${game?.name} already added to your list`);
+                }
               }}
-              icon={<HeartOutlined />}
+              icon={
+                isGameAdded ? (
+                  <HeartFilled style={{ color: 'hotpink' }} />
+                ) : (
+                  <HeartOutlined />
+                )
+              }
             />
           </div>
           <div className={styles.contentSave}>
             <Button
               type="primary"
               onClick={async () => {
-                await onAddGameHandler(game.id);
-
+                if (!isGameAdded) {
+                  await onAddGameHandler(game.id);
+                }
                 await editUserGame({ ...userGame, gameId: game.id });
 
                 info(`Edit game ${game.name} successfully`);
@@ -223,6 +267,11 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
           >
             Private
           </Checkbox>
+          {isGameAdded && (
+            <Button type="dashed" onClick={showDeleteConfirm}>
+              Delete
+            </Button>
+          )}
         </div>
       </div>
       {contextHolder}

@@ -7,11 +7,14 @@ import ListEditor from '@/components/ListEditor';
 import styles from '@/components/GameDetailHeader/GameDetailHeaderInfo/GameDetailHeaderInfo.module.scss';
 import type { GameDetailsType } from '@/components/GameDetailHeader/types';
 import useUserGameById from '@/services/userGames/useUserGameById';
+import { useAppSelector } from '@/app/hooks';
 
 function GameDetailHeaderInfo({ game }: GameDetailsType) {
   const [open, setOpen] = useState(false);
 
   const { userGameLoading, fetchUserGame } = useUserGameById();
+
+  const { addedList } = useAppSelector((state) => state.addedGames);
 
   const items: MenuProps['items'] = [
     {
@@ -40,7 +43,7 @@ function GameDetailHeaderInfo({ game }: GameDetailsType) {
             Open List Editor
           </Button>
           <ListEditor
-            // userGame={userGame}
+            isGameAdded={addedList.includes(game.id as string)}
             userGameLoading={userGameLoading}
             open={open}
             setOpen={setOpen}
