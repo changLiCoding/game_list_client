@@ -24,8 +24,6 @@ export const userGameSlice = createSlice({
         state.completedDate = payload === '' ? null : payload;
       } else if (type === 'startDate') {
         state.startDate = payload === '' ? null : payload;
-      } else if (type === 'review') {
-        state.review = payload;
       } else if (type === 'userGame') {
         const {
           gameStatus,
@@ -34,7 +32,6 @@ export const userGameSlice = createSlice({
           private: isPrivate,
           completedDate,
           startDate,
-          review,
         } = payload;
         state.gameStatus = gameStatus;
         state.gameNote = gameNote;
@@ -42,7 +39,6 @@ export const userGameSlice = createSlice({
         state.private = isPrivate;
         state.completedDate = completedDate === '' ? null : completedDate;
         state.startDate = startDate === '' ? null : startDate;
-        state.review = review;
       }
     },
   },
