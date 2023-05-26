@@ -62,6 +62,6 @@ export const INITIAL_USER_GAME_BY_ID_STATE = {
   gameStatus: '',
   private: false,
   rating: 0,
-  review: '',
+  journals: undefined,
   startDate: null,
 };

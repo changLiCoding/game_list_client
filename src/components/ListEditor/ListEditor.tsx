@@ -141,6 +141,7 @@ function ListEditor({
                 if (!isGameAdded) {
                   await onAddGameHandler(game.id);
                 }
+
                 await editUserGame({ ...userGame, gameId: game.id });
 
                 info(`Edit game ${game.name} successfully`);

@@ -28,7 +28,6 @@ const userGameInitialState = {
   gameStatus: '',
   private: false,
   rating: 0,
-  review: '',
   startDate: null,
 };
 
