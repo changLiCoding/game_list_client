@@ -4,7 +4,7 @@ import {
   MenuUnfoldOutlined,
   SearchOutlined,
 } from '@ant-design/icons';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useQuery } from '@apollo/client';
 import styles from '@/components/FiltersWrapper/FiltersWrapper.module.scss';
@@ -14,6 +14,7 @@ import { useAppSelector } from '@/app/hooks';
 import { GET_GAME_FILTERS } from '@/services/game/queries';
 import { getTokenFromLocalStorage } from '@/constants';
 import { setGameFilters } from '@/app/store';
+import useFilterOptions from '@/hooks/useFilterOptions';
 
 const { Search } = Input;
 
@@ -55,14 +56,12 @@ export default function FiltersWrapper() {
 
   const { data } = useQuery(GET_GAME_FILTERS, getTokenFromLocalStorage);
   // const filters = useNewFilterOptions(...data?.getGameFilters.genres);
-  // const filters = useFilterOptions(
-  //   data?.getGameFilters.genres,
-  //   data?.getGameFilters.platforms,
-  //   data?.getGameFilters.tags,
-  //   data?.getGameFilters.year
-  // );
-
-  // console.log('filters', filters);
+  const filters = useFilterOptions(
+    data?.getGameFilters.genres,
+    data?.getGameFilters.platforms,
+    data?.getGameFilters.tags,
+    data?.getGameFilters.year
+  );
 
   const { useBreakpoint } = Grid;
   const screens = useBreakpoint();
@@ -77,6 +76,7 @@ export default function FiltersWrapper() {
     );
   }
 
+  console.log('filters', filters);
   console.log('gameFilters', gameFilters);
   return (
     <Layout className={styles.layoutFiltersWrapperContainer}>
@@ -119,90 +119,24 @@ export default function FiltersWrapper() {
               onChange={(value) => dispatch(setGameFilters({ tags: value }))}
             />
           </div>
-          {/* <h3 className={filterFieldStyles.h3FilterFieldTitle}>Year</h3>
-          <SelectFilterField
-            value={gameFilters.year}
-            options={data.getGameFilters.platforms}
-          /> */}
-          {/* {gameFilters.genres && (
+          <div>
+            <h3 className={filterFieldStyles.h3FilterFieldTitle}>Year</h3>
             <Select
-              mode="multiple"
-              maxTagCount="responsive"
               style={{ width: 200 }}
               className={styles.cascaderStyle}
-              value={gameFilters.genres ?? []}
+              value={gameFilters.year}
               allowClear
-              onChange={(v: string[], o) => {
-                console.log('onChange', v, o);
-                dispatch(setGameFilters({ genres: v }));
-              }}
+              onChange={(v) => dispatch(setGameFilters({ year: v }))}
             >
-              {data.getGameFilters.genres.map((s) => {
+              {filters.filters[3].options.map((s) => {
                 return (
-                  <Select.Option key={s} value={s}>
-                    <div className={styles.option}>{s}</div>
+                  <Select.Option key={s.value} value={s.value}>
+                    <div className={styles.option}>{s.value}</div>
                   </Select.Option>
                 );
               })}
             </Select>
-          )}
-
-          <h3 className={filterFieldStyles.h3FilterFieldTitle}>Genres test</h3>
-          {gameFilters.genres && (
-            <Select
-              mode="multiple"
-              maxTagCount="responsive"
-              style={{ width: 200 }}
-              className={styles.cascaderStyle}
-              value={gameFilters.genres ?? []}
-              allowClear
-              onChange={(v: string[], o) => {
-                console.log('onChange', v, o);
-                dispatch(setGameFilters({ genres: v }));
-              }}
-            >
-              {data.getGameFilters.genres.map((s) => {
-                return (
-                  <Select.Option key={s} value={s}>
-                    <div className={styles.option}>{s}</div>
-                  </Select.Option>
-                );
-              })}
-            </Select>
-          )} */}
-
-          {/* {filters.filters.map((filter) => {
-            console.log(filter, 'filter');
-            return (
-              <>
-                <h3 className={filterFieldStyles.h3FilterFieldTitle}>
-                  {filter.name}
-                </h3>
-                <Select
-                  key={filter.name}
-                  mode="multiple"
-                  maxTagCount="responsive"
-                  style={{ width: 200 }}
-                  className={styles.cascaderStyle}
-                  value={gameFilters.genres ?? []}
-                  allowClear
-                  onChange={(v: string[], o) => {
-                    console.log('onChange', v, o);
-                    dispatch(setFilters({ genres: v }));
-                  }}
-                >
-                  {filter.options.map((s) => {
-                    // console.log(s);
-                    return (
-                      <Select.Option key={s.label} value={s.value}>
-                        <div className={styles.option}>{s.value}</div>
-                      </Select.Option>
-                    );
-                  })}
-                </Select>
-              </>
-            );
-          })} */}
+          </div>
         </div>
       ) : (
         <Space

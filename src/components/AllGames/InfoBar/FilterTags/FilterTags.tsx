@@ -6,54 +6,57 @@ import styles from '@/components/AllGames/InfoBar/FilterTags/FilterTags.module.s
 
 import { useAppSelector } from '@/app/hooks';
 import { remove } from '@/utils/utils';
-import { resetGameFilters, setGameFilters } from '@/app/store';
+import { resetGameFilter, resetGameFilters, setGameFilters } from '@/app/store';
+import { BaseFilters } from '@/types/global';
 
 function FilterTags() {
   const dispatch = useDispatch();
   const gameFilters = useAppSelector((state) => state.gameFilters);
 
   const filterTags = useMemo(() => {
-    const keys = Object.keys(gameFilters).filter((e) => e);
-    const shouldRenderTags = keys.some((e) => {
-      const value = gameFilters[e as keyof typeof gameFilters];
-      if (value) {
-        if (Array.isArray(value)) {
-          return value.length > 0;
-        }
-        return true;
-      }
-      return false;
+    // Loop through all the keys and values of gameFilters and filter out the non null and undefined values
+    const entries = Object.entries(gameFilters).filter((e) => {
+      if (Array.isArray(e[1])) return e[1].length > 0;
+      return e[1];
     });
 
-    if (shouldRenderTags)
+    if (entries.length > 0)
       return (
         <>
           <TagsTwoTone className={styles.tagsIcon} />
-          {keys.map((key) => {
-            let filter = gameFilters[key as keyof typeof gameFilters];
-            if (filter && !Array.isArray(filter)) {
-              filter = Array.of(filter);
-            }
-            return (
-              filter &&
-              filter.map((filterValue) => {
+
+          {entries.map(([key, value]) => {
+            if (Array.isArray(value)) {
+              return value.map((filterValue) => {
                 return (
                   <Tag
                     closable
                     onClose={() => {
-                      if (!filter) return;
-                      const removedFilter = remove(filter, filterValue);
+                      const removedFilter = remove(value, filterValue);
                       dispatch(setGameFilters({ [key]: removedFilter }));
                     }}
-                    key={filterValue}
+                    key={`${key}-${filterValue}`}
                     className={styles.tagsText}
                   >
                     {filterValue}
                   </Tag>
                 );
-              })
+              });
+            }
+            return (
+              <Tag
+                closable
+                onClose={() => {
+                  dispatch(resetGameFilter(key as keyof BaseFilters));
+                }}
+                key={value}
+                className={styles.tagsText}
+              >
+                {value}
+              </Tag>
             );
           })}
+
           <Tag
             closable
             onClose={() => dispatch(resetGameFilters())}
@@ -67,40 +70,7 @@ function FilterTags() {
     return <div />;
   }, [dispatch, gameFilters]);
 
-  return (
-    <div className={styles.tagsContainer}>
-      {filterTags}
-      {/* {shouldRenderTags && (
-        <>
-          <TagsTwoTone className={styles.tagsIcon} />
-          {gameFilters.genres &&
-            gameFilters.genres.map((filter) => {
-              return (
-                <Tag
-                  closable
-                  onClose={() => {
-                    if (!gameFilters.genres) return;
-                    const removedFilter = remove(gameFilters.genres, filter);
-                    dispatch(setGameFilters({ genres: removedFilter }));
-                  }}
-                  key={filter}
-                  className={styles.tagsText}
-                >
-                  {filter}
-                </Tag>
-              );
-            })}
-          <Tag
-            closable
-            onClose={() => dispatch(resetGameFilters())}
-            className={styles.clearAll}
-          >
-            Clear all
-          </Tag>
-        </>
-      )} */}
-    </div>
-  );
+  return <div className={styles.tagsContainer}>{filterTags}</div>;
 }
 
 export default FilterTags;
