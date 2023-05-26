@@ -2,13 +2,14 @@ import { Layout, Grid, Input, Space, Button, Select } from 'antd';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { d } from 'vitest/dist/types-e3c9754d';
+import { useQuery } from '@apollo/client';
 import styles from '@/components/FiltersWrapper/FiltersWrapper.module.scss';
 import filterFieldStyles from '@/components/FiltersWrapper/FilterField/FilterField.module.scss';
-import useGetFilters from '@/services/game/useGetFilters';
 
 import { useAppSelector } from '@/app/hooks';
-import { setFilter1, setFilters } from '@/features/gameFiltersSlice';
+import { GET_GAME_FILTERS } from '@/services/game/queries';
+import { getTokenFromLocalStorage } from '@/constants';
+import { setGameFilters } from '@/app/store';
 
 const { Search } = Input;
 
@@ -16,134 +17,101 @@ export default function FiltersWrapper() {
   const [collapsed, setCollapsed] = useState(false);
   const dispatch = useDispatch();
   const gameFilters = useAppSelector((state) => state.gameFilters);
-  const filters = useGetFilters();
+
+  const { data } = useQuery(GET_GAME_FILTERS, getTokenFromLocalStorage);
+  // const filters = useNewFilterOptions(...data?.getGameFilters.genres);
+  // const filters = useFilterOptions(
+  //   data?.getGameFilters.genres,
+  //   data?.getGameFilters.platforms,
+  //   data?.getGameFilters.tags,
+  //   data?.getGameFilters.year
+  // );
+
+  // console.log('filters', filters);
 
   const { useBreakpoint } = Grid;
   const screens = useBreakpoint();
+
+  if (!data) return null;
+  if (data.getGameFilters.errors.length > 0) {
+    console.log('Errors:', data.getGameFilters.errors);
+    return (
+      <div>
+        <p>Errors while fetching filters: {data.getGameFilters.errors[0]}</p>
+      </div>
+    );
+  }
+
+  // const filtersGroup = [
+  //   filters.filters,
+  //   data.getGameFilters.platforms,
+  //   data.getGameFilters.tags,
+  //   data.getGameFilters.year,
+  // ];
 
   console.log('gameFilters', gameFilters);
   return (
     <Layout className={styles.layoutFiltersWrapperContainer}>
       {screens.md ? (
         <div className={filterFieldStyles.layoutFilterFieldContainer}>
-          <h3 className={filterFieldStyles.h3FilterFieldTitle}>Genres Test</h3>
-          <Select
-            mode="multiple"
-            maxTagCount="responsive"
-            style={{ width: 200 }}
-            className={styles.cascaderStyle}
-            // value={gameFilters.genres.map((e) => {
-            //   return {
-            //     value: e,
-            //     label: e,
-            //   };
-            // })}
-            allowClear
-            onChange={(v: string[], o) => {
-              console.log('onChange', v, o);
-              dispatch(setFilters({ genres: v }));
-            }}
-          >
-            {filters.genres.map((s) => (
-              <Select.Option key={s} value={s}>
-                <div className={styles.option}>{s}</div>
-              </Select.Option>
-            ))}
-          </Select>
+          <h3 className={filterFieldStyles.h3FilterFieldTitle}>Genres test</h3>
+          {gameFilters.genres && (
+            <Select
+              mode="multiple"
+              maxTagCount="responsive"
+              style={{ width: 200 }}
+              className={styles.cascaderStyle}
+              value={gameFilters.genres ?? []}
+              allowClear
+              onChange={(v: string[], o) => {
+                console.log('onChange', v, o);
+                dispatch(setGameFilters({ genres: v }));
+              }}
+            >
+              {data.getGameFilters.genres.map((s) => {
+                return (
+                  <Select.Option key={s} value={s}>
+                    <div className={styles.option}>{s}</div>
+                  </Select.Option>
+                );
+              })}
+            </Select>
+          )}
+
+          {/* {filters.filters.map((filter) => {
+            console.log(filter, 'filter');
+            return (
+              <>
+                <h3 className={filterFieldStyles.h3FilterFieldTitle}>
+                  {filter.name}
+                </h3>
+                <Select
+                  key={filter.name}
+                  mode="multiple"
+                  maxTagCount="responsive"
+                  style={{ width: 200 }}
+                  className={styles.cascaderStyle}
+                  value={gameFilters.genres ?? []}
+                  allowClear
+                  onChange={(v: string[], o) => {
+                    console.log('onChange', v, o);
+                    dispatch(setFilters({ genres: v }));
+                  }}
+                >
+                  {filter.options.map((s) => {
+                    // console.log(s);
+                    return (
+                      <Select.Option key={s.label} value={s.value}>
+                        <div className={styles.option}>{s.value}</div>
+                      </Select.Option>
+                    );
+                  })}
+                </Select>
+              </>
+            );
+          })} */}
         </div>
       ) : (
-        /* 
-              <div>{e.name}</div>
-              <FilterField2
-                key={e.name}
-                style={{ width: 150 }}
-                customCascaderStyle={styles.cascaderStyle}
-                allowClear
-                onClear={(old) => {
-                  console.log('onClear', old);
-                  e.selected = [];
-                  dispatch(
-                    removeFilter({
-                      type: e.name,
-                    })
-                  );
-                }}
-                onSelect={(old, v) => {
-                  console.log('onSelect', old, v);
-                  e.selected.push(v);
-                  dispatch(
-                    addFilter({
-                      type: e.name,
-                      value: [v],
-                    })
-                  );
-                }}
-              >
-                {e.values.map((s) => (
-                  <Select.Option key={s.label} value={s.value}>
-                    <div className={styles.option}>
-                      {s.label}{' '}
-                      {e.selected.includes(s.label) && <CheckCircleOutlined />}
-                    </div>
-                  </Select.Option>
-                ))}
-              </FilterField2> 
-         <Select
-                key={e.name}
-                style={{ width: 120 }}
-                allowClear
-                value={e.selected}
-                onClear={() => {
-                  e.selected = '';
-                  console.log('onClear');
-                }}
-                onSelect={(v, o) => {
-                  e.selected = v;
-                  console.log('onSelect', v, o);
-                }}
-              >
-                {e.values.map((s) => (
-                  <Select.Option key={s.label} value={s.value}>
-                    <div className={styles.option}>{s.label}</div>
-                  </Select.Option>
-                ))}
-              </Select> */
-
-        // <Select
-        //   style={{ width: 120 }}
-        //   allowClear
-        //   // value={last}
-        //   onClear={() => {
-        //     console.log('onClear');
-        //   }}
-        //   onSelect={(v, o) => {
-        //     console.log('onSelect', v, o);
-        //   }}
-        // >
-        //   {/* {values.map((s) => (
-        //     <Select.Option key={s} value={s}>
-        //       <div className={styles.option}>
-        //         {s} {selected.includes(s) && <CheckCircleOutlined />}
-        //       </div>
-        //     </Select.Option>
-        //   ))} */}
-        // </Select>
-        //   setLast(v);
-        //   if (v) {
-        // dispatch(
-        //   addFilter({
-        //     type: 'Platform',
-        //     value: [v],
-        //   })
-        // );
-        //   } else {
-        // dispatch(
-        //   removeFilter({
-        //     type: 'Platform',
-        //   })
-        // );
-        //   }
-        // }}
         <Space
           direction="horizontal"
           size={screens.sm ? 48 : 24}

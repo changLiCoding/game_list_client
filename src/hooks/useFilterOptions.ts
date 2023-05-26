@@ -2,11 +2,13 @@ import { useMemo } from 'react';
 import type { Filter } from '@/components/UserListFilterColumn/Desktop/types';
 import type { UseFilterOptionsType } from '@/hooks/types';
 import type { DropDownOption } from '@/types/global';
+import { FIRST_VIDEO_GAME_RELEASED_YEAR } from '@/constants';
 
 const useFilterOptions = (
-  genres: string[],
-  platforms: string[],
-  tags: string[]
+  genres?: string[],
+  platforms?: string[],
+  tags?: string[],
+  year?: number
 ): UseFilterOptionsType => {
   const optionsGenerator = (typeArray: string[]): DropDownOption[] =>
     typeArray.map((name) => ({
@@ -27,11 +29,14 @@ const useFilterOptions = (
   }, [tags]);
 
   const yearOptions = useMemo(() => {
-    const currentYear = new Date().getFullYear();
+    const currentYear = Math.max(
+      year ?? new Date().getFullYear(),
+      FIRST_VIDEO_GAME_RELEASED_YEAR
+    );
     const years = [];
     // 1958 is the year of the first video game
     let temp;
-    for (let i = currentYear; i >= 1958; i -= 1) {
+    for (let i = currentYear; i >= FIRST_VIDEO_GAME_RELEASED_YEAR; i -= 1) {
       temp = i.toString();
       years.push({
         value: temp,
@@ -40,7 +45,7 @@ const useFilterOptions = (
     }
 
     return years;
-  }, []);
+  }, [year]);
 
   const filters: Filter[] = [
     {

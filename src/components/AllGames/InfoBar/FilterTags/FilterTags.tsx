@@ -4,78 +4,52 @@ import { useDispatch } from 'react-redux';
 import styles from '@/components/AllGames/InfoBar/FilterTags/FilterTags.module.scss';
 
 import { useAppSelector } from '@/app/hooks';
-// import { removeFilter, reset } from '@/features/gameFiltersSlice';
-// import { clearAll, removeFilter } from '@/features/homeSearchSlice';
+// import { reset, setFilters } from '@/features/gameFiltersSlice';
+import { remove } from '@/utils/utils';
+import { resetGameFilters, setGameFilters } from '@/app/store';
 
 function FilterTags() {
   const dispatch = useDispatch();
-  const homeSearchState = useAppSelector((state) => state.gameFilters);
-  const shouldRenderTags = false;
+  const gameFilters = useAppSelector((state) => state.gameFilters);
+  const shouldRenderTags = Object.keys(gameFilters).some((e) => {
+    const value = gameFilters[e as keyof typeof gameFilters];
+    if (value) {
+      if (Array.isArray(value)) {
+        return value.length > 0;
+      }
+      return true;
+    }
+    return false;
+  });
   return (
     <div className={styles.tagsContainer}>
       {shouldRenderTags && (
         <>
           <TagsTwoTone className={styles.tagsIcon} />
-          {/* {homeSearchState.genres.map((filter) => {
-            return (
-              <Tag
-                closable
-                onClose={() => {
-                  console.log('onClose - ', filter);
-                  dispatch(removeFilter({ key: 'genres', value: filter }));
-                }}
-                key={filter}
-                className={styles.tagsText}
-              >
-                {filter}
-              </Tag>
-            );
-          })} */}
-          {/* {homeSearchState.filters.platforms.map((filter) => {
-            return (
-              <Tag
-                closable
-                onClose={() =>
-                  dispatch(removeFilter({ type: 'Platform', value: filter }))
-                }
-                key={filter}
-                className={styles.tagsText}
-              >
-                {filter}
-              </Tag>
-            );
-          })}
-          {homeSearchState.filters.tags.map((filter) => {
-            return (
-              <Tag
-                closable
-                onClose={() =>
-                  dispatch(removeFilter({ type: 'Tag', value: filter }))
-                }
-                key={filter}
-                className={styles.tagsText}
-              >
-                {filter}
-              </Tag>
-            );
-          })}
-          {homeSearchState.filters.year > 0 && (
-            <Tag
-              closable
-              onClose={() => dispatch(removeFilter({ type: 'Year' }))}
-              key={homeSearchState.filters.year}
-              className={styles.tagsText}
-            >
-              {homeSearchState.filters.year}
-            </Tag>
-          )} */}
-          {/* <Tag
+          {gameFilters.genres &&
+            gameFilters.genres.map((filter) => {
+              return (
+                <Tag
+                  closable
+                  onClose={() => {
+                    if (!gameFilters.genres) return;
+                    const removedFilter = remove(gameFilters.genres, filter);
+                    dispatch(setGameFilters({ genres: removedFilter }));
+                  }}
+                  key={filter}
+                  className={styles.tagsText}
+                >
+                  {filter}
+                </Tag>
+              );
+            })}
+          <Tag
             closable
-            onClose={() => dispatch(reset())}
+            onClose={() => dispatch(resetGameFilters())}
             className={styles.clearAll}
           >
             Clear all
-          </Tag> */}
+          </Tag>
         </>
       )}
     </div>

@@ -42,9 +42,14 @@ export const GET_ALL_GAMES_BY_TAG: TypedDocumentNode<
   }
 `;
 
+// https://stackoverflow.com/questions/67884720/typescript-omit-nested-property
+type ChangeFields<T, R> = Omit<T, keyof R> & R;
 export const GET_GAME_FILTERS: TypedDocumentNode<
-  { getGameFilters: GameFilters },
-  GetGameFiltersQuery
+  { getGameFilters: Omit<GameFilters, '__typename'> },
+  ChangeFields<
+    GetGameFiltersQuery,
+    GetGameFiltersQuery['getGameFilters']['__typename']
+  >
 > = gql`
   query GetGameFilters {
     getGameFilters {
