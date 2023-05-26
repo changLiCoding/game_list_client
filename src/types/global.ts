@@ -39,5 +39,4 @@ export type Filters2 = MakeUndefined<BaseFilters>;
 
 export type UserGameFilters = Filters2 & {
   selectedList: number;
-  sort: string;
 };

@@ -18,7 +18,6 @@ const defaultGameFilters: BaseFilters = {
 const defaultUserGameFilters: UserGameFilters = {
   ...defaultGameFilters,
   selectedList: 0,
-  sort: '',
 };
 
 const gameFiltersSlice =
