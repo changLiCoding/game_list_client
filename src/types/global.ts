@@ -33,10 +33,6 @@ export type BaseFilters = MakeUndefined<
 
 export type Filters2 = MakeUndefined<BaseFilters>;
 
-// export type FiltersWithUndefined = {
-//   [K in keyof BaseFilters]: BaseFilters[K] | undefined;
-// };
-
 export type UserGameFilters = Filters2 & {
   selectedList: number;
 };
