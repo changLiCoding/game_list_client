@@ -22,7 +22,13 @@ import DatePickerField from '../DatePickerField';
 import TextAreaInput from '../TextAreaInput';
 import type { ListEditorType } from '@/components/ListEditor/types';
 
-function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
+function ListEditor({
+  isGameAdded,
+  userGameLoading,
+  open,
+  setOpen,
+  game,
+}: ListEditorType) {
   const dispatch = useDispatch();
 
   const { userGame } = useAppSelector((state) => state);
@@ -35,9 +41,7 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
     private: selectedPrivate,
   } = useAppSelector((state) => state.userGame);
 
-  const { userGame } = useAppSelector((state) => state);
-
-  const { contextHolder, info } = useNotification();
+  const { contextHolder, info, warrning, success } = useNotification();
 
   const { addUserGames, deleteUserGames } = useAddDeleteGame();
   const { editUserGame } = useEditUserGame();
@@ -53,7 +57,9 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
   };
 
   const onEditGameHandler = async () => {
-    await onAddGameHandler(game.id);
+    if (!isGameAdded) {
+      await onAddGameHandler(game.id);
+    }
 
     await editUserGame({ ...userGame, gameId: game.id });
 
@@ -143,14 +149,7 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
           <div className={styles.contentSave}>
             <Button
               type="primary"
-              onClick={async () => {
-                await onAddGameHandler(game.id);
-
-                await editUserGame({ ...userGame, gameId: game.id });
-
-                info(`Edit game ${game.name} successfully`);
-                setOpen(false);
-              }}
+              onClick={onEditGameHandler}
               className={styles.saveButton}
             >
               Save
