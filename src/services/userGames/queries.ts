@@ -31,7 +31,6 @@ export const ADD_USER_GAMES = gql`
         gameStatus
         gameNote
         startDate
-        journals
         completedDate
         rating
         private
@@ -76,7 +75,6 @@ export const GET_USER_GAME_BY_GAME_ID = gql`
       gameNote
       gameStatus
       id
-      journals
       startDate
       completedDate
       rating
@@ -154,7 +152,6 @@ export const EDIT_USER_GAME_BY_GAME_ID = gql`
         id
         gameNote
         gameStatus
-        journals
         startDate
         completedDate
         rating
