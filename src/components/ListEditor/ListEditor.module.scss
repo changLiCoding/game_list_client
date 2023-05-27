@@ -52,6 +52,15 @@
 
         .contentSave {
           padding-bottom: 10px;
+          & > button {
+            outline: none;
+            transition: background-color 0.2s ease-in-out;
+
+            &:hover {
+              color: variables.$color-white;
+              background-color: variables.$color-icon-selected;
+            }
+          }
         }
       }
     }
@@ -125,12 +134,32 @@
             width: 100%;
           }
         }
+
+        & > button {
+          margin-left: auto;
+          margin-top: auto;
+          text-align: center;
+          background-color: variables.$color-foreground-grey-dark;
+          border: none;
+          color: rgba(variables.$color-text, 0.9);
+          cursor: pointer;
+          // font-size: 14px;
+          font-weight: 500;
+          margin-bottom: 12px;
+          outline: none;
+          transition: background-color 0.2s ease-in-out;
+
+          &:hover {
+            color: variables.$color-white;
+            background-color: variables.$color-red;
+          }
+        }
       }
     }
 
     .favouriteButton {
       color: rgba(variables.$color-white, 0.45);
-      font-size: 20px;
+      font-size: 15px;
     }
 
     .saveButton {

@@ -28,7 +28,6 @@ const userGameInitialState = {
   gameStatus: '',
   private: false,
   rating: 0,
-  review: '',
   startDate: null,
 };
 
@@ -93,6 +92,30 @@ vi.mock('@/services/games/useAllGames', async () => {
         },
       ],
     }),
+  };
+});
+
+vi.mock('react-redux', async () => {
+  const actual: unknown = await vi.importActual('react-redux');
+  if (typeof actual !== 'object')
+    throw new Error('Import Actual did not return not an object');
+  return {
+    ...actual,
+    useDispatch: vi.fn(() => vi.fn()),
+  };
+});
+
+vi.mock('@/app/hooks', async () => {
+  const actual: unknown = await vi.importActual('@/app/hooks');
+  if (typeof actual !== 'object')
+    throw new Error('Import Actual did not return not an object');
+  return {
+    ...actual,
+    useAppSelector: vi.fn(() => ({
+      addedGames: {
+        addedList: [],
+      },
+    })),
   };
 });
 

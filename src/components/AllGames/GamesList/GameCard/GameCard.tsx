@@ -1,5 +1,6 @@
 import { Col, Card, Popover, Tag, Button, Divider } from 'antd';
 import {
+  EditOutlined,
   PlusCircleOutlined,
   FrownOutlined,
   MehOutlined,
@@ -42,6 +43,7 @@ export function getRatingIcon(avgScore: number, color: string) {
 }
 
 export default function GameCard({
+  isAdded,
   game,
   colorBgContainer,
   openGameListEditor,
@@ -103,6 +105,7 @@ export default function GameCard({
                       backgroundColor: colorBgContainer,
                     }}
                     cover={<img alt="example" src={game.imageURL} />}
+                    bodyStyle={{ padding: '24px 24px 24px 10px' }}
                   >
                     <Meta
                       style={{ color: `${data}` }}
@@ -125,7 +128,17 @@ export default function GameCard({
               style={{
                 color: `${data}`,
               }}
-              icon={<PlusCircleOutlined style={{ fontSize: '1rem' }} />}
+              icon={
+                isAdded ? (
+                  <EditOutlined
+                    style={{
+                      fontSize: '14px',
+                    }}
+                  />
+                ) : (
+                  <PlusCircleOutlined style={{ fontSize: '14px' }} />
+                )
+              }
               shape="circle"
             />
           </Popover>

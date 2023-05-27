@@ -31,7 +31,6 @@ export type InitialStateUserGameType = {
   completedDate: string | null;
   gameNote: string;
   gameStatus: string;
-  review: string;
   startDate: string | null;
   private: boolean;
   rating: number;

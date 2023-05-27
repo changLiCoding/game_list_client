@@ -21,6 +21,7 @@ export const GET_ALL_GAMES: TypedDocumentNode<{ allGames: Game[] }, void> = gql`
       genres
       tags
       platforms
+      isGameAdded
     }
   }
 `;

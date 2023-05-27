@@ -30,7 +30,6 @@ export const ADD_USER_GAMES = gql`
         id
         gameStatus
         gameNote
-        review
         startDate
         completedDate
         rating
@@ -76,7 +75,6 @@ export const GET_USER_GAME_BY_GAME_ID = gql`
       gameNote
       gameStatus
       id
-      review
       startDate
       completedDate
       rating
@@ -159,7 +157,6 @@ export const EDIT_USER_GAME_BY_GAME_ID = gql`
         id
         gameNote
         gameStatus
-        review
         startDate
         completedDate
         rating

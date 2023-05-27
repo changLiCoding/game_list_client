@@ -17,14 +17,29 @@
     }
   }
 
+  // animation: fadeAnimation 0.3s ease;
+
   .buttonGameHoverShow {
-    display: none;
     position: absolute;
     bottom: 14px;
-    right: 17px;
+    right: 12px;
+    // transition: opacity 0.3s ease;
+    opacity: 0;
+    transform: scale(0.2);
+    transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out,
+      background 0.2s ease-in-out;
   }
   &:hover .buttonGameHoverShow {
-    display: block;
+    transform: scale(1.1) !important;
+    opacity: 1;
+    // @keyframes fadeAnimation {
+    //   0% {
+    //     opacity: 0;
+    //   }
+    //   100% {
+    //     opacity: 1;
+    //   }
+    // }
   }
 
   & .cardGameContainer {
