@@ -32,14 +32,6 @@
   &:hover .buttonGameHoverShow {
     transform: scale(1.1) !important;
     opacity: 1;
-    // @keyframes fadeAnimation {
-    //   0% {
-    //     opacity: 0;
-    //   }
-    //   100% {
-    //     opacity: 1;
-    //   }
-    // }
   }
 
   & .cardGameContainer {
@@ -70,7 +62,7 @@
 }
 
 :global(main.ant-layout-content) {
-  div:first-child {
+  :global(.ant-card-bordered.ant-card) {
     background: none;
   }
 }

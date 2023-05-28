@@ -105,7 +105,10 @@ export default function GameCard({
                       backgroundColor: colorBgContainer,
                     }}
                     cover={<img alt="example" src={game.imageURL} />}
-                    bodyStyle={{ padding: '24px 24px 24px 10px' }}
+                    bodyStyle={{
+                      padding: '24px 24px 24px 10px',
+                      backgroundColor: colorBgContainer,
+                    }}
                   >
                     <Meta
                       style={{ color: `${data}` }}
