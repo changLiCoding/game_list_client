@@ -125,6 +125,8 @@ export type GameFilters = {
   errors: Array<Scalars['String']>;
   genres: Array<Scalars['String']>;
   platforms: Array<Scalars['String']>;
+  search: Scalars['String'];
+  sortBy: Scalars['String'];
   tags: Array<Scalars['String']>;
   year: Scalars['Int'];
 };
@@ -243,6 +245,8 @@ export type Query = {
 export type QueryAllGamesArgs = {
   genre?: InputMaybe<Array<Scalars['String']>>;
   platform?: InputMaybe<Array<Scalars['String']>>;
+  search?: InputMaybe<Scalars['String']>;
+  sortBy?: InputMaybe<Scalars['String']>;
   tag?: InputMaybe<Array<Scalars['String']>>;
   year?: InputMaybe<Scalars['Int']>;
 };
