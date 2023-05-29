@@ -8,8 +8,17 @@ export const GET_ALL_GAMES: TypedDocumentNode<{ allGames: Game[] }, void> = gql`
     $tag: [String!]
     $platform: [String!]
     $year: Int
+    $search: String
+    $sortOrder: String
   ) {
-    allGames(genre: $genre, tag: $tag, platform: $platform, year: $year) {
+    allGames(
+      genre: $genre
+      tag: $tag
+      platform: $platform
+      year: $year
+      search: $search
+      sortBy: $sortOrder
+    ) {
       id
       name
       description
