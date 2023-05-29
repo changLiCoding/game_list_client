@@ -17,7 +17,6 @@ import {
   getTokenFromLocalStorage,
 } from '@/constants';
 import { setGameFilters } from '@/app/store';
-import useFilterOptions from '@/hooks/useFilterOptions';
 import { range } from '@/utils/utils';
 
 const { Search } = Input;
@@ -25,24 +24,28 @@ const { useBreakpoint } = Grid;
 
 type ArrayOnly<T> = T extends any[] ? T : never;
 
-type Testing<T> =
+type SelectFilterFieldType<T> =
   | {
       mode: 'multiple';
-      value: ArrayOnly<T>;
+      value: ArrayOnly<T> | undefined;
       options: string[] | number[];
       onChange: (value: T) => void;
     }
   | {
       mode: undefined;
-      value: T;
+      value: T | undefined;
       options: string[] | number[];
       onChange: (value: T) => void;
     };
 
-function SelectFilterField<T>({ mode, value, options, onChange }: Testing<T>) {
+function SelectFilterField<T>({
+  mode,
+  value,
+  options,
+  onChange,
+}: SelectFilterFieldType<T>) {
   const optionsMemo = useMemo(() => {
     return options.map((s) => {
-      console.log('SelectFilterField memo running');
       return (
         <Select.Option key={s} value={s}>
           <div className={styles.option}>{s}</div>
@@ -64,28 +67,6 @@ function SelectFilterField<T>({ mode, value, options, onChange }: Testing<T>) {
     </Select>
   );
 }
-
-// function SelectFilterField2<T>({ mode, value, options, onChange }: Testing<T>) {
-//   return (
-//     <Select
-//       mode={mode}
-//       style={{ width: 200 }}
-//       className={styles.cascaderStyle}
-//       value={mode === 'multiple' ? (value as any[]) : (value as any)}
-//       allowClear
-//       onChange={onChange}
-//     >
-//       {options.map((s) => {
-//         return (
-//           <Select.Option key={s} value={s}>
-//             <div className={styles.option}>{s}</div>
-//           </Select.Option>
-//         );
-//       })}
-//     </Select>
-//   );
-// }
-
 export default function FiltersWrapper() {
   const [collapsed, setCollapsed] = useState(false);
   const dispatch = useDispatch();
@@ -95,42 +76,8 @@ export default function FiltersWrapper() {
     GET_GAME_FILTERS,
     getTokenFromLocalStorage
   );
-  // const filters = useNewFilterOptions(...data?.getGameFilters.genres);
-  const filters = useFilterOptions(
-    data?.getGameFilters.genres,
-    data?.getGameFilters.platforms,
-    data?.getGameFilters.tags,
-    data?.getGameFilters.year
-  );
-
-  // const genresOptions = useMemo(() => {
-  //   return (
-  //     <SelectFilterField<string[]>
-  //       mode="multiple"
-  //       value={gameFilters.genres || []}
-  //       options={data?.getGameFilters.genres || []}
-  //       onChange={(value) => dispatch(setGameFilters({ genres: value }))}
-  //     />
-  //   );
-  // }, [data?.getGameFilters.genres, dispatch, gameFilters.genres]);
-
-  const genresOptions = useMemo(() => {
-    console.log('genresOptions running');
-    return data?.getGameFilters.genres ? data?.getGameFilters.genres : [];
-  }, [data?.getGameFilters.genres]);
-
-  const platformsOptions = useMemo(() => {
-    console.log('platformsOptions running');
-    return data?.getGameFilters.platforms ? data?.getGameFilters.platforms : [];
-  }, [data?.getGameFilters.platforms]);
-
-  const tagOptions = useMemo(() => {
-    console.log('tagOptions running');
-    return data?.getGameFilters.tags ? data?.getGameFilters.tags : [];
-  }, [data?.getGameFilters.tags]);
 
   const yearOptions = useMemo(() => {
-    console.log('yearOptions running');
     const currentYear = Math.max(
       data?.getGameFilters.year ?? new Date().getFullYear(),
       FIRST_VIDEO_GAME_RELEASED_YEAR
@@ -152,8 +99,6 @@ export default function FiltersWrapper() {
     );
   }
 
-  console.log('filters', filters);
-  console.log('gameFilters', gameFilters);
   return (
     <Layout className={styles.layoutFiltersWrapperContainer}>
       {screens.md ? (
@@ -173,13 +118,12 @@ export default function FiltersWrapper() {
               // }}
             />
           </div>
-          {/* {genresOptions} */}
           <div>
             <h3 className={filterFieldStyles.h3FilterFieldTitle}>Genres</h3>
             <SelectFilterField<string[]>
               mode="multiple"
               value={gameFilters.genres || []}
-              options={genresOptions}
+              options={data?.getGameFilters.genres || []}
               onChange={(value) => dispatch(setGameFilters({ genres: value }))}
             />
           </div>
@@ -189,7 +133,7 @@ export default function FiltersWrapper() {
             <SelectFilterField<string[]>
               mode="multiple"
               value={gameFilters.platforms || []}
-              options={platformsOptions}
+              options={data?.getGameFilters.platforms || []}
               onChange={(value) =>
                 dispatch(setGameFilters({ platforms: value }))
               }
@@ -201,7 +145,7 @@ export default function FiltersWrapper() {
             <SelectFilterField<string[]>
               mode="multiple"
               value={gameFilters.tags || []}
-              options={tagOptions}
+              options={data?.getGameFilters.tags || []}
               onChange={(value) => dispatch(setGameFilters({ tags: value }))}
             />
           </div>
@@ -210,7 +154,7 @@ export default function FiltersWrapper() {
             <h3 className={filterFieldStyles.h3FilterFieldTitle}>Year</h3>
             <SelectFilterField<number>
               mode={undefined}
-              value={gameFilters.year as number}
+              value={gameFilters.year}
               options={yearOptions}
               onChange={(value) => dispatch(setGameFilters({ year: value }))}
             />
