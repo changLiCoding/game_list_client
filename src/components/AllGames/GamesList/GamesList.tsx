@@ -21,12 +21,15 @@ export default function GamesList() {
   const [open, setOpen] = useState(false);
   const [selectedGame, setSelectedGame] = useState<GameDataType>();
 
+  console.log('gameFilters', gameFilters);
   const { data, loading } = useQuery(GET_ALL_GAMES, {
     variables: {
       genre: gameFilters.genres,
       tag: gameFilters.tags,
       platform: gameFilters.platforms,
       year: gameFilters.year,
+      sortBy: gameFilters.sortBy,
+      search: gameFilters.search,
     },
     ...getTokenFromLocalStorage,
   });

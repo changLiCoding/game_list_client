@@ -110,12 +110,11 @@ export default function FiltersWrapper() {
               style={{ width: 300 }}
               size="middle"
               prefix={<SearchOutlined />}
-              // onChange={(e) => {
-              //   // TODO: Convert this into a component as the user game list will need this as well
-              //   const value = e.target.value.trim();
-              //   if (value.length === 0) return;
-              //   // TODO: Will be done in another PR
-              // }}
+              value={gameFilters.search}
+              onChange={(e) => {
+                // TODO: debounce
+                dispatch(setGameFilters({ search: e.target.value }));
+              }}
             />
           </div>
           <div>
