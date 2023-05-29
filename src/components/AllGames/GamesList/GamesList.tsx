@@ -1,7 +1,7 @@
 import { theme, Card, Row } from 'antd';
 import { Content } from 'antd/es/layout/layout';
-import { useState } from 'react';
 import { useQuery } from '@apollo/client';
+import { useState } from 'react';
 import GameCard from '@/components/AllGames/GamesList/GameCard';
 import List from '@/components/AllGames/GamesList/List';
 import styles from '@/components/AllGames/GamesList/GamesList.module.scss';
@@ -31,8 +31,11 @@ export default function GamesList() {
     ...getTokenFromLocalStorage,
   });
 
+  const { addedList } = useAppSelector((state) => state.addedGames);
+
   const openGameListEditor = async (game: GameDataType) => {
     setSelectedGame(game);
+
     await fetchUserGame({ variables: { gameId: game.id } });
     setOpen(true);
   };
@@ -60,6 +63,7 @@ export default function GamesList() {
           >
             {data?.allGames.map((game) => (
               <GameCard
+                isAdded={addedList.includes(game.id)}
                 key={`grid-${game.id}`}
                 game={game}
                 colorBgContainer={colorBgContainer}
@@ -91,7 +95,7 @@ export default function GamesList() {
         open={open}
         setOpen={setOpen}
         game={selectedGame as GameDataType}
-        setGame={setSelectedGame}
+        isGameAdded={addedList.includes(selectedGame?.id as string)}
       />
     </Content>
   );

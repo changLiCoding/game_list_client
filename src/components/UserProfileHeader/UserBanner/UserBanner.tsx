@@ -4,10 +4,6 @@ import type { UserProfileHeaderType } from '@/components/UserProfileHeader/types
 function UserBanner({ userState }: UserProfileHeaderType) {
   const { user } = userState;
 
-  // if (loading || !user) {
-  //   return <div>Loading...</div>;
-  // }
-
   return (
     <div
       className={styles.bannerContainerNull}

@@ -1,5 +1,9 @@
 import { Modal, Button, Checkbox, Select } from 'antd';
-import { HeartOutlined } from '@ant-design/icons';
+import {
+  HeartOutlined,
+  ExclamationCircleFilled,
+  HeartFilled,
+} from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
 
 import useAddDeleteGame from '@/services/userGames/useAddDeleteGame';
@@ -11,21 +15,20 @@ import type {
   OnChangeDatePickerType,
   OnChangeTextAreaType,
 } from '@/types/global';
-import {
-  setUserGameCompletedDate,
-  setUserGameNote,
-  setUserGameStatus,
-  setUserGamePrivate,
-  setUserGameRating,
-  setUserGameStartDate,
-} from '@/features/userGameSlice';
+import { setUserGameReducer } from '@/features/userGameSlice';
 import { useAppSelector } from '@/app/hooks';
 import styles from '@/components/ListEditor/ListEditor.module.scss';
 import DatePickerField from '../DatePickerField';
 import TextAreaInput from '../TextAreaInput';
 import type { ListEditorType } from '@/components/ListEditor/types';
 
-function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
+function ListEditor({
+  isGameAdded,
+  userGameLoading,
+  open,
+  setOpen,
+  game,
+}: ListEditorType) {
   const dispatch = useDispatch();
   const {
     gameStatus: selectedStatus,
@@ -38,14 +41,19 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
 
   const { userGame } = useAppSelector((state) => state);
 
-  const { contextHolder, info } = useNotification();
+  const { contextHolder, info, warrning, success } = useNotification();
 
-  const { addUserGames } = useAddDeleteGame();
+  const { addUserGames, deleteUserGames } = useAddDeleteGame();
   const { editUserGame } = useEditUserGame();
 
   const onAddGameHandler = async (gameId: string) => {
     await addUserGames(gameId);
-    info(`Game ${game?.name} added to your list`);
+    success(`Game ${game?.name} added to your list`);
+  };
+
+  const onDeteteGameHandler = async (gameId: string) => {
+    await deleteUserGames(gameId);
+    warrning(`Game ${game?.name} deleted from your list`);
   };
 
   const statusOptions: DropDownOption[] = [
@@ -66,6 +74,24 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
   if (userGameLoading) {
     return <div>Loading...</div>;
   }
+
+  const { confirm } = Modal;
+
+  const showDeleteConfirm = () => {
+    confirm({
+      title: `Are you sure to remove ${game.name} from your list?`,
+      icon: <ExclamationCircleFilled />,
+      content: 'Click Yes would remove all data of this game as well.',
+      okText: 'Yes',
+      okType: 'danger',
+      cancelText: 'No',
+      onOk: async () => {
+        await onDeteteGameHandler(game.id);
+        setOpen(false);
+      },
+      zIndex: 1041,
+    });
+  };
 
   return (
     <Modal
@@ -93,16 +119,28 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
               className={styles.favouriteButton}
               type="ghost"
               onClick={async () => {
-                await onAddGameHandler(game?.id);
+                if (!isGameAdded) {
+                  await onAddGameHandler(game?.id);
+                } else {
+                  info(`Game ${game?.name} already added to your list`);
+                }
               }}
-              icon={<HeartOutlined />}
+              icon={
+                isGameAdded ? (
+                  <HeartFilled style={{ color: 'hotpink' }} />
+                ) : (
+                  <HeartOutlined />
+                )
+              }
             />
           </div>
           <div className={styles.contentSave}>
             <Button
               type="primary"
               onClick={async () => {
-                await onAddGameHandler(game.id);
+                if (!isGameAdded) {
+                  await onAddGameHandler(game.id);
+                }
 
                 await editUserGame({ ...userGame, gameId: game.id });
 
@@ -125,7 +163,9 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
                 data-testid="dropdown-Status"
                 value={selectedStatus || undefined}
                 onChange={(value: string): void => {
-                  dispatch(setUserGameStatus(value));
+                  dispatch(
+                    setUserGameReducer({ type: 'gameStatus', payload: value })
+                  );
                 }}
                 options={statusOptions}
                 placeholder="Status"
@@ -140,7 +180,14 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
                 data-testid="dropdown-Score"
                 value={selectedRating || undefined}
                 onChange={(value: number): void => {
-                  dispatch(setUserGameRating(value));
+                  dispatch(
+                    setUserGameReducer({
+                      type: 'rating',
+                      payload: value,
+                    })
+
+                    // Rating(value)
+                  );
                 }}
                 options={scoreOptions}
                 placeholder="Score"
@@ -154,7 +201,12 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
               <DatePickerField
                 defaultValue={selectedStart || undefined}
                 onChange={(value: OnChangeDatePickerType) => {
-                  dispatch(setUserGameStartDate(value?.toISOString()));
+                  dispatch(
+                    setUserGameReducer({
+                      type: 'startDate',
+                      payload: value?.toISOString(),
+                    })
+                  );
                 }}
                 fieldName="Start"
                 customCascaderStyle={styles.cascaderStyle}
@@ -169,7 +221,12 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
                 fieldName="Finish"
                 customCascaderStyle={styles.cascaderStyle}
                 onChange={(value: OnChangeDatePickerType) => {
-                  dispatch(setUserGameCompletedDate(value?.toISOString()));
+                  dispatch(
+                    setUserGameReducer({
+                      type: 'completedDate',
+                      payload: value?.toISOString(),
+                    })
+                  );
                 }}
               />
             </div>
@@ -182,7 +239,12 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
                 fieldName="Notes"
                 customCascaderStyle={styles.cascaderStyle}
                 onChange={(value: OnChangeTextAreaType) => {
-                  dispatch(setUserGameNote(value.target.value));
+                  dispatch(
+                    setUserGameReducer({
+                      type: 'gameNote',
+                      payload: value.target.value,
+                    })
+                  );
                 }}
               />
             </div>
@@ -196,11 +258,21 @@ function ListEditor({ userGameLoading, open, setOpen, game }: ListEditorType) {
           <Checkbox
             checked={selectedPrivate || false}
             onChange={(e: OnChangeCheckboxType) => {
-              dispatch(setUserGamePrivate(e.target.checked));
+              dispatch(
+                setUserGameReducer({
+                  type: 'private',
+                  payload: e.target.checked,
+                })
+              );
             }}
           >
             Private
           </Checkbox>
+          {isGameAdded && (
+            <Button type="dashed" onClick={showDeleteConfirm}>
+              Delete
+            </Button>
+          )}
         </div>
       </div>
       {contextHolder}

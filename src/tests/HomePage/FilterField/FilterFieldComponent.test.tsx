@@ -27,6 +27,7 @@ describe('FilterField Component', () => {
           options={options}
           onChange={onChange}
           changeOnSelect={changeOnSelect}
+          customCascaderStyle=""
         />
       </ContextWrapper>
     );

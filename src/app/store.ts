@@ -3,6 +3,7 @@ import { setupListeners } from '@reduxjs/toolkit/query';
 import userReducer from '@/features/userSlice';
 import userGamesListReducer from '@/features/userUserGamesListSlice';
 import userGameReducer from '@/features/userGameSlice';
+import addedGamesReducer from '@/features/addedGamesSlice';
 import homeSearchSlice from '@/features/homeSearchSlice';
 import { createGameFiltersSlice } from '@/features/gameFiltersSlice';
 import { BaseFilters, UserGameFilters } from '@/types/global';
@@ -35,6 +36,8 @@ const rootReducer = combineReducers({
   // gameFilters: gameFiltersSlice,
   gameFilters: gameFiltersSlice.reducer,
   userGameFilters: userGameFiltersSlice.reducer,
+
+  addedGames: addedGamesReducer,
 });
 
 export const store = configureStore({

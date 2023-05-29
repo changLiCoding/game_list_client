@@ -4,62 +4,46 @@ import { InitialStateUserGameType } from '@/features/types';
 
 const initialState: InitialStateUserGameType = INITIAL_USER_GAME_BY_ID_STATE;
 
+// TODO: Add types to refector the reducer
 export const userGameSlice = createSlice({
   name: 'userGame',
   initialState,
   reducers: {
-    setUserGameStatus: (state, action) => {
-      state.gameStatus = action.payload;
-    },
-    setUserGameNote: (state, action) => {
-      state.gameNote = action.payload;
-    },
-    setUserGameRating: (state, action) => {
-      state.rating = action.payload;
-    },
-    setUserGamePrivate: (state, action) => {
-      state.private = action.payload;
-    },
-    setUserGameCompletedDate: (state, action) => {
-      state.completedDate = action.payload === '' ? null : action.payload;
-    },
-    setUserGameStartDate: (state, action) => {
-      state.startDate = action.payload === '' ? null : action.payload;
-    },
-    setUserGameReview: (state, action) => {
-      state.review = action.payload;
-    },
-    setUserGame: (state, action) => {
-      const {
-        gameStatus,
-        gameNote,
-        rating,
-        private: isPrivate,
-        completedDate,
-        startDate,
-        review,
-      } = action.payload;
+    setUserGameReducer: (state, action) => {
+      const { type, payload } = action.payload;
 
-      state.gameStatus = gameStatus;
-      state.gameNote = gameNote;
-      state.rating = rating;
-      state.private = isPrivate;
-      state.completedDate = completedDate === '' ? null : completedDate;
-      state.startDate = startDate === '' ? null : startDate;
-      state.review = review;
+      if (type === 'gameStatus') {
+        state.gameStatus = payload;
+      } else if (type === 'gameNote') {
+        state.gameNote = payload;
+      } else if (type === 'rating') {
+        state.rating = payload;
+      } else if (type === 'private') {
+        state.private = payload;
+      } else if (type === 'completedDate') {
+        state.completedDate = payload === '' ? null : payload;
+      } else if (type === 'startDate') {
+        state.startDate = payload === '' ? null : payload;
+      } else if (type === 'userGame') {
+        const {
+          gameStatus,
+          gameNote,
+          rating,
+          private: isPrivate,
+          completedDate,
+          startDate,
+        } = payload;
+        state.gameStatus = gameStatus;
+        state.gameNote = gameNote;
+        state.rating = rating;
+        state.private = isPrivate;
+        state.completedDate = completedDate === '' ? null : completedDate;
+        state.startDate = startDate === '' ? null : startDate;
+      }
     },
   },
 });
 
-export const {
-  setUserGame,
-  setUserGameCompletedDate,
-  setUserGameNote,
-  setUserGamePrivate,
-  setUserGameRating,
-  setUserGameReview,
-  setUserGameStartDate,
-  setUserGameStatus,
-} = userGameSlice.actions;
+export const { setUserGameReducer } = userGameSlice.actions;
 
 export default userGameSlice.reducer;

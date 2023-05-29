@@ -1,10 +1,46 @@
 import { describe, it, vi } from 'vitest';
+import { configureStore } from '@reduxjs/toolkit';
+import { Provider } from 'react-redux';
 import { render, screen } from '@testing-library/react';
-// import userEvent from '@testing-library/user-event';
-import ContextWrapper from '@/ContextWrapper';
+import { ApolloProvider } from '@apollo/client';
+import { apolloClient } from '@/graphql';
+
 import GamesList from '@/components/AllGames/GamesList/index';
 
-vi.mock('../../../services/games/useAllGames', async () => {
+const initialState = {
+  filters: {
+    platforms: [],
+    tags: [],
+    genres: [],
+    year: -1,
+  },
+  lastSelected: {
+    platforms: '',
+    tags: '',
+    genres: '',
+  },
+  view: 'list',
+};
+
+const userGameInitialState = {
+  completedDate: null,
+  gameNote: '',
+  gameStatus: '',
+  private: false,
+  rating: 0,
+  startDate: null,
+};
+
+const userGameReducer = (state = userGameInitialState) => state;
+const homeSearchReducer = (state = initialState) => state;
+const mockStore = configureStore({
+  reducer: {
+    homeSearch: homeSearchReducer,
+    userGame: userGameReducer,
+  },
+});
+
+vi.mock('@/services/games/useAllGames', async () => {
   const actual: unknown = await vi.importActual(
     '../../../services/games/useAllGames'
   );
@@ -59,6 +95,30 @@ vi.mock('../../../services/games/useAllGames', async () => {
   };
 });
 
+vi.mock('react-redux', async () => {
+  const actual: unknown = await vi.importActual('react-redux');
+  if (typeof actual !== 'object')
+    throw new Error('Import Actual did not return not an object');
+  return {
+    ...actual,
+    useDispatch: vi.fn(() => vi.fn()),
+  };
+});
+
+vi.mock('@/app/hooks', async () => {
+  const actual: unknown = await vi.importActual('@/app/hooks');
+  if (typeof actual !== 'object')
+    throw new Error('Import Actual did not return not an object');
+  return {
+    ...actual,
+    useAppSelector: vi.fn(() => ({
+      addedGames: {
+        addedList: [],
+      },
+    })),
+  };
+});
+
 describe('Games List Component', () => {
   beforeEach(() => {
     // window.innerWidth = 800;
@@ -71,13 +131,16 @@ describe('Games List Component', () => {
   // });
 
   it('should render the games list when isCardView false', async () => {
-    const {
-      queryByText,
-      // debug
-    } = render(
-      <ContextWrapper>
-        <GamesList />
-      </ContextWrapper>
+    // const dispatch = useDispatch();
+    // dispatch(setView('list'));
+    const { queryByText } = render(
+      <Provider store={mockStore}>
+        <ApolloProvider client={apolloClient}>
+          {/* <ContextWrapper> */}
+          <GamesList />
+          {/* </ContextWrapper> */}
+        </ApolloProvider>
+      </Provider>
     );
     // vi.spyOn(window.screen, 'width', 'get').mockReturnValue(1600);
     // expect(window.screen.width).toBe(1600);
@@ -104,8 +167,9 @@ describe('Games List Component', () => {
     const platforms = screen.queryAllByTestId('gamePlatforms') as HTMLElement[];
     const platformOne = platforms[0];
 
-    expect(platformOne).toHaveTextContent('Windows');
-    // debug(platformOne);
+    expect(platformOne).toBeInTheDocument();
+    expect(platformOne).toHaveTextContent('PC');
+    expect(platformOne).toHaveTextContent('macOS');
     // const style = window.getComputedStyle(platformOne);
     // console.log('style of platformOne: ', style);
     // expect(style.display).toBe('none');
