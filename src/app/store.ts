@@ -14,10 +14,13 @@ const defaultGameFilters: BaseFilters = {
   platforms: [],
   tags: [],
   year: undefined,
+  search: undefined,
+  sortBy: undefined,
 };
 
 const defaultUserGameFilters: UserGameFilters = {
   ...defaultGameFilters,
+  sortBy: undefined,
   selectedList: 0,
 };
 
