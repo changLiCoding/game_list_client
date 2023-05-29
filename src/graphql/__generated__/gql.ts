@@ -20,6 +20,7 @@ const documents = {
     "\n  query GetAllGamesByTag($tag: EntityIdNameAttributes!, $limit: Int) {\n    getAllGamesByTag(tag: $tag, limit: $limit) {\n      name\n    }\n  }\n": types.GetAllGamesByTagDocument,
     "\n  query GetGameFilters {\n    getGameFilters {\n      genres\n      platforms\n      tags\n      year\n      errors\n    }\n  }\n": types.GetGameFiltersDocument,
     "\n  query GetAllGames(\n    $genre: [String!]\n    $tag: [String!]\n    $platform: [String!]\n    $year: Int\n  ) {\n    allGames(genre: $genre, tag: $tag, platform: $platform, year: $year) {\n      id\n      name\n      description\n      bannerURL\n      imageURL\n      releaseDate\n      avgScore\n      totalRating\n      genres\n      tags\n      platforms\n      isGameAdded\n    }\n  }\n": types.GetAllGamesDocument,
+    "\n  query getAllStatusUpdatesForAUser {\n    getAllStatusUpdatesForAUser {\n      id\n      gameId\n      gameName\n      imageURL\n      updatedAt\n      status\n    }\n  }\n": types.GetAllStatusUpdatesForAUserDocument,
     "\n  query User {\n    getUserById {\n      username\n      bannerPicture\n      userPicture\n    }\n  }\n": types.UserDocument,
     "\n  mutation editListsOrder($payload: Scalar!, $action: String!) {\n    updateUser(input: { payload: $payload, action: $action }) {\n      user {\n        listsOrder\n      }\n      errors\n    }\n  }\n": types.EditListsOrderDocument,
     "\n  mutation DeleteUserGames($gameId: ID!) {\n    deleteUserGames(input: { gameId: $gameId }) {\n      userGame {\n        id\n        game {\n          id\n          name\n          description\n          imageURL\n          bannerURL\n          releaseDate\n          avgScore\n          genres\n          platforms\n          tags\n        }\n      }\n      errors\n    }\n  }\n": types.DeleteUserGamesDocument,
@@ -72,6 +73,10 @@ export function gql(source: "\n  query GetGameFilters {\n    getGameFilters {\n 
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\n  query GetAllGames(\n    $genre: [String!]\n    $tag: [String!]\n    $platform: [String!]\n    $year: Int\n  ) {\n    allGames(genre: $genre, tag: $tag, platform: $platform, year: $year) {\n      id\n      name\n      description\n      bannerURL\n      imageURL\n      releaseDate\n      avgScore\n      totalRating\n      genres\n      tags\n      platforms\n      isGameAdded\n    }\n  }\n"): (typeof documents)["\n  query GetAllGames(\n    $genre: [String!]\n    $tag: [String!]\n    $platform: [String!]\n    $year: Int\n  ) {\n    allGames(genre: $genre, tag: $tag, platform: $platform, year: $year) {\n      id\n      name\n      description\n      bannerURL\n      imageURL\n      releaseDate\n      avgScore\n      totalRating\n      genres\n      tags\n      platforms\n      isGameAdded\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  query getAllStatusUpdatesForAUser {\n    getAllStatusUpdatesForAUser {\n      id\n      gameId\n      gameName\n      imageURL\n      updatedAt\n      status\n    }\n  }\n"): (typeof documents)["\n  query getAllStatusUpdatesForAUser {\n    getAllStatusUpdatesForAUser {\n      id\n      gameId\n      gameName\n      imageURL\n      updatedAt\n      status\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
