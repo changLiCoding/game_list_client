@@ -1,3 +1,5 @@
+export const FIRST_VIDEO_GAME_RELEASED_YEAR = 1958;
+
 export const getTokenFromLocalStorage = {
   context: {
     headers: {
