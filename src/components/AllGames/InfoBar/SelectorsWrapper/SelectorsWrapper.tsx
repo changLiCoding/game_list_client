@@ -9,6 +9,7 @@ import { setGameFilters } from '@/app/store';
 
 function SelectorsWrapper() {
   const homeSearchState = useAppSelector((state) => state.homeSearch);
+  const gameFilters = useAppSelector((state) => state.gameFilters);
   const dispatch = useDispatch();
 
   const sortItemsList = useMemo(() => {
@@ -28,6 +29,7 @@ function SelectorsWrapper() {
         style={{ width: 120 }}
         bordered={false}
         suffixIcon={null}
+        value={gameFilters.sortBy}
         options={sortItemsList}
         onChange={(value) => {
           dispatch(setGameFilters({ sortBy: value }));
