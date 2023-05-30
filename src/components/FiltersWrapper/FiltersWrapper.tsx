@@ -106,6 +106,7 @@ export default function FiltersWrapper() {
           <div>
             <h3 className={filterFieldStyles.h3FilterFieldTitle}>Search</h3>
             <Input
+              allowClear
               className={styles.cascaderStyle}
               style={{ width: 300 }}
               size="middle"
