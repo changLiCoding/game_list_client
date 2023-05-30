@@ -4,9 +4,10 @@ import {
   MenuUnfoldOutlined,
   SearchOutlined,
 } from '@ant-design/icons';
-import { useMemo, useState } from 'react';
+import { ChangeEventHandler, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useQuery } from '@apollo/client';
+import { debounce } from 'lodash';
 import styles from '@/components/FiltersWrapper/FiltersWrapper.module.scss';
 import filterFieldStyles from '@/components/FiltersWrapper/FilterField/FilterField.module.scss';
 
@@ -112,7 +113,6 @@ export default function FiltersWrapper() {
               prefix={<SearchOutlined />}
               value={gameFilters.search}
               onChange={(e) => {
-                // TODO: debounce
                 dispatch(setGameFilters({ search: e.target.value }));
               }}
             />
