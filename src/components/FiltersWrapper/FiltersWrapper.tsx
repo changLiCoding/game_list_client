@@ -4,10 +4,9 @@ import {
   MenuUnfoldOutlined,
   SearchOutlined,
 } from '@ant-design/icons';
-import { ChangeEventHandler, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useQuery } from '@apollo/client';
-import { debounce } from 'lodash';
 import styles from '@/components/FiltersWrapper/FiltersWrapper.module.scss';
 import filterFieldStyles from '@/components/FiltersWrapper/FilterField/FilterField.module.scss';
 

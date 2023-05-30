@@ -1,14 +1,8 @@
 import { theme, Card, Row } from 'antd';
 import { Content } from 'antd/es/layout/layout';
-import { useLazyQuery, useQuery } from '@apollo/client';
-import {
-  ChangeEventHandler,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
-import { debounce, set } from 'lodash';
+import { useQuery } from '@apollo/client';
+import { useCallback, useEffect, useState } from 'react';
+import { debounce } from 'lodash';
 import GameCard from '@/components/AllGames/GamesList/GameCard';
 import List from '@/components/AllGames/GamesList/List';
 import styles from '@/components/AllGames/GamesList/GamesList.module.scss';
@@ -31,11 +25,6 @@ export default function GamesList() {
   const [open, setOpen] = useState(false);
   const [selectedGame, setSelectedGame] = useState<GameDataType>();
 
-  // console.log('gameFilters', gameFilters);
-  // const [loadGreeting, { called, loading, data }] = useLazyQuery(
-  //   GET_GREETING,
-  //   { variables: { language: "english" } }
-  // );
   const { data, loading } = useQuery(GET_ALL_GAMES, {
     variables: {
       genre: gameFilters.genres,
@@ -48,53 +37,48 @@ export default function GamesList() {
     ...getTokenFromLocalStorage,
   });
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedFilter = useCallback(
     debounce((query: string | undefined) => {
       console.log('called debouncedFilter ', query);
+      if (!query) {
+        setTempSearch(undefined);
+        return;
+      }
       setTempSearch(query);
     }, 500),
     []
   );
 
-  // console.log('tempSearch', tempSearch);
-
-  // const debouncedChangeHandler = useMemo(
-  //   () =>
-  //     debounce(() => console.log('called onChange ', gameFilters.search), 1000),
-  //   [gameFilters.search]
-  // );
-
-  // useEffect(() => {
-  //   // console.log('test: = ', gameFilters.search);
-  //   debouncedChangeHandler();
-  // }, [gameFilters.search]);
-
   useEffect(() => {
     const unsubscribe = store.subscribe(() => {
-      console.log(
-        'Called useEffect (in subscribe) = ',
-        store.getState().gameFilters.search
-      );
-      debouncedFilter(store.getState().gameFilters.search);
-      // setTempSearch(store.getState().gameFilters.search);
+      const { search } = store.getState().gameFilters;
+      console.log('Called useEffect (in subscribe) = ', search);
+
+      if (search === tempSearch) {
+        console.log('search === tempSearch');
+        return;
+      }
+
+      if (search === '') {
+        console.log('NULL');
+        setTempSearch(undefined);
+        debouncedFilter.cancel();
+        return;
+      }
+      debouncedFilter(search);
     });
 
     return () => {
-      console.log('Called useEffect unsub');
       unsubscribe();
     };
-  }, [debouncedFilter]);
+  }, [debouncedFilter, tempSearch]);
 
   useEffect(() => {
     return () => {
       debouncedFilter.cancel();
     };
   }, [debouncedFilter]);
-
-  // useEffect(() => {
-  //   console.log('Called useEffect = ', gameFilters.search);
-  //   debouncedChangeHandler();
-  // }, [gameFilters.search]);
 
   const { addedList } = useAppSelector((state) => state.addedGames);
 
