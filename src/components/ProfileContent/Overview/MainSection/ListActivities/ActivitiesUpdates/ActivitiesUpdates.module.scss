@@ -1,0 +1,78 @@
+@use '../../../../../../styles/mixin.scss' as mixin;
+@use '../../../../../../styles/variables.scss' as variables;
+
+.activitiesUpdatesContainer {
+  @include mixin.desktopUltroLarge {
+    display: grid;
+    grid-column-gap: 30px;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .activity {
+    margin-bottom: 20px;
+    min-height: 0px;
+    .activityContent {
+      background: variables.$color-foreground;
+      border-radius: 6px;
+      font-size: 1.3rem;
+      overflow: hidden;
+      position: relative;
+      .activityInfo {
+        display: grid;
+        font-size: 1.4rem;
+        grid-template-columns: 50px auto;
+        height: 100%;
+        min-height: 70px;
+        & > a {
+          text-decoration: none;
+          transition: 0.15s;
+          outline: 0;
+          background-position: 50%;
+          background-repeat: no-repeat;
+          background-size: cover;
+        }
+        .activityInfoText {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          line-height: 1.4;
+          min-height: 70px;
+          font-size: 14px;
+          color: variables.$color-text;
+          div {
+            padding: 0 16px;
+            a {
+              text-decoration: none;
+              transition: 0.15s;
+              outline: 0;
+              color: variables.$color-blue;
+              font-weight: 600;
+              &:hover {
+                color: variables.$color-blue-dim;
+              }
+            }
+          }
+        }
+      }
+
+      .time {
+        color: variables.$color-text-lighter;
+        font-size: 14px;
+        position: absolute;
+        right: 12px;
+        top: 12px;
+        font-weight: 800;
+      }
+      .actions {
+        font-size: 14px;
+        bottom: 12px;
+        color: variables.$color-blue-dim;
+        position: absolute;
+        right: 12px;
+      }
+    }
+
+    .replayContainer {
+    }
+  }
+}

@@ -4,7 +4,7 @@ import { Dropdown, Space } from 'antd';
 
 import styles from '@/components/ProfileContent/Overview/MainSection/ListActivities/ListActivities.module.scss';
 import useStatusUpdates from '@/services/statusUpdate/useStatusUpdates';
-import { StatusUpdate as StatusUpdateType } from '@/graphql/__generated__/graphql';
+
 import PostInput from '@/components/ProfileContent/Overview/MainSection/ListActivities/PostInput/PostInput';
 import ActivitiesUpdates from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivitiesUpdates';
 
@@ -44,7 +44,7 @@ function ListActivities() {
         </Dropdown>
       </h2>
       <PostInput />
-      <ActivitiesUpdates />
+      <ActivitiesUpdates statusUpdates={statusUpdates} />
     </div>
   );
 }
