@@ -40,28 +40,24 @@ export default function GamesList() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedFilter = useCallback(
     debounce((query: string | undefined) => {
-      console.log('called debouncedFilter ', query);
       if (!query) {
         setTempSearch(undefined);
         return;
       }
       setTempSearch(query);
-    }, 500),
+    }, 600),
     []
   );
 
   useEffect(() => {
     const unsubscribe = store.subscribe(() => {
       const { search } = store.getState().gameFilters;
-      console.log('Called useEffect (in subscribe) = ', search);
 
       if (search === tempSearch) {
-        console.log('search === tempSearch');
         return;
       }
 
-      if (search === '') {
-        console.log('NULL');
+      if (!search) {
         setTempSearch(undefined);
         debouncedFilter.cancel();
         return;
@@ -70,15 +66,10 @@ export default function GamesList() {
     });
 
     return () => {
+      debouncedFilter.cancel();
       unsubscribe();
     };
   }, [debouncedFilter, tempSearch]);
-
-  useEffect(() => {
-    return () => {
-      debouncedFilter.cancel();
-    };
-  }, [debouncedFilter]);
 
   const { addedList } = useAppSelector((state) => state.addedGames);
 
