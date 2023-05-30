@@ -21,6 +21,7 @@ import styles from '@/components/ListEditor/ListEditor.module.scss';
 import DatePickerField from '../DatePickerField';
 import TextAreaInput from '../TextAreaInput';
 import type { ListEditorType } from '@/components/ListEditor/types';
+import useStatusUpdates from '@/services/statusUpdate/useStatusUpdates';
 
 function ListEditor({
   isGameAdded,
@@ -45,6 +46,7 @@ function ListEditor({
 
   const { addUserGames, deleteUserGames } = useAddDeleteGame();
   const { editUserGame } = useEditUserGame();
+  const { refetch: refetchStatusUpdate } = useStatusUpdates();
 
   const onAddGameHandler = async (gameId: string) => {
     await addUserGames(gameId);
@@ -121,6 +123,7 @@ function ListEditor({
               onClick={async () => {
                 if (!isGameAdded) {
                   await onAddGameHandler(game?.id);
+                  refetchStatusUpdate();
                 } else {
                   info(`Game ${game?.name} already added to your list`);
                 }
@@ -140,9 +143,11 @@ function ListEditor({
               onClick={async () => {
                 if (!isGameAdded) {
                   await onAddGameHandler(game.id);
+                  refetchStatusUpdate();
                 }
 
                 await editUserGame({ ...userGame, gameId: game.id });
+                refetchStatusUpdate();
 
                 info(`Edit game ${game.name} successfully`);
                 setOpen(false);

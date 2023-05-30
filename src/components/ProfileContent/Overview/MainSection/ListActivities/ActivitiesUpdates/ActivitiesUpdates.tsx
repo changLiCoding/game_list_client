@@ -1,5 +1,6 @@
 import { StatusUpdate as StatusUpdateType } from '@/graphql/__generated__/graphql';
 import styles from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivitiesUpdates.module.scss';
+import useTimeElapsed from '@/hooks/useTimeElapsed';
 
 function ActivitiesUpdates({
   statusUpdates,
@@ -76,6 +77,8 @@ function ActivitiesUpdates({
     <div className={styles.activitiesUpdatesContainer}>
       {statusUpdates.length > 0 &&
         statusUpdates.map((statusUpdate) => {
+          const timeElapsed = useTimeElapsed(statusUpdate.updatedAt);
+
           return (
             <div className={styles.activity} key={statusUpdate.id}>
               <div className={styles.activityContent}>
