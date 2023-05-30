@@ -31,6 +31,7 @@ function FilterTags() {
               return value.map((filterValue) => {
                 return (
                   <Tag
+                    id={`tag-${key}`}
                     closable
                     onClose={() => {
                       const removedFilter = remove(value, filterValue);
@@ -46,6 +47,7 @@ function FilterTags() {
             }
             return (
               <Tag
+                id={`tag-${key}`}
                 closable
                 onClose={() => {
                   dispatch(resetGameFilter(key as keyof BaseFilters));
