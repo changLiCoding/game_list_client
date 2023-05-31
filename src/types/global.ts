@@ -31,7 +31,9 @@ export type UserGameFiltersSortType =
   | SharedSortType
   | 'last_updated'
   | 'score'
-  | 'status'
+  | 'status' // TODO Delete status?
+  | 'last_updated'
+  | 'last_added'
   | 'start_date'
   | 'completed_date';
 

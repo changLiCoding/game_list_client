@@ -6,13 +6,19 @@ import styles from '@/components/AllGames/InfoBar/SelectorsWrapper/SelectorsWrap
 import { useAppSelector } from '@/app/hooks';
 import { setView } from '@/features/homeSearchSlice';
 import { setGameFilters } from '@/app/store';
+import { GameFiltersSortType } from '@/types/global';
+
+type SortItemsListType = {
+  label: string;
+  value: GameFiltersSortType | undefined;
+};
 
 function SelectorsWrapper() {
   const homeSearchState = useAppSelector((state) => state.homeSearch);
   const gameFilters = useAppSelector((state) => state.gameFilters);
   const dispatch = useDispatch();
 
-  const sortItemsList = useMemo(() => {
+  const sortItemsList: SortItemsListType[] = useMemo(() => {
     return [
       { label: 'Name', value: 'name' },
       { label: 'Average Score', value: 'avg_score' },
@@ -30,7 +36,7 @@ function SelectorsWrapper() {
         bordered={false}
         value={gameFilters.sortBy}
         options={sortItemsList}
-        onChange={(value) => {
+        onChange={(value: SortItemsListType['value']) => {
           dispatch(setGameFilters({ sortBy: value }));
         }}
       />
