@@ -30,8 +30,6 @@ export type GameFiltersSortType = SharedSortType | 'total_rating';
 export type UserGameFiltersSortType =
   | SharedSortType
   | 'last_updated'
-  | 'score'
-  | 'status' // TODO Delete status?
   | 'last_updated'
   | 'last_added'
   | 'start_date'

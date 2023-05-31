@@ -21,7 +21,6 @@ function SortLists() {
       { label: 'Average Score', value: 'avg_score' },
       { label: 'Newest Releases', value: 'newest_releases' },
       { label: 'Oldest Releases', value: 'oldest_releases' },
-      { label: 'Score', value: 'score' },
       { label: 'Last Updated', value: 'last_updated' },
       { label: 'Last Added', value: 'last_added' },
       { label: 'Start Date', value: 'start_date' },
@@ -31,6 +30,7 @@ function SortLists() {
 
   return (
     <Select
+      placement="topLeft"
       style={{ width: 150 }}
       className={styles.selectorsContainer}
       defaultValue="name"
