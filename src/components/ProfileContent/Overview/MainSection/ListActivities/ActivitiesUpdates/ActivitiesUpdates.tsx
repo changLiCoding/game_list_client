@@ -1,6 +1,7 @@
+import { LikeOutlined, WechatOutlined } from '@ant-design/icons';
+
 import { StatusUpdate as StatusUpdateType } from '@/graphql/__generated__/graphql';
 import styles from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivitiesUpdates.module.scss';
-import useTimeElapsed from '@/hooks/useTimeElapsed';
 
 function ActivitiesUpdates({
   statusUpdates,
@@ -8,6 +9,18 @@ function ActivitiesUpdates({
   statusUpdates: StatusUpdateType[];
 }) {
   console.log(statusUpdates);
+
+  function getTimeElapsed(timestamp: string) {
+    const currentDate = new Date();
+    const previousDate = new Date(timestamp);
+    const timeDifference = currentDate.getTime() - previousDate.getTime();
+    const millisecondsPerDay = 24 * 60 * 60 * 1000;
+    const daysElapsed = Math.floor(timeDifference / millisecondsPerDay);
+    const hoursElapsed = Math.floor(
+      (timeDifference % millisecondsPerDay) / (60 * 60 * 1000)
+    );
+    return { daysElapsed, hoursElapsed };
+  }
 
   const activityGenerator = (statusUpdate: StatusUpdateType): JSX.Element => {
     switch (statusUpdate.status) {
@@ -77,8 +90,9 @@ function ActivitiesUpdates({
     <div className={styles.activitiesUpdatesContainer}>
       {statusUpdates.length > 0 &&
         statusUpdates.map((statusUpdate) => {
-          const timeElapsed = useTimeElapsed(statusUpdate.updatedAt);
-
+          const { daysElapsed, hoursElapsed } = getTimeElapsed(
+            statusUpdate.updatedAt
+          );
           return (
             <div className={styles.activity} key={statusUpdate.id}>
               <div className={styles.activityContent}>
@@ -97,8 +111,20 @@ function ActivitiesUpdates({
                     <div>{activityGenerator(statusUpdate)}</div>
                   </div>
                 </div>
-                <div className={styles.time}>time</div>
-                <div className={styles.actions}>actions</div>
+                <div className={styles.time}>
+                  {daysElapsed > 0
+                    ? `${daysElapsed} days`
+                    : `${hoursElapsed} hours`}{' '}
+                  ago
+                </div>
+                <div className={styles.actions}>
+                  <div>
+                    <LikeOutlined />
+                  </div>
+                  <div>
+                    <WechatOutlined />
+                  </div>
+                </div>
               </div>
               <div
                 className={styles.replayContainer}

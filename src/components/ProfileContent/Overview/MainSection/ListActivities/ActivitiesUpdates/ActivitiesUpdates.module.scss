@@ -2,6 +2,8 @@
 @use '../../../../../../styles/variables.scss' as variables;
 
 .activitiesUpdatesContainer {
+  font-family: 'Josefin Sans', sans-serif;
+
   @include mixin.desktopUltroLarge {
     display: grid;
     grid-column-gap: 30px;
@@ -57,7 +59,7 @@
 
       .time {
         color: variables.$color-text-lighter;
-        font-size: 14px;
+        font-size: 12px;
         position: absolute;
         right: 12px;
         top: 12px;
@@ -69,6 +71,12 @@
         color: variables.$color-blue-dim;
         position: absolute;
         right: 12px;
+        > div {
+          cursor: pointer;
+          display: inline-block;
+          padding-left: 5px;
+          transition: 0.2s;
+        }
       }
     }
 
