@@ -15,7 +15,7 @@ function UserGamesTable({
   const { platform, tag, genre } = useAppSelector(
     (state) => state.userGames.filters
   );
-  const search = useAppSelector((state) => state.userGames.search);
+  const search = useAppSelector((state) => state.userGameFilters.search);
 
   let games: GameDataType[] = gamesData.map((val: Game) => ({
     key: val.id,
