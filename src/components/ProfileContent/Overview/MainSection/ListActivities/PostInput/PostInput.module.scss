@@ -1,0 +1,6 @@
+.postInputContainer {
+  margin-bottom: 20px;
+  & > input {
+    border-style: none;
+  }
+}

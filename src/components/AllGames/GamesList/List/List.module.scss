@@ -168,6 +168,9 @@
     }
 
     .gameRating {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       @include mixin.phone {
         display: inline-block;
         margin-right: 8px;
@@ -178,6 +181,7 @@
         top: auto;
         left: auto;
         font-size: 1.3rem;
+        margin-bottom: 12px;
         vertical-align: top;
         width: 1.25em;
         @include mixin.phone {
