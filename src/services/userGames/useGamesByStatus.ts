@@ -34,6 +34,7 @@ const useGamesByStatus = (): UseGamesByStatusType => {
     ) {
       throw new Error('Error getting games by status');
     }
+    console.log('gamesByStatusForAUser', gamesByStatusForAUser);
 
     return {
       refetch,

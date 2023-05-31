@@ -9,6 +9,8 @@ function SideSection({
   gamesByStatusForAUserLoading: boolean;
   gamesByStatus?: UserGamesByStatus;
 }) {
+  gamesByStatus && console.log(gamesByStatus);
+
   const gamesExtractor = (gamesObjData: UserGamesByStatus) => {
     const res: JSX.Element[] = [];
 
