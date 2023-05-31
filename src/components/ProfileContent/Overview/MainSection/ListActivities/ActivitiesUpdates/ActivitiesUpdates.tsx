@@ -8,8 +8,6 @@ function ActivitiesUpdates({
 }: {
   statusUpdates: StatusUpdateType[];
 }) {
-  console.log(statusUpdates);
-
   function getTimeElapsed(timestamp: string) {
     const currentDate = new Date();
     const previousDate = new Date(timestamp);

@@ -6,13 +6,14 @@ import { debounce } from 'lodash';
 import GameCard from '@/components/AllGames/GamesList/GameCard';
 import List from '@/components/AllGames/GamesList/List';
 import styles from '@/components/AllGames/GamesList/GamesList.module.scss';
-import { useAppSelector } from '@/app/hooks';
+import { useAppSelector, useAppDispatch } from '@/app/hooks';
 import useUserGameById from '@/services/userGames/useUserGameById';
 import ListEditor from '@/components/ListEditor';
 import type { GameDataType } from '@/components/GamesListTable/types';
 import { GET_ALL_GAMES } from '@/services/games/queries';
 import { getTokenFromLocalStorage } from '@/constants';
 import { store } from '@/app/store';
+import { setAddedGames } from '@/features/addedGamesSlice';
 
 export default function GamesList() {
   const homeSearchState = useAppSelector((state) => state.homeSearch);
@@ -25,6 +26,8 @@ export default function GamesList() {
   const [open, setOpen] = useState(false);
   const [selectedGame, setSelectedGame] = useState<GameDataType>();
 
+  const dispatch = useAppDispatch();
+
   const { data, loading } = useQuery(GET_ALL_GAMES, {
     variables: {
       genre: gameFilters.genres,
@@ -35,6 +38,21 @@ export default function GamesList() {
       search: tempSearch,
     },
     ...getTokenFromLocalStorage,
+    onCompleted: (games) => {
+      const { allGames: allGamesData } = games;
+      if (allGamesData) {
+        allGamesData.forEach((game) => {
+          if (game.isGameAdded) {
+            dispatch(
+              setAddedGames({
+                type: 'add',
+                gameId: game.id,
+              })
+            );
+          }
+        });
+      }
+    },
   });
 
   // eslint-disable-next-line react-hooks/exhaustive-deps

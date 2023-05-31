@@ -10,7 +10,6 @@ import ActivitiesUpdates from '@/components/ProfileContent/Overview/MainSection/
 
 function ListActivities() {
   const { statusUpdates, loading } = useStatusUpdates();
-  statusUpdates && console.log(statusUpdates);
 
   const items: MenuProps['items'] = [
     {
