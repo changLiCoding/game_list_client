@@ -1,7 +1,8 @@
 import { theme, Card, Row } from 'antd';
 import { Content } from 'antd/es/layout/layout';
 import { useQuery } from '@apollo/client';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { debounce } from 'lodash';
 import GameCard from '@/components/AllGames/GamesList/GameCard';
 import List from '@/components/AllGames/GamesList/List';
 import styles from '@/components/AllGames/GamesList/GamesList.module.scss';
@@ -11,10 +12,13 @@ import ListEditor from '@/components/ListEditor';
 import type { GameDataType } from '@/components/GamesListTable/types';
 import { GET_ALL_GAMES } from '@/services/games/queries';
 import { getTokenFromLocalStorage } from '@/constants';
+import { store } from '@/app/store';
 
 export default function GamesList() {
   const homeSearchState = useAppSelector((state) => state.homeSearch);
   const gameFilters = useAppSelector((state) => state.gameFilters);
+
+  const [tempSearch, setTempSearch] = useState<string | undefined>('');
 
   // States for modal to edit list
   const { userGameLoading, fetchUserGame } = useUserGameById();
@@ -27,9 +31,45 @@ export default function GamesList() {
       tag: gameFilters.tags,
       platform: gameFilters.platforms,
       year: gameFilters.year,
+      sortBy: gameFilters.sortBy,
+      search: tempSearch,
     },
     ...getTokenFromLocalStorage,
   });
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const debouncedFilter = useCallback(
+    debounce((query: string | undefined) => {
+      if (!query) {
+        setTempSearch(undefined);
+        return;
+      }
+      setTempSearch(query);
+    }, 600),
+    []
+  );
+
+  useEffect(() => {
+    const unsubscribe = store.subscribe(() => {
+      const { search } = store.getState().gameFilters;
+
+      if (search === tempSearch) {
+        return;
+      }
+
+      if (!search) {
+        setTempSearch(undefined);
+        debouncedFilter.cancel();
+        return;
+      }
+      debouncedFilter(search);
+    });
+
+    return () => {
+      debouncedFilter.cancel();
+      unsubscribe();
+    };
+  }, [debouncedFilter, tempSearch]);
 
   const { addedList } = useAppSelector((state) => state.addedGames);
 

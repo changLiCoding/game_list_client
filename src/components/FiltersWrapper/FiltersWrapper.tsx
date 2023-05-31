@@ -106,16 +106,15 @@ export default function FiltersWrapper() {
           <div>
             <h3 className={filterFieldStyles.h3FilterFieldTitle}>Search</h3>
             <Input
+              allowClear
               className={styles.cascaderStyle}
               style={{ width: 300 }}
               size="middle"
               prefix={<SearchOutlined />}
-              // onChange={(e) => {
-              //   // TODO: Convert this into a component as the user game list will need this as well
-              //   const value = e.target.value.trim();
-              //   if (value.length === 0) return;
-              //   // TODO: Will be done in another PR
-              // }}
+              value={gameFilters.search}
+              onChange={(e) => {
+                dispatch(setGameFilters({ search: e.target.value }));
+              }}
             />
           </div>
           <div>

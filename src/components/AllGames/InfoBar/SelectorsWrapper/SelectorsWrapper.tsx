@@ -1,64 +1,39 @@
-import {
-  EllipsisOutlined,
-  AppstoreFilled,
-  UnorderedListOutlined,
-} from '@ant-design/icons';
-import { useState } from 'react';
-import type { MenuProps } from 'antd';
-import { Dropdown } from 'antd';
+import { AppstoreFilled, UnorderedListOutlined } from '@ant-design/icons';
+import { useMemo } from 'react';
+import { Select } from 'antd';
 import { useDispatch } from 'react-redux';
 import styles from '@/components/AllGames/InfoBar/SelectorsWrapper/SelectorsWrapper.module.scss';
 import { useAppSelector } from '@/app/hooks';
 import { setView } from '@/features/homeSearchSlice';
+import { setGameFilters } from '@/app/store';
 
 function SelectorsWrapper() {
   const homeSearchState = useAppSelector((state) => state.homeSearch);
+  const gameFilters = useAppSelector((state) => state.gameFilters);
   const dispatch = useDispatch();
-  const [sortBy, setSortBy] = useState('Average Score');
 
-  const sortItems: MenuProps['items'] = [
-    'Average Score',
-    'Newest',
-    'Oldest',
-    'Title',
-    'Trending',
-    'Popularity',
-    'Date Added',
-  ].map((item) => ({
-    key: item,
-    label: (
-      <button
-        type="button"
-        onClick={() => setSortBy(item)}
-        style={{
-          cursor: 'pointer',
-          width: '100%',
-          minHeight: '22px',
-          backgroundColor: 'transparent',
-          color: 'rgb(116,136,153)',
-          border: 'none',
-        }}
-      >
-        {item}
-      </button>
-    ),
-  }));
+  const sortItemsList = useMemo(() => {
+    return [
+      { label: 'Name', value: 'name' },
+      { label: 'Average Score', value: 'avg_score' },
+      { label: 'Newest Releases', value: 'newest_releases' },
+      { label: 'Oldest Releases', value: 'oldest_releases' },
+      { label: 'Total Ratings', value: 'total_rating' },
+    ];
+  }, []);
 
   return (
     <div className={styles.selectorsContainer}>
-      <Dropdown
-        arrow
-        menu={{ items: sortItems }}
-        trigger={['click']}
-        placement="bottom"
-      >
-        <div className={styles.sortSelector}>
-          {/* <MoreOutlined /> */}
-          <EllipsisOutlined />
-
-          <span>{sortBy}</span>
-        </div>
-      </Dropdown>
+      <Select
+        style={{ width: 150 }}
+        defaultValue="name"
+        bordered={false}
+        value={gameFilters.sortBy}
+        options={sortItemsList}
+        onChange={(value) => {
+          dispatch(setGameFilters({ sortBy: value }));
+        }}
+      />
       <div className={styles.wrapper}>
         <AppstoreFilled
           onClick={() => dispatch(setView('grid'))}
