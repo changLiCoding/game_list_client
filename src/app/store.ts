@@ -6,7 +6,7 @@ import userGameReducer from '@/features/userGameSlice';
 import addedGamesReducer from '@/features/addedGamesSlice';
 import homeSearchSlice from '@/features/homeSearchSlice';
 import { createGameFiltersSlice } from '@/features/gameFiltersSlice';
-import { BaseFilters, HomeGameFilters, UserGameFilters } from '@/types/global';
+import { HomeGameFilters, UserGameFilters } from '@/types/global';
 // import gameFiltersSlice from '@/features/gameFiltersSlice';
 
 const defaultGameFilters: HomeGameFilters = {
@@ -19,13 +19,17 @@ const defaultGameFilters: HomeGameFilters = {
 };
 
 const defaultUserGameFilters: UserGameFilters = {
-  ...defaultGameFilters,
+  genres: undefined,
+  platforms: undefined,
+  tags: undefined,
+  year: undefined,
+  search: undefined,
   sortBy: undefined,
-  selectedList: 0,
+  selectedList: 'all',
 };
 
 const gameFiltersSlice =
-  createGameFiltersSlice<BaseFilters>(defaultGameFilters);
+  createGameFiltersSlice<HomeGameFilters>(defaultGameFilters);
 const userGameFiltersSlice = createGameFiltersSlice<UserGameFilters>(
   defaultUserGameFilters
 );

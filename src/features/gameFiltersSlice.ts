@@ -1,7 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { BaseFilters } from '@/types/global';
 
-export function createGameFiltersSlice<T extends BaseFilters>(initialState: T) {
+export function createGameFiltersSlice<T>(initialState: T) {
   return createSlice({
     name: 'gameFiltersSlice',
     initialState,
