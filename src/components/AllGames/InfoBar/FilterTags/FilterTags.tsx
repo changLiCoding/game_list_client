@@ -16,6 +16,7 @@ function FilterTags() {
   const filterTags = useMemo(() => {
     // Loop through all the keys and values of gameFilters and filter out the non null and undefined values
     const entries = Object.entries(gameFilters).filter((e) => {
+      if (e && e[0] === 'sortBy') return false; // Don't show sortBy in the filter tags - Kind of a hack, but were only filtering out 1 key
       if (Array.isArray(e[1])) return e[1].length > 0;
       return e[1];
     });
@@ -30,6 +31,7 @@ function FilterTags() {
               return value.map((filterValue) => {
                 return (
                   <Tag
+                    id={`tag-${key}`}
                     closable
                     onClose={() => {
                       const removedFilter = remove(value, filterValue);
@@ -45,6 +47,7 @@ function FilterTags() {
             }
             return (
               <Tag
+                id={`tag-${key}`}
                 closable
                 onClose={() => {
                   dispatch(resetGameFilter(key as keyof BaseFilters));
