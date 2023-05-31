@@ -18,13 +18,17 @@ function ListStatistic({
     Object.keys(gamesObjData).forEach((key) => {
       if (key.includes('Count')) {
         result.push(
-          <Col span={4} key={key}>
+          <Col span={6} key={key}>
             <Statistic
               valueStyle={{
                 color: 'rgb(17, 45, 78)',
                 fontSize: `${screens.xs ? '10px' : '14px'}`,
               }}
-              title={key.replace('Count', '').toUpperCase()}
+              title={
+                key === 'justAddedCount'
+                  ? 'Just Added'
+                  : key.replace('Count', '').toUpperCase()
+              }
               value={
                 gamesObjData[
                   key as
@@ -33,6 +37,7 @@ function ListStatistic({
                     | 'pausedCount'
                     | 'droppedCount'
                     | 'planningCount'
+                    | 'justAddedCount'
                 ] || undefined
               }
             />

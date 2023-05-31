@@ -9,15 +9,19 @@ function SideSection({
   gamesByStatusForAUserLoading: boolean;
   gamesByStatus?: UserGamesByStatus;
 }) {
-  gamesByStatus && console.log(gamesByStatus);
-
   const gamesExtractor = (gamesObjData: UserGamesByStatus) => {
     const res: JSX.Element[] = [];
 
     gamesObjData?.listsOrder?.split(',').forEach((status: string) => {
       const gameData =
         gamesObjData[
-          status as 'playing' | 'completed' | 'paused' | 'dropped' | 'planning'
+          status as
+            | 'playing'
+            | 'completed'
+            | 'paused'
+            | 'dropped'
+            | 'planning'
+            | 'justAdded'
         ];
 
       if (gameData && gameData.length > 0) {
