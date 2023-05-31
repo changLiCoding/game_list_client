@@ -25,10 +25,9 @@ function SelectorsWrapper() {
   return (
     <div className={styles.selectorsContainer}>
       <Select
+        style={{ width: 150 }}
         defaultValue="name"
-        style={{ width: 120 }}
         bordered={false}
-        suffixIcon={null}
         value={gameFilters.sortBy}
         options={sortItemsList}
         onChange={(value) => {
