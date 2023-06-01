@@ -5,7 +5,7 @@ import {
   HeartFilled,
 } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
-
+import React from 'react';
 import useAddDeleteGame from '@/services/userGames/useAddDeleteGame';
 import useEditUserGame from '@/services/userGames/useEditUserGame';
 import useNotification from '@/hooks/useNotification';
@@ -24,7 +24,7 @@ import type { ListEditorType } from '@/components/ListEditor/types';
 import useStatusUpdates from '@/services/statusUpdate/useStatusUpdates';
 import useGamesByStatus from '@/services/userGames/useGamesByStatus';
 
-function ListEditor({
+function ListEditorTemp({
   isGameAdded,
   userGameLoading,
   open,
@@ -289,5 +289,7 @@ function ListEditor({
     </Modal>
   );
 }
+
+const ListEditor = React.memo(ListEditorTemp);
 
 export default ListEditor;
