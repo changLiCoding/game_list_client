@@ -14,7 +14,7 @@ const defaultGameFilters: HomeGameFilters = {
   platforms: [],
   tags: [],
   year: undefined,
-  search: undefined,
+  search: '',
   sortBy: 'name',
 };
 
