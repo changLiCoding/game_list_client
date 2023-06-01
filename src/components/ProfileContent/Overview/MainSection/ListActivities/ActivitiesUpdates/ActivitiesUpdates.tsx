@@ -60,6 +60,19 @@ function ActivitiesUpdates({
           </>
         );
 
+      case 'Inactive':
+        return (
+          <>
+            You removed{' '}
+            <a
+              href={`/game-detail/${statusUpdate.gameId}/${statusUpdate.gameName}`}
+            >
+              {statusUpdate.gameName}
+            </a>{' '}
+            from your list.
+          </>
+        );
+
       case null:
         return (
           <>

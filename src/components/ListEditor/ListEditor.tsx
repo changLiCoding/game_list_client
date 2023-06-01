@@ -91,6 +91,8 @@ function ListEditor({
       cancelText: 'No',
       onOk: async () => {
         await onDeteteGameHandler(game.id);
+        refetchGamesByStatus();
+        refetchStatusUpdate();
         setOpen(false);
       },
       zIndex: 1041,
