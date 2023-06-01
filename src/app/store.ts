@@ -1,7 +1,7 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import userReducer from '@/features/userSlice';
-import userGamesListReducer from '@/features/userUserGamesListSlice';
+import userGamesListReducer from '@/features/userGamesListSlice';
 import userGameReducer from '@/features/userGameSlice';
 import addedGamesReducer from '@/features/addedGamesSlice';
 import homeSearchSlice from '@/features/homeSearchSlice';

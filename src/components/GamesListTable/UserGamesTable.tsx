@@ -12,26 +12,25 @@ function UserGamesTable({
   gamesData: Game[];
   title: string;
 }) {
-  const { platform, tag, genre } = useAppSelector(
-    (state) => state.userGames.filters
+  const { search, platforms, tags, genres } = useAppSelector(
+    (state) => state.userGameFilters
   );
-  const search = useAppSelector((state) => state.userGameFilters.search);
 
   let games: GameDataType[] = gamesData.map((val: Game) => ({
     key: val.id,
     ...val,
   }));
 
-  if (platform) {
-    games = games.filter((val) => val.platforms.includes(platform));
+  if (platforms) {
+    games = games.filter((val) => val.platforms.includes(platforms));
   }
 
-  if (tag) {
-    games = games.filter((val) => val.tags.includes(tag));
+  if (tags) {
+    games = games.filter((val) => val.tags.includes(tags));
   }
 
-  if (genre) {
-    games = games.filter((val) => val.genres.includes(genre));
+  if (genres) {
+    games = games.filter((val) => val.genres.includes(genres));
   }
 
   if (search) {

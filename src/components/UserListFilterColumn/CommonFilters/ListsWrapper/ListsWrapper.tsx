@@ -5,7 +5,7 @@ import styles from './ListsWrapperStyle.module.scss';
 import {
   resetLocalListOrder,
   setListOrder,
-} from '@/features/userUserGamesListSlice';
+} from '@/features/userGamesListSlice';
 import useEditListsOrder from '@/services/user/useEditListsOrder';
 import { useAppSelector } from '@/app/hooks';
 import ReorderLists from '@/components/UserListFilterColumn/Desktop/ReorderLists';
@@ -14,6 +14,9 @@ import AvailableLists from '@/components/UserListFilterColumn/Desktop/AvailableL
 function ListsWrapper() {
   const dispatch = useDispatch();
   const { editNewListsOrder } = useEditListsOrder();
+  // const localListOrder = useAppSelector(
+  //   (state) => state.userGames.localListOrder
+  // );
   const localListOrder = useAppSelector(
     (state) => state.userGames.localListOrder
   );
@@ -22,6 +25,7 @@ function ListsWrapper() {
   const handleSaveListOrder = () => {
     editNewListsOrder(localListOrder.join(','), 'lists_order');
     dispatch(setListOrder());
+    setListStyles((prev) => !prev);
   };
 
   const handleOrderToAvailableLists = () => {

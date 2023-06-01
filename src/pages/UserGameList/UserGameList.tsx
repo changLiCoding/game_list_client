@@ -1,22 +1,36 @@
-import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 import styles from './UserGameListStyle.module.scss';
 import useGamesByStatus from '@/services/userGames/useGamesByStatus';
 import FilterColumn from '@/components/UserListFilterColumn';
 import UserGamesTable from '@/components/GamesListTable';
 import { useAppSelector } from '@/app/hooks';
-import { setInitialState } from '@/features/userUserGamesListSlice';
 import type { Game } from '@/graphql/__generated__/graphql';
+import { ListTypes } from '@/types/global';
+import { setInitialState } from '@/features/userGamesListSlice';
+
+// const LIST_TYPES: ListTypes[] = [
+//   'planning',
+//   'playing',
+//   'paused',
+//   'completed',
+//   'dropped',
+// ];
 
 function UserGameList() {
   const dispatch = useDispatch();
-  const selectedLists = useAppSelector(
-    (state) => state.userGames.selectedLists
+  // const selectedLists = useAppSelector(
+  //   (state) => state.userGames.selectedLists
+  // );
+  const selectedList = useAppSelector(
+    (state) => state.userGameFilters.selectedList
   );
+  const listOrder = useAppSelector((state) => state.userGames.listOrder);
   const { gamesByStatusForAUserLoading, gamesByStatusForAUser } =
-    useGamesByStatus();
+    useGamesByStatus(); // dsa
 
   // Initialize the listsOrder, selectedLists, and localListOrder in redux toolkit
+
   useEffect(() => {
     if (gamesByStatusForAUser?.gamesByStatusForAUser?.listsOrder) {
       dispatch(
@@ -35,24 +49,29 @@ function UserGameList() {
     <div className={styles.mainContainer}>
       <FilterColumn />
       <div>
-        {selectedLists.map((list) => {
-          return (
-            <UserGamesTable
-              key={list}
-              gamesData={
-                gamesByStatusForAUser?.gamesByStatusForAUser[
-                  list as
-                    | 'playing'
-                    | 'completed'
-                    | 'dropped'
-                    | 'paused'
-                    | 'planning'
-                ] as Game[]
-              }
-              title={list[0].toUpperCase() + list.slice(1)}
-            />
-          );
-        })}
+        {selectedList === 'all' ? (
+          listOrder.map((list) => {
+            return (
+              <UserGamesTable
+                key={list}
+                gamesData={
+                  gamesByStatusForAUser?.gamesByStatusForAUser[list] as Game[]
+                }
+                title={list[0].toUpperCase() + list.slice(1)}
+              />
+            );
+          })
+        ) : (
+          <UserGamesTable
+            key={selectedList}
+            gamesData={
+              gamesByStatusForAUser?.gamesByStatusForAUser[
+                selectedList
+              ] as Game[]
+            }
+            title={selectedList[0].toUpperCase() + selectedList.slice(1)}
+          />
+        )}
       </div>
     </div>
   );
