@@ -47,13 +47,14 @@ export type UserGameFiltersSortType =
 //   Omit<GameFilters, '__typename' | 'errors'>
 // >;
 
-export type SelectedListTypes =
-  | 'all'
+export type ListTypes =
   | 'planning'
   | 'playing'
   | 'paused'
   | 'completed'
   | 'dropped';
+
+export type SelectedListTypes = ListTypes | 'all';
 
 export type HomeGameFilters = {
   search: string | undefined;
