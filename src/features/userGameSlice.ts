@@ -41,9 +41,18 @@ export const userGameSlice = createSlice({
         state.startDate = startDate === '' ? null : startDate;
       }
     },
+    resetUserGameReducer: (state) => {
+      state.gameStatus = '';
+      state.gameNote = '';
+      state.rating = 0;
+      state.private = false;
+      state.completedDate = null;
+      state.startDate = null;
+    },
   },
 });
 
-export const { setUserGameReducer } = userGameSlice.actions;
+export const { setUserGameReducer, resetUserGameReducer } =
+  userGameSlice.actions;
 
 export default userGameSlice.reducer;
