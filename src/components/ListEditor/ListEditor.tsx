@@ -60,14 +60,14 @@ function ListEditorTemp({
 
   const onDeleteGameHandler = async (gameId: string) => {
     await deleteUserGames(gameId);
-    console.log(cache.data.data);
 
-    const normalizedId = cache.identify({ id: gameId, __typename: 'UserGame' });
+    const normalizedId = cache.identify({
+      id: userGame.id,
+      __typename: 'UserGame',
+    });
 
-    console.log(normalizedId);
     cache.evict({ id: normalizedId });
     cache.gc();
-    console.log(cache.data.data);
 
     warning(`Game ${game?.name} deleted from your list`);
   };
@@ -155,9 +155,9 @@ function ListEditorTemp({
             <Button
               type="primary"
               onClick={async () => {
-                if (!isGameAdded) {
-                  await onAddGameHandler(game.id);
-                }
+                // if (!isGameAdded) {
+                //   await onAddGameHandler(game.id);
+                // }
                 const { id, ...newUserGame } = userGame;
                 await editUserGame({ ...newUserGame, gameId: game.id });
                 // refetchStatusUpdate();

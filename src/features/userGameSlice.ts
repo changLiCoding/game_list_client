@@ -14,6 +14,7 @@ export const userGameSlice = createSlice({
 
       if (type === 'gameStatus') {
         if (payload === 'Inactive') {
+          state.id = '';
           state.gameStatus = '';
           state.gameNote = '';
           state.rating = 0;
@@ -41,10 +42,11 @@ export const userGameSlice = createSlice({
           private: isPrivate,
           completedDate,
           startDate,
+          id,
         } = payload;
-        console.log('payload', payload);
 
         if (gameStatus === 'Inactive') {
+          state.id = '';
           state.gameStatus = '';
           state.gameNote = '';
           state.rating = 0;
@@ -52,6 +54,7 @@ export const userGameSlice = createSlice({
           state.completedDate = null;
           state.startDate = null;
         } else {
+          state.id = id;
           state.gameStatus = gameStatus;
           state.gameNote = gameNote;
           state.rating = rating;
@@ -62,6 +65,7 @@ export const userGameSlice = createSlice({
       }
     },
     resetUserGameReducer: (state) => {
+      state.id = '';
       state.gameStatus = '';
       state.gameNote = '';
       state.rating = 0;
