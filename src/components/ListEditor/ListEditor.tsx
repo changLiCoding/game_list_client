@@ -6,6 +6,8 @@ import {
 } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
 import React from 'react';
+
+import { apolloClient } from '@/graphql';
 import useAddDeleteGame from '@/services/userGames/useAddDeleteGame';
 import useEditUserGame from '@/services/userGames/useEditUserGame';
 import useNotification from '@/hooks/useNotification';
@@ -21,8 +23,6 @@ import styles from '@/components/ListEditor/ListEditor.module.scss';
 import DatePickerField from '../DatePickerField';
 import TextAreaInput from '../TextAreaInput';
 import type { ListEditorType } from '@/components/ListEditor/types';
-import useStatusUpdates from '@/services/statusUpdate/useStatusUpdates';
-import useGamesByStatus from '@/services/userGames/useGamesByStatus';
 
 function ListEditorTemp({
   isGameAdded,
@@ -45,10 +45,10 @@ function ListEditorTemp({
 
   const { contextHolder, info, warning, success } = useNotification();
 
+  const { cache } = apolloClient;
+
   const { addUserGames, deleteUserGames } = useAddDeleteGame();
   const { editUserGame } = useEditUserGame();
-  const { refetch: refetchStatusUpdate } = useStatusUpdates();
-  const { refetch: refetchGamesByStatus } = useGamesByStatus();
 
   const onAddGameHandler = async (gameId: string) => {
     await addUserGames(gameId);
@@ -57,6 +57,15 @@ function ListEditorTemp({
 
   const onDeleteGameHandler = async (gameId: string) => {
     await deleteUserGames(gameId);
+
+    const normalizedId = cache.identify({
+      id: userGame.id,
+      __typename: 'UserGame',
+    });
+
+    cache.evict({ id: normalizedId });
+    cache.gc();
+
     warning(`Game ${game?.name} deleted from your list`);
   };
 
@@ -91,8 +100,6 @@ function ListEditorTemp({
       cancelText: 'No',
       onOk: async () => {
         await onDeleteGameHandler(game.id);
-        refetchGamesByStatus();
-        refetchStatusUpdate();
         setOpen(false);
       },
       zIndex: 1041,
@@ -127,8 +134,6 @@ function ListEditorTemp({
               onClick={async () => {
                 if (!isGameAdded) {
                   await onAddGameHandler(game?.id);
-                  refetchStatusUpdate();
-                  refetchGamesByStatus();
                 } else {
                   info(`Game ${game?.name} already added to your list`);
                 }
@@ -146,13 +151,13 @@ function ListEditorTemp({
             <Button
               type="primary"
               onClick={async () => {
-                if (!isGameAdded) {
-                  await onAddGameHandler(game.id);
-                }
-
-                await editUserGame({ ...userGame, gameId: game.id });
-                refetchStatusUpdate();
-                refetchGamesByStatus();
+                // if (!isGameAdded) {
+                //   await onAddGameHandler(game.id);
+                // }
+                const { id, ...newUserGame } = userGame;
+                await editUserGame({ ...newUserGame, gameId: game.id });
+                // refetchStatusUpdate();
+                // refetchGamesByStatus();
 
                 info(`Edit game ${game.name} successfully`);
                 setOpen(false);
