@@ -29,7 +29,17 @@ const useUserGameById = (): UseUserGameByIdType => {
       context: getTokenFromLocalStorage.context,
       onCompleted: (data) => {
         // When user game is not found, clear out redux slice
+        console.log('data', data);
+
         if (data.getUserGameByGameId) {
+          if (data.getUserGameByGameId.gameStatus === 'Inactive') {
+            dispatch(
+              setUserGameReducer({
+                type: 'userGame',
+                payload: INITIAL_USER_GAME_BY_ID_STATE,
+              })
+            );
+          }
           dispatch(
             setUserGameReducer({
               type: 'userGame',
@@ -37,6 +47,8 @@ const useUserGameById = (): UseUserGameByIdType => {
             })
           );
         } else {
+          console.log('what??');
+
           dispatch(
             setUserGameReducer({
               type: 'userGame',

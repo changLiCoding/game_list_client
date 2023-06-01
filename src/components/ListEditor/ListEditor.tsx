@@ -6,6 +6,8 @@ import {
 } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
 import React from 'react';
+
+import { apolloClient } from '@/graphql';
 import useAddDeleteGame from '@/services/userGames/useAddDeleteGame';
 import useEditUserGame from '@/services/userGames/useEditUserGame';
 import useNotification from '@/hooks/useNotification';
@@ -46,6 +48,8 @@ function ListEditorTemp({
 
   const { contextHolder, info, warning, success } = useNotification();
 
+  const { cache } = apolloClient;
+
   const { addUserGames, deleteUserGames } = useAddDeleteGame();
   const { editUserGame } = useEditUserGame();
 
@@ -56,6 +60,15 @@ function ListEditorTemp({
 
   const onDeleteGameHandler = async (gameId: string) => {
     await deleteUserGames(gameId);
+    console.log(cache.data.data);
+
+    const normalizedId = cache.identify({ id: gameId, __typename: 'UserGame' });
+
+    console.log(normalizedId);
+    cache.evict({ id: normalizedId });
+    cache.gc();
+    console.log(cache.data.data);
+
     warning(`Game ${game?.name} deleted from your list`);
   };
 
@@ -145,8 +158,8 @@ function ListEditorTemp({
                 if (!isGameAdded) {
                   await onAddGameHandler(game.id);
                 }
-
-                await editUserGame({ ...userGame, gameId: game.id });
+                const { id, ...newUserGame } = userGame;
+                await editUserGame({ ...newUserGame, gameId: game.id });
                 // refetchStatusUpdate();
                 // refetchGamesByStatus();
 
