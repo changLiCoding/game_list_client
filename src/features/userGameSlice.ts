@@ -64,19 +64,9 @@ export const userGameSlice = createSlice({
         }
       }
     },
-    resetUserGameReducer: (state) => {
-      state.id = '';
-      state.gameStatus = '';
-      state.gameNote = '';
-      state.rating = 0;
-      state.private = false;
-      state.completedDate = null;
-      state.startDate = null;
-    },
   },
 });
 
-export const { setUserGameReducer, resetUserGameReducer } =
-  userGameSlice.actions;
+export const { setUserGameReducer } = userGameSlice.actions;
 
 export default userGameSlice.reducer;

@@ -4,7 +4,6 @@ import { useDispatch } from 'react-redux';
 import {
   ADD_USER_GAMES,
   DELETE_USER_GAMES,
-  GET_USER_GAME_BY_GAME_ID,
 } from '@/services/userGames/queries';
 import { useAppSelector } from '@/app/hooks';
 import { setAddedGames } from '@/features/addedGamesSlice';

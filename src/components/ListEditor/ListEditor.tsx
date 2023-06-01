@@ -17,10 +17,7 @@ import type {
   OnChangeDatePickerType,
   OnChangeTextAreaType,
 } from '@/types/global';
-import {
-  setUserGameReducer,
-  resetUserGameReducer,
-} from '@/features/userGameSlice';
+import { setUserGameReducer } from '@/features/userGameSlice';
 import { useAppSelector } from '@/app/hooks';
 import styles from '@/components/ListEditor/ListEditor.module.scss';
 import DatePickerField from '../DatePickerField';
@@ -103,7 +100,6 @@ function ListEditorTemp({
       cancelText: 'No',
       onOk: async () => {
         await onDeleteGameHandler(game.id);
-        dispatch(resetUserGameReducer());
         setOpen(false);
       },
       zIndex: 1041,
