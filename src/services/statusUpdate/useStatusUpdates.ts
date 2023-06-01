@@ -1,11 +1,15 @@
 import {
-  useQuery,
   OperationVariables,
   ApolloQueryResult,
+  useLazyQuery,
+  QueryResult,
 } from '@apollo/client';
 import { getTokenFromLocalStorage } from '@/constants';
 import { GET_ALL_STATUS_UPDATES_FOR_A_USER } from '@/services/statusUpdate/queries';
-import { StatusUpdate as StatusUpdateType } from '@/graphql/__generated__/graphql';
+import {
+  GetAllStatusUpdatesForAUserQuery,
+  StatusUpdate as StatusUpdateType,
+} from '@/graphql/__generated__/graphql';
 
 type StatusUpdateReturnType = {
   statusUpdates: StatusUpdateType[];
@@ -15,15 +19,16 @@ type StatusUpdateReturnType = {
   ) => Promise<
     ApolloQueryResult<{ getAllStatusUpdatesForAUser: StatusUpdateType[] }>
   >;
+  getAllStatusUpdatesForAUser: () => Promise<
+    QueryResult<GetAllStatusUpdatesForAUserQuery, OperationVariables>
+  >;
 };
 
 const useStatusUpdates = (): StatusUpdateReturnType => {
-  const { data, loading, refetch } = useQuery(
-    GET_ALL_STATUS_UPDATES_FOR_A_USER,
-    {
+  const [getAllStatusUpdatesForAUser, { data, loading, refetch }] =
+    useLazyQuery(GET_ALL_STATUS_UPDATES_FOR_A_USER, {
       context: getTokenFromLocalStorage.context,
-    }
-  );
+    });
 
   try {
     if (!data || !data.getAllStatusUpdatesForAUser) {
@@ -31,6 +36,7 @@ const useStatusUpdates = (): StatusUpdateReturnType => {
     }
     const statusUpdates = data.getAllStatusUpdatesForAUser;
     return {
+      getAllStatusUpdatesForAUser,
       statusUpdates,
       loading,
       refetch,
@@ -42,6 +48,7 @@ const useStatusUpdates = (): StatusUpdateReturnType => {
         : [];
 
       return {
+        getAllStatusUpdatesForAUser,
         statusUpdates,
         loading,
         refetch,
@@ -49,6 +56,7 @@ const useStatusUpdates = (): StatusUpdateReturnType => {
     }
     data.getAllStatusUpdatesForAUser.errors = ['Unknown error'];
     return {
+      getAllStatusUpdatesForAUser,
       statusUpdates: data.getAllStatusUpdatesForAUser
         ? (data.getAllStatusUpdatesForAUser as StatusUpdateType[])
         : [],

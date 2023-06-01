@@ -1,15 +1,21 @@
 import { DownOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Dropdown, Space } from 'antd';
-
+import { useEffect } from 'react';
 import styles from '@/components/ProfileContent/Overview/MainSection/ListActivities/ListActivities.module.scss';
 import useStatusUpdates from '@/services/statusUpdate/useStatusUpdates';
-
 import PostInput from '@/components/ProfileContent/Overview/MainSection/ListActivities/PostInput/PostInput';
 import ActivitiesUpdates from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivitiesUpdates';
 
 function ListActivities() {
-  const { statusUpdates, loading } = useStatusUpdates();
+  const { getAllStatusUpdatesForAUser, statusUpdates, loading } =
+    useStatusUpdates();
+
+  useEffect(() => {
+    if (getAllStatusUpdatesForAUser) {
+      getAllStatusUpdatesForAUser();
+    }
+  }, [getAllStatusUpdatesForAUser]);
 
   const items: MenuProps['items'] = [
     {
