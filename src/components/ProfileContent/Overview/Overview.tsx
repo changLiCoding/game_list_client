@@ -1,13 +1,23 @@
+import { useEffect } from 'react';
 import styles from '@/components/ProfileContent/Overview/Overview.module.scss';
 import SideSection from '@/components/ProfileContent/Overview/SideSection/SideSection';
 import MainSection from '@/components/ProfileContent/Overview/MainSection/MainSection';
 import useGamesByStatus from '@/services/userGames/useGamesByStatus';
 
 function Overview() {
-  const { gamesByStatusForAUserLoading, gamesByStatusForAUser } =
-    useGamesByStatus();
+  const {
+    getGamesByStatusForAUser,
+    gamesByStatusForAUserLoading,
+    gamesByStatusForAUser,
+  } = useGamesByStatus();
 
-  if (gamesByStatusForAUserLoading) {
+  useEffect(() => {
+    if (getGamesByStatusForAUser) {
+      getGamesByStatusForAUser();
+    }
+  }, [getGamesByStatusForAUser]);
+
+  if (gamesByStatusForAUserLoading || !gamesByStatusForAUser) {
     return <div>Loading...</div>;
   }
 

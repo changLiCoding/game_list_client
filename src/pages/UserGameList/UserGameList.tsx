@@ -13,8 +13,17 @@ function UserGameList() {
   const selectedLists = useAppSelector(
     (state) => state.userGames.selectedLists
   );
-  const { gamesByStatusForAUserLoading, gamesByStatusForAUser } =
-    useGamesByStatus();
+  const {
+    getGamesByStatusForAUser,
+    gamesByStatusForAUserLoading,
+    gamesByStatusForAUser,
+  } = useGamesByStatus();
+
+  useEffect(() => {
+    if (getGamesByStatusForAUser) {
+      getGamesByStatusForAUser();
+    }
+  }, [getGamesByStatusForAUser]);
 
   // Initialize the listsOrder, selectedLists, and localListOrder in redux toolkit
   useEffect(() => {
@@ -27,7 +36,7 @@ function UserGameList() {
     }
   }, [dispatch, gamesByStatusForAUser?.gamesByStatusForAUser?.listsOrder]);
 
-  if (gamesByStatusForAUserLoading) {
+  if (gamesByStatusForAUserLoading || !gamesByStatusForAUser) {
     return <div>Loading...</div>;
   }
 

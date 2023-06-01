@@ -1,5 +1,6 @@
 import { Badge, List } from 'antd';
 import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 import styles from './AvailableListsStyle.module.scss';
 import { setSelectedList } from '@/features/userUserGamesListSlice';
 import { useAppSelector } from '@/app/hooks';
@@ -9,7 +10,14 @@ function AvailableLists() {
   const dispatch = useDispatch();
   const selectedItem = useAppSelector((state) => state.userGames.selectedList);
 
-  const { gamesByStatusForAUser } = useGamesByStatus();
+  const { getGamesByStatusForAUser, gamesByStatusForAUser } =
+    useGamesByStatus();
+
+  useEffect(() => {
+    if (getGamesByStatusForAUser) {
+      getGamesByStatusForAUser();
+    }
+  }, [getGamesByStatusForAUser]);
 
   const data = [];
   if (gamesByStatusForAUser?.gamesByStatusForAUser?.totalCount) {
