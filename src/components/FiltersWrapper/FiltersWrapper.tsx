@@ -9,7 +9,6 @@ import { useDispatch } from 'react-redux';
 import { useQuery } from '@apollo/client';
 import styles from '@/components/FiltersWrapper/FiltersWrapper.module.scss';
 import filterFieldStyles from '@/components/FiltersWrapper/FilterField/FilterField.module.scss';
-
 import { useAppSelector } from '@/app/hooks';
 import { GET_GAME_FILTERS } from '@/services/game/queries';
 import {
@@ -18,25 +17,10 @@ import {
 } from '@/constants';
 import { setGameFilters } from '@/app/store';
 import { range } from '@/utils/utils';
+import type { SelectFilterFieldType } from '@/components/FiltersWrapper/types';
 
 const { Search } = Input;
 const { useBreakpoint } = Grid;
-
-type ArrayOnly<T> = T extends any[] ? T : never;
-
-type SelectFilterFieldType<T> =
-  | {
-      mode: 'multiple';
-      value: ArrayOnly<T> | undefined;
-      options: string[] | number[];
-      onChange: (value: T) => void;
-    }
-  | {
-      mode: undefined;
-      value: T | undefined;
-      options: string[] | number[];
-      onChange: (value: T) => void;
-    };
 
 function SelectFilterField<T>({
   mode,

@@ -5,7 +5,7 @@ import {
   HeartFilled,
 } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
-
+import React from 'react';
 import useAddDeleteGame from '@/services/userGames/useAddDeleteGame';
 import useEditUserGame from '@/services/userGames/useEditUserGame';
 import useNotification from '@/hooks/useNotification';
@@ -24,7 +24,7 @@ import type { ListEditorType } from '@/components/ListEditor/types';
 import useStatusUpdates from '@/services/statusUpdate/useStatusUpdates';
 import useGamesByStatus from '@/services/userGames/useGamesByStatus';
 
-function ListEditor({
+function ListEditorTemp({
   isGameAdded,
   userGameLoading,
   open,
@@ -32,6 +32,8 @@ function ListEditor({
   game,
 }: ListEditorType) {
   const dispatch = useDispatch();
+  const userGame = useAppSelector((state) => state.userGame);
+
   const {
     gameStatus: selectedStatus,
     rating: selectedRating,
@@ -39,11 +41,9 @@ function ListEditor({
     startDate: selectedStart,
     completedDate: selectedCompleted,
     private: selectedPrivate,
-  } = useAppSelector((state) => state.userGame);
+  } = userGame;
 
-  const { userGame } = useAppSelector((state) => state);
-
-  const { contextHolder, info, warrning, success } = useNotification();
+  const { contextHolder, info, warning, success } = useNotification();
 
   const { addUserGames, deleteUserGames } = useAddDeleteGame();
   const { editUserGame } = useEditUserGame();
@@ -55,9 +55,9 @@ function ListEditor({
     success(`Game ${game?.name} added to your list`);
   };
 
-  const onDeteteGameHandler = async (gameId: string) => {
+  const onDeleteGameHandler = async (gameId: string) => {
     await deleteUserGames(gameId);
-    warrning(`Game ${game?.name} deleted from your list`);
+    warning(`Game ${game?.name} deleted from your list`);
   };
 
   const statusOptions: DropDownOption[] = [
@@ -90,7 +90,7 @@ function ListEditor({
       okType: 'danger',
       cancelText: 'No',
       onOk: async () => {
-        await onDeteteGameHandler(game.id);
+        await onDeleteGameHandler(game.id);
         refetchGamesByStatus();
         refetchStatusUpdate();
         setOpen(false);
@@ -289,5 +289,7 @@ function ListEditor({
     </Modal>
   );
 }
+
+const ListEditor = React.memo(ListEditorTemp);
 
 export default ListEditor;

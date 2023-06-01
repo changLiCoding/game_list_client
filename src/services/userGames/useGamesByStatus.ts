@@ -1,11 +1,15 @@
 import {
-  useQuery,
   OperationVariables,
   ApolloQueryResult,
+  useLazyQuery,
+  QueryResult,
 } from '@apollo/client';
 import { GET_GAMES_BY_STATUS } from './queries';
 import { getTokenFromLocalStorage } from '@/constants';
-import type { UserGamesByStatus } from '@/graphql/__generated__/graphql';
+import type {
+  GamesByTagsForAUserQuery,
+  UserGamesByStatus,
+} from '@/graphql/__generated__/graphql';
 
 type UseGamesByStatusType = {
   gamesByStatusForAUser: {
@@ -15,14 +19,20 @@ type UseGamesByStatusType = {
   refetch: (
     variables?: Partial<OperationVariables> | undefined
   ) => Promise<ApolloQueryResult<{ gamesByStatusForAUser: UserGamesByStatus }>>;
+  getGamesByStatusForAUser: () => Promise<
+    QueryResult<GamesByTagsForAUserQuery, OperationVariables>
+  >;
 };
 
 const useGamesByStatus = (): UseGamesByStatusType => {
-  const {
-    loading: gamesByStatusForAUserLoading,
-    data: gamesByStatusForAUser,
-    refetch,
-  } = useQuery(GET_GAMES_BY_STATUS, {
+  const [
+    getGamesByStatusForAUser,
+    {
+      loading: gamesByStatusForAUserLoading,
+      data: gamesByStatusForAUser,
+      refetch,
+    },
+  ] = useLazyQuery(GET_GAMES_BY_STATUS, {
     context: getTokenFromLocalStorage.context,
   });
 
@@ -36,6 +46,7 @@ const useGamesByStatus = (): UseGamesByStatusType => {
     }
 
     return {
+      getGamesByStatusForAUser,
       refetch,
       gamesByStatusForAUser,
       gamesByStatusForAUserLoading,
@@ -43,6 +54,7 @@ const useGamesByStatus = (): UseGamesByStatusType => {
   } catch (error: unknown) {
     if (error instanceof Error) {
       return {
+        getGamesByStatusForAUser,
         refetch,
         gamesByStatusForAUser,
         gamesByStatusForAUserLoading,
@@ -50,6 +62,7 @@ const useGamesByStatus = (): UseGamesByStatusType => {
     }
     gamesByStatusForAUser.gamesByStatusForAUser.errors = ['Unknown error'];
     return {
+      getGamesByStatusForAUser,
       refetch,
       gamesByStatusForAUser,
       gamesByStatusForAUserLoading,
