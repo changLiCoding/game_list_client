@@ -6,12 +6,7 @@ import styles from '@/components/AllGames/InfoBar/SelectorsWrapper/SelectorsWrap
 import { useAppSelector } from '@/app/hooks';
 import { setView } from '@/features/homeSearchSlice';
 import { setGameFilters } from '@/app/store';
-import { GameFiltersSortType } from '@/types/global';
-
-type SortItemsListType = {
-  label: string;
-  value: GameFiltersSortType | undefined;
-};
+import { SortItemsListType } from './types';
 
 function SelectorsWrapper() {
   const homeSearchState = useAppSelector((state) => state.homeSearch);
