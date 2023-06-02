@@ -1,0 +1,6 @@
+.followsContainer {
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: repeat(auto-fill, 80px);
+  grid-template-rows: repeat(auto-fill, 80px);
+}
