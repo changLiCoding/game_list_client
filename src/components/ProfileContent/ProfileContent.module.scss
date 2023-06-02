@@ -3,6 +3,7 @@
 
 .profileContent {
   min-width: 320px;
+
   padding-left: 20px;
   padding-right: 20px;
 
@@ -14,7 +15,6 @@
     padding-right: 30px;
   }
   @include mixin.desktop {
-    max-width: 1140px;
     padding-left: 50px;
     padding-right: 50px;
   }
@@ -22,5 +22,6 @@
     max-width: 1520px;
     padding-left: 100px;
     padding-right: 100px;
+    margin: auto;
   }
 }

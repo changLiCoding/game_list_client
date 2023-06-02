@@ -22,7 +22,7 @@ const useNotification = () => {
     });
   };
 
-  const warrning = (value: string) => {
+  const warning = (value: string) => {
     messageApi.open({
       type: 'warning',
       content: value,
@@ -32,7 +32,7 @@ const useNotification = () => {
   };
 
   return {
-    warrning,
+    warning,
     success,
     contextHolder,
     info,

@@ -8,3 +8,19 @@ export interface FilterFieldProps {
   changeOnSelect: boolean;
   customCascaderStyle: string;
 }
+
+type ArrayOnly<T> = T extends any[] ? T : never;
+
+export type SelectFilterFieldType<T> =
+  | {
+      mode: 'multiple';
+      value: ArrayOnly<T> | undefined;
+      options: string[] | number[];
+      onChange: (value: T) => void;
+    }
+  | {
+      mode: undefined;
+      value: T | undefined;
+      options: string[] | number[];
+      onChange: (value: T) => void;
+    };

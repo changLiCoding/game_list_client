@@ -11,7 +11,7 @@ function ListCards({
 }) {
   return (
     <div className={styles.listContainer}>
-      <h2>{status}</h2>
+      <h2>{status === 'justAdded' ? 'Just Added' : status}</h2>
       <div className={styles.listCards}>
         {Array.isArray(gameData) &&
           gameData.length > 0 &&

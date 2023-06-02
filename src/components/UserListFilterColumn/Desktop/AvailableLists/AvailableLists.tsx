@@ -1,6 +1,6 @@
 import { Badge, List } from 'antd';
 import { useDispatch } from 'react-redux';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import styles from './AvailableListsStyle.module.scss';
 import { useAppSelector } from '@/app/hooks';
 import useGamesByStatus from '@/services/userGames/useGamesByStatus';
@@ -13,7 +13,14 @@ function AvailableLists() {
   const gameFilters = useAppSelector((state) => state.userGameFilters);
   const listOrder = useAppSelector((state) => state.userGames);
 
-  const { gamesByStatusForAUser } = useGamesByStatus();
+  const { getGamesByStatusForAUser, gamesByStatusForAUser } =
+    useGamesByStatus();
+
+  useEffect(() => {
+    if (getGamesByStatusForAUser) {
+      getGamesByStatusForAUser();
+    }
+  }, [getGamesByStatusForAUser]);
 
   const data: DataList[] = useMemo(() => {
     const dataArray: DataList[] = [

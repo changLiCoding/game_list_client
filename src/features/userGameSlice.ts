@@ -13,7 +13,17 @@ export const userGameSlice = createSlice({
       const { type, payload } = action.payload;
 
       if (type === 'gameStatus') {
-        state.gameStatus = payload;
+        if (payload === 'Inactive') {
+          state.id = '';
+          state.gameStatus = '';
+          state.gameNote = '';
+          state.rating = 0;
+          state.private = false;
+          state.completedDate = null;
+          state.startDate = null;
+        } else {
+          state.gameStatus = payload;
+        }
       } else if (type === 'gameNote') {
         state.gameNote = payload;
       } else if (type === 'rating') {
@@ -32,13 +42,26 @@ export const userGameSlice = createSlice({
           private: isPrivate,
           completedDate,
           startDate,
+          id,
         } = payload;
-        state.gameStatus = gameStatus;
-        state.gameNote = gameNote;
-        state.rating = rating;
-        state.private = isPrivate;
-        state.completedDate = completedDate === '' ? null : completedDate;
-        state.startDate = startDate === '' ? null : startDate;
+
+        if (gameStatus === 'Inactive') {
+          state.id = '';
+          state.gameStatus = '';
+          state.gameNote = '';
+          state.rating = 0;
+          state.private = false;
+          state.completedDate = null;
+          state.startDate = null;
+        } else {
+          state.id = id;
+          state.gameStatus = gameStatus;
+          state.gameNote = gameNote;
+          state.rating = rating;
+          state.private = isPrivate;
+          state.completedDate = completedDate === '' ? null : completedDate;
+          state.startDate = startDate === '' ? null : startDate;
+        }
       }
     },
   },

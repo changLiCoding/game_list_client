@@ -138,11 +138,21 @@ export const GET_GAMES_BY_STATUS = gql`
         genres
         releaseDate
       }
+      justAdded {
+        id
+        name
+        imageURL
+        avgScore
+        platforms
+        tags
+        genres
+      }
       playingCount
       planningCount
       completedCount
       pausedCount
       droppedCount
+      justAddedCount
       totalCount
       listsOrder
       errors

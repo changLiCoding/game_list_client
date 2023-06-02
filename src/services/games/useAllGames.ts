@@ -30,6 +30,7 @@ export default function useAllGames(
     ...getTokenFromLocalStorage,
     onCompleted: (data) => {
       const { allGames: allGamesData } = data;
+
       if (allGamesData) {
         allGamesData.forEach((game) => {
           if (game.isGameAdded) {
@@ -50,6 +51,7 @@ export default function useAllGames(
       throw new Error('No games found');
     }
     games = allGames?.allGames;
+
     return { games, loading, errors, refetch };
   } catch (error: unknown) {
     if (error instanceof Error) {

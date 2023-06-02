@@ -1,6 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState: { addedList: string[] } = { addedList: [] };
+const initialState: { addedList: string[]; isUserGameEdited: boolean } = {
+  addedList: [],
+  isUserGameEdited: false,
+};
 
 export const addedGamesSlice = createSlice({
   name: 'addedGames',
@@ -15,9 +18,16 @@ export const addedGamesSlice = createSlice({
         );
       }
     },
+    setIsUserGameEdited: (state, action) => {
+      if (action.payload.type === 'edit') {
+        state.isUserGameEdited = true;
+      } else if (action.payload.type === 'reset') {
+        state.isUserGameEdited = false;
+      }
+    },
   },
 });
 
-export const { setAddedGames } = addedGamesSlice.actions;
+export const { setAddedGames, setIsUserGameEdited } = addedGamesSlice.actions;
 
 export default addedGamesSlice.reducer;

@@ -5,7 +5,9 @@ import {
   HeartFilled,
 } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
+import React from 'react';
 
+import { apolloClient } from '@/graphql';
 import useAddDeleteGame from '@/services/userGames/useAddDeleteGame';
 import useEditUserGame from '@/services/userGames/useEditUserGame';
 import useNotification from '@/hooks/useNotification';
@@ -22,7 +24,7 @@ import DatePickerField from '../DatePickerField';
 import TextAreaInput from '../TextAreaInput';
 import type { ListEditorType } from '@/components/ListEditor/types';
 
-function ListEditor({
+function ListEditorTemp({
   isGameAdded,
   userGameLoading,
   open,
@@ -30,6 +32,8 @@ function ListEditor({
   game,
 }: ListEditorType) {
   const dispatch = useDispatch();
+  const userGame = useAppSelector((state) => state.userGame);
+
   const {
     gameStatus: selectedStatus,
     rating: selectedRating,
@@ -37,11 +41,11 @@ function ListEditor({
     startDate: selectedStart,
     completedDate: selectedCompleted,
     private: selectedPrivate,
-  } = useAppSelector((state) => state.userGame);
+  } = userGame;
 
-  const { userGame } = useAppSelector((state) => state);
+  const { contextHolder, info, warning, success } = useNotification();
 
-  const { contextHolder, info, warrning, success } = useNotification();
+  const { cache } = apolloClient;
 
   const { addUserGames, deleteUserGames } = useAddDeleteGame();
   const { editUserGame } = useEditUserGame();
@@ -51,9 +55,18 @@ function ListEditor({
     success(`Game ${game?.name} added to your list`);
   };
 
-  const onDeteteGameHandler = async (gameId: string) => {
+  const onDeleteGameHandler = async (gameId: string) => {
     await deleteUserGames(gameId);
-    warrning(`Game ${game?.name} deleted from your list`);
+
+    const normalizedId = cache.identify({
+      id: userGame.id,
+      __typename: 'UserGame',
+    });
+
+    cache.evict({ id: normalizedId });
+    cache.gc();
+
+    warning(`Game ${game?.name} deleted from your list`);
   };
 
   const statusOptions: DropDownOption[] = [
@@ -86,7 +99,7 @@ function ListEditor({
       okType: 'danger',
       cancelText: 'No',
       onOk: async () => {
-        await onDeteteGameHandler(game.id);
+        await onDeleteGameHandler(game.id);
         setOpen(false);
       },
       zIndex: 1041,
@@ -138,11 +151,13 @@ function ListEditor({
             <Button
               type="primary"
               onClick={async () => {
-                if (!isGameAdded) {
-                  await onAddGameHandler(game.id);
-                }
-
-                await editUserGame({ ...userGame, gameId: game.id });
+                // if (!isGameAdded) {
+                //   await onAddGameHandler(game.id);
+                // }
+                const { id, ...newUserGame } = userGame;
+                await editUserGame({ ...newUserGame, gameId: game.id });
+                // refetchStatusUpdate();
+                // refetchGamesByStatus();
 
                 info(`Edit game ${game.name} successfully`);
                 setOpen(false);
@@ -279,5 +294,7 @@ function ListEditor({
     </Modal>
   );
 }
+
+const ListEditor = React.memo(ListEditorTemp);
 
 export default ListEditor;

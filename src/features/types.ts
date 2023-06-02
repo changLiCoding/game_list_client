@@ -26,6 +26,7 @@ export type InitialStateUserGameType = {
   startDate: string | null;
   private: boolean;
   rating: number;
+  id: string;
 };
 
 export type HomeSearchSlice = {

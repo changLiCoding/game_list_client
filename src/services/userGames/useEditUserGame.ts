@@ -1,8 +1,11 @@
 import { useMutation } from '@apollo/client';
+import { useDispatch } from 'react-redux';
 import {
   EDIT_USER_GAME_BY_GAME_ID,
   GET_USER_GAME_BY_GAME_ID,
 } from '@/services/userGames/queries';
+import { setAddedGames, setIsUserGameEdited } from '@/features/addedGamesSlice';
+import { useAppSelector } from '@/app/hooks';
 import { getTokenFromLocalStorage } from '@/constants';
 import type {
   EditUserGamesPayload,
@@ -10,6 +13,9 @@ import type {
 } from '@/graphql/__generated__/graphql';
 
 const useEditUserGame = () => {
+  const dispatch = useDispatch();
+  const { addedList } = useAppSelector((state) => state.addedGames);
+
   const [editUserGameRequest] = useMutation(EDIT_USER_GAME_BY_GAME_ID);
 
   const editUserGame = async (
@@ -27,6 +33,21 @@ const useEditUserGame = () => {
           },
         ],
         awaitRefetchQueries: true,
+        onCompleted: (data) => {
+          // ADD GAME IN REDUX STORE
+          if (
+            data.editUserGames.userGame.game.id &&
+            !addedList.includes(data.editUserGames.userGame.game.id)
+          ) {
+            dispatch(setIsUserGameEdited({ type: 'edit' }));
+            dispatch(
+              setAddedGames({
+                type: 'add',
+                gameId: data.editUserGames.userGame.game.id,
+              })
+            );
+          }
+        },
       });
 
       if (
