@@ -7,17 +7,17 @@ import {
 import { GET_ALL_FOLLOWS } from '@/services/follow/queries';
 import { getTokenFromLocalStorage } from '@/constants';
 import {
-  User as UserType,
+  Follow as FollowType,
   GetAllFollowsQuery,
 } from '@/graphql/__generated__/graphql';
 
 type UseAllFollowsType = {
-  follows: UserType[];
+  follows: FollowType[];
   loading: boolean;
   getAllFollows: () => Promise<
     QueryResult<GetAllFollowsQuery, OperationVariables>
   >;
-  refetch: () => Promise<ApolloQueryResult<{ getAllFollows: UserType[] }>>;
+  refetch: () => Promise<ApolloQueryResult<{ getAllFollows: FollowType[] }>>;
 };
 
 const useAllFollows = (): UseAllFollowsType => {
@@ -43,7 +43,7 @@ const useAllFollows = (): UseAllFollowsType => {
     };
   } catch (error: unknown) {
     if (error instanceof Error) {
-      const follows = data ? (data.getAllFollows as UserType[]) : [];
+      const follows = data ? (data.getAllFollows as FollowType[]) : [];
 
       return {
         getAllFollows,
@@ -57,7 +57,7 @@ const useAllFollows = (): UseAllFollowsType => {
 
     return {
       getAllFollows,
-      follows: data.getAllFollows as UserType[],
+      follows: data.getAllFollows as FollowType[],
       loading,
       refetch,
     };
