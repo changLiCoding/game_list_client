@@ -42,6 +42,8 @@ function UserGameList() {
               <UserGamesTable
                 key={list}
                 gamesData={
+                  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                  // @ts-ignore
                   gamesByStatusForAUser?.gamesByStatusForAUser[list] as Game[]
                 }
                 title={list[0].toUpperCase() + list.slice(1)}
