@@ -1,29 +1,44 @@
-import SelectDropdown from '@/components/SelectDropdown';
+import { useMemo } from 'react';
+import { Select } from 'antd';
+import { useDispatch } from 'react-redux';
 import styles from './SortListsStyle.module.scss';
-import type { DropDownOption, OnChangeCascaderType } from '@/types/global';
+import type { UserGameFiltersSortType } from '@/types/global';
+import { setUserGameFilters } from '@/app/store';
+import { useAppSelector } from '@/app/hooks';
 
-const options: DropDownOption[] = [
-  {
-    value: 'Sort1',
-    label: 'Sort1',
-  },
-  {
-    value: 'Sort2',
-    label: 'Sort2',
-  },
-];
+type SortItemsListType = {
+  label: string;
+  value: UserGameFiltersSortType | undefined;
+};
 
 function SortLists() {
-  const onChange = (value: OnChangeCascaderType, fieldName: string): void => {
-    // console.log(value);
-  };
+  const gameFilters = useAppSelector((state) => state.userGameFilters);
+  const dispatch = useDispatch();
+
+  const sortItemsList: SortItemsListType[] = useMemo(() => {
+    return [
+      { label: 'Name', value: 'name' },
+      { label: 'Average Score', value: 'avg_score' },
+      { label: 'Newest Releases', value: 'newest_releases' },
+      { label: 'Oldest Releases', value: 'oldest_releases' },
+      { label: 'Last Updated', value: 'last_updated' },
+      { label: 'Last Added', value: 'last_added' },
+      { label: 'Start Date', value: 'start_date' },
+      { label: 'Completed Date', value: 'completed_date' },
+    ];
+  }, []);
+
   return (
-    <SelectDropdown
-      customCascaderStyle={styles.cascaderStyle}
-      fieldName="Sort"
-      options={options}
-      onChange={onChange}
-      changeOnSelect
+    <Select
+      placement="topLeft"
+      style={{ width: 150 }}
+      className={styles.selectorsContainer}
+      defaultValue="name"
+      value={gameFilters.sortBy}
+      options={sortItemsList}
+      onChange={(value: SortItemsListType['value']) => {
+        dispatch(setUserGameFilters({ sortBy: value }));
+      }}
     />
   );
 }

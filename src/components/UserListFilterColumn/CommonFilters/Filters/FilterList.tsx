@@ -1,104 +1,94 @@
 import { useDispatch } from 'react-redux';
-import SelectDropdown from '@/components/SelectDropdown';
+import { useMemo } from 'react';
+import { Select } from 'antd';
 import styles from './FilterListWrapperStyle.module.scss';
-import { setFilters } from '@/features/userUserGamesListSlice';
-import type { OnChangeCascaderType } from '@/types/global';
 import { useAppSelector } from '@/app/hooks';
 import useGetFilters from '@/services/game/useGetFilters';
-import useFilterOptions from '@/hooks/useFilterOptions';
+import { setUserGameFilters } from '@/app/store';
+
+// TODO: Move into separate component
+type ArrayOnly<T> = T extends any[] ? T : never;
+
+type SelectFilterFieldType<T> =
+  | {
+      mode: 'multiple';
+      placeholder: string;
+      value: ArrayOnly<T> | undefined;
+      options: string[] | number[];
+      onChange: (value: T) => void;
+    }
+  | {
+      mode: undefined;
+      placeholder: string;
+      value: T | undefined;
+      options: string[] | number[];
+      onChange: (value: T) => void;
+    };
+
+function SelectFilterField<T>({
+  placeholder,
+  mode,
+  value,
+  options,
+  onChange,
+}: SelectFilterFieldType<T>) {
+  const optionsMemo = useMemo(() => {
+    return options.map((s) => {
+      return (
+        <Select.Option key={s} value={s}>
+          <div className={styles.option}>{s}</div>
+        </Select.Option>
+      );
+    });
+  }, [options]);
+
+  return (
+    <Select
+      placeholder={placeholder}
+      mode={mode}
+      style={{ width: 200 }}
+      className={styles.cascaderStyle}
+      value={value}
+      allowClear
+      onChange={onChange}
+    >
+      {optionsMemo}
+    </Select>
+  );
+}
 
 function FilterList() {
   const dispatch = useDispatch();
-  const filterValues = useAppSelector((state) => state.userGames.filters);
+  const gameFilters = useAppSelector((state) => state.userGameFilters);
   const { genres, platforms, tags } = useGetFilters();
-  const { filters } = useFilterOptions(genres, platforms, tags);
-
-  const onChange = (value: OnChangeCascaderType, fieldName: string): void => {
-    dispatch(
-      setFilters({
-        type: fieldName,
-        value: value ? (value as string[])[0] : '',
-      })
-    );
-  };
 
   return (
     <div className={styles.dropdownList}>
-      {filters.map((filter) => {
-        const filterVal =
-          filterValues[
-            filter.name.toLowerCase() as 'platform' | 'tag' | 'genre'
-          ];
-        return (
-          <SelectDropdown
-            key={filter.name}
-            customCascaderStyle={styles.cascaderStyle}
-            fieldName={filter.name}
-            options={filter.options}
-            onChange={onChange}
-            changeOnSelect
-            value={filterVal ? [filterVal] : undefined}
-          />
-        );
-      })}
+      <SelectFilterField<string>
+        placeholder="Genres"
+        mode={undefined}
+        value={gameFilters.genres}
+        options={genres}
+        onChange={(value) => dispatch(setUserGameFilters({ genres: value }))}
+      />
+
+      <SelectFilterField<string>
+        placeholder="Platforms"
+        mode={undefined}
+        value={gameFilters.platforms}
+        options={platforms}
+        onChange={(value) => dispatch(setUserGameFilters({ platforms: value }))}
+      />
+
+      <SelectFilterField<string>
+        placeholder="Tags"
+        mode={undefined}
+        value={gameFilters.tags}
+        options={tags}
+        onChange={(value) => dispatch(setUserGameFilters({ tags: value }))}
+      />
     </div>
   );
 }
 
 export default FilterList;
-
-// const filters: Filter[] = [
-//   {
-//     name: 'Platform',
-//     options: [
-//       {
-//         value: 'Option1',
-//         label: 'Option1',
-//       },
-//       {
-//         value: 'Option2',
-//         label: 'Option2',
-//       },
-//     ],
-//   },
-//   {
-//     name: 'Status',
-//     options: [
-//       {
-//         value: 'Status1',
-//         label: 'Status1',
-//       },
-//       {
-//         value: 'Status2',
-//         label: 'Status2',
-//       },
-//     ],
-//   },
-//   {
-//     name: 'Genres',
-//     options: [
-//       {
-//         value: 'Genres1',
-//         label: 'Genres1',
-//       },
-//       {
-//         value: 'Genres2',
-//         label: 'Genres2',
-//       },
-//     ],
-//   },
-
-//   {
-//     name: 'Country',
-//     options: [
-//       {
-//         value: 'Country1',
-//         label: 'Country1',
-//       },
-//       {
-//         value: 'Country2',
-//         label: 'Country2',
-//       },
-//     ],
-//   },
-// ];

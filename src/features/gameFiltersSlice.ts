@@ -1,9 +1,8 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { BaseFilters } from '@/types/global';
 
-export function createGameFiltersSlice<T extends BaseFilters>(initialState: T) {
+export function createGameFiltersSlice<T>(name: string, initialState: T) {
   return createSlice({
-    name: 'gameFiltersSlice',
+    name,
     initialState,
     reducers: {
       setFilters: (state, action: PayloadAction<Partial<T>>) => {

@@ -7,7 +7,7 @@ import type {
   StatusListType,
 } from '@/components/UserListFilterColumn/types';
 import StatusItem from '@/components/UserListFilterColumn/Desktop/StatusItem';
-import { setLocalListOrder } from '@/features/userUserGamesListSlice';
+import { setLocalListOrder } from '@/features/userGamesListSlice';
 import { useAppSelector } from '@/app/hooks';
 
 const reorder = (
