@@ -56,7 +56,8 @@ function ListEditorTemp({
   };
 
   const onDeleteGameHandler = async (gameId: string) => {
-    await deleteUserGames(gameId);
+    const data = await deleteUserGames(gameId);
+    console.log('deleteUserGames Data:', data);
 
     const normalizedId = cache.identify({
       id: userGame.id,

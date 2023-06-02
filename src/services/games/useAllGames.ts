@@ -5,6 +5,7 @@ import { setAddedGames } from '@/features/addedGamesSlice';
 import { getTokenFromLocalStorage } from '@/constants';
 import { GET_ALL_GAMES } from './queries';
 import type { Game as GameType } from '@/graphql/__generated__/graphql';
+import { useAppSelector } from '@/app/hooks';
 
 export default function useAllGames(
   genre: string[] = [],
@@ -13,7 +14,7 @@ export default function useAllGames(
   year = -1
 ) {
   const dispatch = useDispatch();
-
+  const { addedList } = useAppSelector((state) => state.addedGames);
   let games: GameType[] = [];
   const errors: string[] = [];
   const {
@@ -33,7 +34,7 @@ export default function useAllGames(
 
       if (allGamesData) {
         allGamesData.forEach((game) => {
-          if (game.isGameAdded) {
+          if (game.isGameAdded && !addedList.includes(game.id)) {
             dispatch(
               setAddedGames({
                 type: 'add',
