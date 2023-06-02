@@ -10,6 +10,7 @@
   background-size: cover;
   height: 330px;
   position: relative;
+  justify-content: center;
 
   @include mixin.phoneSmall {
     margin: 0;
@@ -28,29 +29,18 @@
     width: 100%;
   }
   .imageContainer {
-    align-items: flex-end;
-    display: flex;
-    height: 100%;
     position: relative;
-    margin: 0 auto;
-    min-width: 320px;
-
-    padding-left: 20px;
-    padding-right: 20px;
+    width: 90vw;
+    margin-left: 20px;
 
     @include mixin.phoneLarge {
-      padding-left: 30px;
-      padding-right: 30px;
+      min-width: 320px;
     }
     @include mixin.desktop {
       max-width: 1140px;
-      padding-left: 50px;
-      padding-right: 50px;
     }
     @include mixin.desktopUltroLarge {
       max-width: 1520px;
-      padding-left: 100px;
-      padding-right: 100px;
     }
     .userInfoContainer {
       align-items: flex-end;
