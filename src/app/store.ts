@@ -28,9 +28,12 @@ const defaultUserGameFilters: UserGameFilters = {
   selectedList: 'all',
 };
 
-const gameFiltersSlice =
-  createGameFiltersSlice<HomeGameFilters>(defaultGameFilters);
+const gameFiltersSlice = createGameFiltersSlice<HomeGameFilters>(
+  'gameFiltersSlice',
+  defaultGameFilters
+);
 const userGameFiltersSlice = createGameFiltersSlice<UserGameFilters>(
+  'userGameFiltersSlice',
   defaultUserGameFilters
 );
 
