@@ -1,12 +1,12 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import userReducer from '@/features/userSlice';
-import userGamesListReducer from '@/features/userUserGamesListSlice';
+import userGamesListReducer from '@/features/userGamesListSlice';
 import userGameReducer from '@/features/userGameSlice';
 import addedGamesReducer from '@/features/addedGamesSlice';
 import homeSearchSlice from '@/features/homeSearchSlice';
 import { createGameFiltersSlice } from '@/features/gameFiltersSlice';
-import { BaseFilters, HomeGameFilters, UserGameFilters } from '@/types/global';
+import { HomeGameFilters, UserGameFilters } from '@/types/global';
 // import gameFiltersSlice from '@/features/gameFiltersSlice';
 
 const defaultGameFilters: HomeGameFilters = {
@@ -19,14 +19,21 @@ const defaultGameFilters: HomeGameFilters = {
 };
 
 const defaultUserGameFilters: UserGameFilters = {
-  ...defaultGameFilters,
+  genres: undefined,
+  platforms: undefined,
+  tags: undefined,
+  year: undefined,
+  search: undefined,
   sortBy: undefined,
-  selectedList: 0,
+  selectedList: 'all',
 };
 
-const gameFiltersSlice =
-  createGameFiltersSlice<BaseFilters>(defaultGameFilters);
+const gameFiltersSlice = createGameFiltersSlice<HomeGameFilters>(
+  'gameFiltersSlice',
+  defaultGameFilters
+);
 const userGameFiltersSlice = createGameFiltersSlice<UserGameFilters>(
+  'userGameFiltersSlice',
   defaultUserGameFilters
 );
 

@@ -1,14 +1,17 @@
 import { Badge, List } from 'antd';
 import { useDispatch } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import styles from './AvailableListsStyle.module.scss';
-import { setSelectedList } from '@/features/userUserGamesListSlice';
 import { useAppSelector } from '@/app/hooks';
 import useGamesByStatus from '@/services/userGames/useGamesByStatus';
+import { setUserGameFilters } from '@/app/store';
+import { SelectedListTypes } from '@/types/global';
+import { DataList } from './types';
 
 function AvailableLists() {
   const dispatch = useDispatch();
-  const selectedItem = useAppSelector((state) => state.userGames.selectedList);
+  const gameFilters = useAppSelector((state) => state.userGameFilters);
+  const listOrder = useAppSelector((state) => state.userGames);
 
   const { getGamesByStatusForAUser, gamesByStatusForAUser } =
     useGamesByStatus();
@@ -19,46 +22,57 @@ function AvailableLists() {
     }
   }, [getGamesByStatusForAUser]);
 
-  const data = [];
-  if (gamesByStatusForAUser?.gamesByStatusForAUser?.totalCount) {
-    data.push({
-      name: 'All',
-      count: gamesByStatusForAUser?.gamesByStatusForAUser?.totalCount,
-    });
-  }
-  if (gamesByStatusForAUser?.gamesByStatusForAUser?.planningCount) {
-    data.push({
-      name: 'Planning',
-      count: gamesByStatusForAUser?.gamesByStatusForAUser?.planningCount,
-    });
-  }
-  if (gamesByStatusForAUser?.gamesByStatusForAUser?.playingCount) {
-    data.push({
-      name: 'Playing',
-      count: gamesByStatusForAUser?.gamesByStatusForAUser?.playingCount,
-    });
-  }
-  if (gamesByStatusForAUser?.gamesByStatusForAUser?.completedCount) {
-    data.push({
-      name: 'Completed',
-      count: gamesByStatusForAUser?.gamesByStatusForAUser?.completedCount,
-    });
-  }
-  if (gamesByStatusForAUser?.gamesByStatusForAUser?.pausedCount) {
-    data.push({
-      name: 'Paused',
-      count: gamesByStatusForAUser?.gamesByStatusForAUser?.pausedCount,
-    });
-  }
-  if (gamesByStatusForAUser?.gamesByStatusForAUser?.droppedCount) {
-    data.push({
-      name: 'Dropped',
-      count: gamesByStatusForAUser?.gamesByStatusForAUser?.droppedCount,
-    });
-  }
+  const data: DataList[] = useMemo(() => {
+    const dataArray: DataList[] = [
+      {
+        name: 'Planning',
+        value: 'planning',
+        count: gamesByStatusForAUser?.gamesByStatusForAUser?.planningCount ?? 0,
+      },
+      {
+        name: 'Playing',
+        value: 'playing',
+        count: gamesByStatusForAUser?.gamesByStatusForAUser?.playingCount ?? 0,
+      },
+      {
+        name: 'Paused',
+        value: 'paused',
+        count: gamesByStatusForAUser?.gamesByStatusForAUser?.pausedCount ?? 0,
+      },
+      {
+        name: 'Completed',
+        value: 'completed',
+        count:
+          gamesByStatusForAUser?.gamesByStatusForAUser?.completedCount ?? 0,
+      },
+      {
+        name: 'Dropped',
+        value: 'dropped',
+        count: gamesByStatusForAUser?.gamesByStatusForAUser?.droppedCount ?? 0,
+      },
+    ];
 
-  const handleItemClick = (item: string) => {
-    dispatch(setSelectedList(item.toLowerCase()));
+    const newArray = listOrder.listOrder
+      .map((value) => dataArray.find((item) => item.value === value))
+      .filter((item) => item && item.count > 0) as DataList[];
+    newArray.unshift({
+      name: 'All',
+      value: 'all',
+      count: dataArray.reduce((acc, curr) => acc + curr.count, 0),
+    });
+
+    return newArray ?? [];
+  }, [
+    gamesByStatusForAUser?.gamesByStatusForAUser?.completedCount,
+    gamesByStatusForAUser?.gamesByStatusForAUser?.droppedCount,
+    gamesByStatusForAUser?.gamesByStatusForAUser?.pausedCount,
+    gamesByStatusForAUser?.gamesByStatusForAUser?.planningCount,
+    gamesByStatusForAUser?.gamesByStatusForAUser?.playingCount,
+    listOrder.listOrder,
+  ]);
+
+  const handleItemClick = (item: SelectedListTypes) => {
+    dispatch(setUserGameFilters({ selectedList: item }));
   };
 
   return (
@@ -68,9 +82,9 @@ function AvailableLists() {
       renderItem={(item) => (
         <List.Item
           data-testid={`listitem-${item.name}`}
-          onClick={() => handleItemClick(item.name)}
+          onClick={() => handleItemClick(item.value)}
           style={
-            selectedItem === item.name.toLowerCase()
+            gameFilters.selectedList === item.name.toLowerCase()
               ? { backgroundColor: '#e0ddd3' }
               : {}
           }

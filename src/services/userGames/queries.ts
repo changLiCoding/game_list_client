@@ -102,6 +102,7 @@ export const GET_GAMES_BY_STATUS = gql`
         platforms
         tags
         genres
+        releaseDate
       }
       planning {
         id
@@ -111,6 +112,7 @@ export const GET_GAMES_BY_STATUS = gql`
         platforms
         tags
         genres
+        releaseDate
       }
       completed {
         id
@@ -120,6 +122,7 @@ export const GET_GAMES_BY_STATUS = gql`
         platforms
         tags
         genres
+        releaseDate
       }
       paused {
         id
@@ -129,6 +132,7 @@ export const GET_GAMES_BY_STATUS = gql`
         platforms
         tags
         genres
+        releaseDate
       }
       dropped {
         id
@@ -138,6 +142,7 @@ export const GET_GAMES_BY_STATUS = gql`
         platforms
         tags
         genres
+        releaseDate
       }
       justAdded {
         id

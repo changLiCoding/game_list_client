@@ -2,19 +2,15 @@ import { Button, Space, Input } from 'antd';
 import { CloseOutlined, MenuOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
 import styles from './FilterMobile.module.scss';
-import { setSearch } from '@/features/userUserGamesListSlice';
 import { useAppSelector } from '@/app/hooks';
 import type { FilterMobileType } from '@/components/UserListFilterColumn/Mobile/types';
+import { setUserGameFilters } from '@/app/store';
 
 const { Search } = Input;
 
 function FilterMobile({ collapsed, setCollapsed }: FilterMobileType) {
   const dispatch = useDispatch();
-  const search = useAppSelector((state) => state.userGames.search);
-
-  const onSearch = (value: string) => {
-    dispatch(setSearch(value));
-  };
+  const search = useAppSelector((state) => state.userGameFilters.search);
 
   return (
     <Space direction="horizontal" className={styles.mobileSearchFieldWrapper}>
@@ -22,7 +18,9 @@ function FilterMobile({ collapsed, setCollapsed }: FilterMobileType) {
         className={styles.mobileSearchField}
         placeholder="search games"
         size="large"
-        onChange={(e) => onSearch(e.target.value)}
+        onChange={(e) =>
+          dispatch(setUserGameFilters({ search: e.target.value }))
+        }
         enterButton="Search"
         value={search}
       />

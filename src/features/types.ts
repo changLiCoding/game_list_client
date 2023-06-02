@@ -15,16 +15,8 @@ type UserInfo = {
 };
 
 export type InitialStateUserGamesListType = {
-  selectedList: string;
-  selectedLists: string[];
   listOrder: string[];
   localListOrder: string[];
-  filters: {
-    platform: string;
-    tag: string;
-    genre: string;
-  };
-  search: string;
 };
 
 export type InitialStateUserGameType = {

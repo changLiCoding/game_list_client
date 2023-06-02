@@ -7,7 +7,7 @@ import styles from '@/components/AllGames/InfoBar/FilterTags/FilterTags.module.s
 import { useAppSelector } from '@/app/hooks';
 import { remove } from '@/utils/utils';
 import { resetGameFilter, resetGameFilters, setGameFilters } from '@/app/store';
-import { BaseFilters } from '@/types/global';
+import { HomeGameFilters } from '@/types/global';
 
 function FilterTags() {
   const dispatch = useDispatch();
@@ -50,7 +50,7 @@ function FilterTags() {
                 id={`tag-${key}`}
                 closable
                 onClose={() => {
-                  dispatch(resetGameFilter(key as keyof BaseFilters));
+                  dispatch(resetGameFilter(key as keyof HomeGameFilters));
                 }}
                 key={value}
                 className={styles.tagsText}
