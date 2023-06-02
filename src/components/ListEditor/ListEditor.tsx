@@ -59,13 +59,13 @@ function ListEditorTemp({
     const data = await deleteUserGames(gameId);
     console.log('deleteUserGames Data:', data);
 
-    const normalizedId = cache.identify({
-      id: userGame.id,
-      __typename: 'UserGame',
-    });
+    // const normalizedId = cache.identify({
+    //   id: userGame.id,
+    //   __typename: 'UserGame',
+    // });
 
-    cache.evict({ id: normalizedId });
-    cache.gc();
+    // cache.evict({ id: normalizedId });
+    // cache.gc();
 
     warning(`Game ${game?.name} deleted from your list`);
   };
