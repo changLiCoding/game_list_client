@@ -43,7 +43,7 @@ function UserGameList() {
   return (
     <div className={styles.mainContainer}>
       <FilterColumn />
-      <div>
+      <div className={styles.userGamesTable}>
         {selectedLists.map((list) => {
           return (
             <UserGamesTable
