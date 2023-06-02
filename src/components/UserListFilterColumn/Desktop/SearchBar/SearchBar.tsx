@@ -11,7 +11,7 @@ function SearchBar() {
   return (
     <Search
       className={styles.searchBar}
-      placeholder="input games"
+      placeholder="Filter"
       onChange={(e) => dispatch(setUserGameFilters({ search: e.target.value }))}
       data-testid="search-bar-desktop"
     />

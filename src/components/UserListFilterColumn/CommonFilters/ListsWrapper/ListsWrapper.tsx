@@ -14,9 +14,7 @@ import AvailableLists from '@/components/UserListFilterColumn/Desktop/AvailableL
 function ListsWrapper() {
   const dispatch = useDispatch();
   const { editNewListsOrder } = useEditListsOrder();
-  // const localListOrder = useAppSelector(
-  //   (state) => state.userGames.localListOrder
-  // );
+
   const localListOrder = useAppSelector(
     (state) => state.userGames.localListOrder
   );

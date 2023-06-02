@@ -6,31 +6,18 @@ import FilterColumn from '@/components/UserListFilterColumn';
 import UserGamesTable from '@/components/GamesListTable';
 import { useAppSelector } from '@/app/hooks';
 import type { Game } from '@/graphql/__generated__/graphql';
-import { ListTypes } from '@/types/global';
 import { setInitialState } from '@/features/userGamesListSlice';
-
-// const LIST_TYPES: ListTypes[] = [
-//   'planning',
-//   'playing',
-//   'paused',
-//   'completed',
-//   'dropped',
-// ];
 
 function UserGameList() {
   const dispatch = useDispatch();
-  // const selectedLists = useAppSelector(
-  //   (state) => state.userGames.selectedLists
-  // );
   const selectedList = useAppSelector(
     (state) => state.userGameFilters.selectedList
   );
   const listOrder = useAppSelector((state) => state.userGames.listOrder);
   const { gamesByStatusForAUserLoading, gamesByStatusForAUser } =
-    useGamesByStatus(); // dsa
+    useGamesByStatus();
 
   // Initialize the listsOrder, selectedLists, and localListOrder in redux toolkit
-
   useEffect(() => {
     if (gamesByStatusForAUser?.gamesByStatusForAUser?.listsOrder) {
       dispatch(

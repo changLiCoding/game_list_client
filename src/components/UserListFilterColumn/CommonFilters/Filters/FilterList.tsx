@@ -61,17 +61,6 @@ function FilterList() {
   const dispatch = useDispatch();
   const gameFilters = useAppSelector((state) => state.userGameFilters);
   const { genres, platforms, tags } = useGetFilters();
-  // const filterValues = useAppSelector((state) => state.userGames.filters);
-  // const { filters } = useFilterOptions(genres, platforms, tags);
-
-  // const onChange = (value: OnChangeCascaderType, fieldName: string): void => {
-  //   dispatch(
-  //     setFilters({
-  //       type: fieldName,
-  //       value: value ? (value as string[])[0] : '',
-  //     })
-  //   );
-  // };
 
   return (
     <div className={styles.dropdownList}>
@@ -98,23 +87,6 @@ function FilterList() {
         options={tags}
         onChange={(value) => dispatch(setUserGameFilters({ tags: value }))}
       />
-      {/* {filters.map((filter) => {
-        const filterVal =
-          filterValues[
-            filter.name.toLowerCase() as 'platform' | 'tag' | 'genre'
-          ];
-        return (
-          <SelectDropdown
-            key={filter.name}
-            customCascaderStyle={styles.cascaderStyle}
-            fieldName={filter.name}
-            options={filter.options}
-            onChange={onChange}
-            changeOnSelect
-            value={filterVal ? [filterVal] : undefined}
-          />
-        );
-      })} */}
     </div>
   );
 }
