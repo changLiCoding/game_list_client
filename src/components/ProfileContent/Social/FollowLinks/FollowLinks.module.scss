@@ -1,0 +1,25 @@
+@use '../../../../styles/variables.scss' as variables;
+
+.followLinksContainer {
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+  .linksHeader {
+    color: variables.$color-text-lighter;
+    margin-bottom: 10px;
+  }
+  .link {
+    color: variables.$color-text-lighter;
+    cursor: pointer;
+    border-radius: 3px;
+    display: block;
+    font-size: 0.8rem;
+    margin-bottom: 8px;
+    padding: 5px 10px;
+  }
+
+  .selected {
+    background: rgba(variables.$color-foreground, 0.8);
+    color: variables.$color-text;
+    font-weight: 500;
+  }
+}
