@@ -1,5 +1,5 @@
 import { useLazyQuery } from '@apollo/client';
-import { USER } from './queries';
+import { USER } from '@/services/user/queries';
 import { getTokenFromLocalStorage } from '@/constants';
 
 const useGetUser = () => {
