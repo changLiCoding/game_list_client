@@ -86,7 +86,10 @@ export default function FiltersWrapper() {
   return (
     <Layout className={styles.layoutFiltersWrapperContainer}>
       {screens.md ? (
-        <div className={filterFieldStyles.layoutFilterFieldContainer}>
+        <div
+          aria-label="home-filter-desktop-view"
+          className={filterFieldStyles.layoutFilterFieldContainer}
+        >
           <div>
             <h3 className={filterFieldStyles.h3FilterFieldTitle}>Search</h3>
             <Input
@@ -145,6 +148,7 @@ export default function FiltersWrapper() {
         </div>
       ) : (
         <Space
+          aria-label="home-filter-mobile-view"
           direction="horizontal"
           size={screens.sm ? 48 : 24}
           className={styles.spaceFiltersWrapperContainer}

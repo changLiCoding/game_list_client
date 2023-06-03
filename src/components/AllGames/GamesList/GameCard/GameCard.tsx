@@ -72,6 +72,7 @@ export default function GameCard({
           <Popover
             color="#f0f0f0"
             title={game.name}
+            aria-label={`gamecard-popover-${game.name}`}
             content={
               <div style={{ position: 'relative' }}>
                 {game.releaseDate && (
