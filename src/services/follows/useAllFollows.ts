@@ -4,7 +4,7 @@ import {
   ApolloQueryResult,
   QueryResult,
 } from '@apollo/client';
-import { ALL_FOLLOWS_AND_FOLLOWERS } from '@/services/user/queries';
+import { ALL_FOLLOWS_AND_FOLLOWERS } from '@/services/follows/queries';
 import { getTokenFromLocalStorage } from '@/constants';
 import {
   User as UserType,
@@ -20,7 +20,7 @@ type UseAllFollowsType = {
   >;
   refetch: () => Promise<
     ApolloQueryResult<{
-      getUserById: {
+      getAllFollows: {
         id: string;
         followedUsers: UserType[];
         followers: UserType[];
@@ -39,12 +39,12 @@ const useAllFollows = (): UseAllFollowsType => {
   console.log(data);
 
   try {
-    if (!data || !data.getUserById) {
+    if (!data || !data.getAllFollows) {
       throw new Error('Error getting follows');
     }
 
-    const follows = data.getUserById.followedUsers;
-    const { followers } = data.getUserById;
+    const follows = data.getAllFollows.followedUsers;
+    const { followers } = data.getAllFollows;
 
     return {
       getAllFollows,
@@ -58,12 +58,12 @@ const useAllFollows = (): UseAllFollowsType => {
 
     if (error instanceof Error) {
       const follows = data
-        ? (data?.getUserById?.followedUsers as UserType[])
+        ? (data?.getAllFollows?.followedUsers as UserType[])
         : [];
 
       const followers =
-        data?.getUserById?.followers.length > 0
-          ? (data?.getUserById?.followers as UserType[])
+        data?.getAllFollows?.followers.length > 0
+          ? (data?.getAllFollows?.followers as UserType[])
           : [];
 
       return {

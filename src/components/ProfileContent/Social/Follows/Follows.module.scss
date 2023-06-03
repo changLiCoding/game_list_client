@@ -37,7 +37,7 @@
         width: 100%;
         word-break: break-all;
         text-decoration: none;
-        @include mixin.loginTablet {
+        @include mixin.phone {
           opacity: 1;
         }
         &:hover {
@@ -71,7 +71,7 @@
         }
       }
 
-      @include mixin.loginTablet {
+      @include mixin.phone {
         opacity: 1;
       }
     }
