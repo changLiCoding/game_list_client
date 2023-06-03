@@ -5,15 +5,13 @@ import Follows from '@/components/ProfileContent/Social/Follows/Follows';
 import useAllFollows from '@/services/follows/useAllFollows';
 
 function Social() {
-  const { getAllFollows, follows, followers, loading, refetch } =
-    useAllFollows();
+  const { getAllFollows, follows, followers, loading } = useAllFollows();
 
   const [selectedFilter, setSeletedFilter] = useState('Followings');
 
   useEffect(() => {
     if (getAllFollows) {
       getAllFollows();
-      console.log(follows, followers);
     }
   }, [getAllFollows]);
 
@@ -28,8 +26,8 @@ function Social() {
       />
       <Follows
         follows={follows}
-        loading
         followers={followers}
+        loading={loading}
         selectedFilter={selectedFilter}
       />
     </div>

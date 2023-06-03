@@ -1,25 +1,22 @@
-import React from 'react';
-import { CloseCircleFilled, CloseOutlined } from '@ant-design/icons';
+import { CloseOutlined } from '@ant-design/icons';
 
 import styles from '@/components/ProfileContent/Social/Follows/Follows.module.scss';
 import { User as UserType } from '@/graphql/__generated__/graphql';
 
 function Follows({
   follows,
-  // loading,
+  loading,
   followers,
   selectedFilter,
 }: {
   follows: UserType[];
-  // loading: boolean;
+  loading: boolean;
   followers: UserType[];
   selectedFilter: string;
 }) {
-  console.log(follows);
-
-  // if (loading) {
-  //   return <div>Loading...</div>;
-  // }
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   const loadedData = selectedFilter === 'Followings' ? follows : followers;
 

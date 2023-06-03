@@ -36,7 +36,6 @@ const useAllFollows = (): UseAllFollowsType => {
       context: getTokenFromLocalStorage.context,
     }
   );
-  console.log(data);
 
   try {
     if (!data || !data.getAllFollows) {
@@ -54,8 +53,6 @@ const useAllFollows = (): UseAllFollowsType => {
       refetch,
     };
   } catch (error: unknown) {
-    console.log(error);
-
     if (error instanceof Error) {
       const follows = data
         ? (data?.getAllFollows?.followedUsers as UserType[])

@@ -85,7 +85,6 @@ const useAddDeleteGame = () => {
           cache.modify({
             fields: {
               userGames() {
-                console.log('data updated', data.deleteUserGames);
                 return data.deleteUserGames.userGame;
               },
             },
