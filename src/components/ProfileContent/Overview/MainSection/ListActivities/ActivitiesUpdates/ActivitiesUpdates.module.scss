@@ -73,6 +73,20 @@
         color: variables.$color-blue-dim;
         position: absolute;
         right: 12px;
+
+        .liked {
+          color: variables.$color-red;
+          width: 4px;
+        }
+        .notLiked {
+          color: variables.$color-blue-dim;
+        }
+        .likeCount {
+          color: variables.$color-red;
+          margin-right: 10px;
+          font-size: 12px;
+        }
+
         > div {
           cursor: pointer;
           display: inline-block;

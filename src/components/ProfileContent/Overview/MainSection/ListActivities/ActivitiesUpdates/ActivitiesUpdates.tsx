@@ -1,4 +1,5 @@
-import { LikeOutlined, WechatOutlined } from '@ant-design/icons';
+import { WechatOutlined, HeartFilled, HeartOutlined } from '@ant-design/icons';
+import { Button } from 'antd';
 
 import { StatusUpdate as StatusUpdateType } from '@/graphql/__generated__/graphql';
 import styles from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivitiesUpdates.module.scss';
@@ -96,6 +97,7 @@ function ActivitiesUpdates({
         );
     }
   };
+  console.log(statusUpdates);
 
   return (
     <div className={styles.activitiesUpdatesContainer}>
@@ -129,9 +131,22 @@ function ActivitiesUpdates({
                   ago
                 </div>
                 <div className={styles.actions}>
-                  <div>
-                    <LikeOutlined />
-                  </div>
+                  <Button
+                    type="ghost"
+                    icon={
+                      statusUpdate.likesCount > 0 ? (
+                        <HeartFilled className={styles.liked} />
+                      ) : (
+                        <HeartOutlined className={styles.notLiked} />
+                      )
+                    }
+                  />
+
+                  <span className={styles.likeCount}>
+                    {statusUpdate.likesCount > 0
+                      ? statusUpdate.likesCount
+                      : '   '}
+                  </span>
                   <div>
                     <WechatOutlined />
                   </div>

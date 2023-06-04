@@ -9,6 +9,12 @@ export const GET_ALL_STATUS_UPDATES_FOR_A_USER = gql`
       imageURL
       updatedAt
       status
+      likesCount
+      likedUsers {
+        id
+        username
+        userPicture
+      }
     }
   }
 `;
