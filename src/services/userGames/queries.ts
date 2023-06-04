@@ -5,6 +5,12 @@ export const DELETE_USER_GAMES = gql`
     deleteUserGames(input: { gameId: $gameId }) {
       userGame {
         id
+        gameStatus
+        gameNote
+        startDate
+        completedDate
+        rating
+        private
         game {
           id
           name

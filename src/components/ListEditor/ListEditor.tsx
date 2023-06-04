@@ -7,7 +7,6 @@ import {
 import { useDispatch } from 'react-redux';
 import React from 'react';
 
-import { apolloClient } from '@/graphql';
 import useAddDeleteGame from '@/services/userGames/useAddDeleteGame';
 import useEditUserGame from '@/services/userGames/useEditUserGame';
 import useNotification from '@/hooks/useNotification';
@@ -45,8 +44,6 @@ function ListEditorTemp({
 
   const { contextHolder, info, warning, success } = useNotification();
 
-  const { cache } = apolloClient;
-
   const { addUserGames, deleteUserGames } = useAddDeleteGame();
   const { editUserGame } = useEditUserGame();
 
@@ -58,13 +55,13 @@ function ListEditorTemp({
   const onDeleteGameHandler = async (gameId: string) => {
     await deleteUserGames(gameId);
 
-    const normalizedId = cache.identify({
-      id: userGame.id,
-      __typename: 'UserGame',
-    });
+    // const normalizedId = cache.identify({
+    //   id: userGame.id,
+    //   __typename: 'UserGame',
+    // });
 
-    cache.evict({ id: normalizedId });
-    cache.gc();
+    // cache.evict({ id: normalizedId });
+    // cache.gc();
 
     warning(`Game ${game?.name} deleted from your list`);
   };

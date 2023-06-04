@@ -26,7 +26,9 @@ function ListActivities() {
   }, [getAllStatusUpdatesForAUser]);
 
   useEffect(() => {
-    refetch();
+    if (addedList.length > 0) {
+      refetch();
+    }
   }, [addedList, refetch]);
 
   useEffect(() => {

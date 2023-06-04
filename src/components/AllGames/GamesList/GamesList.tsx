@@ -18,6 +18,7 @@ import { setAddedGames } from '@/features/addedGamesSlice';
 export default function GamesList() {
   const homeSearchState = useAppSelector((state) => state.homeSearch);
   const gameFilters = useAppSelector((state) => state.gameFilters);
+  const { addedList } = useAppSelector((state) => state.addedGames);
 
   const [tempSearch, setTempSearch] = useState<string | undefined>('');
 
@@ -40,9 +41,9 @@ export default function GamesList() {
     ...getTokenFromLocalStorage,
     onCompleted: (games) => {
       const { allGames: allGamesData } = games;
-      if (allGamesData) {
+      if (allGamesData && addedList.length === 0) {
         allGamesData.forEach((game) => {
-          if (game.isGameAdded) {
+          if (game.isGameAdded && !addedList.includes(game.id)) {
             dispatch(
               setAddedGames({
                 type: 'add',
@@ -88,8 +89,6 @@ export default function GamesList() {
       unsubscribe();
     };
   }, [debouncedFilter, tempSearch]);
-
-  const { addedList } = useAppSelector((state) => state.addedGames);
 
   const openGameListEditor = async (game: GameDataType) => {
     setSelectedGame(game);

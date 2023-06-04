@@ -81,6 +81,16 @@ const useAddDeleteGame = () => {
         // ],
         // awaitRefetchQueries: true,
 
+        update: (cache, { data }) => {
+          cache.modify({
+            fields: {
+              userGames() {
+                return data.deleteUserGames.userGame;
+              },
+            },
+          });
+        },
+
         onCompleted: (data) => {
           // REMOVE GAME IN REDUX STORE
           if (
