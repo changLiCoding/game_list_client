@@ -3,6 +3,7 @@ import { useMutation } from '@apollo/client';
 import { ADD_LIKE_TO_LIKEABLE } from './querires';
 import { getTokenFromLocalStorage } from '@/constants';
 import type { AddLikeToLikeablePayload } from '@/graphql/__generated__/graphql';
+import { GET_ALL_STATUS_UPDATES_FOR_A_USER } from '../statusUpdate/queries';
 
 const useAddRemoveLike = () => {
   const [addLikeRequest] = useMutation(ADD_LIKE_TO_LIKEABLE);
@@ -15,6 +16,21 @@ const useAddRemoveLike = () => {
       const response = await addLikeRequest({
         variables: { likeableId, likeableType },
         context: getTokenFromLocalStorage.context,
+        // update: (cache, { data }) => {
+        //   console.log(
+        //     'data.addLikeToLikeable.like returned from addLike mutation: ',
+        //     data.addLikeToLikeable.like
+        //   );
+        //   // console.log(cache.data.data);
+
+        //   const { getAllStatusUpdatesForAUser } = cache.readQuery({
+        //     query: GET_ALL_STATUS_UPDATES_FOR_A_USER,
+        //   });
+        //   console.log(
+        //     'readQueryResponse log results',
+        //     getAllStatusUpdatesForAUser
+        //   );
+        // },
       });
       if (
         !response ||
