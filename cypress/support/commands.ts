@@ -35,3 +35,35 @@
 //     }
 //   }
 // }
+
+import "cypress-localstorage-commands";
+
+Cypress.Commands.add("login", () => { 
+  cy.request({
+    method: 'POST',
+    url: 'http://127.0.0.1:3000/graphql',
+    body: {
+      operationName: "Login",
+      variables: { 
+        "email":"v@gmail.com",
+        "password":"password"
+      },
+      query: `mutation Login($email: String!, $password: String!) {
+        login(input: {email: $email, password: $password}) {
+          user {
+           username
+           __typename
+          }
+          token
+          errors
+          __typename
+        }
+      }`
+    }
+  })
+  .its('body')
+  .then(body => {
+    console.log(body.data.login.token);
+    cy.setLocalStorage("token", body.data.login.token);
+  })
+});

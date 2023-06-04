@@ -4,11 +4,8 @@
 
 describe('Navbar', () => {
 
-  beforeEach(() => {
-    cy.visit('http://localhost:5173/')
-  })
-
   it('displays default Navbar', () => {
+    cy.visit('http://localhost:5173/home')
     cy.contains('Home')
     cy.contains('Profile')
     cy.contains('Game List') 
@@ -16,16 +13,15 @@ describe('Navbar', () => {
   })
   
   it('displays Navbar profile popover when signed in', () => {
-      cy.setCookie('token', Cypress.env('VITE_TOKEN_TEST'))
-      cy.setLocalStorage('token', Cypress.env('VITE_TOKEN_TEST'))
-      cy.reload()
+    cy.login()
+    cy.visit('http://localhost:5173/home')
 
-      cy.contains('Settings').should('not.exist')
-      cy.contains('Logout').should('not.exist')
+    cy.contains('Settings').should('not.exist')
+    cy.contains('Logout').should('not.exist')
 
-      cy.get(`.ant-image-img`).click()
-      
-      cy.contains('Settings') 
-      cy.contains('Logout')
+    cy.get(`[data-testid="profile-image"]`).click()
+    
+    cy.contains('Settings') 
+    cy.contains('Logout')
   })
 })
