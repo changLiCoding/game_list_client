@@ -11,6 +11,7 @@ export const getTokenFromLocalStorage = {
 export const INITIAL_USER_STATE = {
   loading: true,
   user: {
+    id: '',
     username: '',
     bannerPicture: '',
     createdAt: '',

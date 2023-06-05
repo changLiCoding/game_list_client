@@ -4,6 +4,7 @@ export type InitialStateType = {
 };
 
 type UserInfo = {
+  id: string;
   username: string;
   bannerPicture: string;
   createdAt: string;

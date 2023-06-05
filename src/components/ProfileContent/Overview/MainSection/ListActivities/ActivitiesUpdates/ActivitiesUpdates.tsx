@@ -1,9 +1,8 @@
-import { HeartFilled, HeartOutlined, MessageOutlined } from '@ant-design/icons';
-import { Button } from 'antd';
-
 import { StatusUpdate as StatusUpdateType } from '@/graphql/__generated__/graphql';
 import styles from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivitiesUpdates.module.scss';
 import useAddRemoveLike from '@/services/like/useAddRemoveLike';
+import ActivityCard from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivityCard';
+import { useAppSelector } from '@/app/hooks';
 
 function ActivitiesUpdates({
   statusUpdates,
@@ -23,6 +22,7 @@ function ActivitiesUpdates({
   }
 
   const { addLike } = useAddRemoveLike();
+  const userState = useAppSelector((state) => state.user);
 
   const activityGenerator = (statusUpdate: StatusUpdateType): JSX.Element => {
     switch (statusUpdate.status) {
@@ -109,62 +109,16 @@ function ActivitiesUpdates({
           const { daysElapsed, hoursElapsed } = getTimeElapsed(
             statusUpdate.updatedAt
           );
-          return (
-            <div className={styles.activity} key={statusUpdate.id}>
-              <div className={styles.activityContent}>
-                <div className={styles.activityInfo}>
-                  <a
-                    href={`/game-detail/${statusUpdate.gameId}/${statusUpdate.gameName}`}
-                    aria-label={`${statusUpdate.gameName}`}
-                    style={{
-                      textIndent: '-9999px',
-                      backgroundImage: `url(${statusUpdate.imageURL})`,
-                    }}
-                  >
-                    {statusUpdate.gameName}
-                  </a>
-                  <div className={styles.activityInfoText}>
-                    <div>{activityGenerator(statusUpdate)}</div>
-                  </div>
-                </div>
-                <div className={styles.time}>
-                  {daysElapsed > 0
-                    ? `${daysElapsed} days`
-                    : `${hoursElapsed} hours`}{' '}
-                  ago
-                </div>
-                <div className={styles.actions}>
-                  <Button
-                    type="ghost"
-                    onClick={async () =>
-                      addLike(statusUpdate.id, 'StatusUpdate')
-                    }
-                    icon={
-                      statusUpdate.likesCount > 0 ? (
-                        <HeartFilled className={styles.liked} />
-                      ) : (
-                        <HeartOutlined className={styles.notLiked} />
-                      )
-                    }
-                  />
 
-                  <span className={styles.likeCount}>
-                    {statusUpdate.likesCount > 0
-                      ? statusUpdate.likesCount
-                      : '   '}
-                  </span>
-                  <div>
-                    <MessageOutlined />
-                  </div>
-                </div>
-              </div>
-              <div
-                className={styles.replayContainer}
-                style={{ display: 'none' }}
-              >
-                replay
-              </div>
-            </div>
+          return (
+            <ActivityCard
+              key={statusUpdate.id}
+              statusUpdate={statusUpdate}
+              daysElapsed={daysElapsed}
+              hoursElapsed={hoursElapsed}
+              updateText={activityGenerator(statusUpdate)}
+              addLike={addLike}
+            />
           );
         })}
     </div>
