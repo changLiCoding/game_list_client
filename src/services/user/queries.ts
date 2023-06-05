@@ -3,6 +3,7 @@ import { gql } from '@apollo/client';
 export const USER = gql`
   query User {
     getUserById {
+      id
       username
       bannerPicture
       userPicture

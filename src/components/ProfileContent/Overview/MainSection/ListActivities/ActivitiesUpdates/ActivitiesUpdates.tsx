@@ -1,7 +1,8 @@
-import { LikeOutlined, WechatOutlined } from '@ant-design/icons';
-
 import { StatusUpdate as StatusUpdateType } from '@/graphql/__generated__/graphql';
 import styles from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivitiesUpdates.module.scss';
+import useAddRemoveLike from '@/services/like/useAddRemoveLike';
+import ActivityCard from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivityCard';
+import { useAppSelector } from '@/app/hooks';
 
 function ActivitiesUpdates({
   statusUpdates,
@@ -19,6 +20,11 @@ function ActivitiesUpdates({
     );
     return { daysElapsed, hoursElapsed };
   }
+
+  const { addLike, removeLike } = useAddRemoveLike();
+  const userState = useAppSelector((state) => state.user.user);
+
+  const { id: currentUserId } = userState;
 
   const activityGenerator = (statusUpdate: StatusUpdateType): JSX.Element => {
     switch (statusUpdate.status) {
@@ -104,46 +110,22 @@ function ActivitiesUpdates({
           const { daysElapsed, hoursElapsed } = getTimeElapsed(
             statusUpdate.updatedAt
           );
+
+          const isCurrentLiked = statusUpdate.likedUsers.some(
+            (user) => user.id === currentUserId
+          );
+
           return (
-            <div className={styles.activity} key={statusUpdate.id}>
-              <div className={styles.activityContent}>
-                <div className={styles.activityInfo}>
-                  <a
-                    href={`/game-detail/${statusUpdate.gameId}/${statusUpdate.gameName}`}
-                    aria-label={`${statusUpdate.gameName}`}
-                    style={{
-                      textIndent: '-9999px',
-                      backgroundImage: `url(${statusUpdate.imageURL})`,
-                    }}
-                  >
-                    {statusUpdate.gameName}
-                  </a>
-                  <div className={styles.activityInfoText}>
-                    <div>{activityGenerator(statusUpdate)}</div>
-                  </div>
-                </div>
-                <div className={styles.time}>
-                  {daysElapsed > 0
-                    ? `${daysElapsed} days`
-                    : `${hoursElapsed} hours`}{' '}
-                  ago
-                </div>
-                <div className={styles.actions}>
-                  <div>
-                    <LikeOutlined />
-                  </div>
-                  <div>
-                    <WechatOutlined />
-                  </div>
-                </div>
-              </div>
-              <div
-                className={styles.replayContainer}
-                style={{ display: 'none' }}
-              >
-                replay
-              </div>
-            </div>
+            <ActivityCard
+              isCurrentLiked={isCurrentLiked}
+              key={statusUpdate.id}
+              statusUpdate={statusUpdate}
+              daysElapsed={daysElapsed}
+              hoursElapsed={hoursElapsed}
+              updateText={activityGenerator(statusUpdate)}
+              addLike={addLike}
+              removeLike={removeLike}
+            />
           );
         })}
     </div>
