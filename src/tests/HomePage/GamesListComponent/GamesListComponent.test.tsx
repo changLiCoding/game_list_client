@@ -1,15 +1,10 @@
 import { describe, it } from 'vitest';
-import { screen } from '@testing-library/react';
-import { MockedProvider } from '@apollo/client/testing';
-import { ConfigProvider } from 'antd';
-import { BrowserRouter } from 'react-router-dom';
+import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { GET_ALL_GAMES } from '@/services/games/queries';
 import { DefaultMockedProvider, renderVite } from '@/utils/test-utils';
 import { store } from '@/app/store';
-import Home from '@/pages/Home';
 import { GET_GAME_FILTERS } from '@/services/game/queries';
-import homeSearchSlice from '@/features/homeSearchSlice';
 import GamesList from '@/components/AllGames/GamesList';
 
 const mocks = [
@@ -103,7 +98,7 @@ const mocks = [
 
 describe('Games List Component', () => {
   it('should render the games list as a grid and show hovered cards', async () => {
-    renderVite(
+    const { queryByText, queryByLabelText } = renderVite(
       <DefaultMockedProvider mocks={mocks}>
         <GamesList />
       </DefaultMockedProvider>,
@@ -123,9 +118,36 @@ describe('Games List Component', () => {
     // Hover over Game 1's card
     await userEvent.hover(await screen.findByText('Game 1'));
 
-    // Expect the card to be inserted into the dom
-    expect(await screen.findByText('Score: 5')).toBeInTheDocument();
-    expect(await screen.findByText('Tags')).toBeInTheDocument();
+    // Expect the popovers to be inserted into the DOM when hovered
+    await userEvent.hover(await screen.findByText('Game 1'));
+    await waitFor(() => {
+      expect(queryByText('Fantasy')).toBeInTheDocument();
+      expect(queryByText('3D')).toBeInTheDocument();
+      expect(queryByText('4D')).not.toBeInTheDocument();
+      expect(queryByText('2D')).not.toBeInTheDocument();
+      expect(queryByLabelText('frown')).toBeInTheDocument();
+      expect(queryByLabelText('smile')).not.toBeInTheDocument();
+      expect(queryByLabelText('meh')).not.toBeInTheDocument();
+    });
+
+    await userEvent.hover(await screen.findByText('Game 2'));
+    await waitFor(() => {
+      expect(queryByText('4D')).toBeInTheDocument();
+      expect(queryByText('Soullike')).toBeInTheDocument();
+      expect(queryByText('2D')).not.toBeInTheDocument();
+      expect(queryByText('Action')).not.toBeInTheDocument();
+      expect(queryByLabelText('smile')).toBeInTheDocument();
+      expect(queryByLabelText('meh')).not.toBeInTheDocument();
+    });
+
+    await userEvent.hover(await screen.findByText('Game 3'));
+    await waitFor(() => {
+      expect(queryByText('2D')).toBeInTheDocument();
+      expect(queryByText('4D')).toBeInTheDocument();
+      expect(queryByLabelText('meh')).toBeInTheDocument();
+      expect(queryByLabelText('smile')).toBeInTheDocument();
+      expect(queryByLabelText('frown')).toBeInTheDocument();
+    });
   });
 
   // aria-label="home-filter-mobile-view"
@@ -144,23 +166,17 @@ describe('Games List Component', () => {
       }
     );
 
+    // Expect all games to render in the list
     expect(await screen.findByText('Game 1')).toBeInTheDocument();
     expect(await screen.findByText('Game 2')).toBeInTheDocument();
     expect(await screen.findByText('Game 3')).toBeInTheDocument();
 
-    // Expect the layout to render as a grid
+    // Expect the layout to render as a list
     expect(await screen.findByLabelText('view-list')).toBeInTheDocument();
 
-    // await userEvent.click(await screen.findByLabelText('set-list-view'));
-    // screen.debug(undefined, 3000000000, {
-    //   highlight: true,
-    //   maxDepth: undefined,
-    // });
-
-    // aria-label="home-filter-mobile-view"
-    // expect(await screen.findByLabelText('view-list')).toBeInTheDocument();
-    // expect(
-    //   await screen.findByLabelText('home-filter-mobile-view')
-    // ).toBeInTheDocument();
+    // Expect the extra data that would be visible only in list form to be rendered
+    expect(await screen.findByText('Rating: 5')).toBeInTheDocument();
+    expect(await screen.findByText('Action')).toBeInTheDocument();
+    expect(await screen.findByText('Adventure')).toBeInTheDocument();
   });
 });
