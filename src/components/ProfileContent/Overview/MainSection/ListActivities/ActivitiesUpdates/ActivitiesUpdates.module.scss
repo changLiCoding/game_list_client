@@ -76,7 +76,6 @@
 
         .liked {
           color: variables.$color-red;
-          width: 4px;
         }
         .notLiked {
           color: variables.$color-blue-dim;
@@ -85,6 +84,9 @@
           color: variables.$color-red;
           margin-right: 10px;
           font-size: 12px;
+        }
+        .zeroCount {
+          opacity: 0;
         }
 
         > div {

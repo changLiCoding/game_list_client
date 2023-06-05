@@ -9,6 +9,7 @@ function ActivityCard({
   daysElapsed,
   hoursElapsed,
   addLike,
+  removeLike,
   updateText,
 }: ActivityCardProps) {
   return (
@@ -36,9 +37,15 @@ function ActivityCard({
         <div className={styles.actions}>
           <Button
             type="ghost"
-            onClick={async () => addLike(statusUpdate.id, 'StatusUpdate')}
+            onClick={async () => {
+              if (isCurrentLiked) {
+                await removeLike(statusUpdate.id, 'StatusUpdate');
+              } else {
+                await addLike(statusUpdate.id, 'StatusUpdate');
+              }
+            }}
             icon={
-              statusUpdate.likesCount > 0 ? (
+              isCurrentLiked ? (
                 <HeartFilled className={styles.liked} />
               ) : (
                 <HeartOutlined className={styles.notLiked} />
@@ -46,8 +53,12 @@ function ActivityCard({
             }
           />
 
-          <span className={styles.likeCount}>
-            {statusUpdate.likesCount > 0 ? statusUpdate.likesCount : '   '}
+          <span
+            className={`${styles.likeCount} ${
+              statusUpdate.likesCount === 0 && styles.zeroCount
+            }`}
+          >
+            {statusUpdate.likesCount}
           </span>
           <div>
             <MessageOutlined />

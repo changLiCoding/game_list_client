@@ -13,4 +13,8 @@ export type ActivityCardProps = {
     likeableId: string,
     likeableType: string
   ) => Promise<AddLikeToLikeablePayload>;
+  removeLike: (
+    likeableId: string,
+    likeableType: string
+  ) => Promise<AddLikeToLikeablePayload>;
 };

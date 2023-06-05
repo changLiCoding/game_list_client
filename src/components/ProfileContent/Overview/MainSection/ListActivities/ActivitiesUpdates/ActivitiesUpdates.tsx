@@ -21,7 +21,7 @@ function ActivitiesUpdates({
     return { daysElapsed, hoursElapsed };
   }
 
-  const { addLike } = useAddRemoveLike();
+  const { addLike, removeLike } = useAddRemoveLike();
   const userState = useAppSelector((state) => state.user.user);
 
   const { id: currentUserId } = userState;
@@ -125,6 +125,7 @@ function ActivitiesUpdates({
               hoursElapsed={hoursElapsed}
               updateText={activityGenerator(statusUpdate)}
               addLike={addLike}
+              removeLike={removeLike}
             />
           );
         })}
