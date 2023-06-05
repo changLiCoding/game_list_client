@@ -1,16 +1,7 @@
-import { describe, it } from 'vitest';
-import { screen } from '@testing-library/react';
-import { MockedProvider } from '@apollo/client/testing';
-import { ConfigProvider } from 'antd';
-import { BrowserRouter } from 'react-router-dom';
-import userEvent from '@testing-library/user-event';
-import { GET_ALL_GAMES } from '@/services/games/queries';
-import { DefaultMockedProvider, renderVite } from '@/utils/test-utils';
-import { store } from '@/app/store';
-import Home from '@/pages/Home';
+import Home from '../../../src/pages/Home/Home';
 import { GET_GAME_FILTERS } from '@/services/game/queries';
-import homeSearchSlice from '@/features/homeSearchSlice';
-import GamesList from '@/components/AllGames/GamesList';
+import { GET_ALL_GAMES } from '@/services/games/queries';
+import { DefaultMockedProvider, renderCypress } from '@/utils/test-utils';
 
 const mocks = [
   {
@@ -101,66 +92,42 @@ const mocks = [
   },
 ];
 
-describe('Games List Component', () => {
-  it('should render the games list as a grid and show hovered cards', async () => {
-    renderVite(
-      <DefaultMockedProvider mocks={mocks}>
-        <GamesList />
-      </DefaultMockedProvider>,
-      { store }
-    );
-
-    expect(await screen.findByText('Game 1')).toBeInTheDocument();
-    expect(await screen.findByText('Game 2')).toBeInTheDocument();
-    expect(await screen.findByText('Game 3')).toBeInTheDocument();
-
-    // Expect the layout to render as a grid
-    expect(await screen.findByLabelText('view-grid')).toBeInTheDocument();
-
-    // Ensure the card is not visible (user has not hovered over it yet)
-    expect(screen.queryByText('Score: 5')).not.toBeInTheDocument();
-
-    // Hover over Game 1's card
-    await userEvent.hover(await screen.findByText('Game 1'));
-
-    // Expect the card to be inserted into the dom
-    expect(await screen.findByText('Score: 5')).toBeInTheDocument();
-    expect(await screen.findByText('Tags')).toBeInTheDocument();
-  });
-
-  // aria-label="home-filter-mobile-view"
-
-  it('should render the games list as a list', async () => {
-    renderVite(
-      <DefaultMockedProvider mocks={mocks}>
-        <GamesList />
+describe('<Home />', () => {
+  it('renders', () => {
+    cy.viewport(1920, 1080);
+    renderCypress(
+      <DefaultMockedProvider mocks={mocks} addTypename={false}>
+        <Home />
       </DefaultMockedProvider>,
       {
         preloadedState: {
           homeSearch: {
-            view: 'list',
+            view: 'grid',
           },
         },
       }
     );
 
-    expect(await screen.findByText('Game 1')).toBeInTheDocument();
-    expect(await screen.findByText('Game 2')).toBeInTheDocument();
-    expect(await screen.findByText('Game 3')).toBeInTheDocument();
+    cy.viewport('ipad-2');
+    cy.contains('Game 1');
+    // cy.contains('Dredge');
 
-    // Expect the layout to render as a grid
-    expect(await screen.findByLabelText('view-list')).toBeInTheDocument();
+    // cy.contains(`[aria-label="view-grid"]`);
 
-    // await userEvent.click(await screen.findByLabelText('set-list-view'));
-    // screen.debug(undefined, 3000000000, {
-    //   highlight: true,
-    //   maxDepth: undefined,
-    // });
+    // // Expect the layout to render as a grid
+    // expect(await screen.findByLabelText('view-grid')).toBeInTheDocument();
 
-    // aria-label="home-filter-mobile-view"
-    // expect(await screen.findByLabelText('view-list')).toBeInTheDocument();
-    // expect(
-    //   await screen.findByLabelText('home-filter-mobile-view')
-    // ).toBeInTheDocument();
+    // // Ensure the card is not visible (user has not hovered over it yet)
+    // expect(screen.queryByText('Score: 5')).not.toBeInTheDocument();
+
+    // // Hover over Game 1's card
+    // await userEvent.hover(await screen.findByText('Game 1'));
+
+    // // Expect the card to be inserted into the dom
+    // expect(await screen.findByText('Score: 5')).toBeInTheDocument();
+    // expect(await screen.findByText('Tags')).toBeInTheDocument();
+
+    // expect(await screen.findByText('Dead Space')).toBeInTheDocument();
+    // expect(await screen.findByText('Dredge')).toBeInTheDocument();
   });
 });

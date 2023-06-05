@@ -1,15 +1,6 @@
-import { describe, it } from 'vitest';
-import { screen } from '@testing-library/react';
-import { MockedProvider } from '@apollo/client/testing';
-import { ConfigProvider } from 'antd';
-import { BrowserRouter } from 'react-router-dom';
-import userEvent from '@testing-library/user-event';
-import { GET_ALL_GAMES } from '@/services/games/queries';
-import { DefaultMockedProvider, renderVite } from '@/utils/test-utils';
-import { store } from '@/app/store';
-import Home from '@/pages/Home';
 import { GET_GAME_FILTERS } from '@/services/game/queries';
-import homeSearchSlice from '@/features/homeSearchSlice';
+import { GET_ALL_GAMES } from '@/services/games/queries';
+import { DefaultMockedProvider, renderCypress } from '@/utils/test-utils';
 import GamesList from '@/components/AllGames/GamesList';
 
 const mocks = [
@@ -101,38 +92,49 @@ const mocks = [
   },
 ];
 
-describe('Games List Component', () => {
-  it('should render the games list as a grid and show hovered cards', async () => {
-    renderVite(
-      <DefaultMockedProvider mocks={mocks}>
+describe('<GameList />', () => {
+  it('should render the games list as a grid and show hovered cards', () => {
+    cy.setLocalStorage(
+      'token',
+      'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2ODg0OTAyNTJ9.W--hThx7Se3R2cpS1L5T2ASm6CqzYy-OZ3k1mlFPoGE'
+    );
+    cy.viewport(1920, 1080);
+    renderCypress(
+      <DefaultMockedProvider mocks={mocks} addTypename={false}>
         <GamesList />
       </DefaultMockedProvider>,
-      { store }
+      {
+        preloadedState: {
+          homeSearch: {
+            view: 'grid',
+          },
+        },
+      }
     );
 
-    expect(await screen.findByText('Game 1')).toBeInTheDocument();
-    expect(await screen.findByText('Game 2')).toBeInTheDocument();
-    expect(await screen.findByText('Game 3')).toBeInTheDocument();
+    cy.contains(`Error!`).should('not.exist');
 
-    // Expect the layout to render as a grid
-    expect(await screen.findByLabelText('view-grid')).toBeInTheDocument();
+    cy.contains('Game 1');
+    cy.contains('Game 2');
+    cy.contains('Game 3');
 
-    // Ensure the card is not visible (user has not hovered over it yet)
-    expect(screen.queryByText('Score: 5')).not.toBeInTheDocument();
+    cy.contains(`Score: 5`).should('not.exist');
+    cy.contains(`Tags`).should('not.exist');
 
-    // Hover over Game 1's card
-    await userEvent.hover(await screen.findByText('Game 1'));
+    cy.get('[game-card-id="1"]').trigger('mouseover');
 
-    // Expect the card to be inserted into the dom
-    expect(await screen.findByText('Score: 5')).toBeInTheDocument();
-    expect(await screen.findByText('Tags')).toBeInTheDocument();
+    cy.contains('Score: 5');
+    cy.contains('Tags');
   });
 
-  // aria-label="home-filter-mobile-view"
-
-  it('should render the games list as a list', async () => {
-    renderVite(
-      <DefaultMockedProvider mocks={mocks}>
+  it('should render the games list as a list (Desktop)', () => {
+    cy.setLocalStorage(
+      'token',
+      'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2ODg0OTAyNTJ9.W--hThx7Se3R2cpS1L5T2ASm6CqzYy-OZ3k1mlFPoGE'
+    );
+    cy.viewport(1920, 1080);
+    renderCypress(
+      <DefaultMockedProvider mocks={mocks} addTypename={false}>
         <GamesList />
       </DefaultMockedProvider>,
       {
@@ -144,23 +146,52 @@ describe('Games List Component', () => {
       }
     );
 
-    expect(await screen.findByText('Game 1')).toBeInTheDocument();
-    expect(await screen.findByText('Game 2')).toBeInTheDocument();
-    expect(await screen.findByText('Game 3')).toBeInTheDocument();
+    cy.contains(`Error!`).should('not.exist');
 
-    // Expect the layout to render as a grid
-    expect(await screen.findByLabelText('view-list')).toBeInTheDocument();
+    cy.contains('Game 1');
+    cy.contains('Game 2');
+    cy.contains('Game 3');
 
-    // await userEvent.click(await screen.findByLabelText('set-list-view'));
-    // screen.debug(undefined, 3000000000, {
-    //   highlight: true,
-    //   maxDepth: undefined,
-    // });
+    cy.contains('[game-card-id="1"]').should('not.exist');
 
-    // aria-label="home-filter-mobile-view"
-    // expect(await screen.findByLabelText('view-list')).toBeInTheDocument();
-    // expect(
-    //   await screen.findByLabelText('home-filter-mobile-view')
-    // ).toBeInTheDocument();
+    cy.contains('Rating: 5');
+    cy.contains('Release Date:');
+    cy.contains('PC');
+    cy.contains('macOS');
+    cy.contains('Tags').should('not.exist');
+  });
+
+  it('should render the games list as a list (Mobile)', () => {
+    cy.setLocalStorage(
+      'token',
+      'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2ODg0OTAyNTJ9.W--hThx7Se3R2cpS1L5T2ASm6CqzYy-OZ3k1mlFPoGE'
+    );
+    cy.viewport('iphone-6');
+    renderCypress(
+      <DefaultMockedProvider mocks={mocks} addTypename={false}>
+        <GamesList />
+      </DefaultMockedProvider>,
+      {
+        preloadedState: {
+          homeSearch: {
+            view: 'list',
+          },
+        },
+      }
+    );
+
+    cy.contains(`Error!`).should('not.exist');
+
+    cy.contains('Game 1');
+    cy.contains('Game 2');
+    cy.contains('Game 3');
+
+    cy.contains('[game-card-id="1"]').should('not.exist');
+
+    cy.contains('Rating: 5');
+    cy.contains('Release Date:');
+    cy.get('PC').should('not.exist');
+    cy.get('macOS').should('not.exist');
+    cy.get('Tags').should('not.exist');
   });
 });

@@ -100,6 +100,7 @@ export default function GameCard({
               <Link to={`/game-detail/${game.id}/${game.name}`}>
                 {game.imageURL && (
                   <Card
+                    game-card-id={game.id}
                     className={styles.cardGameContainer}
                     bordered={false}
                     style={{
