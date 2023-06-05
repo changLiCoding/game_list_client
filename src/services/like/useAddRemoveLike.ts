@@ -44,7 +44,6 @@ const useAddRemoveLike = () => {
       ) {
         throw new Error(response.data.addLikeToLikeable.errors[0]);
       }
-      console.log(response.data.addLikeToLikeable);
 
       return response.data.addLikeToLikeable;
     } catch (error: unknown) {
@@ -72,7 +71,6 @@ const useAddRemoveLike = () => {
       ) {
         throw new Error(response.data.removeLikeFromLikeable.errors[0]);
       }
-      console.log('RemoveLike return: ', response.data.removeLikeFromLikeable);
 
       return response.data.removeLikeFromLikeable;
     } catch (error: unknown) {

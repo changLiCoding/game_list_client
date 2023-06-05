@@ -102,7 +102,6 @@ function ActivitiesUpdates({
         );
     }
   };
-  console.log(statusUpdates);
 
   return (
     <div className={styles.activitiesUpdatesContainer}>
