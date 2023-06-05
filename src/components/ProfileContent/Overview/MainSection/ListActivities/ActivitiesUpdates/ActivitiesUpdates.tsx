@@ -22,7 +22,9 @@ function ActivitiesUpdates({
   }
 
   const { addLike } = useAddRemoveLike();
-  const userState = useAppSelector((state) => state.user);
+  const userState = useAppSelector((state) => state.user.user);
+
+  const { id: currentUserId } = userState;
 
   const activityGenerator = (statusUpdate: StatusUpdateType): JSX.Element => {
     switch (statusUpdate.status) {
@@ -110,8 +112,13 @@ function ActivitiesUpdates({
             statusUpdate.updatedAt
           );
 
+          const isCurrentLiked = statusUpdate.likedUsers.some(
+            (user) => user.id === currentUserId
+          );
+
           return (
             <ActivityCard
+              isCurrentLiked={isCurrentLiked}
               key={statusUpdate.id}
               statusUpdate={statusUpdate}
               daysElapsed={daysElapsed}

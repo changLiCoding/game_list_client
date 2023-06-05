@@ -4,10 +4,11 @@ import {
 } from '@/graphql/__generated__/graphql';
 
 export type ActivityCardProps = {
+  isCurrentLiked: boolean;
   statusUpdate: StatusUpdateType;
   daysElapsed: number;
   hoursElapsed: number;
-  updateText: string;
+  updateText: JSX.Element;
   addLike: (
     likeableId: string,
     likeableType: string

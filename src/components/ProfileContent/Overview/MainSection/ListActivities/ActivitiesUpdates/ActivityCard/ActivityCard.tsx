@@ -4,6 +4,7 @@ import styles from '@/components/ProfileContent/Overview/MainSection/ListActivit
 import type { ActivityCardProps } from './type';
 
 function ActivityCard({
+  isCurrentLiked,
   statusUpdate,
   daysElapsed,
   hoursElapsed,
