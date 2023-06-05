@@ -38,10 +38,10 @@
 
 import "cypress-localstorage-commands";
 
-Cypress.Commands.add("login", () => { 
+Cypress.Commands.add("loginWithRequest", () => { 
   cy.request({
     method: 'POST',
-    url: 'http://127.0.0.1:3000/graphql',
+    url: `${Cypress.env('BACKEND_URL')}/graphql`,
     body: {
       operationName: "Login",
       variables: { 
@@ -66,4 +66,8 @@ Cypress.Commands.add("login", () => {
     console.log(body.data.login.token);
     cy.setLocalStorage("token", body.data.login.token);
   })
+});
+
+Cypress.Commands.add("loginWithLocalStorage", () => { 
+  cy.setLocalStorage('token', Cypress.env('VITE_TOKEN_TEST'));
 });
