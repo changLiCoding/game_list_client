@@ -2,6 +2,7 @@ import { CloseOutlined } from '@ant-design/icons';
 
 import styles from '@/components/ProfileContent/Social/Follows/Follows.module.scss';
 import { User as UserType } from '@/graphql/__generated__/graphql';
+import useAddRemoveFollow from '@/services/follows/useAddRemoveFollow';
 
 function Follows({
   follows,
@@ -14,6 +15,7 @@ function Follows({
   followers: UserType[];
   selectedFilter: string;
 }) {
+  const { addFollow, removeFollow } = useAddRemoveFollow();
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -32,7 +34,7 @@ function Follows({
               <a href={`/user/${follow.username}/`}>{follow.username}</a>
             </div>
             <div className={styles.unfollow}>
-              <CloseOutlined />{' '}
+              <CloseOutlined onClick={async () => removeFollow(follow.id)} />{' '}
             </div>
           </div>
         ))}

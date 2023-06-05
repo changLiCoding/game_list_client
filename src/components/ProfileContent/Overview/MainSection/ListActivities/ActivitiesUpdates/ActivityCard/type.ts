@@ -1,6 +1,7 @@
 import {
   StatusUpdate as StatusUpdateType,
   AddLikeToLikeablePayload,
+  RemoveLikeFromLikeablePayload,
 } from '@/graphql/__generated__/graphql';
 
 export type ActivityCardProps = {
@@ -16,5 +17,5 @@ export type ActivityCardProps = {
   removeLike: (
     likeableId: string,
     likeableType: string
-  ) => Promise<AddLikeToLikeablePayload>;
+  ) => Promise<RemoveLikeFromLikeablePayload>;
 };
