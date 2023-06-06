@@ -1,80 +1,9 @@
 import { GET_GAME_FILTERS } from '@/services/game/queries';
-import { GET_ALL_GAMES } from '@/services/games/queries';
 import { DefaultMockedProvider, renderCypress } from '@/utils/test-utils';
 import UserGameList from '@/pages/UserGameList';
 import { GET_GAMES_BY_STATUS } from '@/services/userGames/queries';
 
 const mocks = [
-  {
-    request: {
-      query: GET_ALL_GAMES,
-      variables: {
-        genre: [],
-        tag: [],
-        platform: [],
-        year: undefined,
-        sortBy: 'name',
-        search: '',
-      },
-    },
-    result: {
-      data: {
-        allGames: [
-          {
-            __typename: 'Game',
-            id: '1',
-            name: 'Game 1',
-            description: 'Description 1',
-            imageURL:
-              'https://images.igdb.com/igdb/image/upload/t_cover_big/co4a7a.png',
-            bannerURL:
-              'https://images.igdb.com/igdb/image/upload/t_cover_big/co4a7a.png',
-            tags: ['3D', 'Fantasy'],
-            genres: ['Action', 'Adventure'],
-            platforms: ['PC', 'macOS'],
-            releaseDate: '2021-01-01 00:00:00',
-            avgScore: 5,
-            totalRating: 5,
-            isGameAdded: false,
-          },
-          {
-            __typename: 'Game',
-            id: '2',
-            name: 'Game 2',
-            description: 'Description 2',
-            imageURL:
-              'https://images.igdb.com/igdb/image/upload/t_cover_big/co4a7a.png',
-            bannerURL:
-              'https://images.igdb.com/igdb/image/upload/t_cover_big/co4a7a.png',
-            tags: ['4D', 'Soullike'],
-            genres: ['Role Playing', 'Straitagy'],
-            platforms: ['Xbox 360', 'Playstation 3'],
-            releaseDate: '2021-01-02 00:00:00',
-            avgScore: 10,
-            totalRating: 5,
-            isGameAdded: false,
-          },
-          {
-            __typename: 'Game',
-            id: '3',
-            name: 'Game 3',
-            description: 'Description 3',
-            imageURL:
-              'https://images.igdb.com/igdb/image/upload/t_cover_big/co4a7a.png',
-            bannerURL:
-              'https://images.igdb.com/igdb/image/upload/t_cover_big/co4a7a.png',
-            tags: ['2D', 'Action'],
-            genres: ['JRPG', 'Simulation'],
-            platforms: ['Xbox', 'Playstation 2'],
-            releaseDate: '2021-01-03 00:00:00',
-            avgScore: 8,
-            totalRating: 5,
-            isGameAdded: false,
-          },
-        ],
-      },
-    },
-  },
   {
     request: {
       query: GET_GAME_FILTERS,
@@ -181,6 +110,7 @@ describe('<UserGameList />', () => {
         <UserGameList />
       </DefaultMockedProvider>
     );
+
     cy.contains('Halo 2').should('exist');
     cy.contains('Halo 3').should('exist');
     cy.contains('Pokemon Alpha Sapphire').should('exist');
@@ -216,18 +146,25 @@ describe('<UserGameList />', () => {
         <UserGameList />
       </DefaultMockedProvider>
     );
+
     cy.contains('Halo 2').should('exist');
     cy.contains('Halo 3').should('exist');
     cy.contains('Pokemon Alpha Sapphire').should('exist');
+
     cy.get('[data-testid="listitem-Playing"]').click();
+
     cy.contains('Halo 2').should('exist');
     cy.contains('Halo 3').should('exist');
     cy.contains('Pokemon Alpha Sapphire').should('not.exist');
+
     cy.get('[data-testid="listitem-Planning"]').click();
+
     cy.contains('Halo 2').should('not.exist');
     cy.contains('Halo 3').should('not.exist');
     cy.contains('Pokemon Alpha Sapphire').should('exist');
+
     cy.get('[data-testid="listitem-All"]').click();
+
     cy.contains('Halo 2').should('exist');
     cy.contains('Halo 3').should('exist');
     cy.contains('Pokemon Alpha Sapphire').should('exist');
@@ -243,56 +180,75 @@ describe('<UserGameList />', () => {
         <UserGameList />
       </DefaultMockedProvider>
     );
+
     // Expect all games to render
     cy.contains('Halo 2').should('exist');
     cy.contains('Halo 3').should('exist');
     cy.contains('Pokemon Alpha Sapphire').should('exist');
+
     // Click on the genres dropdown
     cy.get('[data-testid="dropdown-genres"]').click();
+
     // Click the 'Action' option
     cy.get('[data-testid="option-Action"]').click();
+
     // Expect no games to render
     cy.contains('Halo 2').should('not.exist');
     cy.contains('Halo 3').should('not.exist');
     cy.contains('Pokemon Alpha Sapphire').should('not.exist');
+
     // Click the 'Genere' option clear button
     cy.get('[data-testid="dropdown-genres"] > .ant-select-clear').click();
+
     // Expect all games to render
     cy.contains('Halo 2').should('exist');
     cy.contains('Halo 3').should('exist');
     cy.contains('Pokemon Alpha Sapphire').should('exist');
+
     // Click on the genres dropdown
     cy.get('[data-testid="dropdown-platforms"]').click();
+
     // Click the 'Action' option
     cy.get('[data-testid="option-PC"]').click();
+
     // Expect all games to render
     cy.contains('Halo 2').should('not.exist');
     cy.contains('Halo 3').should('not.exist');
     cy.contains('Pokemon Alpha Sapphire').should('not.exist');
+
     // Click the 'Platforms' option clear button
     cy.get('[data-testid="dropdown-platforms"] > .ant-select-clear').click();
+
     // Expect all games to render
     cy.contains('Halo 2').should('exist');
     cy.contains('Halo 3').should('exist');
     cy.contains('Pokemon Alpha Sapphire').should('exist');
+
     // Click on the genres dropdown
     cy.get('[data-testid="dropdown-tags"]').click();
+
     // Click the 'Action' option
     cy.get('[data-testid="option-3D"]').click();
+
     // Expect all games to render
     cy.contains('Halo 2').should('exist');
     cy.contains('Halo 3').should('not.exist');
     cy.contains('Pokemon Alpha Sapphire').should('not.exist');
+
     // Click on the genres dropdown
     cy.get('[data-testid="dropdown-tags"]').click();
+
     // Click the 'Action' option
     cy.get('[data-testid="option-Fantasy"]').click();
+
     // Expect all games to render
     cy.contains('Halo 2').should('not.exist');
     cy.contains('Halo 3').should('not.exist');
     cy.contains('Pokemon Alpha Sapphire').should('exist');
+
     // Click the 'Platforms' option clear button
     cy.get('[data-testid="dropdown-tags"] > .ant-select-clear').click();
+
     // Expect all games to render
     cy.contains('Halo 2').should('exist');
     cy.contains('Halo 3').should('exist');
