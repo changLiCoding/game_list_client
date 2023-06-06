@@ -18,3 +18,24 @@ export const GET_ALL_STATUS_UPDATES_FOR_A_USER = gql`
     }
   }
 `;
+
+export const GET_GLOBAL_STATUS_UPDATES = gql`
+  query getGlobalStatusUpdates {
+    getGlobalStatusUpdates {
+      id
+      username
+      userPicture
+      gameId
+      gameName
+      imageURL
+      updatedAt
+      status
+      likesCount
+      likedUsers {
+        id
+        username
+        userPicture
+      }
+    }
+  }
+`;

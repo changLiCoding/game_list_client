@@ -4,7 +4,7 @@ import { Dropdown, Space } from 'antd';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import styles from '@/components/ProfileContent/Overview/MainSection/ListActivities/ListActivities.module.scss';
-import useStatusUpdates from '@/services/statusUpdate/useStatusUpdates';
+import useGlobalStatusUpdates from '@/services/statusUpdate/useGlobalStatusUpdates';
 import PostInput from '@/components/ProfileContent/Overview/MainSection/ListActivities/PostInput/PostInput';
 import ActivitiesUpdates from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivitiesUpdates';
 import { useAppSelector } from '@/app/hooks';
@@ -16,14 +16,14 @@ function ListActivities() {
   const { isUserGameEdited, addedList } = useAppSelector(
     (state) => state.addedGames
   );
-  const { getAllStatusUpdatesForAUser, refetch, statusUpdates, loading } =
-    useStatusUpdates();
+  const { getGlobalStatusUpdates, refetch, statusUpdates, loading } =
+    useGlobalStatusUpdates();
 
   useEffect(() => {
-    if (getAllStatusUpdatesForAUser) {
-      getAllStatusUpdatesForAUser();
+    if (getGlobalStatusUpdates) {
+      getGlobalStatusUpdates();
     }
-  }, [getAllStatusUpdatesForAUser]);
+  }, [getGlobalStatusUpdates]);
 
   useEffect(() => {
     if (addedList.length > 0) {
