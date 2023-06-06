@@ -23,6 +23,7 @@ export const GET_GLOBAL_STATUS_UPDATES = gql`
   query getGlobalStatusUpdates {
     getGlobalStatusUpdates {
       id
+      userId
       username
       userPicture
       gameId

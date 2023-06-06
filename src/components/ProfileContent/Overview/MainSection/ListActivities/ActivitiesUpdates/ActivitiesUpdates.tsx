@@ -27,11 +27,15 @@ function ActivitiesUpdates({
   const { id: currentUserId } = userState;
 
   const activityGenerator = (statusUpdate: StatusUpdateType): JSX.Element => {
+    const name =
+      currentUserId === statusUpdate.userId ? 'You' : statusUpdate.username;
+
+    const verb = currentUserId === statusUpdate.userId ? 'are' : 'is';
     switch (statusUpdate.status) {
       case 'Playing':
         return (
           <>
-            You are playing{' '}
+            {`${name} ${verb} playing`}
             <a
               href={`/game-detail/${statusUpdate.gameId} / ${statusUpdate.gameName}`}
             >
@@ -45,7 +49,7 @@ function ActivitiesUpdates({
       case 'Paused':
         return (
           <>
-            You {statusUpdate.status.toLowerCase()}{' '}
+            {name} {statusUpdate.status.toLowerCase()}{' '}
             <a
               href={`/game-detail/${statusUpdate.gameId}/${statusUpdate.gameName}`}
             >
@@ -57,7 +61,7 @@ function ActivitiesUpdates({
       case 'Planning':
         return (
           <>
-            You are planning to play{' '}
+            {name} {verb} planning to play{' '}
             <a
               href={`/game-detail/${statusUpdate.gameId}/${statusUpdate.gameName}`}
             >

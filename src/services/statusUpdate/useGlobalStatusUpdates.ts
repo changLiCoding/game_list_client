@@ -6,10 +6,7 @@ import {
 } from '@apollo/client';
 import { getTokenFromLocalStorage } from '@/constants';
 import { GET_GLOBAL_STATUS_UPDATES } from '@/services/statusUpdate/queries';
-import {
-  GetGlobalStatusUpdatesQuery,
-  StatusUpdate as StatusUpdateType,
-} from '@/graphql/__generated__/graphql';
+import { StatusUpdate as StatusUpdateType } from '@/graphql/__generated__/graphql';
 
 type GlobalStatusUpdateReturnType = {
   statusUpdates: StatusUpdateType[];
@@ -20,7 +17,7 @@ type GlobalStatusUpdateReturnType = {
     ApolloQueryResult<{ getGlobalStatusUpdates: StatusUpdateType[] }>
   >;
   getGlobalStatusUpdates: () => Promise<
-    QueryResult<GetGlobalStatusUpdatesQuery, OperationVariables>
+    QueryResult<StatusUpdateType[], OperationVariables>
   >;
 };
 
