@@ -3,7 +3,7 @@ import { Button, Popover, Avatar, Modal } from 'antd';
 import type { Post as PostType } from '@/graphql/__generated__/graphql';
 import useNotification from '@/hooks/useNotification';
 import useAddRemoveFollow from '@/services/follows/useAddRemoveFollow';
-import styles from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivitiesUpdates.module.scss';
+import styles from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivityCard/PostActivity/PostActivity.module.scss';
 
 function PostActivity({
   post,
@@ -31,7 +31,20 @@ function PostActivity({
   };
   return (
     <div className={styles.postActivityContainer}>
-      <span>{post.text}</span>
+      <div className={styles.postActivityHeader}>
+        <Avatar src={post.userPicture} size={50} />
+        {post.username && (
+          <a href={`/user/${post.username}`} aria-label={post.username}>
+            {' '}
+            {post.username}
+          </a>
+        )}
+      </div>
+      <div className={styles.postActivityBody}>
+        <div>
+          <p>{post.text}</p>
+        </div>
+      </div>
     </div>
   );
 }
