@@ -100,6 +100,9 @@ const mocks = [
   },
 ];
 
+const { getComputedStyle } = window;
+window.getComputedStyle = (elt) => getComputedStyle(elt);
+
 describe('Get games according to list types for a user', () => {
   it('should render all games for a user', async () => {
     renderVite(
