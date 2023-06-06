@@ -37,7 +37,9 @@ function SelectFilterField<T>({
     return options.map((s) => {
       return (
         <Select.Option key={s} value={s}>
-          <div className={styles.option}>{s}</div>
+          <div className={styles.option} data-testid={`option-${s}`}>
+            {s}
+          </div>
         </Select.Option>
       );
     });
