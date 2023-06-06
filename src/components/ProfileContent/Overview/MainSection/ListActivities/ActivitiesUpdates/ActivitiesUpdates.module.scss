@@ -16,13 +16,11 @@
     .activityContent {
       background: variables.$color-foreground;
       border-radius: 3px;
-      font-size: 1.3rem;
       overflow: hidden;
       position: relative;
       .activityInfo {
         display: grid;
-        font-size: 1.4rem;
-        grid-template-columns: 50px auto;
+        grid-template-columns: 60px auto;
         height: 100%;
         min-height: 70px;
         & > a {
@@ -38,7 +36,7 @@
           flex-direction: column;
           justify-content: center;
           line-height: 1.4;
-          min-height: 70px;
+          min-height: 80px;
           font-size: 14px;
           padding: 5px, -1px;
           padding-right: 100px;
@@ -55,6 +53,10 @@
                 color: variables.$color-blue-dim;
               }
             }
+          }
+          span {
+            margin-left: 8px;
+            cursor: pointer;
           }
         }
       }

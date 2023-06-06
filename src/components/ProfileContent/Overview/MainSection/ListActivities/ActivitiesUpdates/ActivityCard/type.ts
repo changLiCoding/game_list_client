@@ -9,7 +9,7 @@ export type ActivityCardProps = {
   statusUpdate: StatusUpdateType;
   daysElapsed: number;
   hoursElapsed: number;
-  updateText: JSX.Element;
+  currentUserId: string;
   addLike: (
     likeableId: string,
     likeableType: string

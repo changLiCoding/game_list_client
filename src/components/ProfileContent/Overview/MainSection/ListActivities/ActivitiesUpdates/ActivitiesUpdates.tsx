@@ -26,87 +26,6 @@ function ActivitiesUpdates({
 
   const { id: currentUserId } = userState;
 
-  const activityGenerator = (statusUpdate: StatusUpdateType): JSX.Element => {
-    const name =
-      currentUserId === statusUpdate.userId ? 'You' : statusUpdate.username;
-
-    const verb = currentUserId === statusUpdate.userId ? 'are' : 'is';
-    switch (statusUpdate.status) {
-      case 'Playing':
-        return (
-          <>
-            {`${name} ${verb} playing`}
-            <a
-              href={`/game-detail/${statusUpdate.gameId} / ${statusUpdate.gameName}`}
-            >
-              {statusUpdate.gameName}
-            </a>{' '}
-          </>
-        );
-
-      case 'Completed':
-      case 'Dropped':
-      case 'Paused':
-        return (
-          <>
-            {name} {statusUpdate.status.toLowerCase()}{' '}
-            <a
-              href={`/game-detail/${statusUpdate.gameId}/${statusUpdate.gameName}`}
-            >
-              {statusUpdate.gameName}
-            </a>{' '}
-          </>
-        );
-
-      case 'Planning':
-        return (
-          <>
-            {name} {verb} planning to play{' '}
-            <a
-              href={`/game-detail/${statusUpdate.gameId}/${statusUpdate.gameName}`}
-            >
-              {statusUpdate.gameName}
-            </a>{' '}
-          </>
-        );
-
-      case 'Inactive':
-        return (
-          <>
-            You removed{' '}
-            <a
-              href={`/game-detail/${statusUpdate.gameId}/${statusUpdate.gameName}`}
-            >
-              {statusUpdate.gameName}
-            </a>{' '}
-            from your list.
-          </>
-        );
-
-      case null:
-        return (
-          <>
-            You just added{' '}
-            <a
-              href={`/game-detail/${statusUpdate.gameId}/${statusUpdate.gameName}`}
-            >
-              {statusUpdate.gameName}
-            </a>{' '}
-            to your list!
-          </>
-        );
-
-      default:
-        return (
-          <a
-            href={`game-detail/${statusUpdate.gameId}/${statusUpdate.gameName}`}
-          >
-            {`${statusUpdate.gameName}`}{' '}
-          </a>
-        );
-    }
-  };
-
   return (
     <div className={styles.activitiesUpdatesContainer}>
       {statusUpdates.length > 0 &&
@@ -126,7 +45,7 @@ function ActivitiesUpdates({
               statusUpdate={statusUpdate}
               daysElapsed={daysElapsed}
               hoursElapsed={hoursElapsed}
-              updateText={activityGenerator(statusUpdate)}
+              currentUserId={currentUserId}
               addLike={addLike}
               removeLike={removeLike}
             />
