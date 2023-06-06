@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { useMemo } from 'react';
+import { PropsWithChildren, useMemo } from 'react';
 import { Select } from 'antd';
 import styles from './FilterListWrapperStyle.module.scss';
 import { useAppSelector } from '@/app/hooks';
@@ -31,7 +31,8 @@ function SelectFilterField<T>({
   value,
   options,
   onChange,
-}: SelectFilterFieldType<T>) {
+  ...rest
+}: PropsWithChildren<SelectFilterFieldType<T>>) {
   const optionsMemo = useMemo(() => {
     return options.map((s) => {
       return (
@@ -44,6 +45,7 @@ function SelectFilterField<T>({
 
   return (
     <Select
+      {...rest}
       placeholder={placeholder}
       mode={mode}
       style={{ width: 200 }}
@@ -65,6 +67,7 @@ function FilterList() {
   return (
     <div className={styles.dropdownList}>
       <SelectFilterField<string>
+        data-testid="dropdown-genres"
         placeholder="Genres"
         mode={undefined}
         value={gameFilters.genres}
@@ -73,6 +76,7 @@ function FilterList() {
       />
 
       <SelectFilterField<string>
+        data-testid="dropdown-platforms"
         placeholder="Platforms"
         mode={undefined}
         value={gameFilters.platforms}
@@ -81,6 +85,7 @@ function FilterList() {
       />
 
       <SelectFilterField<string>
+        data-testid="dropdown-tags"
         placeholder="Tags"
         mode={undefined}
         value={gameFilters.tags}
