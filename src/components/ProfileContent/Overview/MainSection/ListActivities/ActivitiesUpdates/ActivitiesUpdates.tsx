@@ -1,4 +1,7 @@
-import { StatusUpdate as StatusUpdateType } from '@/graphql/__generated__/graphql';
+import type {
+  StatusUpdate as StatusUpdateType,
+  Post as PostType,
+} from '@/graphql/__generated__/graphql';
 import styles from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivitiesUpdates.module.scss';
 import useAddRemoveLike from '@/services/like/useAddRemoveLike';
 import ActivityCard from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivityCard';
@@ -6,8 +9,10 @@ import { useAppSelector } from '@/app/hooks';
 
 function ActivitiesUpdates({
   statusUpdates,
+  posts,
 }: {
   statusUpdates: StatusUpdateType[];
+  posts: PostType[];
 }) {
   function getTimeElapsed(timestamp: string) {
     const currentDate = new Date();
@@ -26,31 +31,39 @@ function ActivitiesUpdates({
 
   const { id: currentUserId } = userState;
 
+  console.log('statusUpdates', statusUpdates);
+  console.log('posts', posts);
+
   return (
     <div className={styles.activitiesUpdatesContainer}>
       {statusUpdates.length > 0 &&
-        statusUpdates.map((statusUpdate) => {
-          const { daysElapsed, hoursElapsed } = getTimeElapsed(
-            statusUpdate.updatedAt
-          );
+        posts.length > 0 &&
+        [...statusUpdates, ...posts]
+          .sort((a, b) => {
+            return Date.parse(b.updatedAt) - Date.parse(a.updatedAt);
+          })
+          .map((activity) => {
+            console.log('activity', activity);
 
-          const isCurrentLiked = statusUpdate.likedUsers.some(
-            (user) => user.id === currentUserId
-          );
-
-          return (
-            <ActivityCard
-              isCurrentLiked={isCurrentLiked}
-              key={statusUpdate.id}
-              statusUpdate={statusUpdate}
-              daysElapsed={daysElapsed}
-              hoursElapsed={hoursElapsed}
-              currentUserId={currentUserId}
-              addLike={addLike}
-              removeLike={removeLike}
-            />
-          );
-        })}
+            const { daysElapsed, hoursElapsed } = getTimeElapsed(
+              activity.updatedAt
+            );
+            const isCurrentLiked = activity.likedUsers.some(
+              (user) => user.id === currentUserId
+            );
+            return (
+              <ActivityCard
+                isCurrentLiked={isCurrentLiked}
+                key={`${activity.__typename}:${activity.id}`}
+                activity={activity}
+                daysElapsed={daysElapsed}
+                hoursElapsed={hoursElapsed}
+                currentUserId={currentUserId}
+                addLike={addLike}
+                removeLike={removeLike}
+              />
+            );
+          })}
     </div>
   );
 }

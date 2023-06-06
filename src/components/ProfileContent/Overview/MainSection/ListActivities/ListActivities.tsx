@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import styles from '@/components/ProfileContent/Overview/MainSection/ListActivities/ListActivities.module.scss';
 import useGlobalStatusUpdates from '@/services/statusUpdate/useGlobalStatusUpdates';
+import useGlobalPosts from '@/services/post/useGlobalPosts';
 import PostInput from '@/components/ProfileContent/Overview/MainSection/ListActivities/PostInput/PostInput';
 import ActivitiesUpdates from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivitiesUpdates';
 import { useAppSelector } from '@/app/hooks';
@@ -19,11 +20,19 @@ function ListActivities() {
   const { getGlobalStatusUpdates, refetch, statusUpdates, loading } =
     useGlobalStatusUpdates();
 
+  const { getGlobalPosts, posts } = useGlobalPosts();
+
   useEffect(() => {
     if (getGlobalStatusUpdates) {
       getGlobalStatusUpdates();
     }
   }, [getGlobalStatusUpdates]);
+
+  useEffect(() => {
+    if (getGlobalPosts) {
+      getGlobalPosts();
+    }
+  }, [getGlobalPosts]);
 
   useEffect(() => {
     if (addedList.length > 0) {
@@ -70,7 +79,7 @@ function ListActivities() {
         </Dropdown>
       </h2>
       <PostInput />
-      <ActivitiesUpdates statusUpdates={statusUpdates} />
+      <ActivitiesUpdates statusUpdates={statusUpdates} posts={posts} />
     </div>
   );
 }
