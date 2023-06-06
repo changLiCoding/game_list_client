@@ -1,7 +1,13 @@
-import { HeartFilled, HeartOutlined, MessageOutlined } from '@ant-design/icons';
-import { Button } from 'antd';
+import {
+  HeartFilled,
+  HeartOutlined,
+  MessageOutlined,
+  UserOutlined,
+} from '@ant-design/icons';
+import { Button, Popover, Avatar } from 'antd';
 import styles from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivitiesUpdates.module.scss';
 import type { ActivityCardProps } from './type';
+import type { User as UserType } from '@/graphql/__generated__/graphql';
 
 function ActivityCard({
   isCurrentLiked,
@@ -12,6 +18,19 @@ function ActivityCard({
   removeLike,
   updateText,
 }: ActivityCardProps) {
+  const likedAvatar = (likedUsers: UserType[]) => {
+    return (
+      <Avatar.Group maxCount={3}>
+        {likedUsers.map((user) => (
+          <Avatar
+            icon={<UserOutlined />}
+            key={user.id}
+            src={user.userPicture}
+          />
+        ))}
+      </Avatar.Group>
+    );
+  };
   return (
     <div className={styles.activity} key={statusUpdate.id}>
       <div className={styles.activityContent}>
@@ -35,23 +54,34 @@ function ActivityCard({
           ago
         </div>
         <div className={styles.actions}>
-          <Button
-            type="ghost"
-            onClick={async () => {
-              if (isCurrentLiked) {
-                await removeLike(statusUpdate.id, 'StatusUpdate');
-              } else {
-                await addLike(statusUpdate.id, 'StatusUpdate');
-              }
+          <Popover
+            arrow={false}
+            trigger="hover"
+            content={() => likedAvatar(statusUpdate.likedUsers)}
+            overlayInnerStyle={{
+              backgroundColor: 'transparent',
+              // border: 'none',
+              boxShadow: 'none',
             }}
-            icon={
-              isCurrentLiked ? (
-                <HeartFilled className={styles.liked} />
-              ) : (
-                <HeartOutlined className={styles.notLiked} />
-              )
-            }
-          />
+          >
+            <Button
+              type="ghost"
+              onClick={async () => {
+                if (isCurrentLiked) {
+                  await removeLike(statusUpdate.id, 'StatusUpdate');
+                } else {
+                  await addLike(statusUpdate.id, 'StatusUpdate');
+                }
+              }}
+              icon={
+                isCurrentLiked ? (
+                  <HeartFilled className={styles.liked} />
+                ) : (
+                  <HeartOutlined className={styles.notLiked} />
+                )
+              }
+            />
+          </Popover>
 
           <span
             className={`${styles.likeCount} ${

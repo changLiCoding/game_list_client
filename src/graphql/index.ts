@@ -8,5 +8,31 @@ const httpLink = new HttpLink({
 
 export const apolloClient = new ApolloClient({
   link: httpLink,
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    typePolicies: {
+      StatusUpdate: {
+        fields: {
+          likedUsers: {
+            merge(existing, incoming) {
+              return incoming;
+            },
+          },
+        },
+      },
+      Follow: {
+        fields: {
+          followedUsers: {
+            merge(existing, incoming) {
+              return incoming;
+            },
+          },
+          followers: {
+            merge(existing, incoming) {
+              return incoming;
+            },
+          },
+        },
+      },
+    },
+  }),
 });

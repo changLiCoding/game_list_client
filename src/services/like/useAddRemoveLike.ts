@@ -4,7 +4,7 @@ import { ADD_LIKE_TO_LIKEABLE, REMOVE_LIKE_FROM_LIKEABLE } from './querires';
 import { getTokenFromLocalStorage } from '@/constants';
 import type {
   AddLikeToLikeablePayload,
-  RemoveFollowsByIdPayload,
+  RemoveLikeFromLikeablePayload,
 } from '@/graphql/__generated__/graphql';
 import { GET_ALL_STATUS_UPDATES_FOR_A_USER } from '../statusUpdate/queries';
 
@@ -57,7 +57,7 @@ const useAddRemoveLike = () => {
   const removeLike = async (
     likeableId: string,
     likeableType: string
-  ): Promise<RemoveFollowsByIdPayload> => {
+  ): Promise<RemoveLikeFromLikeablePayload> => {
     try {
       const response = await removeLikeRequest({
         variables: { likeableId, likeableType },
