@@ -1,4 +1,4 @@
-import Home from '../../../src/pages/Home/Home';
+import Home from '../../src/pages/Home/Home';
 import { GET_GAME_FILTERS } from '@/services/game/queries';
 import { GET_ALL_GAMES } from '@/services/games/queries';
 import { DefaultMockedProvider, renderCypress } from '@/utils/test-utils';
