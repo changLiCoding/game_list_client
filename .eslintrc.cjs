@@ -60,7 +60,6 @@ module.exports = {
     'dist/**/*',
     'codegen.ts',
     'src/graphql/__generated__/*',
-    'cypress/**/*',
     'cypress.config.ts',
   ],
 };

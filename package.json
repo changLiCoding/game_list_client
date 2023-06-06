@@ -12,7 +12,8 @@
     "test": "vitest",
     "coverage": "vitest run --coverage",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx .",
-    "lint:fix": "eslint --fix --ext .js,.jsx,.ts,.tsx ."
+    "lint:fix": "eslint --fix --ext .js,.jsx,.ts,.tsx .",
+    "cy": "npx cypress open"
   },
   "dependencies": {
     "@ant-design/icons": "^5.0.1",

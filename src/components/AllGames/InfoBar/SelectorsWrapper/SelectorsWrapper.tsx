@@ -37,12 +37,14 @@ function SelectorsWrapper() {
       />
       <div className={styles.wrapper}>
         <AppstoreFilled
+          aria-label="set-grid-view"
           onClick={() => dispatch(setView('grid'))}
           className={`${styles.selectorIcon} ${
             homeSearchState.view === 'grid' && styles.selected
           }`}
         />
         <UnorderedListOutlined
+          aria-label="set-list-view"
           onClick={() => dispatch(setView('list'))}
           className={`${styles.selectorIcon} ${
             homeSearchState.view === 'list' && styles.selected

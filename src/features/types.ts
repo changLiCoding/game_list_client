@@ -31,16 +31,5 @@ export type InitialStateUserGameType = {
 };
 
 export type HomeSearchSlice = {
-  filters: {
-    platforms: string[];
-    tags: string[];
-    genres: string[];
-    year: number;
-  };
-  lastSelected: {
-    platforms: string;
-    tags: string;
-    genres: string;
-  };
   view: 'grid' | 'list';
 };

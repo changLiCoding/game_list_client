@@ -11,7 +11,7 @@
 //
 //
 // -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
+// Cypress.Commands.add('login', (email, password) => {  })
 //
 //
 // -- This is a child command --
@@ -35,3 +35,39 @@
 //     }
 //   }
 // }
+
+import "cypress-localstorage-commands";
+
+Cypress.Commands.add("loginWithRequest", () => { 
+  cy.request({
+    method: 'POST',
+    url: `${Cypress.env('BACKEND_URL')}/graphql`,
+    body: {
+      operationName: "Login",
+      variables: { 
+        "email":"v@gmail.com",
+        "password":"password"
+      },
+      query: `mutation Login($email: String!, $password: String!) {
+        login(input: {email: $email, password: $password}) {
+          user {
+           username
+           __typename
+          }
+          token
+          errors
+          __typename
+        }
+      }`
+    }
+  })
+  .its('body')
+  .then(body => {
+    console.log(body.data.login.token);
+    cy.setLocalStorage("token", body.data.login.token);
+  })
+});
+
+Cypress.Commands.add("loginWithLocalStorage", () => { 
+  cy.setLocalStorage('token', Cypress.env('VITE_TOKEN_TEST'));
+});

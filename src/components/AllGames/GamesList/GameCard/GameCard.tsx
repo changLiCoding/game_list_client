@@ -72,6 +72,7 @@ export default function GameCard({
           <Popover
             color="#f0f0f0"
             title={game.name}
+            aria-label={`gamecard-popover-${game.name}`}
             content={
               <div style={{ position: 'relative' }}>
                 {game.releaseDate && (
@@ -99,6 +100,7 @@ export default function GameCard({
               <Link to={`/game-detail/${game.id}/${game.name}`}>
                 {game.imageURL && (
                   <Card
+                    game-card-id={game.id}
                     className={styles.cardGameContainer}
                     bordered={false}
                     style={{

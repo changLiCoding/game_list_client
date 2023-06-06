@@ -107,7 +107,7 @@ export default function GamesList() {
   }
 
   return (
-    <Content>
+    <Content aria-label={`view-${homeSearchState.view}`}>
       {homeSearchState.view === 'grid' ? (
         <Card title="All Games" headStyle={{ color: 'rgb(100, 115,128)' }}>
           <Row
