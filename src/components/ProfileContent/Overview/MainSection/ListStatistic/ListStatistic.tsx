@@ -26,7 +26,7 @@ function ListStatistic({
               }}
               title={
                 key === 'justAddedCount'
-                  ? 'Just Added'
+                  ? 'JUST ADDED'
                   : key.replace('Count', '').toUpperCase()
               }
               value={

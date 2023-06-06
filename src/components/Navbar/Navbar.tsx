@@ -164,7 +164,7 @@ export default function Navbar() {
                           width={38}
                           height={38}
                           alt="profile"
-                          src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+                          src={userState?.user?.userPicture}
                         />
                       </Popover>
                     ) : (
