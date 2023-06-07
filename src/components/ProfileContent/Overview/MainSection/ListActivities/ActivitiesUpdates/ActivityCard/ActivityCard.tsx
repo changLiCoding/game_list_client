@@ -40,7 +40,11 @@ function ActivityCard({
   };
 
   return (
-    <div className={styles.activity}>
+    <div
+      className={`${styles.activity} ${
+        activity.__typename === 'Post' && styles.postActivity
+      }`}
+    >
       <div className={styles.activityContent}>
         {activity.__typename === 'StatusUpdate' && (
           <StatusUpdateActivity

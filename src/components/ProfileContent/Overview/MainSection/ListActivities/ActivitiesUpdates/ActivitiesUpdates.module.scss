@@ -10,9 +10,17 @@
     grid-template-columns: 1fr 1fr;
   }
 
+  .postActivity {
+    @include mixin.desktopUltroLarge {
+      grid-column-start: 1;
+      grid-column-end: 3;
+    }
+  }
+
   .activity {
     margin-bottom: 20px;
     min-height: 0px;
+
     .activityContent {
       background: variables.$color-foreground;
       border-radius: 3px;

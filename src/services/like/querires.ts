@@ -34,6 +34,17 @@ export const ADD_LIKE_TO_LIKEABLE = gql`
           ... on Follow {
             id
           }
+          ... on Post {
+            id
+            userId
+            text
+            likesCount
+            likedUsers {
+              id
+              username
+              userPicture
+            }
+          }
         }
       }
       errors
@@ -74,6 +85,17 @@ export const REMOVE_LIKE_FROM_LIKEABLE = gql`
           }
           ... on Follow {
             id
+          }
+          ... on Post {
+            id
+            userId
+            text
+            likesCount
+            likedUsers {
+              id
+              username
+              userPicture
+            }
           }
         }
       }
