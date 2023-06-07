@@ -62,12 +62,15 @@ function ActivityCard({
         </div>
         <div className={styles.actions}>
           <Popover
+            placement="bottom"
             arrow={false}
             trigger="hover"
             content={() => likedAvatar(activity.likedUsers as UserType[])}
             overlayInnerStyle={{
               backgroundColor: 'transparent',
               boxShadow: 'none',
+              marginTop: '-10px',
+              paddingTop: '0px',
             }}
           >
             <Button
