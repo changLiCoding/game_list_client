@@ -11,12 +11,14 @@ import addedGamesReducer from '@/features/addedGamesSlice';
 import homeSearchSlice from '@/features/homeSearchSlice';
 import { createGameFiltersSlice } from '@/features/gameFiltersSlice';
 import { HomeGameFilters, UserGameFilters } from '@/types/global';
-// import gameFiltersSlice from '@/features/gameFiltersSlice';
 
 const defaultGameFilters: HomeGameFilters = {
   genres: [],
   platforms: [],
   tags: [],
+  excludedPlatforms: [],
+  excludedGenres: [],
+  excludedTags: [],
   year: undefined,
   search: '',
   sortBy: 'name',

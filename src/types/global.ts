@@ -61,6 +61,9 @@ export type HomeGameFilters = {
   genres: string[] | undefined;
   platforms: string[] | undefined;
   tags: string[] | undefined;
+  excludedPlatforms: string[] | undefined;
+  excludedGenres: string[] | undefined;
+  excludedTags: string[] | undefined;
   year: number | undefined;
   sortBy: GameFiltersSortType | undefined;
 };
