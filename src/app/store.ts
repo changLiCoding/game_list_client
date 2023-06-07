@@ -6,6 +6,7 @@ import userGameReducer from '@/features/userGameSlice';
 import addedGamesReducer from '@/features/addedGamesSlice';
 import homeSearchSlice from '@/features/homeSearchSlice';
 import { createGameFiltersSlice } from '@/features/gameFiltersSlice';
+import userPostSlice from '@/features/userPostSlice';
 import { HomeGameFilters, UserGameFilters } from '@/types/global';
 // import gameFiltersSlice from '@/features/gameFiltersSlice';
 
@@ -48,6 +49,7 @@ const rootReducer = combineReducers({
   userGameFilters: userGameFiltersSlice.reducer,
 
   addedGames: addedGamesReducer,
+  userPost: userPostSlice,
 });
 
 export const store = configureStore({
