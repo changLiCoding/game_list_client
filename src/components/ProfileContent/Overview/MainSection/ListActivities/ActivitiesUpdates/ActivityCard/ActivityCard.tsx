@@ -4,19 +4,26 @@ import {
   MessageOutlined,
   UserOutlined,
 } from '@ant-design/icons';
-import { Button, Popover, Avatar } from 'antd';
+import { Button, Popover, Avatar, Modal } from 'antd';
 import styles from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivitiesUpdates.module.scss';
 import type { ActivityCardProps } from './type';
-import type { User as UserType } from '@/graphql/__generated__/graphql';
+import type {
+  StatusUpdate,
+  User as UserType,
+} from '@/graphql/__generated__/graphql';
+import useAddRemoveFollow from '@/services/follows/useAddRemoveFollow';
+import useNotification from '@/hooks/useNotification';
+import StatusUpdateActivity from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivityCard/StatusUpdateActivity';
+import PostActivity from './PostActivity';
 
 function ActivityCard({
   isCurrentLiked,
-  statusUpdate,
+  activity,
   daysElapsed,
   hoursElapsed,
   addLike,
   removeLike,
-  updateText,
+  currentUserId,
 }: ActivityCardProps) {
   const likedAvatar = (likedUsers: UserType[]) => {
     return (
@@ -31,46 +38,48 @@ function ActivityCard({
       </Avatar.Group>
     );
   };
+
   return (
-    <div className={styles.activity} key={statusUpdate.id}>
+    <div
+      className={`${styles.activity} ${
+        activity.__typename === 'Post' && styles.postActivity
+      }`}
+    >
       <div className={styles.activityContent}>
-        <div className={styles.activityInfo}>
-          <a
-            href={`/game-detail/${statusUpdate.gameId}/${statusUpdate.gameName}`}
-            aria-label={`${statusUpdate.gameName}`}
-            style={{
-              textIndent: '-9999px',
-              backgroundImage: `url(${statusUpdate.imageURL})`,
-            }}
-          >
-            {statusUpdate.gameName}
-          </a>
-          <div className={styles.activityInfoText}>
-            <div>{updateText}</div>
-          </div>
-        </div>
+        {activity.__typename === 'StatusUpdate' && (
+          <StatusUpdateActivity
+            statusUpdate={activity}
+            currentUserId={currentUserId}
+          />
+        )}
+
+        {activity.__typename === 'Post' && (
+          <PostActivity post={activity} currentUserId={currentUserId} />
+        )}
         <div className={styles.time}>
           {daysElapsed > 0 ? `${daysElapsed} days` : `${hoursElapsed} hours`}{' '}
           ago
         </div>
         <div className={styles.actions}>
           <Popover
+            placement="bottom"
             arrow={false}
             trigger="hover"
-            content={() => likedAvatar(statusUpdate.likedUsers)}
+            content={() => likedAvatar(activity.likedUsers as UserType[])}
             overlayInnerStyle={{
               backgroundColor: 'transparent',
-              // border: 'none',
               boxShadow: 'none',
+              marginTop: '-10px',
+              paddingTop: '0px',
             }}
           >
             <Button
               type="ghost"
               onClick={async () => {
                 if (isCurrentLiked) {
-                  await removeLike(statusUpdate.id, 'StatusUpdate');
+                  await removeLike(activity.id, activity.__typename as string);
                 } else {
-                  await addLike(statusUpdate.id, 'StatusUpdate');
+                  await addLike(activity.id, activity.__typename as string);
                 }
               }}
               icon={
@@ -85,10 +94,10 @@ function ActivityCard({
 
           <span
             className={`${styles.likeCount} ${
-              statusUpdate.likesCount === 0 && styles.zeroCount
+              activity.likesCount === 0 && styles.zeroCount
             }`}
           >
-            {statusUpdate.likesCount}
+            {activity.likesCount}
           </span>
           <div>
             <MessageOutlined />

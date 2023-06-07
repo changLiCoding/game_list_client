@@ -1,6 +1,9 @@
 import { useMutation } from '@apollo/client';
 
-import { ADD_LIKE_TO_LIKEABLE, REMOVE_LIKE_FROM_LIKEABLE } from './querires';
+import {
+  ADD_LIKE_TO_LIKEABLE,
+  REMOVE_LIKE_FROM_LIKEABLE,
+} from '@/services/like/queries';
 import { getTokenFromLocalStorage } from '@/constants';
 import type {
   AddLikeToLikeablePayload,

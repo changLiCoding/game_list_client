@@ -29,7 +29,7 @@ const useAddRemoveFollow = () => {
       return response.data.addFollowsById;
     } catch (error: unknown) {
       if (error instanceof Error) {
-        throw new Error(error.message);
+        return error.message;
       }
       throw new Error('Error adding follow');
     }
