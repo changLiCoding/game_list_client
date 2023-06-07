@@ -6,6 +6,9 @@ import { CreatePostPayload } from '@/graphql/__generated__/graphql';
 import type { Post as PostType } from '@/graphql/__generated__/graphql';
 
 const usePosts = () => {
+  type QueryResult = {
+    getGlobalPosts: PostType[];
+  };
   const [createPostRequest] = useMutation(CREATE_POST);
 
   const createPost = async (text: string): Promise<CreatePostPayload> => {
@@ -15,28 +18,22 @@ const usePosts = () => {
         context: getTokenFromLocalStorage.context,
 
         update: (cache, { data }) => {
-          console.log(
-            'data.createPost.post returned from createPost mutation: ',
-            data.createPost.post
-          );
-
-          const { getGlobalPosts } = cache.readQuery({
+          const queryResult: QueryResult | null = cache.readQuery({
             query: GET_GLOBAL_POSTS,
           });
+          // Make sure the query exists and getGlobalPosts is not null
+          if (queryResult && queryResult.getGlobalPosts) {
+            const { getGlobalPosts } = queryResult;
 
-          console.log('readQueryResponse log results', getGlobalPosts);
+            const newGetGlobalPosts = [data.createPost.post, ...getGlobalPosts];
 
-          const newGetGlobalPosts = [data.createPost.post, ...getGlobalPosts];
-          console.log('newGetGlobalPosts', newGetGlobalPosts);
-
-          cache.writeQuery({
-            query: GET_GLOBAL_POSTS,
-            data: { getGlobalPosts: newGetGlobalPosts },
-          });
+            cache.writeQuery({
+              query: GET_GLOBAL_POSTS,
+              data: { getGlobalPosts: newGetGlobalPosts },
+            });
+          }
         },
       });
-
-      console.log(text);
 
       if (
         !response ||
@@ -50,7 +47,7 @@ const usePosts = () => {
       return response.data.createPost;
     } catch (error: unknown) {
       if (error instanceof Error) {
-        throw new Error(error.message);
+        return { errors: [error.message], post: null };
       }
       throw new Error('Error creating post');
     }

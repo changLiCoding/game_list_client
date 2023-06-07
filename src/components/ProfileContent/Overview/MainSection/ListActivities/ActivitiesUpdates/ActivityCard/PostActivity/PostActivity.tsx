@@ -32,7 +32,16 @@ function PostActivity({
   return (
     <div className={styles.postActivityContainer}>
       <div className={styles.postActivityHeader}>
-        <Avatar src={post.userPicture} size={50} />
+        <Avatar
+          src={post.userPicture}
+          size={50}
+          onClick={async () => {
+            if (post.userId && post.userId !== currentUserId) {
+              await handleAddFollow(post);
+            }
+          }}
+          style={{ cursor: `${post.userId !== currentUserId && 'pointer'}` }}
+        />
         {post.username && (
           <a href={`/user/${post.username}`} aria-label={post.username}>
             {' '}
@@ -45,6 +54,7 @@ function PostActivity({
           <p>{post.text}</p>
         </div>
       </div>
+      {contextHolder}
     </div>
   );
 }

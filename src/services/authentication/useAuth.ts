@@ -1,6 +1,10 @@
 import { useMutation } from '@apollo/client';
 import { LOGIN, REGISTER } from './queries';
 import useNotification from '@/hooks/useNotification';
+import useAllGames from '@/services/games/useAllGames';
+import useGlobalPosts from '@/services/post/useGlobalPosts';
+import useGlobalStatusUpdates from '@/services/statusUpdate/useGlobalStatusUpdates';
+import useAllFollows from '@/services/follows/useAllFollows';
 import type {
   LoginUserPayload,
   RegisterUserPayload,
@@ -10,6 +14,8 @@ const useAuth = () => {
   const { contextHolder, info } = useNotification();
   const [loginRequest] = useMutation(LOGIN);
   const [registerRequest] = useMutation(REGISTER);
+
+  const { refetch: refetchAllGames } = useAllGames();
 
   const login = async (
     email: string,
@@ -26,6 +32,10 @@ const useAuth = () => {
         response.data.login.errors[0]
       )
         throw new Error(response.data.login.errors[0]);
+
+      if (refetchAllGames) {
+        await refetchAllGames();
+      }
 
       return response.data.login;
     } catch (err: unknown) {

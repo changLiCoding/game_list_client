@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 
 import styles from '@/components/ProfileContent/Overview/MainSection/ListActivities/PostInput/PostInput.module.scss';
 import { useAppSelector } from '@/app/hooks';
+import useNotification from '@/hooks/useNotification';
 import { setPost } from '@/features/userPostSlice';
 import usePosts from '@/services/post/usePosts';
 
@@ -11,6 +12,8 @@ function PostInput() {
   const { post } = useAppSelector((state) => state.userPost);
 
   const { createPost } = usePosts();
+
+  const { success, contextHolder, warning } = useNotification();
 
   return (
     <div className={styles.postInputContainer}>
@@ -28,16 +31,19 @@ function PostInput() {
         <Button
           onClick={async () => {
             if (createPost && post) {
-              console.log(post);
-
               const response = await createPost(post);
-              console.log(response);
+              if (response?.post && response?.errors?.length === 0) {
+                success(`You have posted successfully.`);
+              } else {
+                warning(`Can not post. ${response.errors}!`);
+              }
             }
           }}
         >
           Post
         </Button>
       </div>
+      {contextHolder}
     </div>
   );
 }

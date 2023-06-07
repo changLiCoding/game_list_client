@@ -31,9 +31,6 @@ function ActivitiesUpdates({
 
   const { id: currentUserId } = userState;
 
-  console.log('statusUpdates', statusUpdates);
-  console.log('posts', posts);
-
   return (
     <div className={styles.activitiesUpdatesContainer}>
       {statusUpdates.length > 0 &&
@@ -43,8 +40,6 @@ function ActivitiesUpdates({
             return Date.parse(b.updatedAt) - Date.parse(a.updatedAt);
           })
           .map((activity) => {
-            console.log('activity', activity);
-
             const { daysElapsed, hoursElapsed } = getTimeElapsed(
               activity.updatedAt
             );
