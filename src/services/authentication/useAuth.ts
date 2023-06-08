@@ -1,10 +1,7 @@
 import { useMutation } from '@apollo/client';
-import { LOGIN, REGISTER } from './queries';
+
+import { LOGIN, REGISTER } from '@/services/authentication/queries';
 import useNotification from '@/hooks/useNotification';
-import useAllGames from '@/services/games/useAllGames';
-import useGlobalPosts from '@/services/post/useGlobalPosts';
-import useGlobalStatusUpdates from '@/services/statusUpdate/useGlobalStatusUpdates';
-import useAllFollows from '@/services/follows/useAllFollows';
 import type {
   LoginUserPayload,
   RegisterUserPayload,
@@ -12,12 +9,9 @@ import type {
 
 const useAuth = () => {
   const { contextHolder, info } = useNotification();
-  const [loginRequest, { loading: isLoginLoading }] = useMutation(LOGIN);
-  const [registerRequest, { loading: isRegisterLoading }] =
+  const [loginRequest, { client: afterLoginClient }] = useMutation(LOGIN);
+  const [registerRequest, { client: afterRegisterClient }] =
     useMutation(REGISTER);
-
-  const { refetch: refetchAllGames } = useAllGames();
-  const { refetch: refetchGlobalPosts } = useGlobalPosts();
 
   const login = async (
     email: string,
@@ -26,6 +20,10 @@ const useAuth = () => {
     try {
       const response = await loginRequest({
         variables: { email, password },
+
+        onCompleted: () => {
+          afterLoginClient.resetStore();
+        },
       });
       if (
         !response ||
@@ -66,6 +64,9 @@ const useAuth = () => {
     try {
       const response = await registerRequest({
         variables: { username, email, password },
+        onCompleted: () => {
+          afterRegisterClient.resetStore();
+        },
       });
 
       if (
@@ -91,8 +92,6 @@ const useAuth = () => {
     register,
     contextHolder,
     info,
-    isLoginLoading,
-    isRegisterLoading,
   };
 };
 
