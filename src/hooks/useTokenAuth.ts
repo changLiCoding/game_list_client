@@ -42,7 +42,9 @@ const useTokenAuth = (): UseTokenAuthType => {
   // }, [authToken, dispatch, getUser, data]);
 
   useEffect(() => {
-    if (data) {
+    const authToken = localStorage.getItem('token');
+
+    if (data && authToken) {
       dispatch(setUser(data?.getUserById));
     }
   }, [data, dispatch]);

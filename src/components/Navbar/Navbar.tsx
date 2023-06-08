@@ -24,7 +24,6 @@ export default function Navbar() {
   const dispatch = useDispatch();
   const screens = useBreakpoint();
   const { cache } = apolloClient;
-  const { user } = useAppSelector((state) => state.user);
   // console.log(user);
 
   const logout = async () => {
@@ -40,6 +39,8 @@ export default function Navbar() {
     await apolloClient.resetStore();
     dispatch(setUser(INITIAL_USER_STATE.user));
     navigate('/home');
+    console.log('userState in NavBar after logout', userState);
+
     setOpen(false);
   };
 
