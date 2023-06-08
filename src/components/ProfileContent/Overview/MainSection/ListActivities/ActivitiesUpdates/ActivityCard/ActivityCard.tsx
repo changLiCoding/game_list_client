@@ -4,15 +4,11 @@ import {
   MessageOutlined,
   UserOutlined,
 } from '@ant-design/icons';
-import { Button, Popover, Avatar, Modal } from 'antd';
+import { Button, Popover, Avatar } from 'antd';
 import styles from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivitiesUpdates.module.scss';
 import type { ActivityCardProps } from './type';
-import type {
-  StatusUpdate,
-  User as UserType,
-} from '@/graphql/__generated__/graphql';
-import useAddRemoveFollow from '@/services/follows/useAddRemoveFollow';
-import useNotification from '@/hooks/useNotification';
+import type { User as UserType } from '@/graphql/__generated__/graphql';
+
 import StatusUpdateActivity from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivityCard/StatusUpdateActivity';
 import PostActivity from './PostActivity';
 

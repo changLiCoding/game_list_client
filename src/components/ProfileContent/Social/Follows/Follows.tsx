@@ -17,7 +17,7 @@ function Follows({
   followers: UserType[];
   selectedFilter: string;
 }) {
-  const { addFollow, removeFollow } = useAddRemoveFollow();
+  const { removeFollow } = useAddRemoveFollow();
 
   const { success, contextHolder, warning } = useNotification();
 

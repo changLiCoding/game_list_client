@@ -19,7 +19,6 @@ export default function useAllGames(
   const errors: string[] = [];
 
   const tokenContext = getTokenFromLocalStorage();
-  console.log('tokenContext in useAllGames', tokenContext);
 
   const {
     data: allGames,

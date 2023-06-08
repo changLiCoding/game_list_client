@@ -1,10 +1,6 @@
-import { Button, Popover, Avatar, Modal } from 'antd';
+import { Avatar, Modal } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-import {
-  StatusUpdate as StatusUpdateType,
-  AddLikeToLikeablePayload,
-  RemoveLikeFromLikeablePayload,
-} from '@/graphql/__generated__/graphql';
+import { StatusUpdate as StatusUpdateType } from '@/graphql/__generated__/graphql';
 import useNotification from '@/hooks/useNotification';
 import useAddRemoveFollow from '@/services/follows/useAddRemoveFollow';
 import styles from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivitiesUpdates.module.scss';
@@ -16,7 +12,7 @@ function StatusUpdateActivity({
   statusUpdate: StatusUpdateType;
   currentUserId: string;
 }) {
-  const { addFollow, removeFollow } = useAddRemoveFollow();
+  const { addFollow } = useAddRemoveFollow();
   const { success, contextHolder, warning } = useNotification();
 
   const name =
