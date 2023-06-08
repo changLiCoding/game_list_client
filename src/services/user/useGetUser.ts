@@ -15,7 +15,7 @@ const useGetUser = (): UseGetUserType => {
     context: getTokenFromLocalStorage(),
 
     onCompleted: (returnedData) => {
-      console.log('data in useGetUser', returnedData);
+      console.log('data in useGetUser onCompleted', returnedData);
     },
   });
 

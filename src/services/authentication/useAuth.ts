@@ -19,12 +19,6 @@ const useAuth = () => {
   const { refetch: refetchAllGames } = useAllGames();
   const { refetch: refetchGlobalPosts } = useGlobalPosts();
 
-  console.log(
-    'isLoginLoading in useAuth',
-    isLoginLoading,
-    localStorage.getItem('token')
-  );
-
   const login = async (
     email: string,
     password: string

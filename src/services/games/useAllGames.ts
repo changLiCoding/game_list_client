@@ -17,6 +17,10 @@ export default function useAllGames(
   const { addedList } = useAppSelector((state) => state.addedGames);
   let games: GameType[] = [];
   const errors: string[] = [];
+
+  const tokenContext = getTokenFromLocalStorage();
+  console.log('tokenContext in useAllGames', tokenContext);
+
   const {
     data: allGames,
     loading,
@@ -28,7 +32,7 @@ export default function useAllGames(
       platform,
       year: year === -1 ? null : year,
     },
-    ...getTokenFromLocalStorage,
+    context: tokenContext,
     onCompleted: (data) => {
       const { allGames: allGamesData } = data;
 

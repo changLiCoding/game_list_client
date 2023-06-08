@@ -107,7 +107,7 @@ function UserGameListDesktop({ data }: UserGameListDataType) {
   //   sorter,
   //   extra
   // ) => {
-  //   console.log('params', pagination, filters, sorter, extra);
+
   // };
 
   return (

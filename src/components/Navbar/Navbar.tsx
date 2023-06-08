@@ -24,7 +24,6 @@ export default function Navbar() {
   const dispatch = useDispatch();
   const screens = useBreakpoint();
   const { cache } = apolloClient;
-  // console.log(user);
 
   const logout = async () => {
     localStorage.removeItem('token');

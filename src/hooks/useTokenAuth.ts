@@ -15,13 +15,7 @@ const useTokenAuth = (): UseTokenAuthType => {
 
   useEffect(() => {
     const authToken = localStorage.getItem('token');
-
     if (authToken !== null && authToken.length > 0 && !isExpired(authToken)) {
-      console.log(
-        'authToken in useTokenAuth only run when authToken is not null',
-        authToken
-      );
-
       getUser();
     } else {
       localStorage.clear();
@@ -31,10 +25,9 @@ const useTokenAuth = (): UseTokenAuthType => {
 
   // useEffect(() => {
   //   if (authToken && !isExpired(authToken)) {
-  //     // console.log('authToken in useTokenAuth', authToken);
 
   //     getUser();
-  //     // console.log('data in useTokenAuth', data);
+
   //   } else {
   //     localStorage.clear();
   //     dispatch(setLoading(false));
@@ -48,8 +41,6 @@ const useTokenAuth = (): UseTokenAuthType => {
       dispatch(setUser(data?.getUserById));
     }
   }, [data, dispatch]);
-
-  // console.log('loading in useTokenAuth', loading);
 
   return { loading, userState };
 };

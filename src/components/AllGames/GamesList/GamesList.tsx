@@ -38,7 +38,7 @@ export default function GamesList() {
       sortBy: gameFilters.sortBy,
       search: tempSearch,
     },
-    ...getTokenFromLocalStorage,
+    context: getTokenFromLocalStorage(),
     onCompleted: (games) => {
       const { allGames: allGamesData } = games;
       if (allGamesData && addedList.length === 0) {
