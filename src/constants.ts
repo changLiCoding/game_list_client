@@ -8,6 +8,15 @@ export const getTokenFromLocalStorage = {
   },
 };
 
+// export const getTokenFromLocalStorage = () => {
+//   const authToken = localStorage.getItem('token');
+//   return {
+//     headers: {
+//       Authorization: authToken ? `Bearer ${authToken}` : '',
+//     },
+//   };
+// };
+
 export const INITIAL_USER_STATE = {
   loading: true,
   user: {

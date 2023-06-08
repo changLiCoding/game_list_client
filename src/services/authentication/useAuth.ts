@@ -12,10 +12,18 @@ import type {
 
 const useAuth = () => {
   const { contextHolder, info } = useNotification();
-  const [loginRequest] = useMutation(LOGIN);
-  const [registerRequest] = useMutation(REGISTER);
+  const [loginRequest, { loading: isLoginLoading }] = useMutation(LOGIN);
+  const [registerRequest, { loading: isRegisterLoading }] =
+    useMutation(REGISTER);
 
   const { refetch: refetchAllGames } = useAllGames();
+  const { refetch: refetchGlobalPosts } = useGlobalPosts();
+
+  console.log(
+    'isLoginLoading in useAuth',
+    isLoginLoading,
+    localStorage.getItem('token')
+  );
 
   const login = async (
     email: string,
@@ -33,9 +41,18 @@ const useAuth = () => {
       )
         throw new Error(response.data.login.errors[0]);
 
-      if (refetchAllGames) {
-        await refetchAllGames();
-      }
+      // if (refetchAllGames) {
+      //   await refetchAllGames();
+      // }
+
+      // if (refetchGlobalPosts) {
+      //   console.log(
+      //     'refetchGlobalPosts in useAuth',
+      //     localStorage.getItem('token')
+      //   );
+
+      //   await refetchGlobalPosts();
+      // }
 
       return response.data.login;
     } catch (err: unknown) {
@@ -80,6 +97,8 @@ const useAuth = () => {
     register,
     contextHolder,
     info,
+    isLoginLoading,
+    isRegisterLoading,
   };
 };
 

@@ -4,6 +4,7 @@ import { useAppSelector } from '@/app/hooks';
 import SideSection from '@/components/ProfileContent/Overview/SideSection/SideSection';
 import MainSection from '@/components/ProfileContent/Overview/MainSection/MainSection';
 import useGamesByStatus from '@/services/userGames/useGamesByStatus';
+import useAuth from '@/services/authentication/useAuth';
 
 function Overview() {
   const {
@@ -14,6 +15,10 @@ function Overview() {
   } = useGamesByStatus();
 
   const { addedList } = useAppSelector((state) => state.addedGames);
+
+  const { isLoginLoading, isRegisterLoading } = useAuth();
+
+  // console.log('isLoginLoading', isLoginLoading);
 
   useEffect(() => {
     if (getGamesByStatusForAUser) {
