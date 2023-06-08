@@ -12,14 +12,14 @@ type UseGetUserType = {
 
 const useGetUser = (): UseGetUserType => {
   const [getUser, { data, loading }] = useLazyQuery(USER, {
-    context: getTokenFromLocalStorage.context,
+    context: getTokenFromLocalStorage(),
 
     onCompleted: (returnedData) => {
       console.log('data in useGetUser', returnedData);
     },
   });
 
-  console.log('context', getTokenFromLocalStorage.context);
+  console.log('context', getTokenFromLocalStorage());
 
   // console.log('data in useGetUser', data, localStorage.getItem('token'));
 

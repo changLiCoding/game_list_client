@@ -33,7 +33,7 @@ const useAllFollows = (): UseAllFollowsType => {
   const [getAllFollows, { data, loading, refetch }] = useLazyQuery(
     ALL_FOLLOWS_AND_FOLLOWERS,
     {
-      context: getTokenFromLocalStorage.context,
+      context: getTokenFromLocalStorage(),
     }
   );
 

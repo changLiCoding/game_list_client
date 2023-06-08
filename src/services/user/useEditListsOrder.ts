@@ -14,7 +14,7 @@ const useEditListsOrder = () => {
     try {
       const response = await editListsOrder({
         variables: { payload, action },
-        context: getTokenFromLocalStorage.context,
+        context: getTokenFromLocalStorage(),
       });
 
       if (

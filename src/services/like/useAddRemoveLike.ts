@@ -22,7 +22,7 @@ const useAddRemoveLike = () => {
     try {
       const response = await addLikeRequest({
         variables: { likeableId, likeableType },
-        context: getTokenFromLocalStorage.context,
+        context: getTokenFromLocalStorage(),
         // update: (cache, { data }) => {
         //   console.log(
         //     'data.addLikeToLikeable.like returned from addLike mutation: ',
@@ -64,7 +64,7 @@ const useAddRemoveLike = () => {
     try {
       const response = await removeLikeRequest({
         variables: { likeableId, likeableType },
-        context: getTokenFromLocalStorage.context,
+        context: getTokenFromLocalStorage(),
       });
       if (
         !response ||

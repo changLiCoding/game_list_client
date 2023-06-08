@@ -23,12 +23,12 @@ const useAddDeleteGame = () => {
     try {
       const response = await addUserGamesRequest({
         variables: { gameId },
-        context: getTokenFromLocalStorage.context,
+        context: getTokenFromLocalStorage(),
         // refetchQueries: [
         //   {
         //     query: GET_USER_GAME_BY_GAME_ID,
         //     variables: { gameId },
-        //     context: getTokenFromLocalStorage.context,
+        //     context: getTokenFromLocalStorage(),
         //   },
         // ],
         // awaitRefetchQueries: true,
@@ -71,12 +71,12 @@ const useAddDeleteGame = () => {
     try {
       const response = await deleteUserGamesRequest({
         variables: { gameId },
-        context: getTokenFromLocalStorage.context,
+        context: getTokenFromLocalStorage(),
         // refetchQueries: [
         //   {
         //     query: GET_USER_GAME_BY_GAME_ID,
         //     variables: { gameId },
-        //     context: getTokenFromLocalStorage.context,
+        //     context: getTokenFromLocalStorage(),
         //   },
         // ],
         // awaitRefetchQueries: true,

@@ -21,7 +21,7 @@ const useGlobalPosts = (): UseGlobalPostsType => {
   const [getGlobalPosts, { data, loading, refetch }] = useLazyQuery(
     GET_GLOBAL_POSTS,
     {
-      context: getTokenFromLocalStorage.context,
+      context: getTokenFromLocalStorage(),
     }
   );
 

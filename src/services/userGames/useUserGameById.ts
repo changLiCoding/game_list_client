@@ -26,7 +26,7 @@ const useUserGameById = (): UseUserGameByIdType => {
   const [fetchUserGame, { loading: userGameLoading, error }] = useLazyQuery(
     GET_USER_GAME_BY_GAME_ID,
     {
-      context: getTokenFromLocalStorage.context,
+      context: getTokenFromLocalStorage(),
       onCompleted: (data) => {
         // When user game is not found, clear out redux slice
 
