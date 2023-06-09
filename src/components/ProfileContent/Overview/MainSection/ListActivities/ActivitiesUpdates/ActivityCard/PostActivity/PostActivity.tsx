@@ -1,4 +1,4 @@
-import { Button, Popover, Avatar, Modal } from 'antd';
+import { Avatar, Modal } from 'antd';
 
 import type { Post as PostType } from '@/graphql/__generated__/graphql';
 import useNotification from '@/hooks/useNotification';
@@ -12,7 +12,7 @@ function PostActivity({
   post: PostType;
   currentUserId: string;
 }) {
-  const { addFollow, removeFollow } = useAddRemoveFollow();
+  const { addFollow } = useAddRemoveFollow();
   const { success, contextHolder, warning } = useNotification();
 
   const handleAddFollow = async (stateInput: PostType) => {

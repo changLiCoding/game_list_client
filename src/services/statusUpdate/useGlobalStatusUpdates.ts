@@ -25,7 +25,7 @@ const useGlobalStatusUpdates = (): GlobalStatusUpdateReturnType => {
   const [getGlobalStatusUpdates, { data, loading, refetch }] = useLazyQuery(
     GET_GLOBAL_STATUS_UPDATES,
     {
-      context: getTokenFromLocalStorage.context,
+      context: getTokenFromLocalStorage(),
     }
   );
 

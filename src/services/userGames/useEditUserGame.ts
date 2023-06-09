@@ -24,12 +24,12 @@ const useEditUserGame = () => {
     try {
       const response = await editUserGameRequest({
         variables: { input },
-        context: getTokenFromLocalStorage.context,
+        context: getTokenFromLocalStorage(),
         refetchQueries: [
           {
             query: GET_USER_GAME_BY_GAME_ID,
             variables: { gameId: input.gameId },
-            context: getTokenFromLocalStorage.context,
+            context: getTokenFromLocalStorage(),
           },
         ],
         awaitRefetchQueries: true,

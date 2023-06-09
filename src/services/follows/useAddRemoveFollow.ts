@@ -14,7 +14,7 @@ const useAddRemoveFollow = () => {
     try {
       const response = await addFollowsByIdRequest({
         variables: { followedId },
-        context: getTokenFromLocalStorage.context,
+        context: getTokenFromLocalStorage(),
       });
 
       if (
@@ -39,7 +39,7 @@ const useAddRemoveFollow = () => {
     try {
       const response = await removeFollowsByIdRequest({
         variables: { followedId },
-        context: getTokenFromLocalStorage.context,
+        context: getTokenFromLocalStorage(),
       });
       if (
         !response ||

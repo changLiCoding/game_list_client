@@ -15,7 +15,7 @@ const usePosts = () => {
     try {
       const response = await createPostRequest({
         variables: { text },
-        context: getTokenFromLocalStorage.context,
+        context: getTokenFromLocalStorage(),
 
         update: (cache, { data }) => {
           const queryResult: QueryResult | null = cache.readQuery({

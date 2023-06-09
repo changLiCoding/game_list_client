@@ -1,10 +1,7 @@
 import { useMutation } from '@apollo/client';
-import { LOGIN, REGISTER } from './queries';
+
+import { LOGIN, REGISTER } from '@/services/authentication/queries';
 import useNotification from '@/hooks/useNotification';
-import useAllGames from '@/services/games/useAllGames';
-import useGlobalPosts from '@/services/post/useGlobalPosts';
-import useGlobalStatusUpdates from '@/services/statusUpdate/useGlobalStatusUpdates';
-import useAllFollows from '@/services/follows/useAllFollows';
 import type {
   LoginUserPayload,
   RegisterUserPayload,
@@ -12,10 +9,9 @@ import type {
 
 const useAuth = () => {
   const { contextHolder, info } = useNotification();
-  const [loginRequest] = useMutation(LOGIN);
-  const [registerRequest] = useMutation(REGISTER);
-
-  const { refetch: refetchAllGames } = useAllGames();
+  const [loginRequest, { client: afterLoginClient }] = useMutation(LOGIN);
+  const [registerRequest, { client: afterRegisterClient }] =
+    useMutation(REGISTER);
 
   const login = async (
     email: string,
@@ -24,6 +20,10 @@ const useAuth = () => {
     try {
       const response = await loginRequest({
         variables: { email, password },
+
+        onCompleted: () => {
+          afterLoginClient.resetStore();
+        },
       });
       if (
         !response ||
@@ -33,9 +33,18 @@ const useAuth = () => {
       )
         throw new Error(response.data.login.errors[0]);
 
-      if (refetchAllGames) {
-        await refetchAllGames();
-      }
+      // if (refetchAllGames) {
+      //   await refetchAllGames();
+      // }
+
+      // if (refetchGlobalPosts) {
+      //   console.log(
+      //     'refetchGlobalPosts in useAuth',
+      //     localStorage.getItem('token')
+      //   );
+
+      //   await refetchGlobalPosts();
+      // }
 
       return response.data.login;
     } catch (err: unknown) {
@@ -55,6 +64,9 @@ const useAuth = () => {
     try {
       const response = await registerRequest({
         variables: { username, email, password },
+        onCompleted: () => {
+          afterRegisterClient.resetStore();
+        },
       });
 
       if (

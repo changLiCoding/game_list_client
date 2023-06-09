@@ -13,7 +13,6 @@ import { setUser } from '@/features/userSlice';
 import { INITIAL_USER_STATE } from '@/constants';
 import styles from './Navbar.module.scss';
 import { apolloClient } from '@/graphql';
-import { useAppSelector } from '@/app/hooks';
 
 const { useBreakpoint } = Grid;
 
@@ -23,23 +22,14 @@ export default function Navbar() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const screens = useBreakpoint();
-  const { cache } = apolloClient;
-  const { user } = useAppSelector((state) => state.user);
-  // console.log(user);
 
   const logout = async () => {
     localStorage.removeItem('token');
-    // console.log({ id: `${user.__typename}:${user.id}` });
-    // const normalizedId = cache.identify({
-    //   id: user.id,
-    //   __typename: 'User',
-    // });
-    // cache.evict({ id: normalizedId });
-    // cache.gc();
 
     await apolloClient.resetStore();
     dispatch(setUser(INITIAL_USER_STATE.user));
     navigate('/home');
+
     setOpen(false);
   };
 
