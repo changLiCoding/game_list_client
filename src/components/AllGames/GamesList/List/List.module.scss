@@ -26,7 +26,7 @@
   box-shadow: 0 14px 30px rgba(103, 132, 187, 0.15),
     0 4px 4px rgba(103, 132, 187, 0.05);
   display: inline-grid;
-  grid-template-columns: 78px auto;
+  grid-template-columns: 105px auto;
   position: relative;
   text-align: left;
   min-height: 120px;
@@ -120,7 +120,6 @@
         font-size: 1.5rem;
         font-weight: 600;
         margin-bottom: 14px;
-        overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
 
@@ -204,6 +203,8 @@
     }
 
     .gamePlatforms {
+      overflow: hidden;
+      max-height: 114px;
       @include mixin.phone {
         display: none;
         & span {
