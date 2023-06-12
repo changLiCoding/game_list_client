@@ -33,19 +33,6 @@ const useAuth = () => {
       )
         throw new Error(response.data.login.errors[0]);
 
-      // if (refetchAllGames) {
-      //   await refetchAllGames();
-      // }
-
-      // if (refetchGlobalPosts) {
-      //   console.log(
-      //     'refetchGlobalPosts in useAuth',
-      //     localStorage.getItem('token')
-      //   );
-
-      //   await refetchGlobalPosts();
-      // }
-
       return response.data.login;
     } catch (err: unknown) {
       if (err instanceof Error) {

@@ -7,7 +7,7 @@ import {
   UserOutlined,
 } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import useTokenAuth from '@/hooks/useTokenAuth';
 import { setUser } from '@/features/userSlice';
 import { INITIAL_USER_STATE } from '@/constants';
@@ -20,6 +20,8 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const { loading, userState } = useTokenAuth();
   const navigate = useNavigate();
+  const { pathname } = useLocation();
+
   const dispatch = useDispatch();
   const screens = useBreakpoint();
 
@@ -133,11 +135,19 @@ export default function Navbar() {
                           </button>
                         </li>
                       ) : (
-                        <li
-                          className={styles['mobile-nav__header-drawer-item']}
-                        >
-                          <Link to="/login">Log In</Link>
-                        </li>
+                        <>
+                          <li
+                            className={styles['mobile-nav__header-drawer-item']}
+                          >
+                            <Link to="/login">Log In</Link>
+                          </li>
+
+                          <li
+                            className={styles['mobile-nav__header-drawer-item']}
+                          >
+                            <Link to="/register">Register</Link>
+                          </li>
+                        </>
                       )}
                     </ul>
                   </Drawer>
@@ -172,9 +182,19 @@ export default function Navbar() {
                         />
                       </Popover>
                     ) : (
-                      <li className={styles['desktop-nav__nav-item']}>
-                        <Link to="/login">Sign In</Link>
-                      </li>
+                      <>
+                        {pathname !== '/login' && (
+                          <li className={styles['desktop-nav__nav-item']}>
+                            <Link to="/login">Sign In</Link>
+                          </li>
+                        )}
+
+                        {pathname !== '/register' && (
+                          <li className={styles['desktop-nav__nav-item']}>
+                            <Link to="/register">Register</Link>
+                          </li>
+                        )}
+                      </>
                     )}
                   </ul>
                 </nav>

@@ -41,7 +41,6 @@ export default function GamesList() {
     context: getTokenFromLocalStorage(),
     onCompleted: (games) => {
       const { allGames: allGamesData } = games;
-      console.log(allGamesData);
 
       if (allGamesData && addedList.length === 0) {
         allGamesData.forEach((game) => {
