@@ -33,8 +33,7 @@ function ActivitiesUpdates({
 
   return (
     <div className={styles.activitiesUpdatesContainer}>
-      {statusUpdates.length > 0 &&
-        posts.length > 0 &&
+      {(statusUpdates.length > 0 || posts.length > 0) &&
         [...statusUpdates, ...posts]
           .sort((a, b) => {
             return Date.parse(b.updatedAt) - Date.parse(a.updatedAt);
