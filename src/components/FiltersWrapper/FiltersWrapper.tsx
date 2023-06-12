@@ -56,10 +56,9 @@ export default function FiltersWrapper() {
   const dispatch = useDispatch();
   const gameFilters = useAppSelector((state) => state.gameFilters);
 
-  const { data, loading } = useQuery(
-    GET_GAME_FILTERS,
-    getTokenFromLocalStorage
-  );
+  const { data, loading } = useQuery(GET_GAME_FILTERS, {
+    context: getTokenFromLocalStorage(),
+  });
 
   const yearOptions = useMemo(() => {
     const currentYear = Math.max(

@@ -56,6 +56,11 @@ function List({ game, colorBgContainer }: GameCardType): JSX.Element {
                     {genre}
                   </Tag>
                 ))}
+                {game.tags.map((tag: string) => (
+                  <Tag bordered={false} color={data} key={`${game.id} ${tag}`}>
+                    {tag}
+                  </Tag>
+                ))}
               </div>
             </div>
             <div className={styles.gameRating}>

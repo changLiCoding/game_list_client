@@ -41,6 +41,7 @@ export default function GamesList() {
     context: getTokenFromLocalStorage(),
     onCompleted: (games) => {
       const { allGames: allGamesData } = games;
+
       if (allGamesData && addedList.length === 0) {
         allGamesData.forEach((game) => {
           if (game.isGameAdded && !addedList.includes(game.id)) {
