@@ -32,14 +32,14 @@
   min-height: 120px;
 
   @include mixin.phoneSmall {
-    margin-left: 50px;
+    margin-left: 55px;
     margin-right: 8px;
   }
 
   .gameRankNumber {
     color: rgb(139, 160, 178);
     display: flex;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     font-weight: 900;
     height: 50px;
     left: -70px;
@@ -54,9 +54,9 @@
     border-radius: 50%;
 
     @include mixin.phoneSmall {
-      font-size: 1.2rem;
+      font-size: 1rem;
       height: 25px;
-      left: -50px;
+      left: -55px;
       padding: 8px;
       top: 50px;
       width: 40px;
