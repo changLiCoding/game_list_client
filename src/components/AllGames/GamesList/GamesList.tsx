@@ -1,4 +1,5 @@
 import { theme, Card, Row } from 'antd';
+import { InView } from 'react-intersection-observer';
 import { Content } from 'antd/es/layout/layout';
 import { useQuery } from '@apollo/client';
 import { useCallback, useEffect, useState } from 'react';
@@ -29,7 +30,7 @@ export default function GamesList() {
 
   const dispatch = useAppDispatch();
 
-  const { data, loading } = useQuery(GET_ALL_GAMES, {
+  const { data, loading, fetchMore } = useQuery(GET_ALL_GAMES, {
     variables: {
       genre: gameFilters.genres,
       tag: gameFilters.tags,
@@ -37,6 +38,8 @@ export default function GamesList() {
       year: gameFilters.year,
       sortBy: gameFilters.sortBy,
       search: tempSearch,
+      limit: 20,
+      offset: 0,
     },
     context: getTokenFromLocalStorage(),
     onCompleted: (games) => {
@@ -119,15 +122,46 @@ export default function GamesList() {
               xl: 32,
             }}
           >
-            {data?.allGames.map((game) => (
-              <GameCard
-                isAdded={addedList.includes(game.id)}
-                key={`grid-${game.id}`}
-                game={game}
-                colorBgContainer={colorBgContainer}
-                openGameListEditor={openGameListEditor}
-              />
-            ))}
+            {data &&
+              data?.allGames.map((game) => (
+                <GameCard
+                  isAdded={addedList.includes(game.id)}
+                  key={`grid-${game.id}`}
+                  game={game}
+                  colorBgContainer={colorBgContainer}
+                  openGameListEditor={openGameListEditor}
+                />
+              ))}
+            {data && (
+              <InView
+                style={{ visibility: 'hidden' }}
+                onChange={async (inView) => {
+                  const currentLength = data.allGames.length || 0;
+
+                  if (inView) {
+                    console.log(currentLength);
+                    await fetchMore({
+                      variables: {
+                        limit: 20,
+                        offset: currentLength,
+                      },
+                      updateQuery: (prev, { fetchMoreResult }) => {
+                        if (!fetchMoreResult) return prev;
+                        return {
+                          ...prev,
+                          allGames: [
+                            ...prev.allGames,
+                            ...fetchMoreResult.allGames,
+                          ],
+                        };
+                      },
+                    });
+                  }
+                }}
+              >
+                INVIEW
+              </InView>
+            )}
           </Row>
         </Card>
       ) : (
@@ -145,6 +179,23 @@ export default function GamesList() {
                   colorBgContainer={colorBgContainer}
                 />
               ))}
+            {data && (
+              <InView
+                onChange={async (inView) => {
+                  const currentLength = data.allGames.length || 0;
+
+                  if (inView) {
+                    console.log(currentLength);
+                    await fetchMore({
+                      variables: {
+                        limit: 20,
+                        offset: currentLength,
+                      },
+                    });
+                  }
+                }}
+              />
+            )}
           </div>
         </div>
       )}

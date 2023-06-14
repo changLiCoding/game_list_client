@@ -10,6 +10,8 @@ export const GET_ALL_GAMES: TypedDocumentNode<{ allGames: Game[] }, void> = gql`
     $year: Int
     $search: String
     $sortBy: String
+    $limit: Int
+    $offset: Int
   ) {
     allGames(
       genre: $genre
@@ -18,6 +20,8 @@ export const GET_ALL_GAMES: TypedDocumentNode<{ allGames: Game[] }, void> = gql`
       year: $year
       search: $search
       sortBy: $sortBy
+      limit: $limit
+      offset: $offset
     ) {
       id
       name
