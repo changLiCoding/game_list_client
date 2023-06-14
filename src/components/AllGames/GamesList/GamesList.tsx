@@ -139,7 +139,6 @@ export default function GamesList() {
                   const currentLength = data.allGames.length || 0;
 
                   if (inView) {
-                    console.log(currentLength);
                     await fetchMore({
                       variables: {
                         limit: 20,
@@ -168,33 +167,46 @@ export default function GamesList() {
         <div className={styles.allListContainer}>
           <div className={styles.allListTitle}>All Games</div>
           <div className={styles.allListDivider}>
-            {[...data.allGames]
-              .sort((a, b) => {
-                return parseInt(a.id, 10) - parseInt(b.id, 10);
-              })
-              .map((game) => (
-                <List
-                  key={`list-${game.id}`}
-                  game={game}
-                  colorBgContainer={colorBgContainer}
-                />
-              ))}
+            {data &&
+              [...data.allGames]
+                .sort((a, b) => {
+                  return parseInt(a.id, 10) - parseInt(b.id, 10);
+                })
+                .map((game) => (
+                  <List
+                    key={`list-${game.id}`}
+                    game={game}
+                    colorBgContainer={colorBgContainer}
+                  />
+                ))}
             {data && (
               <InView
+                style={{ visibility: 'hidden' }}
                 onChange={async (inView) => {
                   const currentLength = data.allGames.length || 0;
 
                   if (inView) {
-                    console.log(currentLength);
                     await fetchMore({
                       variables: {
                         limit: 20,
                         offset: currentLength,
                       },
+                      updateQuery: (prev, { fetchMoreResult }) => {
+                        if (!fetchMoreResult) return prev;
+                        return {
+                          ...prev,
+                          allGames: [
+                            ...prev.allGames,
+                            ...fetchMoreResult.allGames,
+                          ],
+                        };
+                      },
                     });
                   }
                 }}
-              />
+              >
+                INVIEW
+              </InView>
             )}
           </div>
         </div>
