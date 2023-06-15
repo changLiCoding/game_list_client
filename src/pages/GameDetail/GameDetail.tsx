@@ -11,7 +11,7 @@ import { apolloClient } from '@/graphql';
 function GameDetail() {
   const { id } = useParams();
 
-  const game = apolloClient.readFragment({
+  const game: GameType | null = apolloClient.readFragment({
     id: `Game:${id}`,
     fragment: gql`
       fragment GetAllGames on Game {
