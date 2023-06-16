@@ -1,22 +1,52 @@
 import { useParams } from 'react-router-dom';
+import { gql } from '@apollo/client';
 import { Layout } from 'antd';
 import { Content } from 'antd/es/layout/layout';
-import type { Game as GameType } from '@/graphql/__generated__/graphql';
-import useAllGames from '@/services/games/useAllGames';
+import { useEffect, useState } from 'react';
+import useGetGameById from '@/services/game/useGetGameById';
+
 import GameDetailHeader from '@/components/GameDetailHeader';
+import { apolloClient } from '@/graphql';
 
 function GameDetail() {
   const { id } = useParams();
-  const {
-    games: gamesState,
-    loading,
-  }: { games: GameType[]; loading: boolean } = useAllGames();
+  const { game: gameFromHook, getGame } = useGetGameById();
 
-  if (loading) return <div>Loading...</div>;
+  const tempGame = apolloClient.readFragment({
+    id: `Game:${id}`,
+    fragment: gql`
+      fragment GetAllGames on Game {
+        id
+        name
+        description
+        bannerURL
+        imageURL
+        releaseDate
+        avgScore
+        totalRating
+        genres
+        tags
+        platforms
+        isGameAdded
+      }
+    `,
+  });
 
-  const game = gamesState.find((gameEle: GameType) => gameEle.id === id);
+  const [game, setGame] = useState(tempGame);
+  useEffect(() => {
+    const loadGame = async (newGame: string) => {
+      await getGame(newGame);
+    };
+    if (!tempGame) {
+      loadGame(id as string);
+    }
+  }, [id, getGame, tempGame]);
 
-  return game !== undefined ? (
+  useEffect(() => {
+    setGame(gameFromHook);
+  }, [gameFromHook]);
+
+  return game ? (
     <Layout>
       <Content>
         <GameDetailHeader game={game} />
