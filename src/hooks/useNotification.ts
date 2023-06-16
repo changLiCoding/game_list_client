@@ -1,33 +1,36 @@
-import { message } from 'antd';
+import { message, notification } from 'antd';
 import '@/styles/global.scss';
 
 const useNotification = () => {
-  const [messageApi, contextHolder] = message.useMessage();
+  const [messageApi, contextHolder] = notification.useNotification();
 
   const info = (value: string) => {
-    messageApi.open({
+    messageApi.info({
       type: 'info',
-      content: value,
+      message: value,
       duration: 2,
       className: 'infoMessage',
+      placement: 'topRight',
     });
   };
 
   const success = (value: string) => {
-    messageApi.open({
+    messageApi.info({
       type: 'success',
-      content: value,
+      message: value,
       duration: 2,
       className: 'infoMessage',
+      placement: 'topRight',
     });
   };
 
   const warning = (value: string) => {
-    messageApi.open({
+    messageApi.info({
       type: 'warning',
-      content: value,
+      message: value,
       duration: 2,
       className: 'infoMessage',
+      placement: 'topRight',
     });
   };
 
