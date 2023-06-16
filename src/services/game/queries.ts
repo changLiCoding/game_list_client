@@ -10,7 +10,7 @@ import type {
 } from '../../graphql/__generated__/graphql';
 
 export const GET_GAME_BY_ID = gql`
-  query GetGameById($id: String!) {
+  query GetGameById($id: ID!) {
     getGameById(id: $id) {
       id
       name
