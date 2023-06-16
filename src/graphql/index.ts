@@ -3,7 +3,8 @@ import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client';
 
 // create an http link
 const httpLink = new HttpLink({
-  uri: import.meta.env.VITE_BACKEND,
+  // uri: import.meta.env.VITE_BACKEND,
+  uri: 'https://gamelist.up.railway.app/graphql/',
 });
 
 export const apolloClient = new ApolloClient({
