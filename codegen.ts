@@ -4,7 +4,8 @@ dotenv.config();
 
 const config: CodegenConfig = {
   // schema: import.meta.env.VITE_BACKEND,
-  schema: process.env.VITE_BACKEND,
+  // schema: process.env.VITE_BACKEND,
+  schema: 'https://gamelist.up.railway.app/graphql/',
   documents: ['src/**/*.tsx', 'src/**/*.ts'],
   generates: {
     './src/graphql/__generated__/': {
