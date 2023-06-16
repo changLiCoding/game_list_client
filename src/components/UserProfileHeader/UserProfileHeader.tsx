@@ -1,5 +1,5 @@
 import UserBanner from '@/components/UserProfileHeader/UserBanner/UserBanner';
-import UserLinks from '@/components/UserProfileHeader/UserLinks/UserLinks';
+import UserLinks from '@/components/UserProfileHeader/UserLinks';
 import type { UserProfileHeaderType } from '@/components/UserProfileHeader/types';
 
 function UserProfileHeader({ userState }: UserProfileHeaderType) {
