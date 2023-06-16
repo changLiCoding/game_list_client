@@ -12,7 +12,11 @@ import { apolloClient } from '@/graphql';
 function GameDetail() {
   const { warning, contextHolder } = useNotification();
   const { id } = useParams();
-  const { game: gameFromHook, getGame, loading } = useGetGameById();
+  const {
+    game: gameFromHook,
+    getGame,
+    error: errorFromHook,
+  } = useGetGameById();
 
   const [game, setGame] = useState(null);
 
@@ -56,29 +60,25 @@ function GameDetail() {
     }
   }, [id]);
 
-  if ((!game && !gameFromHook) || loading) {
+  if (!game && !gameFromHook) {
     return (
       <Layout>
         <Content>
-          <div>Loading...</div>
+          <div>{errorFromHook?.message}</div>
         </Content>
       </Layout>
     );
   }
 
-  return game || gameFromHook ? (
-    <Layout>
-      <Content>
-        <GameDetailHeader game={game || gameFromHook} />
-      </Content>
-    </Layout>
-  ) : (
-    <Layout>
-      <Content>
-        <div>Game not found</div>
-      </Content>
-      {contextHolder}
-    </Layout>
+  return (
+    (game || gameFromHook) && (
+      <Layout>
+        <Content>
+          <GameDetailHeader game={game || gameFromHook} />
+        </Content>
+        {contextHolder}
+      </Layout>
+    )
   );
 }
 
