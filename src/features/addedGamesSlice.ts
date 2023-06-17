@@ -9,6 +9,9 @@ export const addedGamesSlice = createSlice({
   name: 'addedGames',
   initialState,
   reducers: {
+    setClearAddedGames: (state) => {
+      state.addedList = [];
+    },
     setAddedGames: (state, action) => {
       if (action.payload.type === 'add') {
         state.addedList.push(action.payload.gameId);
@@ -28,6 +31,7 @@ export const addedGamesSlice = createSlice({
   },
 });
 
-export const { setAddedGames, setIsUserGameEdited } = addedGamesSlice.actions;
+export const { setAddedGames, setIsUserGameEdited, setClearAddedGames } =
+  addedGamesSlice.actions;
 
 export default addedGamesSlice.reducer;

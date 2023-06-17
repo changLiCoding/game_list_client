@@ -9,7 +9,7 @@ import useGetGameById from '@/services/game/useGetGameById';
 import GameDetailHeader from '@/components/GameDetailHeader';
 import { apolloClient } from '@/graphql';
 
-function GameDetail() {
+function GameDetail(): JSX.Element {
   const { warning, contextHolder } = useNotification();
   const { id } = useParams();
   const {
@@ -70,7 +70,6 @@ function GameDetail() {
     );
   }
 
-  console.log('game', game);
   return (
     (game || gameFromHook) && (
       <Layout>

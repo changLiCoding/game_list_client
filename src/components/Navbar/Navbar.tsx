@@ -10,6 +10,7 @@ import { useDispatch } from 'react-redux';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import useTokenAuth from '@/hooks/useTokenAuth';
 import { setUser } from '@/features/userSlice';
+import { setClearAddedGames } from '@/features/addedGamesSlice';
 import { INITIAL_USER_STATE } from '@/constants';
 import styles from './Navbar.module.scss';
 import { apolloClient } from '@/graphql';
@@ -30,6 +31,7 @@ export default function Navbar() {
 
     await apolloClient.resetStore();
     dispatch(setUser(INITIAL_USER_STATE.user));
+    dispatch(setClearAddedGames());
     navigate('/home');
 
     setOpen(false);

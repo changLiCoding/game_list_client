@@ -20,6 +20,7 @@ export default function GamesList() {
   const homeSearchState = useAppSelector((state) => state.homeSearch);
   const gameFilters = useAppSelector((state) => state.gameFilters);
   const { addedList } = useAppSelector((state) => state.addedGames);
+  const userState = useAppSelector((state) => state.user);
 
   const [tempSearch, setTempSearch] = useState<string | undefined>('');
 
@@ -47,7 +48,11 @@ export default function GamesList() {
 
       if (allGamesData && addedList.length === 0) {
         allGamesData.forEach((game) => {
-          if (game.isGameAdded && !addedList.includes(game.id)) {
+          if (
+            userState.user.id &&
+            game.isGameAdded &&
+            !addedList.includes(game.id)
+          ) {
             dispatch(
               setAddedGames({
                 type: 'add',
