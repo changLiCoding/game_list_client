@@ -62,6 +62,8 @@ export const userGameSlice = createSlice({
           state.completedDate = completedDate === '' ? null : completedDate;
           state.startDate = startDate === '' ? null : startDate;
         }
+      } else if (type === 'reset') {
+        Object.assign(state, INITIAL_USER_GAME_BY_ID_STATE);
       }
     },
   },
