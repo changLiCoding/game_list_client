@@ -44,24 +44,22 @@ function ListEditorTemp({
 
   const { contextHolder, info, warning, success } = useNotification();
 
+  const userState = useAppSelector((state) => state.user);
+
   const { addUserGames, deleteUserGames } = useAddDeleteGame();
   const { editUserGame } = useEditUserGame();
 
   const onAddGameHandler = async (gameId: string) => {
+    if (userState?.user.id === '') {
+      warning('Please login to add game to your GameList');
+      return;
+    }
     await addUserGames(gameId);
     success(`Game ${game?.name} added to your list`);
   };
 
   const onDeleteGameHandler = async (gameId: string) => {
     await deleteUserGames(gameId);
-
-    // const normalizedId = cache.identify({
-    //   id: userGame.id,
-    //   __typename: 'UserGame',
-    // });
-
-    // cache.evict({ id: normalizedId });
-    // cache.gc();
 
     warning(`Game ${game?.name} deleted from your list`);
   };
@@ -132,7 +130,7 @@ function ListEditorTemp({
                 if (!isGameAdded) {
                   await onAddGameHandler(game?.id);
                 } else {
-                  info(`Game ${game?.name} already added to your list`);
+                  info(`Game ${game?.name} already added to your GameList`);
                 }
               }}
               icon={
@@ -148,9 +146,10 @@ function ListEditorTemp({
             <Button
               type="primary"
               onClick={async () => {
-                // if (!isGameAdded) {
-                //   await onAddGameHandler(game.id);
-                // }
+                if (userState?.user.id === '') {
+                  warning('Please login to add or edit your GameList');
+                  return;
+                }
                 const { id, ...newUserGame } = userGame;
                 await editUserGame({ ...newUserGame, gameId: game.id });
                 // refetchStatusUpdate();

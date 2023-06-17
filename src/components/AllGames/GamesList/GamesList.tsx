@@ -46,7 +46,7 @@ export default function GamesList() {
     onCompleted: (games) => {
       const { allGames: allGamesData } = games;
 
-      if (allGamesData && addedList.length === 0) {
+      if (allGamesData) {
         allGamesData.forEach((game) => {
           if (
             userState.user.id &&

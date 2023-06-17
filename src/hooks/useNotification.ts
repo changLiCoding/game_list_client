@@ -1,4 +1,4 @@
-import { message, notification } from 'antd';
+import { notification } from 'antd';
 import '@/styles/global.scss';
 
 const useNotification = () => {
@@ -15,8 +15,7 @@ const useNotification = () => {
   };
 
   const success = (value: string) => {
-    messageApi.info({
-      type: 'success',
+    messageApi.success({
       message: value,
       duration: 2,
       className: 'infoMessage',
@@ -25,8 +24,7 @@ const useNotification = () => {
   };
 
   const warning = (value: string) => {
-    messageApi.info({
-      type: 'warning',
+    messageApi.warning({
       message: value,
       duration: 2,
       className: 'infoMessage',

@@ -8,22 +8,58 @@ import styles from '@/components/GameDetailHeader/GameDetailHeaderInfo/GameDetai
 import type { GameDetailsType } from '@/components/GameDetailHeader/types';
 import useUserGameById from '@/services/userGames/useUserGameById';
 import { useAppSelector } from '@/app/hooks';
+import useAddDeleteGame from '@/services/userGames/useAddDeleteGame';
+import useEditUserGame from '@/services/userGames/useEditUserGame';
+import useNotification from '@/hooks/useNotification';
 
 function GameDetailHeaderInfo({ game }: GameDetailsType) {
   const [open, setOpen] = useState(false);
 
+  const { info, warning, success, contextHolder } = useNotification();
+
   const { userGameLoading, fetchUserGame } = useUserGameById();
 
   const { addedList } = useAppSelector((state) => state.addedGames);
+  const userState = useAppSelector((state) => state.user);
 
+  const { addUserGames } = useAddDeleteGame();
+  const { editUserGame } = useEditUserGame();
+
+  const handleEditUserGameStatus = async (statusType: string) => {
+    if (userState?.user.id === '') {
+      warning('Please login to edit GameList status');
+      return;
+    }
+    await editUserGame({ gameId: game.id as string, gameStatus: statusType });
+    success(`Game ${game?.name} status updated`);
+  };
   const items: MenuProps['items'] = [
     {
       key: '1',
-      label: <Button type="text"> Set as Planning</Button>,
+      label: (
+        <Button
+          type="text"
+          onClick={async () => {
+            await handleEditUserGameStatus('Planning');
+          }}
+        >
+          {' '}
+          Set as Planning
+        </Button>
+      ),
     },
     {
       key: '2',
-      label: <Button type="text">Set as Playing</Button>,
+      label: (
+        <Button
+          type="text"
+          onClick={async () => {
+            await handleEditUserGameStatus('Playing');
+          }}
+        >
+          Set as Playing
+        </Button>
+      ),
     },
     {
       type: 'divider',
@@ -54,6 +90,19 @@ function GameDetailHeaderInfo({ game }: GameDetailsType) {
     },
   ];
 
+  const handleAddGame = async (gameId: string) => {
+    if (!addedList.includes(gameId as string)) {
+      if (userState?.user.id === '') {
+        info('Please login to add game to your GameList');
+        return;
+      }
+      await addUserGames(gameId as string);
+      success(`Game ${game?.name} added to your list`);
+    } else {
+      warning(`Game ${game?.name} already added to your list`);
+    }
+  };
+
   return (
     <Layout className={styles.infoContainer}>
       <Content className={styles.infoContent}>
@@ -68,7 +117,13 @@ function GameDetailHeaderInfo({ game }: GameDetailsType) {
             )}
             <div className={styles.infoActions}>
               <Space.Compact className={styles.listActions}>
-                <Button type="primary" className={styles.add}>
+                <Button
+                  type="primary"
+                  className={styles.add}
+                  onClick={async () => {
+                    await handleAddGame(game.id as string);
+                  }}
+                >
                   Add to List
                 </Button>
 
@@ -83,7 +138,14 @@ function GameDetailHeaderInfo({ game }: GameDetailsType) {
                 </Dropdown>
               </Space.Compact>
               <div>
-                <Button type="primary" danger icon={<HeartOutlined />} />
+                <Button
+                  type="primary"
+                  danger
+                  icon={<HeartOutlined />}
+                  onClick={async () => {
+                    await handleAddGame(game.id as string);
+                  }}
+                />
               </div>
             </div>
           </div>
@@ -100,6 +162,7 @@ function GameDetailHeaderInfo({ game }: GameDetailsType) {
           </div>
         </div>
       </Content>
+      {contextHolder}
     </Layout>
   );
 }
