@@ -70,6 +70,7 @@ function GameDetail() {
     );
   }
 
+  console.log('game', game);
   return (
     (game || gameFromHook) && (
       <Layout>
