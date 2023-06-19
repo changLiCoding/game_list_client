@@ -78,7 +78,7 @@ function ListActivities() {
           </Space>
         </Dropdown>
       </h2>
-      <PostInput />
+      <PostInput type="post" />
       <ActivitiesUpdates statusUpdates={statusUpdates} posts={posts} />
     </div>
   );

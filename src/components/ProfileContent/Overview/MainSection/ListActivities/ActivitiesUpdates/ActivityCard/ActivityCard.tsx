@@ -18,6 +18,7 @@ import useNotification from '@/hooks/useNotification';
 import StatusUpdateActivity from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivityCard/StatusUpdateActivity';
 import PostActivity from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivityCard/PostActivity';
 import getTimeElapsed from '@/utils/getTimeElapsed';
+import CommentInputWrapper from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivityCard/CommentInputWrapper';
 
 function ActivityCard({
   isCurrentLiked,
@@ -210,8 +211,7 @@ function ActivityCard({
               </div>
             );
           })}
-
-          <div className={styles.replyEditor}>replay editor</div>
+          <CommentInputWrapper />
         </div>
       </div>
       {contextHolder}

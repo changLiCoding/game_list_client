@@ -46,6 +46,16 @@ export const CREATE_POST = gql`
           username
           userPicture
         }
+        comments {
+          id
+          body
+          user {
+            id
+            username
+            userPicture
+          }
+          updatedAt
+        }
       }
       errors
     }
