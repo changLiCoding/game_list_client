@@ -50,9 +50,6 @@ export const ADD_COMMENT_TO_COMMENTABLE = gql`
               updatedAt
             }
           }
-          ... on Follow {
-            id
-          }
           ... on Post {
             id
             userId

@@ -5,6 +5,10 @@ import {
   // REMOVE_COMMENT_FROM_COMMENTABLE,
 } from '@/services/comments/queries';
 import { getTokenFromLocalStorage } from '@/constants';
+import type {
+  AddCommentToCommentablePayload,
+  RemoveCommentFromCommentablePayload,
+} from '@/graphql/__generated__/graphql';
 
 const useAddRemoveComment = () => {
   const [addCommentRequest] = useMutation(ADD_COMMENT_TO_COMMENTABLE);
@@ -13,12 +17,13 @@ const useAddRemoveComment = () => {
     commentableId: string,
     commentableType: string,
     body: string
-  ) => {
+  ): Promise<AddCommentToCommentablePayload> => {
     try {
       const response = await addCommentRequest({
         variables: { commentableId, commentableType, body },
         context: getTokenFromLocalStorage(),
       });
+
       if (
         !response ||
         !response.data ||

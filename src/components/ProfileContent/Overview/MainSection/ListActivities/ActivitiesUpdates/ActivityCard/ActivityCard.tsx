@@ -163,7 +163,6 @@ function ActivityCard({
               daysElapsed: commentDaysElapsed,
               hoursElapsed: commentHoursElapsed,
             } = getTimeElapsed(comment.updatedAt);
-            console.log(comment);
 
             return (
               <div key={comment.id} className={styles.replyList}>
@@ -211,7 +210,10 @@ function ActivityCard({
               </div>
             );
           })}
-          <CommentInputWrapper />
+          <CommentInputWrapper
+            commentType={activity.__typename}
+            commentId={activity.id}
+          />
         </div>
       </div>
       {contextHolder}
