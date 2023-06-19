@@ -6,6 +6,7 @@ import styles from '@/components/ProfileContent/Overview/MainSection/ListActivit
 import useAddRemoveLike from '@/services/like/useAddRemoveLike';
 import ActivityCard from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivityCard';
 import { useAppSelector } from '@/app/hooks';
+import getTimeElapsed from '@/utils/getTimeElapsed';
 
 function ActivitiesUpdates({
   statusUpdates,
@@ -14,18 +15,6 @@ function ActivitiesUpdates({
   statusUpdates: StatusUpdateType[];
   posts: PostType[];
 }) {
-  function getTimeElapsed(timestamp: string) {
-    const currentDate = new Date();
-    const previousDate = new Date(timestamp);
-    const timeDifference = currentDate.getTime() - previousDate.getTime();
-    const millisecondsPerDay = 24 * 60 * 60 * 1000;
-    const daysElapsed = Math.floor(timeDifference / millisecondsPerDay);
-    const hoursElapsed = Math.floor(
-      (timeDifference % millisecondsPerDay) / (60 * 60 * 1000)
-    );
-    return { daysElapsed, hoursElapsed };
-  }
-
   const { addLike, removeLike } = useAddRemoveLike();
   const userState = useAppSelector((state) => state.user.user);
 

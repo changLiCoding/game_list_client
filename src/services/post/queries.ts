@@ -16,6 +16,16 @@ export const GET_GLOBAL_POSTS = gql`
         username
         userPicture
       }
+      comments {
+        id
+        body
+        user {
+          id
+          username
+          userPicture
+        }
+        updatedAt
+      }
     }
   }
 `;

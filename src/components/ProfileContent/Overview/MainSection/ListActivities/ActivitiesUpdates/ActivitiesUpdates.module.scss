@@ -108,7 +108,25 @@
       }
     }
 
-    .replayContainer {
+    .replyContainer {
+      .activityReply {
+        margin: 20px;
+        .replyList {
+          background: variables.$color-foreground;
+          border-radius: 3px;
+          font-size: 1.3rem;
+          margin-bottom: 15px;
+          padding: 14px;
+          padding-bottom: 4px;
+          position: relative;
+
+          .replyAvatar {
+            display: flex;
+          }
+          .replyBody {
+          }
+        }
+      }
     }
   }
 }
