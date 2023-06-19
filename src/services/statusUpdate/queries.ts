@@ -15,6 +15,16 @@ export const GET_ALL_STATUS_UPDATES_FOR_A_USER = gql`
         username
         userPicture
       }
+      comments {
+        id
+        body
+        user {
+          id
+          username
+          userPicture
+        }
+        updatedAt
+      }
     }
   }
 `;
@@ -36,6 +46,16 @@ export const GET_GLOBAL_STATUS_UPDATES = gql`
         id
         username
         userPicture
+      }
+      comments {
+        id
+        body
+        user {
+          id
+          username
+          userPicture
+        }
+        updatedAt
       }
     }
   }

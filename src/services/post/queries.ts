@@ -16,6 +16,16 @@ export const GET_GLOBAL_POSTS = gql`
         username
         userPicture
       }
+      comments {
+        id
+        body
+        user {
+          id
+          username
+          userPicture
+        }
+        updatedAt
+      }
     }
   }
 `;
@@ -35,6 +45,16 @@ export const CREATE_POST = gql`
           id
           username
           userPicture
+        }
+        comments {
+          id
+          body
+          user {
+            id
+            username
+            userPicture
+          }
+          updatedAt
         }
       }
       errors
