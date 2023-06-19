@@ -104,6 +104,7 @@
           display: inline-block;
           padding-left: 5px;
           transition: 0.2s;
+          margin-right: 7px;
         }
       }
     }
@@ -114,7 +115,7 @@
         .replyList {
           background: variables.$color-foreground;
           border-radius: 3px;
-          font-size: 1.3rem;
+          font-size: 14px;
           margin-bottom: 15px;
           padding: 14px;
           padding-bottom: 4px;
@@ -122,9 +123,41 @@
 
           .replyAvatar {
             display: flex;
+            align-items: center;
+            & > a {
+              display: inline-block;
+              height: 40px;
+              line-height: 40px;
+              margin-left: 12px;
+              vertical-align: top;
+              color: variables.$color-blue;
+              text-decoration: none;
+              transition: 0.15s;
+              outline: 0;
+            }
+            .actions {
+              color: variables.$color-text-lighter;
+              font-size: 12px;
+              font-weight: 700;
+              position: absolute;
+              right: 12px;
+              top: 12px;
+            }
           }
           .replyBody {
+            & > div {
+              color: variables.$color-text;
+              line-height: 1.4;
+              margin-bottom: 14px;
+              margin-top: 14px;
+              max-height: 560px;
+              overflow: hidden;
+              overflow-wrap: break-word;
+              word-break: break-word;
+            }
           }
+        }
+        .replyEditor {
         }
       }
     }

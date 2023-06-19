@@ -2,6 +2,7 @@ import { useState } from 'react';
 import {
   HeartFilled,
   HeartOutlined,
+  MessageFilled,
   MessageOutlined,
   UserOutlined,
 } from '@ant-design/icons';
@@ -126,15 +127,29 @@ function ActivityCard({
             {activity.likesCount}
           </span>
           <div>
-            <MessageOutlined
-              onClick={() => {
-                console.log(isCommentVisible);
-
-                setIsCommentVisible(!isCommentVisible);
-                console.log(isCommentVisible);
-              }}
-            />
+            {isCommentVisible ? (
+              <MessageFilled
+                className={styles.liked}
+                onClick={() => {
+                  setIsCommentVisible(!isCommentVisible);
+                }}
+              />
+            ) : (
+              <MessageOutlined
+                className={styles.notLiked}
+                onClick={() => {
+                  setIsCommentVisible(!isCommentVisible);
+                }}
+              />
+            )}
           </div>
+          <span
+            className={`${styles.likeCount} ${
+              activity.comments.length === 0 && styles.zeroCount
+            }`}
+          >
+            {activity.comments.length}
+          </span>
         </div>
       </div>
       <div
@@ -178,19 +193,25 @@ function ActivityCard({
                       {comment.user.username}
                     </a>
                   )}
-                  <div className={styles.time}>
-                    {commentDaysElapsed > 0
-                      ? `${commentDaysElapsed} days`
-                      : `${commentHoursElapsed} hours`}{' '}
-                    ago
+                  <div className={styles.actions}>
+                    <div className={styles.time}>
+                      {commentDaysElapsed > 0
+                        ? `${commentDaysElapsed} days`
+                        : `${commentHoursElapsed} hours`}{' '}
+                      ago
+                    </div>
                   </div>
                 </div>
-                <div className={styles.replyBody}>{comment.body}</div>
+                <div className={styles.replyBody}>
+                  <div>
+                    <p>{comment.body}</p>
+                  </div>
+                </div>
               </div>
             );
           })}
 
-          <div className={styles.replayEditor}>replay editor</div>
+          <div className={styles.replyEditor}>replay editor</div>
         </div>
       </div>
       {contextHolder}
