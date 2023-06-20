@@ -17,6 +17,11 @@ export const apolloClient = new ApolloClient({
               return incoming;
             },
           },
+          comments: {
+            merge(existing, incoming) {
+              return incoming;
+            },
+          },
         },
       },
       Follow: {
@@ -27,6 +32,20 @@ export const apolloClient = new ApolloClient({
             },
           },
           followers: {
+            merge(existing, incoming) {
+              return incoming;
+            },
+          },
+        },
+      },
+      Post: {
+        fields: {
+          likedUsers: {
+            merge(existing, incoming) {
+              return incoming;
+            },
+          },
+          comments: {
             merge(existing, incoming) {
               return incoming;
             },
