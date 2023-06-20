@@ -70,6 +70,25 @@ function ActivityCard({
     });
   };
 
+  const handleRemoveComment = async (commentInput: CommentType) => {
+    Modal.confirm({
+      title: `Are you sure you want to remove this comment?`,
+      content: 'You will not see this comment anymore.',
+      onOk: async () => {
+        const response = await removeComment(
+          commentInput.commentableId,
+          commentInput.commentableType,
+          commentInput.id as string
+        );
+        if (response?.comment && response?.errors?.length === 0) {
+          success(`You have removed this comment successfully.`);
+        } else {
+          warning(`Can not remove this comment. ${response}!`);
+        }
+      },
+    });
+  };
+
   return (
     <div
       className={`${styles.activity} ${
@@ -198,14 +217,22 @@ function ActivityCard({
                   )}
                   <div className={styles.replyActions}>
                     <CloseOutlined
-                      className={styles.replyRemove}
+                      className={`${styles.replyRemove} ${
+                        comment.user.id === currentUserId &&
+                        styles.replyRemoveVisible
+                      }`}
                       onClick={async () => {
-                        const response = await removeComment(
-                          activity.id,
-                          activity.__typename as string,
-                          comment.id
-                        );
-                        console.log(response);
+                        if (
+                          comment.user.id &&
+                          comment.user.id === currentUserId
+                        ) {
+                          await handleRemoveComment(comment);
+                        } else if (
+                          comment.user.id &&
+                          comment.user.id !== currentUserId
+                        ) {
+                          warning('You can not remove other"s comment.');
+                        }
                       }}
                     />
                     <div className={styles.time}>

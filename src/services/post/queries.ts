@@ -19,6 +19,8 @@ export const GET_GLOBAL_POSTS = gql`
       comments {
         id
         body
+        commentableId
+        commentableType
         user {
           id
           username
@@ -49,6 +51,8 @@ export const CREATE_POST = gql`
         comments {
           id
           body
+          commentableId
+          commentableType
           user {
             id
             username

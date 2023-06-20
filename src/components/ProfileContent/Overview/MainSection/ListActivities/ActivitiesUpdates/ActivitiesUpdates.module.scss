@@ -167,11 +167,9 @@
               word-break: break-word;
             }
           }
-          &:hover .replyAvatar > .replyActions > .replyRemove {
+          &:hover .replyAvatar > .replyActions > .replyRemoveVisible {
             opacity: 1;
           }
-        }
-        .replyEditor {
         }
       }
     }
