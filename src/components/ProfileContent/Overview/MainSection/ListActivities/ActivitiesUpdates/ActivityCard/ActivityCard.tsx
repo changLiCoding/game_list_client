@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import {
+  CloseOutlined,
   HeartFilled,
   HeartOutlined,
   MessageFilled,
@@ -14,6 +15,7 @@ import type {
 } from '@/graphql/__generated__/graphql';
 import type { ActivityCardProps } from './type';
 import useAddRemoveFollow from '@/services/follows/useAddRemoveFollow';
+import useAddRemoveComment from '@/services/comments/useAddRemoveComment';
 import useNotification from '@/hooks/useNotification';
 import StatusUpdateActivity from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivityCard/StatusUpdateActivity';
 import PostActivity from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivityCard/PostActivity';
@@ -43,6 +45,7 @@ function ActivityCard({
     );
   };
 
+  const { removeComment } = useAddRemoveComment();
   const { addFollow } = useAddRemoveFollow();
   const { success, contextHolder, warning } = useNotification();
 
@@ -193,7 +196,18 @@ function ActivityCard({
                       {comment.user.username}
                     </a>
                   )}
-                  <div className={styles.actions}>
+                  <div className={styles.replyActions}>
+                    <CloseOutlined
+                      className={styles.replyRemove}
+                      onClick={async () => {
+                        const response = await removeComment(
+                          activity.id,
+                          activity.__typename as string,
+                          comment.id
+                        );
+                        console.log(response);
+                      }}
+                    />
                     <div className={styles.time}>
                       {commentDaysElapsed > 0
                         ? `${commentDaysElapsed} days`

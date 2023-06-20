@@ -135,13 +135,24 @@
               transition: 0.15s;
               outline: 0;
             }
-            .actions {
+            .replyActions {
               color: variables.$color-text-lighter;
               font-size: 12px;
               font-weight: 700;
               position: absolute;
               right: 12px;
               top: 12px;
+              .time {
+                display: inline-block;
+              }
+              .replyRemove {
+                cursor: pointer;
+                padding-left: 5px;
+                margin-right: 10px;
+                color: variables.$color-blue-dim;
+                opacity: 0;
+                transition: opacity 0.2s;
+              }
             }
           }
           .replyBody {
@@ -155,6 +166,9 @@
               overflow-wrap: break-word;
               word-break: break-word;
             }
+          }
+          &:hover .replyAvatar > .replyActions > .replyRemove {
+            opacity: 1;
           }
         }
         .replyEditor {
