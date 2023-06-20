@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import {
+  CloseOutlined,
   HeartFilled,
   HeartOutlined,
   MessageFilled,
@@ -14,6 +15,7 @@ import type {
 } from '@/graphql/__generated__/graphql';
 import type { ActivityCardProps } from './type';
 import useAddRemoveFollow from '@/services/follows/useAddRemoveFollow';
+import useAddRemoveComment from '@/services/comments/useAddRemoveComment';
 import useNotification from '@/hooks/useNotification';
 import StatusUpdateActivity from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivityCard/StatusUpdateActivity';
 import PostActivity from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivityCard/PostActivity';
@@ -43,6 +45,7 @@ function ActivityCard({
     );
   };
 
+  const { removeComment } = useAddRemoveComment();
   const { addFollow } = useAddRemoveFollow();
   const { success, contextHolder, warning } = useNotification();
 
@@ -62,6 +65,25 @@ function ActivityCard({
           );
         } else {
           warning(`Can not follow ${commentInput.user.username}. ${response}!`);
+        }
+      },
+    });
+  };
+
+  const handleRemoveComment = async (commentInput: CommentType) => {
+    Modal.confirm({
+      title: `Are you sure you want to remove this comment?`,
+      content: 'You will not see this comment anymore.',
+      onOk: async () => {
+        const response = await removeComment(
+          commentInput.commentableId,
+          commentInput.commentableType,
+          commentInput.id as string
+        );
+        if (response?.comment && response?.errors?.length === 0) {
+          success(`You have removed this comment successfully.`);
+        } else {
+          warning(`Can not remove this comment. ${response}!`);
         }
       },
     });
@@ -193,7 +215,26 @@ function ActivityCard({
                       {comment.user.username}
                     </a>
                   )}
-                  <div className={styles.actions}>
+                  <div className={styles.replyActions}>
+                    <CloseOutlined
+                      className={`${styles.replyRemove} ${
+                        comment.user.id === currentUserId &&
+                        styles.replyRemoveVisible
+                      }`}
+                      onClick={async () => {
+                        if (
+                          comment.user.id &&
+                          comment.user.id === currentUserId
+                        ) {
+                          await handleRemoveComment(comment);
+                        } else if (
+                          comment.user.id &&
+                          comment.user.id !== currentUserId
+                        ) {
+                          warning('You can not remove other"s comment.');
+                        }
+                      }}
+                    />
                     <div className={styles.time}>
                       {commentDaysElapsed > 0
                         ? `${commentDaysElapsed} days`

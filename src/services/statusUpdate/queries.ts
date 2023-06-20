@@ -18,6 +18,8 @@ export const GET_ALL_STATUS_UPDATES_FOR_A_USER = gql`
       comments {
         id
         body
+        commentableId
+        commentableType
         user {
           id
           username
@@ -50,6 +52,8 @@ export const GET_GLOBAL_STATUS_UPDATES = gql`
       comments {
         id
         body
+        commentableId
+        commentableType
         user {
           id
           username
