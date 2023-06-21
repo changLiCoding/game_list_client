@@ -155,3 +155,71 @@ export const REMOVE_COMMENT_FROM_COMMENTABLE = gql`
     }
   }
 `;
+
+export const EDIT_COMMENT_BY_ID = gql`
+  mutation EditCommentById($commentId: ID!, $body: String!) {
+    editCommentById(input: { commentId: $commentId, body: $body }) {
+      comment {
+        id
+        commentableId
+        commentableType
+        user {
+          id
+          username
+          userPicture
+        }
+        body
+        updatedAt
+        commentable {
+          __typename
+          ... on StatusUpdate {
+            id
+            gameId
+            gameName
+            imageURL
+            updatedAt
+            status
+            likesCount
+            likedUsers {
+              id
+              username
+              userPicture
+            }
+            comments {
+              id
+              body
+              user {
+                id
+                username
+                userPicture
+              }
+              updatedAt
+            }
+          }
+          ... on Post {
+            id
+            userId
+            text
+            likesCount
+            likedUsers {
+              id
+              username
+              userPicture
+            }
+            comments {
+              id
+              body
+              user {
+                id
+                username
+                userPicture
+              }
+              updatedAt
+            }
+          }
+        }
+      }
+      errors
+    }
+  }
+`;
