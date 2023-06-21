@@ -6,7 +6,7 @@ function CommentInputWrapper({
   commentType,
   commentId,
 }: {
-  commentType: 'StatusUpdate' | 'Post' | undefined;
+  commentType: string | undefined;
   commentId: string;
 }) {
   const [comment, setComment] = useState('');
