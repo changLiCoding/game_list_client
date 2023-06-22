@@ -58,7 +58,8 @@ function GameDetail(): JSX.Element {
     if (id) {
       fetchGame();
     }
-  }, [id]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (!game && !gameFromHook) {
     return (

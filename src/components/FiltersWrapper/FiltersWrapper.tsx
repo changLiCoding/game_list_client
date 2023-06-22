@@ -41,7 +41,6 @@ function SelectFilterField<T>({
   return (
     <Select
       mode={mode}
-      // style={{ width: '200px' }}
       className={styles.cascaderStyle}
       value={value}
       allowClear
@@ -94,7 +93,6 @@ export default function FiltersWrapper() {
             <Input
               allowClear
               className={styles.cascaderStyle}
-              // style={{ width: 300 }}
               size="middle"
               prefix={<SearchOutlined />}
               value={gameFilters.search}
