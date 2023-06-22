@@ -8,33 +8,22 @@ import styles from '@/components/GameDetailHeader/GameDetailHeaderInfo/GameDetai
 import type { GameDetailsType } from '@/components/GameDetailHeader/types';
 import useUserGameById from '@/services/userGames/useUserGameById';
 import { useAppSelector } from '@/app/hooks';
-import useEditUserGame from '@/services/userGames/useEditUserGame';
-import useNotification from '@/hooks/useNotification';
 import type { Game as GameType } from '@/graphql/__generated__/graphql';
 import useAddRemoveGameCustomHook from '@/hooks/useAddRemoveGameCustomHook';
 
 function GameDetailHeaderInfo({ game }: GameDetailsType) {
   const [open, setOpen] = useState(false);
 
-  const { warning, success, contextHolder } = useNotification();
-
   const { userGameLoading, fetchUserGame } = useUserGameById();
 
   const { addedList } = useAppSelector((state) => state.addedGames);
-  const userState = useAppSelector((state) => state.user);
 
-  const { handleAddGameHook, contextHolder: handGameContextHolder } =
-    useAddRemoveGameCustomHook();
-  const { editUserGame } = useEditUserGame();
+  const {
+    handleAddGameHook,
+    contextHolder: handGameContextHolder,
+    handleEditUserGameStatus,
+  } = useAddRemoveGameCustomHook();
 
-  const handleEditUserGameStatus = async (statusType: string) => {
-    if (userState?.user.id === '') {
-      warning('Please login to edit GameList status');
-      return;
-    }
-    await editUserGame({ gameId: game.id as string, gameStatus: statusType });
-    success(`Game ${game?.name} status updated`);
-  };
   const items: MenuProps['items'] = [
     {
       key: '1',
@@ -42,7 +31,7 @@ function GameDetailHeaderInfo({ game }: GameDetailsType) {
         <Button
           type="text"
           onClick={async () => {
-            await handleEditUserGameStatus('Planning');
+            await handleEditUserGameStatus('Planning', game as GameType);
           }}
         >
           {' '}
@@ -56,7 +45,7 @@ function GameDetailHeaderInfo({ game }: GameDetailsType) {
         <Button
           type="text"
           onClick={async () => {
-            await handleEditUserGameStatus('Playing');
+            await handleEditUserGameStatus('Playing', game as GameType);
           }}
         >
           Set as Playing
@@ -151,7 +140,6 @@ function GameDetailHeaderInfo({ game }: GameDetailsType) {
           </div>
         </div>
       </Content>
-      {contextHolder}
       {handGameContextHolder}
     </Layout>
   );

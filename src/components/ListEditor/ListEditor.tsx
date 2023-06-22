@@ -46,11 +46,8 @@ function ListEditorTemp({
 
   const userState = useAppSelector((state) => state.user);
 
-  const {
-    handleAddGameHook,
-    handleRemoveGameHook,
-    contextHolder: handGameContextHolder,
-  } = useAddRemoveGameCustomHook();
+  const { handleAddGameHook, handleRemoveGameHook } =
+    useAddRemoveGameCustomHook();
   const { editUserGame } = useEditUserGame();
 
   const statusOptions: DropDownOption[] = [
@@ -84,6 +81,7 @@ function ListEditorTemp({
       cancelText: 'No',
       onOk: async () => {
         await handleRemoveGameHook(game);
+        warning(`Game ${game.name} has been removed from your list.`);
         setOpen(false);
       },
       zIndex: 1041,
@@ -118,6 +116,7 @@ function ListEditorTemp({
               onClick={async () => {
                 if (!isGameAdded) {
                   await handleAddGameHook(game);
+                  info(`Game ${game?.name} added to your GameList`);
                 } else {
                   info(`Game ${game?.name} already added to your GameList`);
                 }
@@ -272,7 +271,6 @@ function ListEditorTemp({
         </div>
       </div>
       {contextHolder}
-      {handGameContextHolder}
     </Modal>
   );
 }

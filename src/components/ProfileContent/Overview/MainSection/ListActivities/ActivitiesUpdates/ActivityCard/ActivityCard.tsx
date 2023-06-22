@@ -8,20 +8,15 @@ import {
   UserOutlined,
   EditOutlined,
 } from '@ant-design/icons';
-import { Avatar, Button, Popover, Modal, Input } from 'antd';
+import { Avatar, Button, Popover } from 'antd';
 import styles from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivitiesUpdates.module.scss';
-import type {
-  User as UserType,
-  Comment as CommentType,
-} from '@/graphql/__generated__/graphql';
+import type { User as UserType } from '@/graphql/__generated__/graphql';
 import type { ActivityCardProps } from './type';
-import useAddRemoveComment from '@/services/comments/useAddRemoveComment';
-import useNotification from '@/hooks/useNotification';
+import useAddRemoveCommentCustomHook from '@/hooks/useAddRemoveCommentCustomHook';
 import StatusUpdateActivity from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivityCard/StatusUpdateActivity';
 import PostActivity from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivityCard/PostActivity';
 import getTimeElapsed from '@/utils/getTimeElapsed';
 import CommentInputWrapper from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivityCard/CommentInputWrapper';
-import useEditComment from '@/services/comments/useEditComment';
 import useAddRemoveFollowCustomHook from '@/hooks/useAddRemoveFollowCustomHook';
 
 function ActivityCard({
@@ -47,65 +42,15 @@ function ActivityCard({
     );
   };
 
-  const { removeComment } = useAddRemoveComment();
-  const { handleAddFollow, contextHolder: handleFollowContextHolder } =
-    useAddRemoveFollowCustomHook();
-  const { editComment } = useEditComment();
-  const { success, contextHolder, warning } = useNotification();
-
+  const {
+    handleRemoveComment,
+    handleEditComment,
+    contextHolder: commentContext,
+  } = useAddRemoveCommentCustomHook();
+  const { handleAddFollow } = useAddRemoveFollowCustomHook();
   const [isCommentVisible, setIsCommentVisible] = useState(
     activity.comments.length > 0
   );
-
-  const handleRemoveComment = async (commentInput: CommentType) => {
-    Modal.confirm({
-      title: `Are you sure you want to remove this comment?`,
-      content: 'You will not see this comment anymore.',
-      onOk: async () => {
-        const response = await removeComment(
-          commentInput.commentableId,
-          commentInput.commentableType,
-          commentInput.id as string
-        );
-        if (response?.comment && response?.errors?.length === 0) {
-          success(`You have removed this comment successfully.`);
-        } else {
-          warning(`Can not remove this comment. ${response}!`);
-        }
-      },
-    });
-  };
-
-  const handleEditComment = async (commentInput: CommentType) => {
-    Modal.confirm({
-      title: `Edit your comment`,
-      content: (
-        <div>
-          <Input.TextArea
-            // value={state}
-            className="comment-editor"
-            autoSize
-            defaultValue={commentInput.body}
-          />
-          {contextHolder}
-        </div>
-      ),
-      onOk: async () => {
-        const commentEditor = document.getElementsByClassName(
-          'comment-editor'
-        )[0] as HTMLTextAreaElement;
-        const response = await editComment(
-          commentInput.id,
-          commentEditor.value
-        );
-        if (response?.comment && response?.errors?.length === 0) {
-          success(`You have edited this comment successfully.`);
-        } else {
-          warning(`Can not edit this comment. ${response}!`);
-        }
-      },
-    });
-  };
 
   return (
     <div
@@ -245,11 +190,6 @@ function ActivityCard({
                           comment.user.id === currentUserId
                         ) {
                           await handleEditComment(comment);
-                        } else if (
-                          comment.user.id &&
-                          comment.user.id !== currentUserId
-                        ) {
-                          warning('You can not edit other"s comment.');
                         }
                       }}
                     />
@@ -264,11 +204,6 @@ function ActivityCard({
                           comment.user.id === currentUserId
                         ) {
                           await handleRemoveComment(comment);
-                        } else if (
-                          comment.user.id &&
-                          comment.user.id !== currentUserId
-                        ) {
-                          warning('You can not remove other"s comment.');
                         }
                       }}
                     />
@@ -294,8 +229,7 @@ function ActivityCard({
           />
         </div>
       </div>
-      {contextHolder}
-      {handleFollowContextHolder}
+      {commentContext}
     </div>
   );
 }

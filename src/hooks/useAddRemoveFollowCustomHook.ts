@@ -10,7 +10,7 @@ import type {
 } from '@/graphql/__generated__/graphql';
 
 const useAddRemoveFollowCustomHook = () => {
-  const { success, warning, contextHolder } = useNotification();
+  const { success, warning, contextHolder } = useNotification('follow');
 
   const { addFollow, removeFollow } = useAddRemoveFollow();
 

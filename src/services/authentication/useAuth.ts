@@ -8,7 +8,7 @@ import type {
 } from '@/graphql/__generated__/graphql';
 
 const useAuth = () => {
-  const { contextHolder, info } = useNotification();
+  const { contextHolder, info } = useNotification('auth');
   const [loginRequest, { client: afterLoginClient }] = useMutation(LOGIN);
   const [registerRequest, { client: afterRegisterClient }] =
     useMutation(REGISTER);

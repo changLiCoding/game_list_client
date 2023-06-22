@@ -2,12 +2,15 @@ import type { Game as GameType } from '@/graphql/__generated__/graphql';
 import { useAppSelector } from '@/app/hooks';
 import useAddDeleteGame from '@/services/userGames/useAddDeleteGame';
 import useNotification from '@/hooks/useNotification';
+import useEditUserGame from '@/services/userGames/useEditUserGame';
 
 const useAddRemoveGameCustomHook = () => {
   const { addUserGames, deleteUserGames } = useAddDeleteGame();
+  const { editUserGame } = useEditUserGame();
   const { addedList } = useAppSelector((state) => state.addedGames);
   const userState = useAppSelector((state) => state.user);
-  const { info, success, warning, contextHolder } = useNotification();
+  const { info, success, warning, contextHolder } =
+    useNotification('userGames');
 
   const handleAddGameHook = async (gameInput: GameType) => {
     if (!addedList.includes(gameInput.id as string)) {
@@ -27,7 +30,27 @@ const useAddRemoveGameCustomHook = () => {
     warning(`Game ${gameInput?.name} removed from your list`);
   };
 
-  return { handleAddGameHook, handleRemoveGameHook, contextHolder };
+  const handleEditUserGameStatus = async (
+    statusType: string,
+    gameInput: GameType
+  ) => {
+    if (userState?.user.id === '') {
+      warning('Please login to edit GameList status');
+      return;
+    }
+    await editUserGame({
+      gameId: gameInput.id as string,
+      gameStatus: statusType,
+    });
+    success(`Game ${gameInput?.name} status updated`);
+  };
+
+  return {
+    handleAddGameHook,
+    handleRemoveGameHook,
+    handleEditUserGameStatus,
+    contextHolder,
+  };
 };
 
 export default useAddRemoveGameCustomHook;
