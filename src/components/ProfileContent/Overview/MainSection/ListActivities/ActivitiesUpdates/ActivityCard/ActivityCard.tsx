@@ -15,7 +15,6 @@ import type {
   Comment as CommentType,
 } from '@/graphql/__generated__/graphql';
 import type { ActivityCardProps } from './type';
-import useAddRemoveFollow from '@/services/follows/useAddRemoveFollow';
 import useAddRemoveComment from '@/services/comments/useAddRemoveComment';
 import useNotification from '@/hooks/useNotification';
 import StatusUpdateActivity from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivityCard/StatusUpdateActivity';
@@ -23,6 +22,7 @@ import PostActivity from '@/components/ProfileContent/Overview/MainSection/ListA
 import getTimeElapsed from '@/utils/getTimeElapsed';
 import CommentInputWrapper from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivityCard/CommentInputWrapper';
 import useEditComment from '@/services/comments/useEditComment';
+import useAddRemoveFollowCustomHook from '@/hooks/useAddRemoveFollowCustomHook';
 
 function ActivityCard({
   isCurrentLiked,
@@ -48,30 +48,14 @@ function ActivityCard({
   };
 
   const { removeComment } = useAddRemoveComment();
-  const { addFollow } = useAddRemoveFollow();
+  const { handleAddFollow, contextHolder: handleFollowContextHolder } =
+    useAddRemoveFollowCustomHook();
   const { editComment } = useEditComment();
   const { success, contextHolder, warning } = useNotification();
 
   const [isCommentVisible, setIsCommentVisible] = useState(
     activity.comments.length > 0
   );
-
-  const handleAddFollow = async (commentInput: CommentType) => {
-    Modal.confirm({
-      title: `Are you sure you want to follow ${commentInput.user.username}?`,
-      content: 'You will see their posts in your feed.',
-      onOk: async () => {
-        const response = await addFollow(commentInput.user.id as string);
-        if (response?.follow && response?.errors?.length === 0) {
-          success(
-            `You have followed ${commentInput.user.username} successfully.`
-          );
-        } else {
-          warning(`Can not follow ${commentInput.user.username}. ${response}!`);
-        }
-      },
-    });
-  };
 
   const handleRemoveComment = async (commentInput: CommentType) => {
     Modal.confirm({
@@ -311,6 +295,7 @@ function ActivityCard({
         </div>
       </div>
       {contextHolder}
+      {handleFollowContextHolder}
     </div>
   );
 }

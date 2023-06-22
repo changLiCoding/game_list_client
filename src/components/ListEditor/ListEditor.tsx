@@ -183,8 +183,6 @@ function ListEditorTemp({
                       type: 'rating',
                       payload: value,
                     })
-
-                    // Rating(value)
                   );
                 }}
                 options={scoreOptions}

@@ -6,6 +6,11 @@ export const GET_ALL_STATUS_UPDATES_FOR_A_USER = gql`
       id
       gameId
       gameName
+      user {
+        id
+        username
+        userPicture
+      }
       imageURL
       updatedAt
       status
@@ -38,6 +43,11 @@ export const GET_GLOBAL_STATUS_UPDATES = gql`
       userId
       username
       userPicture
+      user {
+        id
+        username
+        userPicture
+      }
       gameId
       gameName
       imageURL

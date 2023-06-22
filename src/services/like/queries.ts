@@ -24,6 +24,11 @@ export const ADD_LIKE_TO_LIKEABLE = gql`
             imageURL
             updatedAt
             status
+            user {
+              id
+              username
+              userPicture
+            }
             likesCount
             likedUsers {
               id
@@ -38,6 +43,11 @@ export const ADD_LIKE_TO_LIKEABLE = gql`
             id
             userId
             text
+            user {
+              id
+              username
+              userPicture
+            }
             likesCount
             likedUsers {
               id
@@ -76,6 +86,11 @@ export const REMOVE_LIKE_FROM_LIKEABLE = gql`
             imageURL
             updatedAt
             status
+            user {
+              id
+              username
+              userPicture
+            }
             likesCount
             likedUsers {
               id
@@ -90,6 +105,11 @@ export const REMOVE_LIKE_FROM_LIKEABLE = gql`
             id
             userId
             text
+            user {
+              id
+              username
+              userPicture
+            }
             likesCount
             likedUsers {
               id

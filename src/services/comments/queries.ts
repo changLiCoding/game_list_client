@@ -33,6 +33,11 @@ export const ADD_COMMENT_TO_COMMENTABLE = gql`
             imageURL
             updatedAt
             status
+            user {
+              id
+              username
+              userPicture
+            }
             likesCount
             likedUsers {
               id
@@ -54,6 +59,11 @@ export const ADD_COMMENT_TO_COMMENTABLE = gql`
             id
             userId
             text
+            user {
+              id
+              username
+              userPicture
+            }
             likesCount
             likedUsers {
               id
@@ -110,6 +120,11 @@ export const REMOVE_COMMENT_FROM_COMMENTABLE = gql`
             gameName
             imageURL
             updatedAt
+            user {
+              id
+              username
+              userPicture
+            }
             status
             likesCount
             likedUsers {
@@ -131,6 +146,11 @@ export const REMOVE_COMMENT_FROM_COMMENTABLE = gql`
           ... on Post {
             id
             userId
+            user {
+              id
+              username
+              userPicture
+            }
             text
             likesCount
             likedUsers {
@@ -179,6 +199,11 @@ export const EDIT_COMMENT_BY_ID = gql`
             imageURL
             updatedAt
             status
+            user {
+              id
+              username
+              userPicture
+            }
             likesCount
             likedUsers {
               id
@@ -200,6 +225,11 @@ export const EDIT_COMMENT_BY_ID = gql`
             id
             userId
             text
+            user {
+              id
+              username
+              userPicture
+            }
             likesCount
             likedUsers {
               id

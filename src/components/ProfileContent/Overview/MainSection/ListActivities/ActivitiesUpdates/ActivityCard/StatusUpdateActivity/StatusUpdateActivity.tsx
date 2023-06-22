@@ -1,8 +1,7 @@
-import { Avatar, Modal } from 'antd';
+import { Avatar } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { StatusUpdate as StatusUpdateType } from '@/graphql/__generated__/graphql';
-import useNotification from '@/hooks/useNotification';
-import useAddRemoveFollow from '@/services/follows/useAddRemoveFollow';
+import useAddRemoveFollowCustomHook from '@/hooks/useAddRemoveFollowCustomHook';
 import styles from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivitiesUpdates.module.scss';
 
 function StatusUpdateActivity({
@@ -12,8 +11,8 @@ function StatusUpdateActivity({
   statusUpdate: StatusUpdateType;
   currentUserId: string;
 }) {
-  const { addFollow } = useAddRemoveFollow();
-  const { success, contextHolder, warning } = useNotification();
+  const { handleAddFollow, contextHolder: handleFollowContextHolder } =
+    useAddRemoveFollowCustomHook();
 
   const name =
     statusUpdate.userId === currentUserId ? 'You' : statusUpdate.username;
@@ -37,21 +36,6 @@ function StatusUpdateActivity({
       default:
         return `${name} `;
     }
-  };
-
-  const handleAddFollow = async (stateInput: StatusUpdateType) => {
-    Modal.confirm({
-      title: `Are you sure you want to follow ${statusUpdate.username}?`,
-      content: 'You will see their posts in your feed.',
-      onOk: async () => {
-        const response = await addFollow(stateInput.userId);
-        if (response?.follow && response?.errors?.length === 0) {
-          success(`You have followed ${stateInput.username} successfully.`);
-        } else {
-          warning(`Can not follow ${statusUpdate.username}. ${response}!`);
-        }
-      },
-    });
   };
 
   return (
@@ -83,7 +67,7 @@ function StatusUpdateActivity({
           }}
         />
       </div>
-      {contextHolder}
+      {handleFollowContextHolder}
     </div>
   );
 }

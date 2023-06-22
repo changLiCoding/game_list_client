@@ -7,6 +7,11 @@ export const GET_GLOBAL_POSTS = gql`
       userId
       username
       userPicture
+      user {
+        id
+        username
+        userPicture
+      }
 
       updatedAt
       text
@@ -40,6 +45,11 @@ export const CREATE_POST = gql`
         userId
         username
         userPicture
+        user {
+          id
+          username
+          userPicture
+        }
         updatedAt
         text
         likesCount
