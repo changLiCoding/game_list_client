@@ -173,17 +173,13 @@ export default function GamesList() {
           <div className={styles.allListTitle}>All Games</div>
           <div className={styles.allListDivider}>
             {data &&
-              [...data.allGames]
-                .sort((a, b) => {
-                  return parseInt(a.id, 10) - parseInt(b.id, 10);
-                })
-                .map((game) => (
-                  <List
-                    key={`list-${game.id}`}
-                    game={game}
-                    colorBgContainer={colorBgContainer}
-                  />
-                ))}
+              [...data.allGames].map((game) => (
+                <List
+                  key={`list-${game.id}`}
+                  game={game}
+                  colorBgContainer={colorBgContainer}
+                />
+              ))}
             {data && (
               <InView
                 style={{ visibility: 'hidden' }}
