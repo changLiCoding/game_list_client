@@ -24,14 +24,7 @@ const useAddDeleteGame = () => {
       const response = await addUserGamesRequest({
         variables: { gameId },
         context: getTokenFromLocalStorage(),
-        // refetchQueries: [
-        //   {
-        //     query: GET_USER_GAME_BY_GAME_ID,
-        //     variables: { gameId },
-        //     context: getTokenFromLocalStorage(),
-        //   },
-        // ],
-        // awaitRefetchQueries: true,
+
         onCompleted: (data) => {
           // ADD GAME IN REDUX STORE
           if (
@@ -72,14 +65,6 @@ const useAddDeleteGame = () => {
       const response = await deleteUserGamesRequest({
         variables: { gameId },
         context: getTokenFromLocalStorage(),
-        // refetchQueries: [
-        //   {
-        //     query: GET_USER_GAME_BY_GAME_ID,
-        //     variables: { gameId },
-        //     context: getTokenFromLocalStorage(),
-        //   },
-        // ],
-        // awaitRefetchQueries: true,
 
         update: (cache, { data }) => {
           cache.modify({

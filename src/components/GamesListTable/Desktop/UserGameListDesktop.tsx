@@ -14,7 +14,9 @@ import { useAppSelector } from '@/app/hooks';
 function UserGameListDesktop({ data }: UserGameListDataType) {
   const [open, setOpen] = useState(false);
   const { userGameLoading, fetchUserGame } = useUserGameById();
+
   const [chosenGame, setChosenGame] = useState<GameDataType>();
+
   const handleClick = async (game: GameDataType) => {
     setChosenGame(game);
     await fetchUserGame({ variables: { gameId: game.id } });

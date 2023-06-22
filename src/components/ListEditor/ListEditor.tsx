@@ -7,7 +7,6 @@ import {
 import { useDispatch } from 'react-redux';
 import React from 'react';
 
-import useAddDeleteGame from '@/services/userGames/useAddDeleteGame';
 import useEditUserGame from '@/services/userGames/useEditUserGame';
 import useNotification from '@/hooks/useNotification';
 import type {
@@ -19,6 +18,7 @@ import type {
 import { setUserGameReducer } from '@/features/userGameSlice';
 import { useAppSelector } from '@/app/hooks';
 import styles from '@/components/ListEditor/ListEditor.module.scss';
+import useAddRemoveGameCustomHook from '@/hooks/useAddRemoveGameCustomHook';
 import DatePickerField from '../DatePickerField';
 import TextAreaInput from '../TextAreaInput';
 import type { ListEditorType } from '@/components/ListEditor/types';
@@ -42,27 +42,16 @@ function ListEditorTemp({
     private: selectedPrivate,
   } = userGame;
 
-  const { contextHolder, info, warning, success } = useNotification();
+  const { contextHolder, info, warning } = useNotification();
 
   const userState = useAppSelector((state) => state.user);
 
-  const { addUserGames, deleteUserGames } = useAddDeleteGame();
+  const {
+    handleAddGameHook,
+    handleRemoveGameHook,
+    contextHolder: handGameContextHolder,
+  } = useAddRemoveGameCustomHook();
   const { editUserGame } = useEditUserGame();
-
-  const onAddGameHandler = async (gameId: string) => {
-    if (userState?.user.id === '') {
-      warning('Please login to add game to your GameList');
-      return;
-    }
-    await addUserGames(gameId);
-    success(`Game ${game?.name} added to your list`);
-  };
-
-  const onDeleteGameHandler = async (gameId: string) => {
-    await deleteUserGames(gameId);
-
-    warning(`Game ${game?.name} deleted from your list`);
-  };
 
   const statusOptions: DropDownOption[] = [
     { label: 'Playing', value: 'Playing' },
@@ -94,7 +83,7 @@ function ListEditorTemp({
       okType: 'danger',
       cancelText: 'No',
       onOk: async () => {
-        await onDeleteGameHandler(game.id);
+        await handleRemoveGameHook(game);
         setOpen(false);
       },
       zIndex: 1041,
@@ -128,7 +117,7 @@ function ListEditorTemp({
               type="ghost"
               onClick={async () => {
                 if (!isGameAdded) {
-                  await onAddGameHandler(game?.id);
+                  await handleAddGameHook(game);
                 } else {
                   info(`Game ${game?.name} already added to your GameList`);
                 }
@@ -152,8 +141,6 @@ function ListEditorTemp({
                 }
                 const { id, ...newUserGame } = userGame;
                 await editUserGame({ ...newUserGame, gameId: game.id });
-                // refetchStatusUpdate();
-                // refetchGamesByStatus();
 
                 info(`Edit game ${game.name} successfully`);
                 setOpen(false);
@@ -287,6 +274,7 @@ function ListEditorTemp({
         </div>
       </div>
       {contextHolder}
+      {handGameContextHolder}
     </Modal>
   );
 }

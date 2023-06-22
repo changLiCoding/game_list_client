@@ -8,21 +8,23 @@ import styles from '@/components/GameDetailHeader/GameDetailHeaderInfo/GameDetai
 import type { GameDetailsType } from '@/components/GameDetailHeader/types';
 import useUserGameById from '@/services/userGames/useUserGameById';
 import { useAppSelector } from '@/app/hooks';
-import useAddDeleteGame from '@/services/userGames/useAddDeleteGame';
 import useEditUserGame from '@/services/userGames/useEditUserGame';
 import useNotification from '@/hooks/useNotification';
+import type { Game as GameType } from '@/graphql/__generated__/graphql';
+import useAddRemoveGameCustomHook from '@/hooks/useAddRemoveGameCustomHook';
 
 function GameDetailHeaderInfo({ game }: GameDetailsType) {
   const [open, setOpen] = useState(false);
 
-  const { info, warning, success, contextHolder } = useNotification();
+  const { warning, success, contextHolder } = useNotification();
 
   const { userGameLoading, fetchUserGame } = useUserGameById();
 
   const { addedList } = useAppSelector((state) => state.addedGames);
   const userState = useAppSelector((state) => state.user);
 
-  const { addUserGames } = useAddDeleteGame();
+  const { handleAddGameHook, contextHolder: handGameContextHolder } =
+    useAddRemoveGameCustomHook();
   const { editUserGame } = useEditUserGame();
 
   const handleEditUserGameStatus = async (statusType: string) => {
@@ -90,19 +92,6 @@ function GameDetailHeaderInfo({ game }: GameDetailsType) {
     },
   ];
 
-  const handleAddGame = async (gameId: string) => {
-    if (!addedList.includes(gameId as string)) {
-      if (userState?.user.id === '') {
-        info('Please login to add game to your GameList');
-        return;
-      }
-      await addUserGames(gameId as string);
-      success(`Game ${game?.name} added to your list`);
-    } else {
-      warning(`Game ${game?.name} already added to your list`);
-    }
-  };
-
   return (
     <Layout className={styles.infoContainer}>
       <Content className={styles.infoContent}>
@@ -121,7 +110,7 @@ function GameDetailHeaderInfo({ game }: GameDetailsType) {
                   type="primary"
                   className={styles.add}
                   onClick={async () => {
-                    await handleAddGame(game.id as string);
+                    await handleAddGameHook(game as GameType);
                   }}
                 >
                   Add to List
@@ -143,7 +132,7 @@ function GameDetailHeaderInfo({ game }: GameDetailsType) {
                   danger
                   icon={<HeartOutlined />}
                   onClick={async () => {
-                    await handleAddGame(game.id as string);
+                    await handleAddGameHook(game as GameType);
                   }}
                 />
               </div>
@@ -163,6 +152,7 @@ function GameDetailHeaderInfo({ game }: GameDetailsType) {
         </div>
       </Content>
       {contextHolder}
+      {handGameContextHolder}
     </Layout>
   );
 }
