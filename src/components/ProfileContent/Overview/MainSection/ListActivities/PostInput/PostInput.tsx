@@ -12,7 +12,7 @@ type PostInputProps = {
   comment?: string;
   setComment?: React.Dispatch<React.SetStateAction<string>>;
   type?: 'comment' | 'post';
-  commentType?: 'StatusUpdate' | 'Post' | undefined;
+  commentType?: string;
   commentId?: string;
 };
 
