@@ -17,7 +17,10 @@ function GameDetail(): JSX.Element {
     getGame,
     error: errorFromHook,
   } = useGetGameById();
-
+  // // eslint-disable-next-line react-hooks/exhaustive-deps
+  // const memorizedGetGame = useCallback(getGame, []);
+  // // eslint-disable-next-line react-hooks/exhaustive-deps
+  // const memorizedWarning = useCallback(warning, []);
   const [game, setGame] = useState(null);
 
   useEffect(() => {
@@ -59,7 +62,7 @@ function GameDetail(): JSX.Element {
       fetchGame();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [id]);
 
   if (!game && !gameFromHook) {
     return (

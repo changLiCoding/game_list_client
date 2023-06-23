@@ -1,6 +1,6 @@
+import React, { useState } from 'react';
 import { Button, Layout, Dropdown, Space } from 'antd';
 import type { MenuProps } from 'antd';
-import { useState } from 'react';
 import { HeartOutlined, DownCircleOutlined } from '@ant-design/icons';
 import { Content } from 'antd/es/layout/layout';
 import ListEditor from '@/components/ListEditor';
@@ -11,7 +11,7 @@ import { useAppSelector } from '@/app/hooks';
 import type { Game as GameType } from '@/graphql/__generated__/graphql';
 import useAddRemoveGameCustomHook from '@/hooks/useAddRemoveGameCustomHook';
 
-function GameDetailHeaderInfo({ game }: GameDetailsType) {
+function GameDetailHeaderInfoTemp({ game }: GameDetailsType) {
   const [open, setOpen] = useState(false);
 
   const { userGameLoading, fetchUserGame } = useUserGameById();
@@ -25,61 +25,51 @@ function GameDetailHeaderInfo({ game }: GameDetailsType) {
   } = useAddRemoveGameCustomHook();
 
   const items: MenuProps['items'] = [
-    {
-      key: '1',
+    'Planning',
+    'Playing',
+    'Open List Editor',
+  ].map((item) => {
+    if (item === 'Open List Editor') {
+      return {
+        key: item,
+        label: (
+          <>
+            <Button
+              type="text"
+              onClick={(e) => {
+                e.preventDefault();
+                fetchUserGame({ variables: { gameId: game.id } });
+                setOpen(!open);
+              }}
+            >
+              Open List Editor
+            </Button>
+            <ListEditor
+              isGameAdded={addedList.includes(game.id as string)}
+              userGameLoading={userGameLoading}
+              open={open}
+              setOpen={setOpen}
+              game={game}
+            />
+          </>
+        ),
+      };
+    }
+    return {
+      key: item,
       label: (
         <Button
           type="text"
           onClick={async () => {
-            await handleEditUserGameStatus('Planning', game as GameType);
+            await handleEditUserGameStatus(item, game as GameType);
           }}
         >
           {' '}
-          Set as Planning
+          Set as {item}
         </Button>
       ),
-    },
-    {
-      key: '2',
-      label: (
-        <Button
-          type="text"
-          onClick={async () => {
-            await handleEditUserGameStatus('Playing', game as GameType);
-          }}
-        >
-          Set as Playing
-        </Button>
-      ),
-    },
-    {
-      type: 'divider',
-    },
-    {
-      key: '3',
-      label: (
-        <>
-          <Button
-            type="text"
-            onClick={(e) => {
-              e.preventDefault();
-              fetchUserGame({ variables: { gameId: game.id } });
-              setOpen(!open);
-            }}
-          >
-            Open List Editor
-          </Button>
-          <ListEditor
-            isGameAdded={addedList.includes(game.id as string)}
-            userGameLoading={userGameLoading}
-            open={open}
-            setOpen={setOpen}
-            game={game}
-          />
-        </>
-      ),
-    },
-  ];
+    };
+  });
 
   return (
     <Layout className={styles.infoContainer}>
@@ -144,5 +134,7 @@ function GameDetailHeaderInfo({ game }: GameDetailsType) {
     </Layout>
   );
 }
+
+const GameDetailHeaderInfo = React.memo(GameDetailHeaderInfoTemp);
 
 export default GameDetailHeaderInfo;
