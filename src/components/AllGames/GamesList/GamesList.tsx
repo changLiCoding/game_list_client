@@ -99,12 +99,15 @@ export default function GamesList() {
     };
   }, [debouncedFilter, tempSearch]);
 
-  const openGameListEditor = async (game: GameDataType) => {
-    setSelectedGame(game);
-
-    await fetchUserGame({ variables: { gameId: game.id } });
-    setOpen(true);
-  };
+  const memorizedOpenGameListEditor = useCallback(
+    async (game: GameDataType) => {
+      setSelectedGame(game);
+      await fetchUserGame({ variables: { gameId: game.id } });
+      setOpen(true);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
 
   const {
     token: { colorBgContainer },
@@ -128,15 +131,17 @@ export default function GamesList() {
             }}
           >
             {data &&
-              data?.allGames.map((game) => (
-                <GameCard
-                  isAdded={addedList.includes(game.id)}
-                  key={`grid-${game.id}`}
-                  game={game}
-                  colorBgContainer={colorBgContainer}
-                  openGameListEditor={openGameListEditor}
-                />
-              ))}
+              data?.allGames.map((game) => {
+                return (
+                  <GameCard
+                    isAdded={addedList.includes(game.id)}
+                    key={`grid-${game.id}`}
+                    game={game}
+                    colorBgContainer={colorBgContainer}
+                    openGameListEditor={memorizedOpenGameListEditor}
+                  />
+                );
+              })}
             {data && (
               <InView
                 style={{ visibility: 'hidden' }}

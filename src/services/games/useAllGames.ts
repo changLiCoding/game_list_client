@@ -24,6 +24,7 @@ export default function useAllGames(
     data: allGames,
     loading,
     refetch,
+    fetchMore,
   } = useQuery(GET_ALL_GAMES, {
     variables: {
       genre,
@@ -61,6 +62,6 @@ export default function useAllGames(
     if (error instanceof Error) {
       return error && { games, loading, errors: [error.message] };
     }
-    return { games, loading, errors: ['Unknown'], refetch };
+    return { games, loading, errors: ['Unknown'], refetch, fetchMore };
   }
 }

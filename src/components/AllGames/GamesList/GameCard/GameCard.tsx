@@ -1,48 +1,13 @@
+import React from 'react';
 import { Col, Card, Popover, Tag, Button, Divider } from 'antd';
-import {
-  EditOutlined,
-  PlusCircleOutlined,
-  FrownOutlined,
-  MehOutlined,
-  SmileOutlined,
-} from '@ant-design/icons';
+import { EditOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import Color from 'color-thief-react';
 import { Link } from 'react-router-dom';
 import styles from '@/components/AllGames/GamesList/GameCard/GameCard.module.scss';
 import type { GameCardType } from '@/components/AllGames/GamesList/types';
+import getRatingIcon from '@/utils/getRatingIcon';
 
-export function getRatingIcon(avgScore: number, color: string) {
-  if (avgScore > 8.5) {
-    return (
-      <SmileOutlined
-        className={styles.ratingIcon}
-        style={{
-          color: `${color}`,
-        }}
-      />
-    );
-  }
-  if (avgScore > 6.5) {
-    return (
-      <MehOutlined
-        className={styles.ratingIcon}
-        style={{
-          color: `${color}`,
-        }}
-      />
-    );
-  }
-  return (
-    <FrownOutlined
-      className={styles.ratingIcon}
-      style={{
-        color: `${color}`,
-      }}
-    />
-  );
-}
-
-export default function GameCard({
+function NeedMemoedGameCard({
   isAdded,
   game,
   colorBgContainer,
@@ -152,3 +117,7 @@ export default function GameCard({
     </Color>
   );
 }
+
+const MemoedGameCard = React.memo(NeedMemoedGameCard);
+
+export default MemoedGameCard;

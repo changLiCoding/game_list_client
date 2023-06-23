@@ -1,7 +1,7 @@
 import { Tag } from 'antd';
 import Color from 'color-thief-react';
 import styles from '@/components/AllGames/GamesList/List/List.module.scss';
-import { getRatingIcon } from '@/components/AllGames/GamesList/GameCard/GameCard';
+import getRatingIcon from '@/utils/getRatingIcon';
 import type { GameCardType } from '@/components/AllGames/GamesList/types';
 
 function List({ game, colorBgContainer }: GameCardType): JSX.Element {
