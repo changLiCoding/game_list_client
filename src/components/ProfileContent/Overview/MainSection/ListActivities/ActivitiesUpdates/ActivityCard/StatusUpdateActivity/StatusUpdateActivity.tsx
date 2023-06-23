@@ -60,10 +60,17 @@ function StatusUpdateActivity({
           </a>{' '}
         </div>
         <Avatar
+          style={{
+            cursor: `${
+              statusUpdate.userId !== currentUserId ? 'pointer' : 'default'
+            }`,
+          }}
           src={statusUpdate.userPicture}
           icon={<UserOutlined />}
           onClick={async () => {
-            await handleAddFollow(statusUpdate);
+            if (statusUpdate.userId && statusUpdate.userId !== currentUserId) {
+              await handleAddFollow(statusUpdate);
+            }
           }}
         />
       </div>

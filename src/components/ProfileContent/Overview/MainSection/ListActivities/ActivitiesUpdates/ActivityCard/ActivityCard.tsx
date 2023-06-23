@@ -148,7 +148,6 @@ function ActivityCard({
               daysElapsed: commentDaysElapsed,
               hoursElapsed: commentHoursElapsed,
             } = getTimeElapsed(comment.updatedAt);
-
             return (
               <div key={comment.id} className={styles.replyList}>
                 <div className={styles.replyAvatar}>
