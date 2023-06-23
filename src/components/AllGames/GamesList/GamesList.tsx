@@ -1,69 +1,29 @@
 import { theme, Card, Row } from 'antd';
 import { InView } from 'react-intersection-observer';
 import { Content } from 'antd/es/layout/layout';
-import { useQuery } from '@apollo/client';
 import { useCallback, useEffect, useState } from 'react';
 import { debounce } from 'lodash';
 import GameCard from '@/components/AllGames/GamesList/GameCard';
 import List from '@/components/AllGames/GamesList/List';
 import styles from '@/components/AllGames/GamesList/GamesList.module.scss';
-import { useAppSelector, useAppDispatch } from '@/app/hooks';
+import { useAppSelector } from '@/app/hooks';
 import useUserGameById from '@/services/userGames/useUserGameById';
 import ListEditor from '@/components/ListEditor';
 import type { GameDataType } from '@/components/GamesListTable/types';
-import { GET_ALL_GAMES } from '@/services/games/queries';
-import { getTokenFromLocalStorage } from '@/constants';
 import { store } from '@/app/store';
-import { setAddedGames } from '@/features/addedGamesSlice';
+import useAllGames from '@/services/games/useAllGames';
 
 export default function GamesList() {
   const homeSearchState = useAppSelector((state) => state.homeSearch);
-  const gameFilters = useAppSelector((state) => state.gameFilters);
   const { addedList } = useAppSelector((state) => state.addedGames);
-  const userState = useAppSelector((state) => state.user);
-
-  const [tempSearch, setTempSearch] = useState<string | undefined>('');
 
   // States for modal to edit list
   const { userGameLoading, fetchUserGame } = useUserGameById();
   const [open, setOpen] = useState(false);
   const [selectedGame, setSelectedGame] = useState<GameDataType>();
 
-  const dispatch = useAppDispatch();
-
-  const { data, loading, fetchMore } = useQuery(GET_ALL_GAMES, {
-    variables: {
-      genre: gameFilters.genres,
-      tag: gameFilters.tags,
-      platform: gameFilters.platforms,
-      year: gameFilters.year,
-      sortBy: gameFilters.sortBy,
-      search: tempSearch,
-      limit: 20,
-      offset: 0,
-    },
-    context: getTokenFromLocalStorage(),
-    onCompleted: (games) => {
-      const { allGames: allGamesData } = games;
-
-      if (allGamesData) {
-        allGamesData.forEach((game) => {
-          if (
-            userState.user.id &&
-            game.isGameAdded &&
-            !addedList.includes(game.id)
-          ) {
-            dispatch(
-              setAddedGames({
-                type: 'add',
-                gameId: game.id,
-              })
-            );
-          }
-        });
-      }
-    },
-  });
+  const { games, loading, fetchMore, tempSearch, setTempSearch } =
+    useAllGames();
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedFilter = useCallback(
@@ -90,6 +50,7 @@ export default function GamesList() {
         debouncedFilter.cancel();
         return;
       }
+
       debouncedFilter(search);
     });
 
@@ -97,6 +58,7 @@ export default function GamesList() {
       debouncedFilter.cancel();
       unsubscribe();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedFilter, tempSearch]);
 
   const memorizedOpenGameListEditor = useCallback(
@@ -114,7 +76,7 @@ export default function GamesList() {
   } = theme.useToken();
 
   // TODO: Add Loading component
-  if (loading || !data) {
+  if (loading || games.length === 0) {
     return null;
   }
 
@@ -130,8 +92,8 @@ export default function GamesList() {
               xl: 32,
             }}
           >
-            {data &&
-              data?.allGames.map((game) => {
+            {games.length > 0 &&
+              games.map((game) => {
                 return (
                   <GameCard
                     isAdded={addedList.includes(game.id)}
@@ -142,11 +104,11 @@ export default function GamesList() {
                   />
                 );
               })}
-            {data && (
+            {games.length > 0 && (
               <InView
                 style={{ visibility: 'hidden' }}
                 onChange={async (inView) => {
-                  const currentLength = data.allGames.length || 0;
+                  const currentLength = games.length || 0;
 
                   if (inView) {
                     await fetchMore({
@@ -177,19 +139,19 @@ export default function GamesList() {
         <div className={styles.allListContainer}>
           <div className={styles.allListTitle}>All Games</div>
           <div className={styles.allListDivider}>
-            {data &&
-              [...data.allGames].map((game) => (
+            {games.length > 0 &&
+              games.map((game) => (
                 <List
                   key={`list-${game.id}`}
                   game={game}
                   colorBgContainer={colorBgContainer}
                 />
               ))}
-            {data && (
+            {games.length > 0 && (
               <InView
                 style={{ visibility: 'hidden' }}
                 onChange={async (inView) => {
-                  const currentLength = data.allGames.length || 0;
+                  const currentLength = games.length || 0;
 
                   if (inView) {
                     await fetchMore({
