@@ -29,13 +29,13 @@ function List({ game, colorBgContainer }: GameCardType): JSX.Element {
             href={`/game-detail/${game.id}/${game.name}`}
             className={styles.gameLink}
           >
-            {game.imageURL && (
+            {game.imageURL ? (
               <img
                 src={game?.imageURL}
                 className={styles.gameImage}
                 alt={game.name}
               />
-            )}
+            ) : null}
           </a>
           <div className={styles.gameContent}>
             <div className={styles.gameTitle}>
@@ -65,7 +65,7 @@ function List({ game, colorBgContainer }: GameCardType): JSX.Element {
               </div>
             </div>
             <div className={styles.gameRating}>
-              {game.avgScore && getRatingIcon(game.avgScore, `${data}`)}
+              {game.avgScore ? getRatingIcon(game.avgScore, `${data}`) : null}
               <div style={{ color: `${data}` }}>
                 Rating: {game.avgScore}
                 <div>Based on: {game.totalRating} Users</div>

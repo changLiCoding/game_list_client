@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Button, Layout, Dropdown, Space } from 'antd';
 import type { MenuProps } from 'antd';
 import { HeartOutlined, DownCircleOutlined } from '@ant-design/icons';
@@ -24,53 +24,51 @@ function GameDetailHeaderInfoTemp({ game }: GameDetailsType) {
     handleEditUserGameStatus,
   } = useAddRemoveGameCustomHook();
 
-  const items: MenuProps['items'] = [
-    'Planning',
-    'Playing',
-    'Open List Editor',
-  ].map((item) => {
-    if (item === 'Open List Editor') {
+  const items: MenuProps['items'] = useMemo(() => {
+    return ['Planning', 'Playing', 'Open List Editor'].map((item) => {
+      if (item === 'Open List Editor') {
+        return {
+          key: item,
+          label: (
+            <>
+              <Button
+                type="text"
+                onClick={(e) => {
+                  e.preventDefault();
+                  fetchUserGame({ variables: { gameId: game.id } });
+                  setOpen(!open);
+                }}
+              >
+                Open List Editor
+              </Button>
+              <ListEditor
+                isGameAdded={addedList.includes(game.id as string)}
+                userGameLoading={userGameLoading}
+                open={open}
+                setOpen={setOpen}
+                game={game}
+              />
+            </>
+          ),
+        };
+      }
       return {
         key: item,
         label: (
-          <>
-            <Button
-              type="text"
-              onClick={(e) => {
-                e.preventDefault();
-                fetchUserGame({ variables: { gameId: game.id } });
-                setOpen(!open);
-              }}
-            >
-              Open List Editor
-            </Button>
-            <ListEditor
-              isGameAdded={addedList.includes(game.id as string)}
-              userGameLoading={userGameLoading}
-              open={open}
-              setOpen={setOpen}
-              game={game}
-            />
-          </>
+          <Button
+            type="text"
+            onClick={async () => {
+              await handleEditUserGameStatus(item, game as GameType);
+            }}
+          >
+            {' '}
+            Set as {item}
+          </Button>
         ),
       };
-    }
-    return {
-      key: item,
-      label: (
-        <Button
-          type="text"
-          onClick={async () => {
-            await handleEditUserGameStatus(item, game as GameType);
-          }}
-        >
-          {' '}
-          Set as {item}
-        </Button>
-      ),
-    };
-  });
-
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open, userGameLoading, game, addedList]);
   return (
     <Layout className={styles.infoContainer}>
       <Content className={styles.infoContent}>

@@ -106,7 +106,9 @@ function ListEditorTemp({
       >
         <div className={styles.headerContent}>
           <div className={styles.contentCover}>
-            {game?.imageURL && <img src={game?.imageURL} alt={game?.name} />}
+            {game?.imageURL ? (
+              <img src={game?.imageURL} alt={game?.name} />
+            ) : null}
           </div>
           <div className={styles.contentTitle}>{game?.name}</div>
           <div className={styles.contentFavourite}>

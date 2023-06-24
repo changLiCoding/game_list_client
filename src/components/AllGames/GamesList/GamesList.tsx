@@ -1,4 +1,5 @@
 import { theme, Card, Row } from 'antd';
+import { FixedSizeList } from 'react-window';
 import { InView } from 'react-intersection-observer';
 import { Content } from 'antd/es/layout/layout';
 import { useCallback, useEffect, useState } from 'react';
@@ -108,19 +109,20 @@ export default function GamesList() {
               xl: 32,
             }}
           >
-            {games.length > 0 &&
-              games.map((game) => {
-                return (
-                  <GameCard
-                    isAdded={addedList.includes(game.id)}
-                    key={`grid-${game.id}`}
-                    game={game}
-                    colorBgContainer={colorBgContainer}
-                    openGameListEditor={memorizedOpenGameListEditor}
-                  />
-                );
-              })}
-            {games.length > 0 && (
+            {games.length > 0
+              ? games.map((game) => {
+                  return (
+                    <GameCard
+                      isAdded={addedList.includes(game.id)}
+                      key={`grid-${game.id}`}
+                      game={game}
+                      colorBgContainer={colorBgContainer}
+                      openGameListEditor={memorizedOpenGameListEditor}
+                    />
+                  );
+                })
+              : null}
+            {games.length > 0 ? (
               <InView
                 style={{ visibility: 'hidden' }}
                 onChange={async (inView) => {
@@ -133,22 +135,23 @@ export default function GamesList() {
               >
                 INVIEW
               </InView>
-            )}
+            ) : null}
           </Row>
         </Card>
       ) : (
         <div className={styles.allListContainer}>
           <div className={styles.allListTitle}>All Games</div>
           <div className={styles.allListDivider}>
-            {games.length > 0 &&
-              games.map((game) => (
-                <List
-                  key={`list-${game.id}`}
-                  game={game}
-                  colorBgContainer={colorBgContainer}
-                />
-              ))}
-            {games.length > 0 && (
+            {games.length > 0
+              ? games.map((game) => (
+                  <List
+                    key={`list-${game.id}`}
+                    game={game}
+                    colorBgContainer={colorBgContainer}
+                  />
+                ))
+              : null}
+            {games.length > 0 ? (
               <InView
                 style={{ visibility: 'hidden' }}
                 onChange={async (inView) => {
@@ -161,7 +164,7 @@ export default function GamesList() {
               >
                 INVIEW
               </InView>
-            )}
+            ) : null}
           </div>
         </div>
       )}

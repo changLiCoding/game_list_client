@@ -40,15 +40,16 @@ function NeedMemoedGameCard({
             aria-label={`gamecard-popover-${game.name}`}
             content={
               <div style={{ position: 'relative' }}>
-                {game.releaseDate && (
+                {game.releaseDate ? (
                   <p>{`Released: ${game.releaseDate.slice(0, 10)}`}</p>
-                )}
+                ) : null}
 
                 <p>{`Score: ${game.avgScore}`}</p>
 
                 {/* Conditional rendering icon */}
-                {game.avgScore &&
-                  getRatingIcon(game.avgScore, data as string | '#6927d3')}
+                {game.avgScore
+                  ? getRatingIcon(game.avgScore, data as string | '#6927d3')
+                  : null}
 
                 <Divider> Tags</Divider>
                 {game.tags.map((tag: string) => (
@@ -63,7 +64,7 @@ function NeedMemoedGameCard({
               <p>Error!</p>
             ) : (
               <Link to={`/game-detail/${game.id}/${game.name}`}>
-                {game.imageURL && (
+                {game.imageURL ? (
                   <Card
                     game-card-id={game.id}
                     className={styles.cardGameContainer}
@@ -83,7 +84,7 @@ function NeedMemoedGameCard({
                       title={game.name}
                     />
                   </Card>
-                )}
+                ) : null}
               </Link>
             )}
             <Button
