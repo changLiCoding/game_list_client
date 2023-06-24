@@ -71,6 +71,22 @@ export default function GamesList() {
     []
   );
 
+  const onFetchMore = async (cardsLength: number) => {
+    await fetchMore({
+      variables: {
+        limit: 20,
+        offset: cardsLength,
+      },
+      updateQuery: (prev, { fetchMoreResult }) => {
+        if (!fetchMoreResult) return prev;
+        return {
+          ...prev,
+          allGames: [...prev.allGames, ...fetchMoreResult.allGames],
+        };
+      },
+    });
+  };
+
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -111,22 +127,7 @@ export default function GamesList() {
                   const currentLength = games.length || 0;
 
                   if (inView) {
-                    await fetchMore({
-                      variables: {
-                        limit: 20,
-                        offset: currentLength,
-                      },
-                      updateQuery: (prev, { fetchMoreResult }) => {
-                        if (!fetchMoreResult) return prev;
-                        return {
-                          ...prev,
-                          allGames: [
-                            ...prev.allGames,
-                            ...fetchMoreResult.allGames,
-                          ],
-                        };
-                      },
-                    });
+                    await onFetchMore(currentLength);
                   }
                 }}
               >
@@ -154,22 +155,7 @@ export default function GamesList() {
                   const currentLength = games.length || 0;
 
                   if (inView) {
-                    await fetchMore({
-                      variables: {
-                        limit: 20,
-                        offset: currentLength,
-                      },
-                      updateQuery: (prev, { fetchMoreResult }) => {
-                        if (!fetchMoreResult) return prev;
-                        return {
-                          ...prev,
-                          allGames: [
-                            ...prev.allGames,
-                            ...fetchMoreResult.allGames,
-                          ],
-                        };
-                      },
-                    });
+                    await onFetchMore(currentLength);
                   }
                 }}
               >

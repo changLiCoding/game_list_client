@@ -1,3 +1,4 @@
+import React from 'react';
 import { Tag } from 'antd';
 import Color from 'color-thief-react';
 import styles from '@/components/AllGames/GamesList/List/List.module.scss';
@@ -98,4 +99,6 @@ function List({ game, colorBgContainer }: GameCardType): JSX.Element {
   );
 }
 
-export default List;
+const MemoizedList = React.memo(List);
+
+export default MemoizedList;
