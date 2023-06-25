@@ -43,6 +43,7 @@ export default function GamesList() {
       const { search } = store.getState().gameFilters;
 
       if (search === tempSearch) {
+        debouncedFilter.cancel();
         return;
       }
 
