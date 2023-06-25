@@ -4,7 +4,6 @@ import {
   ExclamationCircleFilled,
   HeartFilled,
 } from '@ant-design/icons';
-import { useDispatch } from 'react-redux';
 import React from 'react';
 
 import useEditUserGame from '@/services/userGames/useEditUserGame';
@@ -16,7 +15,7 @@ import type {
   OnChangeTextAreaType,
 } from '@/types/global';
 import { setUserGameReducer } from '@/features/userGameSlice';
-import { useAppSelector } from '@/app/hooks';
+import { useAppSelector, useAppDispatch } from '@/app/hooks';
 import styles from '@/components/ListEditor/ListEditor.module.scss';
 import useAddRemoveGameCustomHook from '@/hooks/useAddRemoveGameCustomHook';
 import DatePickerField from '../DatePickerField';
@@ -30,7 +29,6 @@ function ListEditorTemp({
   setOpen,
   game,
 }: ListEditorType) {
-  const dispatch = useDispatch();
   const userGame = useAppSelector((state) => state.userGame);
 
   const {
@@ -45,6 +43,7 @@ function ListEditorTemp({
   const { contextHolder, info, warning } = useNotification();
 
   const userState = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
 
   const { handleAddGameHook, handleRemoveGameHook } =
     useAddRemoveGameCustomHook();

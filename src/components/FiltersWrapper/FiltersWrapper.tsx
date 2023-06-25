@@ -52,6 +52,7 @@ function SelectFilterField<T>({
 }
 export default function FiltersWrapper() {
   const [collapsed, setCollapsed] = useState(false);
+
   const dispatch = useDispatch();
   const gameFilters = useAppSelector((state) => state.gameFilters);
 

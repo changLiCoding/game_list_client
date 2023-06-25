@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import type {
   StatusUpdate as StatusUpdateType,
   Post as PostType,
@@ -20,33 +21,36 @@ function ActivitiesUpdates({
 
   const { id: currentUserId } = userState;
 
+  const memoizedActivities = useMemo(() => {
+    return [...statusUpdates, ...posts]
+      .sort((a, b) => {
+        return Date.parse(b.updatedAt) - Date.parse(a.updatedAt);
+      })
+      .map((activity) => {
+        const { daysElapsed, hoursElapsed } = getTimeElapsed(
+          activity.updatedAt
+        );
+        const isCurrentLiked = activity.likedUsers.some(
+          (user) => user.id === currentUserId
+        );
+        return (
+          <ActivityCard
+            isCurrentLiked={isCurrentLiked}
+            key={`${activity.__typename}:${activity.id}`}
+            activity={activity}
+            daysElapsed={daysElapsed}
+            hoursElapsed={hoursElapsed}
+            currentUserId={currentUserId}
+            addLike={addLike}
+            removeLike={removeLike}
+          />
+        );
+      });
+  }, [statusUpdates, posts, currentUserId, addLike, removeLike]);
+
   return (
     <div className={styles.activitiesUpdatesContainer}>
-      {(statusUpdates.length > 0 || posts.length > 0) &&
-        [...statusUpdates, ...posts]
-          .sort((a, b) => {
-            return Date.parse(b.updatedAt) - Date.parse(a.updatedAt);
-          })
-          .map((activity) => {
-            const { daysElapsed, hoursElapsed } = getTimeElapsed(
-              activity.updatedAt
-            );
-            const isCurrentLiked = activity.likedUsers.some(
-              (user) => user.id === currentUserId
-            );
-            return (
-              <ActivityCard
-                isCurrentLiked={isCurrentLiked}
-                key={`${activity.__typename}:${activity.id}`}
-                activity={activity}
-                daysElapsed={daysElapsed}
-                hoursElapsed={hoursElapsed}
-                currentUserId={currentUserId}
-                addLike={addLike}
-                removeLike={removeLike}
-              />
-            );
-          })}
+      {(statusUpdates.length > 0 || posts.length > 0) && memoizedActivities}
     </div>
   );
 }

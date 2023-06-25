@@ -23,17 +23,6 @@ const useTokenAuth = (): UseTokenAuthType => {
     }
   }, [dispatch, getUser]);
 
-  // useEffect(() => {
-  //   if (authToken && !isExpired(authToken)) {
-
-  //     getUser();
-
-  //   } else {
-  //     localStorage.clear();
-  //     dispatch(setLoading(false));
-  //   }
-  // }, [authToken, dispatch, getUser, data]);
-
   useEffect(() => {
     const authToken = localStorage.getItem('token');
 

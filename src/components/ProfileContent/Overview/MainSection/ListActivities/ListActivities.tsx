@@ -1,18 +1,17 @@
 import { DownOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
-import { Dropdown, Space } from 'antd';
+import { Dropdown, Space, Skeleton } from 'antd';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import styles from '@/components/ProfileContent/Overview/MainSection/ListActivities/ListActivities.module.scss';
 import useGlobalStatusUpdates from '@/services/statusUpdate/useGlobalStatusUpdates';
 import useGlobalPosts from '@/services/post/useGlobalPosts';
 import PostInput from '@/components/ProfileContent/Overview/MainSection/ListActivities/PostInput/PostInput';
 import ActivitiesUpdates from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivitiesUpdates';
-import { useAppSelector } from '@/app/hooks';
+import { useAppSelector, useAppDispatch } from '@/app/hooks';
 import { setIsUserGameEdited } from '@/features/addedGamesSlice';
 
 function ListActivities() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const { isUserGameEdited, addedList } = useAppSelector(
     (state) => state.addedGames
@@ -62,9 +61,20 @@ function ListActivities() {
     },
   ];
 
+  if (loading) {
+    return (
+      <div className={styles.listActivitiesContainer}>
+        <h2 className={styles.title}>Activities</h2>
+        <Skeleton avatar active style={{ margin: '25px auto 25px auto' }} />
+        <Skeleton active avatar style={{ marginBottom: '25px' }} />
+        <Skeleton active avatar style={{ marginBottom: '25px' }} />
+        <Skeleton active avatar style={{ marginBottom: '25px' }} />
+      </div>
+    );
+  }
+
   return (
     <div className={styles.listActivitiesContainer}>
-      {loading && <div>Loading...</div>}
       <h2 className={styles.title}>
         Activities
         <Dropdown

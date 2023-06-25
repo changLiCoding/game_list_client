@@ -1,8 +1,8 @@
 import { Button } from 'antd';
-import { useDispatch } from 'react-redux';
+import { useEffect, useRef } from 'react';
 
 import styles from '@/components/ProfileContent/Overview/MainSection/ListActivities/PostInput/PostInput.module.scss';
-import { useAppSelector } from '@/app/hooks';
+import { useAppSelector, useAppDispatch } from '@/app/hooks';
 import useNotification from '@/hooks/useNotification';
 import { setPost } from '@/features/userPostSlice';
 import usePosts from '@/services/post/usePosts';
@@ -23,7 +23,8 @@ function PostInput({
   commentType,
   commentId,
 }: PostInputProps) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+  const postRef = useRef<HTMLTextAreaElement>(null);
   const { post } = useAppSelector((state) => state.userPost);
 
   const { createPost } = usePosts();
@@ -31,9 +32,16 @@ function PostInput({
 
   const { success, contextHolder, warning } = useNotification();
 
+  useEffect(() => {
+    if (type === 'post' && postRef.current) {
+      postRef.current.focus();
+    }
+  }, [type]);
+
   return (
     <div className={styles.postInputContainer}>
       <textarea
+        ref={postRef}
         value={type === 'comment' ? comment : post}
         autoComplete="off"
         placeholder={`${type} something...`}
