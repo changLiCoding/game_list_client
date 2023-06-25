@@ -19,7 +19,7 @@ import { apolloClient } from '@/graphql';
 const { useBreakpoint } = Grid;
 
 export default function Navbar() {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState<boolean>(false);
   const { loading, userState } = useTokenAuth();
   const navigate = useNavigate();
   const { pathname } = useLocation();

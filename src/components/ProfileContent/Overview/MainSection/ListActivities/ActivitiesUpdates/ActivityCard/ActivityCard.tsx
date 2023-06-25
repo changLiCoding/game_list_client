@@ -27,7 +27,7 @@ function ActivityCard({
   addLike,
   removeLike,
   currentUserId,
-}: ActivityCardProps) {
+}: ActivityCardProps): JSX.Element {
   const likedAvatar = (likedUsers: UserType[]) => {
     return (
       <Avatar.Group maxCount={3}>
@@ -48,7 +48,7 @@ function ActivityCard({
     contextHolder: commentContext,
   } = useAddRemoveCommentCustomHook();
   const { handleAddFollow } = useAddRemoveFollowCustomHook();
-  const [isCommentVisible, setIsCommentVisible] = useState(
+  const [isCommentVisible, setIsCommentVisible] = useState<boolean>(
     activity.comments.length > 0
   );
 

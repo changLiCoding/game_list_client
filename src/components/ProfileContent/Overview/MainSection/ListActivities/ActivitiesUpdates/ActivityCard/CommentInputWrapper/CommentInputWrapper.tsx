@@ -9,7 +9,7 @@ function CommentInputWrapper({
   commentType: string | undefined;
   commentId: string;
 }) {
-  const [comment, setComment] = useState('');
+  const [comment, setComment] = useState<string>('');
   return (
     <div>
       <PostInput

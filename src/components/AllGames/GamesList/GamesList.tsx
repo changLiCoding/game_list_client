@@ -1,5 +1,4 @@
 import { theme, Card, Row } from 'antd';
-import { FixedSizeList } from 'react-window';
 import { InView } from 'react-intersection-observer';
 import { Content } from 'antd/es/layout/layout';
 import { useCallback, useEffect, useState } from 'react';

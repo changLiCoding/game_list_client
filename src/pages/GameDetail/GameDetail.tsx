@@ -5,7 +5,7 @@ import { Content } from 'antd/es/layout/layout';
 import { useEffect, useState } from 'react';
 import useNotification from '@/hooks/useNotification';
 import useGetGameById from '@/services/game/useGetGameById';
-
+import type { Game as GameType } from '@/graphql/__generated__/graphql';
 import GameDetailHeader from '@/components/GameDetailHeader';
 import { apolloClient } from '@/graphql';
 
@@ -21,7 +21,7 @@ function GameDetail(): JSX.Element {
   // const memorizedGetGame = useCallback(getGame, []);
   // // eslint-disable-next-line react-hooks/exhaustive-deps
   // const memorizedWarning = useCallback(warning, []);
-  const [game, setGame] = useState(null);
+  const [game, setGame] = useState<GameType | null>(null);
 
   useEffect(() => {
     const fetchGame = async () => {

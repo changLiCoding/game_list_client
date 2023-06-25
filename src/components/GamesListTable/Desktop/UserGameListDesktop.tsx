@@ -12,7 +12,7 @@ import useUserGameById from '@/services/userGames/useUserGameById';
 import { useAppSelector } from '@/app/hooks';
 
 function UserGameListDesktop({ data }: UserGameListDataType) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState<boolean>(false);
   const { userGameLoading, fetchUserGame } = useUserGameById();
 
   const [chosenGame, setChosenGame] = useState<GameDataType>();

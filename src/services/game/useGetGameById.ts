@@ -6,7 +6,12 @@ import { GET_GAME_BY_ID } from '@/services/game/queries';
 import { setAddedGames } from '@/features/addedGamesSlice';
 import type { Game as GameType } from '@/graphql/__generated__/graphql';
 
-export default function useGetGameById() {
+export default function useGetGameById(): {
+  getGame: (id: string) => Promise<void>;
+  game: GameType;
+  loading: boolean;
+  error: unknown;
+} {
   const dispatch = useDispatch();
   const { addedList } = useAppSelector((state) => state.addedGames);
 
