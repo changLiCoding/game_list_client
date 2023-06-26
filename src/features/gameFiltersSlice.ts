@@ -14,7 +14,6 @@ export function createGameFiltersSlice<T>(
     name,
     initialState,
     reducers: {
-      ...extendedReducers,
       setFilters: (state, action: PayloadAction<Partial<T>>) => {
         return { ...state, ...action.payload };
       },
@@ -23,6 +22,7 @@ export function createGameFiltersSlice<T>(
         return { ...state, [filterKey]: initialState[filterKey] };
       },
       reset: () => initialState,
+      ...extendedReducers,
     },
   });
 }

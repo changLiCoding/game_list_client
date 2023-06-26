@@ -1,5 +1,15 @@
-import { Layout, Grid, Input, Space, Button, Select } from 'antd';
 import {
+  Layout,
+  Grid,
+  Input,
+  Space,
+  Button,
+  Select,
+  Popover,
+  Skeleton,
+} from 'antd';
+import {
+  DownloadOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   SearchOutlined,
@@ -15,9 +25,15 @@ import {
   FIRST_VIDEO_GAME_RELEASED_YEAR,
   getTokenFromLocalStorage,
 } from '@/constants';
-import { setGameFilters } from '@/app/store';
+import { setGameFilters, toggleItem } from '@/app/store';
 import { range } from '@/utils/utils';
 import type { SelectFilterFieldType } from '@/components/FiltersWrapper/types';
+import ExclusionFiltersList from './ExclusionFiltersList';
+import ExclusionFiltersList2, {
+  MemoizedExclusionFiltersList2,
+} from './ExclusionFiltersList2';
+import ExclusionFiltersListMessage from './ExclusionFiltersListMessage';
+import ExclusionFiltersList3 from './ExclusionFiltersList3';
 
 const { Search } = Input;
 const { useBreakpoint } = Grid;
@@ -52,6 +68,7 @@ function SelectFilterField<T>({
   );
 }
 export default function FiltersWrapper() {
+  const [open, setOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
   const dispatch = useDispatch();
   const gameFilters = useAppSelector((state) => state.gameFilters);
@@ -73,6 +90,185 @@ export default function FiltersWrapper() {
 
   const screens = useBreakpoint();
 
+  const t = {
+    included: {
+      values: gameFilters.platforms || [],
+      color: 'green',
+    },
+
+    excluded: {
+      values: gameFilters.excludedPlatforms || [],
+      color: 'red',
+    },
+  };
+
+  // value={gameFilters.platforms || []}
+  // options={data?.getGameFilters.platforms || []}
+  // onChange={(value) =>
+  //   dispatch(setGameFilters({ platforms: value }))
+  // }
+
+  const content = (
+    <>
+      {loading ? (
+        <div className={styles.advancedSearchPopoverLoading}>
+          <Skeleton paragraph={{ rows: 3, width: 600 }} active />
+          <Skeleton paragraph={{ rows: 3, width: 600 }} active />
+          <Skeleton paragraph={{ rows: 3, width: 600 }} active />
+        </div>
+      ) : (
+        <>
+          {/* <ExclusionFiltersList2
+          title="Genres"
+          entries={data?.getGameFilters.platforms ?? []}
+          states={[
+            {
+              included: {
+                values: gameFilters.platforms || [],
+                color: 'green',
+              },
+            },
+            {
+              excluded: {
+                values: gameFilters.excludedPlatforms || [],
+                color: 'red',
+              },
+            },
+            // {
+            //   other: {
+            //     values: gameFilters.platforms || [],
+            //     color: 'red',
+            //   },
+            // },
+          ]}
+          onChange={() => {}}
+        /> */}
+          {/* <div>
+            Here
+            {gameFilters.platforms}
+          </div> */}
+
+          <ExclusionFiltersList3
+            title="Genres"
+            entries={data?.getGameFilters.genres ?? []}
+            included={gameFilters.genres || []}
+            excluded={gameFilters.excludedGenres || []}
+            states={[
+              {
+                id: 'included',
+                color: 'green',
+                values: gameFilters.genres || [],
+              },
+              {
+                id: 'excluded',
+                color: 'red',
+                values: gameFilters.excludedGenres || [],
+              },
+            ]}
+          />
+
+          <ExclusionFiltersListMessage
+            title="Genres"
+            entries={data?.getGameFilters.genres ?? []}
+          />
+
+          {/* <ExclusionFiltersList2
+            title="Genres"
+            entries={data?.getGameFilters.genres ?? []}
+            included={gameFilters.genres || []}
+            excluded={gameFilters.excludedGenres || []}
+            states={[
+              {
+                id: 'included',
+                color: 'green',
+                values: gameFilters.genres || [],
+              },
+              {
+                id: 'excluded',
+                color: 'red',
+                values: gameFilters.excludedGenres || [],
+              },
+            ]}
+            onChange={() => {}}
+            setFunc={(included, excluded) =>
+              dispatch(
+                setGameFilters({ genres: included, excludedGenres: excluded })
+              )
+            }
+          /> */}
+
+          {/* <ExclusionFiltersListMessage
+            title="Platforms"
+            entries={data?.getGameFilters.platforms ?? []}
+          />
+
+          <ExclusionFiltersListMessage
+            title="Genres"
+            entries={data?.getGameFilters.genres ?? []}
+          /> */}
+
+          {/* <ExclusionFiltersList
+          title="Genres"
+          entries={data.getGameFilters.genres}
+          onChange={(included, excluded) => {
+            console.log('ExclusionFiltersList included: ', included);
+            console.log('ExclusionFiltersList excluded: ', excluded);
+            dispatch(
+              setGameFilters({ excludedGenres: excluded, genres: included })
+            );
+          }}
+        />
+
+        <ExclusionFiltersList
+          title="Platforms"
+          entries={data.getGameFilters.platforms}
+          onChange={(excluded, included) => {
+            dispatch(
+              setGameFilters({
+                excludedPlatforms: excluded,
+                platforms: included,
+              })
+            );
+          }}
+        />
+
+        <ExclusionFiltersList
+          title="Tags"
+          entries={data.getGameFilters.tags}
+          onChange={(excluded, included) => {
+            // dispatch(setGameFilters({ excludedTags: excluded, tags: included }));
+          }}
+        /> */}
+        </>
+      )}
+
+      {/* 
+     // onChange={(state, entry) => {
+      //   batch(() => {
+      //     // dispatch()
+      //     if (state === 'not_added') {
+      //       const removedEntry = remove(gameFilters.genres, entry);
+      //       dispatch(setGameFilters({ genres: removedEntry }));
+      //     } else if (state === 'included') {
+      //       dispatch(setGameFilters({ genres: [] }));
+      //     } else if (state === 'excluded') {
+      //       dispatch(setGameFilters({ genres: [] }));
+      //     }
+      //   });
+      // }}
+    
+    <h3 className={filterFieldStyles.h3FilterFieldTitle}>excludedGenres</h3>
+    <SelectFilterField<string[]>
+      mode="multiple"
+      value={gameFilters.excludedGenres || []}
+      options={data?.getGameFilters.genres || []}
+      onChange={(value) =>
+        dispatch(setGameFilters({ excludedGenres: value }))
+      }
+    /> */}
+    </>
+  );
+
   if (!data || loading) return null;
   if (data.getGameFilters.errors.length > 0) {
     console.log('Errors:', data.getGameFilters.errors);
@@ -91,6 +287,17 @@ export default function FiltersWrapper() {
           className={filterFieldStyles.layoutFilterFieldContainer}
         >
           <div>
+            <h3 className={filterFieldStyles.h3FilterFieldTitle}>
+              Genres (Test)
+            </h3>
+            <SelectFilterField<string[]>
+              mode="multiple"
+              value={gameFilters.genres || []}
+              options={data?.getGameFilters.genres || []}
+              onChange={(value) => dispatch(toggleItem({ genres: value }))}
+            />
+          </div>
+          {/* <div>
             <h3 className={filterFieldStyles.h3FilterFieldTitle}>Search</h3>
             <Input
               allowClear
@@ -103,8 +310,9 @@ export default function FiltersWrapper() {
                 dispatch(setGameFilters({ search: e.target.value }));
               }}
             />
-          </div>
-          <div>
+          </div> */}
+
+          {/* <div>
             <h3 className={filterFieldStyles.h3FilterFieldTitle}>Genres</h3>
             <SelectFilterField<string[]>
               mode="multiple"
@@ -144,6 +352,19 @@ export default function FiltersWrapper() {
               options={yearOptions}
               onChange={(value) => dispatch(setGameFilters({ year: value }))}
             />
+          </div> */}
+
+          <div>
+            <Popover
+              placement="bottomRight"
+              arrow={false}
+              content={content}
+              trigger="click"
+              open={open}
+              onOpenChange={(newOpen) => setOpen(newOpen)}
+            >
+              <Button type="primary" icon={<DownloadOutlined />} size="large" />
+            </Popover>
           </div>
         </div>
       ) : (

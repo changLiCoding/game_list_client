@@ -2,6 +2,7 @@ import {
   PreloadedState,
   combineReducers,
   configureStore,
+  createListenerMiddleware,
 } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import userReducer from '@/features/userSlice';
@@ -11,6 +12,7 @@ import addedGamesReducer from '@/features/addedGamesSlice';
 import homeSearchSlice from '@/features/homeSearchSlice';
 import { createGameFiltersSlice } from '@/features/gameFiltersSlice';
 import { HomeGameFilters, UserGameFilters } from '@/types/global';
+import { createBigTest } from '@/features/bigTest';
 
 const defaultGameFilters: HomeGameFilters = {
   genres: [],
@@ -22,6 +24,7 @@ const defaultGameFilters: HomeGameFilters = {
   year: undefined,
   search: '',
   sortBy: 'name',
+  state: 'off',
 };
 
 const defaultUserGameFilters: UserGameFilters = {
@@ -43,6 +46,9 @@ const userGameFiltersSlice = createGameFiltersSlice<UserGameFilters>(
   defaultUserGameFilters
 );
 
+export const listenerMiddleware = createListenerMiddleware();
+
+const bigTest = createBigTest();
 const rootReducer = combineReducers({
   user: userReducer,
   userGames: userGamesListReducer,
@@ -51,6 +57,7 @@ const rootReducer = combineReducers({
 
   // gameFilters: gameFiltersSlice,
   gameFilters: gameFiltersSlice.reducer,
+  bigTest: bigTest.reducer,
   userGameFilters: userGameFiltersSlice.reducer,
 
   addedGames: addedGamesReducer,
@@ -58,6 +65,8 @@ const rootReducer = combineReducers({
 
 export const store = configureStore({
   reducer: rootReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().prepend(listenerMiddleware.middleware),
 });
 
 export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
@@ -70,6 +79,13 @@ export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof rootReducer>;
 export type AppStore = ReturnType<typeof setupStore>;
+
+export const {
+  toggleItem,
+  setFilters: setTestFilter,
+  resetFilter: resetTestFilter,
+  reset: resetTestFilters,
+} = bigTest.actions;
 
 export const {
   setFilters: setGameFilters,

@@ -13,6 +13,8 @@ function FilterTags() {
   const dispatch = useDispatch();
   const gameFilters = useAppSelector((state) => state.gameFilters);
 
+  // TODO: Use a 'transformer' function to handle sortBy, excludedPlatforms, excludedTags and excludedGenres
+
   const filterTags = useMemo(() => {
     // Loop through all the keys and values of gameFilters and filter out the non null and undefined values
     const entries = Object.entries(gameFilters).filter((e) => {
@@ -40,6 +42,9 @@ function FilterTags() {
                     key={`${key}-${filterValue}`}
                     className={styles.tagsText}
                   >
+                    {/* Again were only checking for excludedGenres this time. Note: if we had to do this for a 3rd variable, 
+                        this would probably move to a transformer type function to handle these scenarios */}
+                    {key === 'excludedGenres' && <>-</>}
                     {filterValue}
                   </Tag>
                 );

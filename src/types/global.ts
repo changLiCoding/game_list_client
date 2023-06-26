@@ -66,6 +66,7 @@ export type HomeGameFilters = {
   excludedTags: string[] | undefined;
   year: number | undefined;
   sortBy: GameFiltersSortType | undefined;
+  state: string;
 };
 
 export type UserGameFilters = {
