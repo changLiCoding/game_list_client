@@ -14,7 +14,7 @@ const useAddRemoveGameCustomHook = () => {
 
   const handleAddGameHook = async (gameInput: GameType) => {
     if (!addedList.includes(gameInput.id as string)) {
-      if (userState?.user.id === '') {
+      if (userState?.user.id === '' || !userState?.user.id) {
         info('Please login to add game to your GameList');
         return;
       }

@@ -1,4 +1,4 @@
-import { useLazyQuery } from '@apollo/client';
+import { useLazyQuery, ApolloError } from '@apollo/client';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '@/app/hooks';
 import { getTokenFromLocalStorage } from '@/constants';
@@ -10,7 +10,7 @@ export default function useGetGameById(): {
   getGame: (id: string) => Promise<void>;
   game: GameType;
   loading: boolean;
-  error: unknown;
+  error: ApolloError;
 } {
   const dispatch = useDispatch();
   const { addedList } = useAppSelector((state) => state.addedGames);

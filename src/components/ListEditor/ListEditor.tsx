@@ -115,6 +115,10 @@ function ListEditorTemp({
               className={styles.favouriteButton}
               type="ghost"
               onClick={async () => {
+                if (userState?.user.id === '') {
+                  warning('Please login to add or edit your GameList');
+                  return;
+                }
                 if (!isGameAdded) {
                   await handleAddGameHook(game);
                   info(`Game ${game?.name} added to your GameList`);
