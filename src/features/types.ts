@@ -1,3 +1,11 @@
+import { SliceCaseReducers, ValidateSliceCaseReducers } from '@reduxjs/toolkit';
+
+export type GenericGameFilterOptions<T> = {
+  name: string;
+  initialState: T;
+  reducers: ValidateSliceCaseReducers<T, SliceCaseReducers<T>>;
+};
+
 export type InitialStateType = {
   loading: boolean;
   user: UserInfo;

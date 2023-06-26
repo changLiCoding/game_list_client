@@ -37,15 +37,19 @@ const defaultUserGameFilters: UserGameFilters = {
   selectedList: 'all',
 };
 
-const gameFiltersSlice = createGameFiltersSlice<HomeGameFilters>(
-  'gameFiltersSlice',
-  defaultGameFilters
-);
-const userGameFiltersSlice = createGameFiltersSlice<UserGameFilters>(
-  'userGameFiltersSlice',
-  defaultUserGameFilters
-);
+const gameFiltersSlice = createGameFiltersSlice<HomeGameFilters>({
+  name: 'gameFiltersSlice',
+  initialState: defaultGameFilters,
+  reducers: {},
+});
 
+const userGameFiltersSlice = createGameFiltersSlice<UserGameFilters>({
+  name: 'userGameFiltersSlice',
+  initialState: defaultUserGameFilters,
+  reducers: {},
+});
+
+// TODO: Remove everything involving listeners - we don't need them anymore
 export const listenerMiddleware = createListenerMiddleware();
 
 const bigTest = createBigTest();
@@ -55,7 +59,6 @@ const rootReducer = combineReducers({
   userGame: userGameReducer,
   homeSearch: homeSearchSlice,
 
-  // gameFilters: gameFiltersSlice,
   gameFilters: gameFiltersSlice.reducer,
   bigTest: bigTest.reducer,
   userGameFilters: userGameFiltersSlice.reducer,
@@ -82,6 +85,7 @@ export type AppStore = ReturnType<typeof setupStore>;
 
 export const {
   toggleItem,
+  incrementItem,
   setFilters: setTestFilter,
   resetFilter: resetTestFilter,
   reset: resetTestFilters,
