@@ -9,6 +9,25 @@ export interface FilterFieldProps {
   customCascaderStyle: string;
 }
 
+export type StateId = State['id'];
+
+export type State = {
+  id: 'not_added' | 'included' | 'excluded';
+  color: string;
+};
+
+export type EntryProps = {
+  title: string;
+  onChange: (prevState: State, newState: State) => void;
+};
+
+export type ExclusionFiltersListProps = {
+  title: string;
+  entries: string[];
+  onChange: (included: string[], excluded: string[]) => void;
+};
+/// //////////////////////////////////////
+
 type ArrayOnly<T> = T extends any[] ? T : never;
 
 export type SelectFilterFieldType<T> =
