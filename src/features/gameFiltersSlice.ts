@@ -1,10 +1,20 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import {
+  PayloadAction,
+  SliceCaseReducers,
+  ValidateSliceCaseReducers,
+  createSlice,
+} from '@reduxjs/toolkit';
 
-export function createGameFiltersSlice<T>(name: string, initialState: T) {
+export function createGameFiltersSlice<T>(
+  name: string,
+  initialState: T,
+  extendedReducers?: ValidateSliceCaseReducers<T, SliceCaseReducers<T>>
+) {
   return createSlice({
     name,
     initialState,
     reducers: {
+      ...extendedReducers,
       setFilters: (state, action: PayloadAction<Partial<T>>) => {
         return { ...state, ...action.payload };
       },
