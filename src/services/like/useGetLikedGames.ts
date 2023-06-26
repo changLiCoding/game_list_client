@@ -2,22 +2,29 @@ import { useQuery, QueryResult, OperationVariables } from '@apollo/client';
 import { getTokenFromLocalStorage } from '@/constants';
 import { GET_ALL_LIKED_GAMES } from './queries';
 
-import type { Game as GameType } from '@/graphql/__generated__/graphql';
+import type {
+  Game,
+  GetAllLikedGamesQuery,
+} from '@/graphql/__generated__/graphql';
 
 export default function useGetLikedGames() {
   const {
     data,
     loading,
-  }: QueryResult<{ getAllLikedGames: GameType[] }, OperationVariables> =
-    useQuery(GET_ALL_LIKED_GAMES, {
+  }: QueryResult<GetAllLikedGamesQuery, OperationVariables> = useQuery(
+    GET_ALL_LIKED_GAMES,
+    {
       context: getTokenFromLocalStorage(),
-    });
+    }
+  );
   try {
     if (!data || !data.getAllLikedGames) {
       throw new Error('Error getting liked games');
     }
 
-    const likedGames = data.getAllLikedGames;
+    const likedGames = data.getAllLikedGames.map(
+      (like) => like.likeable
+    ) as Game[];
 
     return {
       likedGames,
@@ -25,7 +32,7 @@ export default function useGetLikedGames() {
     };
   } catch (errors: unknown) {
     if (errors instanceof Error) {
-      const likedGames = data ? (data?.getAllLikedGames as GameType[]) : [];
+      const likedGames = [] as Game[];
       return {
         likedGames,
         loading,
