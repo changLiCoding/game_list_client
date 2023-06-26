@@ -10,7 +10,7 @@ export default function useGetGameById(): {
   getGame: (id: string) => Promise<void>;
   game: GameType;
   loading: boolean;
-  error: ApolloError;
+  error: ApolloError | undefined;
 } {
   const dispatch = useDispatch();
   const { addedList } = useAppSelector((state) => state.addedGames);
