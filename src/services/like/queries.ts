@@ -123,3 +123,26 @@ export const REMOVE_LIKE_FROM_LIKEABLE = gql`
     }
   }
 `;
+
+export const GET_ALL_LIKED_GAMES = gql`
+  query GetAllLikedGames {
+    getAllLikedGames {
+      id
+      likeableId
+      likeableType
+      likeable {
+        __typename
+        ... on Game {
+          id
+          name
+          description
+          bannerURL
+          imageURL
+          releaseDate
+          avgScore
+          isGameAdded
+        }
+      }
+    }
+  }
+`;
