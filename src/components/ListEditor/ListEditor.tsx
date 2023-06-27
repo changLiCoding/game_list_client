@@ -21,6 +21,7 @@ import useAddRemoveGameCustomHook from '@/hooks/useAddRemoveGameCustomHook';
 import DatePickerField from '../DatePickerField';
 import TextAreaInput from '../TextAreaInput';
 import type { ListEditorType } from '@/components/ListEditor/types';
+import useAddRemoveLike from '@/services/like/useAddRemoveLike';
 
 function ListEditorTemp({
   isGameAdded,
@@ -48,6 +49,7 @@ function ListEditorTemp({
   const { handleAddGameHook, handleRemoveGameHook } =
     useAddRemoveGameCustomHook();
   const { editUserGame } = useEditUserGame();
+  const { addLike, removeLike } = useAddRemoveLike();
 
   const statusOptions: DropDownOption[] = [
     { label: 'Playing', value: 'Playing' },

@@ -22,6 +22,8 @@ export const DELETE_USER_GAMES = gql`
           genres
           platforms
           tags
+          isGameAdded
+          isGameLiked
         }
       }
       errors
@@ -51,6 +53,8 @@ export const ADD_USER_GAMES = gql`
           genres
           platforms
           tags
+          isGameAdded
+          isGameLiked
         }
       }
       errors
@@ -71,6 +75,8 @@ export const GAMES_FOR_A_USER = gql`
       genres
       platforms
       tags
+      isGameAdded
+      isGameLiked
     }
   }
 `;
@@ -103,6 +109,8 @@ export const GET_GAMES_BY_STATUS = gql`
         tags
         genres
         releaseDate
+        isGameAdded
+        isGameLiked
       }
       planning {
         id
@@ -113,6 +121,8 @@ export const GET_GAMES_BY_STATUS = gql`
         tags
         genres
         releaseDate
+        isGameAdded
+        isGameLiked
       }
       completed {
         id
@@ -123,6 +133,8 @@ export const GET_GAMES_BY_STATUS = gql`
         tags
         genres
         releaseDate
+        isGameAdded
+        isGameLiked
       }
       paused {
         id
@@ -133,6 +145,8 @@ export const GET_GAMES_BY_STATUS = gql`
         tags
         genres
         releaseDate
+        isGameAdded
+        isGameLiked
       }
       dropped {
         id
@@ -143,6 +157,8 @@ export const GET_GAMES_BY_STATUS = gql`
         tags
         genres
         releaseDate
+        isGameAdded
+        isGameLiked
       }
       justAdded {
         id
@@ -152,6 +168,9 @@ export const GET_GAMES_BY_STATUS = gql`
         platforms
         tags
         genres
+        releaseDate
+        isGameAdded
+        isGameLiked
       }
       playingCount
       planningCount

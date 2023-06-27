@@ -24,6 +24,7 @@ export const GET_GAME_BY_ID = gql`
       tags
       platforms
       isGameAdded
+      isGameLiked
     }
   }
 `;

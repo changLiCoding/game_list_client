@@ -21,7 +21,7 @@ export const ADD_LIKE_TO_LIKEABLE = gql`
             id
             gameId
             gameName
-            imageURL
+
             updatedAt
             status
             user {
@@ -39,6 +39,23 @@ export const ADD_LIKE_TO_LIKEABLE = gql`
           ... on Follow {
             id
           }
+
+          ... on Game {
+            id
+            name
+            description
+            bannerURL
+            imageURL
+            releaseDate
+            avgScore
+            totalRating
+            genres
+            tags
+            platforms
+            isGameAdded
+            isGameLiked
+          }
+
           ... on Post {
             id
             userId
@@ -83,7 +100,7 @@ export const REMOVE_LIKE_FROM_LIKEABLE = gql`
             id
             gameId
             gameName
-            imageURL
+
             updatedAt
             status
             user {
@@ -101,6 +118,22 @@ export const REMOVE_LIKE_FROM_LIKEABLE = gql`
           ... on Follow {
             id
           }
+          ... on Game {
+            id
+            name
+            description
+            bannerURL
+            imageURL
+            releaseDate
+            avgScore
+            totalRating
+            genres
+            tags
+            platforms
+            isGameAdded
+            isGameLiked
+          }
+
           ... on Post {
             id
             userId
@@ -141,6 +174,7 @@ export const GET_ALL_LIKED_GAMES = gql`
           releaseDate
           avgScore
           isGameAdded
+          isGameLiked
         }
       }
     }
