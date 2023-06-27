@@ -3,8 +3,10 @@ import { getTokenFromLocalStorage } from '@/constants';
 import { GET_ALL_LIKED_GAMES } from './queries';
 
 import type {
-  Game,
+  Like,
+  Likeable,
   GetAllLikedGamesQuery,
+  Game,
 } from '@/graphql/__generated__/graphql';
 
 export default function useGetLikedGames() {
@@ -22,17 +24,14 @@ export default function useGetLikedGames() {
       throw new Error('Error getting liked games');
     }
 
-    const likedGames = data.getAllLikedGames.map(
-      (like) => like.likeable
-    ) as Game[];
-
+    const likedGames = data.getAllLikedGames as Like[];
     return {
       likedGames,
       loading,
     };
   } catch (errors: unknown) {
     if (errors instanceof Error) {
-      const likedGames = [] as Game[];
+      const likedGames = [] as Like[];
       return {
         likedGames,
         loading,

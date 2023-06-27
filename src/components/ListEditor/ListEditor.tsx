@@ -5,7 +5,7 @@ import {
   ExclamationCircleFilled,
   HeartFilled,
 } from '@ant-design/icons';
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { apolloClient } from '@/graphql';
 import useEditUserGame from '@/services/userGames/useEditUserGame';
@@ -61,13 +61,12 @@ function ListEditorTemp({
     { label: 'Dropped', value: 'Dropped' },
     { label: 'Planning', value: 'Planning' },
   ];
-  const scoreOptions: DropDownOption[] = Array.from(
-    { length: 10 },
-    (_, index) => index + 1
-  ).map((score) => ({
-    label: score,
-    value: score,
-  }));
+  const scoreOptions: DropDownOption[] = useMemo(() => {
+    return Array.from({ length: 10 }, (_, index) => index + 1).map((score) => ({
+      label: score,
+      value: score,
+    }));
+  }, []);
 
   if (userGameLoading) {
     return <div>Loading...</div>;
@@ -125,35 +124,13 @@ function ListEditorTemp({
                   return;
                 }
                 if (!game?.isGameLiked) {
-                  const tempGame = apolloClient.readFragment({
-                    id: `Game:${game.id}`,
-                    fragment: gql`
-                      fragment GetAllGames on Game {
-                        id
-                        name
-                        description
-                        bannerURL
-                        imageURL
-                        releaseDate
-                        avgScore
-                        totalRating
-                        genres
-                        tags
-                        platforms
-                        isGameAdded
-                        isGameLiked
-                      }
-                    `,
-                  });
-                  console.log('game before change', game);
-
                   const response = await addLike(
                     game.id,
                     game.__typename as string
                   );
                   setSelectedGame(response.like?.likeable as GameType);
 
-                  info(`Game ${game?.name} added to your GameList`);
+                  info(`You added ${game?.name} in your favorites list. `);
                 } else {
                   const tempGame = apolloClient.readFragment({
                     id: `Game:${game.id}`,
@@ -183,7 +160,7 @@ function ListEditorTemp({
 
                   setSelectedGame(response.like?.likeable as GameType);
 
-                  info(`Game ${game?.name} already added to your GameList`);
+                  warning(`You removed ${game?.name} in your favorites list. `);
                 }
               }}
               icon={
