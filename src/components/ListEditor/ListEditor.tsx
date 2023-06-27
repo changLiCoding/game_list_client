@@ -1,10 +1,6 @@
 import { gql } from '@apollo/client';
 import { Modal, Button, Checkbox, Select } from 'antd';
-import {
-  HeartOutlined,
-  ExclamationCircleFilled,
-  HeartFilled,
-} from '@ant-design/icons';
+import { HeartOutlined, HeartFilled } from '@ant-design/icons';
 import React, { useMemo } from 'react';
 
 import { apolloClient } from '@/graphql';
@@ -19,12 +15,12 @@ import type {
 import { setUserGameReducer } from '@/features/userGameSlice';
 import { useAppSelector, useAppDispatch } from '@/app/hooks';
 import styles from '@/components/ListEditor/ListEditor.module.scss';
-import useAddRemoveGameCustomHook from '@/hooks/useAddRemoveGameCustomHook';
 import DatePickerField from '../DatePickerField';
 import TextAreaInput from '../TextAreaInput';
 import type { ListEditorType } from '@/components/ListEditor/types';
 import useAddRemoveLike from '@/services/like/useAddRemoveLike';
 import type { Game as GameType } from '@/graphql/__generated__/graphql';
+import useRemoveModalHook from '@/hooks/useRemoveModalHook';
 
 function ListEditorTemp({
   isGameAdded,
@@ -45,12 +41,13 @@ function ListEditorTemp({
     private: selectedPrivate,
   } = userGame;
 
+  const { showRemoveConfirm, contextRemoveModal } = useRemoveModalHook();
+
   const { contextHolder, info, warning } = useNotification();
 
   const userState = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
 
-  const { handleRemoveGameHook } = useAddRemoveGameCustomHook();
   const { editUserGame } = useEditUserGame();
   const { addLike, removeLike } = useAddRemoveLike();
 
@@ -71,25 +68,6 @@ function ListEditorTemp({
   if (userGameLoading) {
     return <div>Loading...</div>;
   }
-
-  const { confirm } = Modal;
-
-  const showDeleteConfirm = () => {
-    confirm({
-      title: `Are you sure to remove ${game.name} from your list?`,
-      icon: <ExclamationCircleFilled />,
-      content: 'Click Yes would remove all data of this game as well.',
-      okText: 'Yes',
-      okType: 'danger',
-      cancelText: 'No',
-      onOk: async () => {
-        await handleRemoveGameHook(game);
-        warning(`Game ${game.name} has been removed from your list.`);
-        setOpen(false);
-      },
-      zIndex: 1041,
-    });
-  };
 
   return (
     <Modal
@@ -306,10 +284,16 @@ function ListEditorTemp({
             Private
           </Checkbox>
           {isGameAdded && (
-            <Button type="dashed" onClick={showDeleteConfirm}>
+            <Button
+              type="dashed"
+              onClick={() => {
+                showRemoveConfirm(game, 'game', setOpen);
+              }}
+            >
               Delete
             </Button>
           )}
+          {contextRemoveModal}
         </div>
       </div>
       {contextHolder}
