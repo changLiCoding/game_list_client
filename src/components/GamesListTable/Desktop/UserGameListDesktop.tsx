@@ -126,6 +126,7 @@ function UserGameListDesktop({ data }: UserGameListDataType) {
         open={open}
         setOpen={setOpen}
         game={chosenGame as GameDataType}
+        setSelectedGame={setChosenGame}
       />
     </>
   );

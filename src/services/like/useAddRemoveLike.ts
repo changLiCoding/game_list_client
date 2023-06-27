@@ -2,17 +2,23 @@ import { useMutation } from '@apollo/client';
 
 import {
   ADD_LIKE_TO_LIKEABLE,
+  GET_ALL_LIKED_GAMES,
   REMOVE_LIKE_FROM_LIKEABLE,
 } from '@/services/like/queries';
 import { getTokenFromLocalStorage } from '@/constants';
 import type {
   AddLikeToLikeablePayload,
+  Like,
   RemoveLikeFromLikeablePayload,
 } from '@/graphql/__generated__/graphql';
 
 const useAddRemoveLike = () => {
   const [addLikeRequest] = useMutation(ADD_LIKE_TO_LIKEABLE);
   const [removeLikeRequest] = useMutation(REMOVE_LIKE_FROM_LIKEABLE);
+
+  type QueryResult = {
+    getAllLikedGames: Like[];
+  };
 
   const addLike = async (
     likeableId: string,
@@ -22,6 +28,22 @@ const useAddRemoveLike = () => {
       const response = await addLikeRequest({
         variables: { likeableId, likeableType },
         context: getTokenFromLocalStorage(),
+        update: (cache, { data }) => {
+          const queryResult: QueryResult | null = cache.readQuery({
+            query: GET_ALL_LIKED_GAMES,
+          });
+          if (queryResult && queryResult.getAllLikedGames) {
+            cache.writeQuery({
+              query: GET_ALL_LIKED_GAMES,
+              data: {
+                getAllLikedGames: [
+                  data.addLikeToLikeable.like,
+                  ...queryResult.getAllLikedGames,
+                ],
+              },
+            });
+          }
+        },
       });
       if (
         !response ||
@@ -49,6 +71,25 @@ const useAddRemoveLike = () => {
       const response = await removeLikeRequest({
         variables: { likeableId, likeableType },
         context: getTokenFromLocalStorage(),
+        update: (cache, { data }) => {
+          const queryResult: QueryResult | null = cache.readQuery({
+            query: GET_ALL_LIKED_GAMES,
+          });
+
+          if (queryResult && queryResult.getAllLikedGames) {
+            const { getAllLikedGames } = queryResult;
+            const newGetAllLikedGames = getAllLikedGames.filter(
+              (like: Like) =>
+                like.likeable?.__typename === 'Game' &&
+                like.id !== data.removeLikeFromLikeable.like.id
+            );
+
+            cache.writeQuery({
+              query: GET_ALL_LIKED_GAMES,
+              data: { getAllLikedGames: newGetAllLikedGames },
+            });
+          }
+        },
       });
       if (
         !response ||

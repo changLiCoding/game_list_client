@@ -10,6 +10,16 @@ export const apolloClient = new ApolloClient({
   link: httpLink,
   cache: new InMemoryCache({
     typePolicies: {
+      Query: {
+        fields: {
+          getAllLikedGames: {
+            merge(existing, incoming) {
+              return incoming;
+            },
+          },
+        },
+      },
+
       StatusUpdate: {
         fields: {
           likedUsers: {
@@ -46,6 +56,15 @@ export const apolloClient = new ApolloClient({
             },
           },
           comments: {
+            merge(existing, incoming) {
+              return incoming;
+            },
+          },
+        },
+      },
+      Like: {
+        fields: {
+          likeable: {
             merge(existing, incoming) {
               return incoming;
             },

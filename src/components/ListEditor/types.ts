@@ -6,4 +6,7 @@ export type ListEditorType = {
   open: boolean;
   setOpen: (open: boolean) => void;
   game: GameDataType;
+  setSelectedGame: React.Dispatch<
+    React.SetStateAction<GameDataType | undefined>
+  >;
 };

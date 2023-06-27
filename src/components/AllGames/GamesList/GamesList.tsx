@@ -174,6 +174,7 @@ export default function GamesList() {
         setOpen={setOpen}
         game={selectedGame as GameDataType}
         isGameAdded={addedList.includes(selectedGame?.id as string)}
+        setSelectedGame={setSelectedGame}
       />
     </Content>
   );

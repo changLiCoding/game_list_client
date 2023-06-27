@@ -35,6 +35,7 @@ export const GET_ALL_GAMES: TypedDocumentNode<{ allGames: Game[] }, void> = gql`
       tags
       platforms
       isGameAdded
+      isGameLiked
     }
   }
 `;

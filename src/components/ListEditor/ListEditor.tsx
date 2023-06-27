@@ -1,11 +1,9 @@
+import { gql } from '@apollo/client';
 import { Modal, Button, Checkbox, Select } from 'antd';
-import {
-  HeartOutlined,
-  ExclamationCircleFilled,
-  HeartFilled,
-} from '@ant-design/icons';
-import React from 'react';
+import { HeartOutlined, HeartFilled } from '@ant-design/icons';
+import React, { useMemo } from 'react';
 
+import { apolloClient } from '@/graphql';
 import useEditUserGame from '@/services/userGames/useEditUserGame';
 import useNotification from '@/hooks/useNotification';
 import type {
@@ -17,10 +15,12 @@ import type {
 import { setUserGameReducer } from '@/features/userGameSlice';
 import { useAppSelector, useAppDispatch } from '@/app/hooks';
 import styles from '@/components/ListEditor/ListEditor.module.scss';
-import useAddRemoveGameCustomHook from '@/hooks/useAddRemoveGameCustomHook';
 import DatePickerField from '../DatePickerField';
 import TextAreaInput from '../TextAreaInput';
 import type { ListEditorType } from '@/components/ListEditor/types';
+import useAddRemoveLike from '@/services/like/useAddRemoveLike';
+import type { Game as GameType } from '@/graphql/__generated__/graphql';
+import useRemoveModalHook from '@/hooks/useRemoveModalHook';
 
 function ListEditorTemp({
   isGameAdded,
@@ -28,6 +28,7 @@ function ListEditorTemp({
   open,
   setOpen,
   game,
+  setSelectedGame,
 }: ListEditorType) {
   const userGame = useAppSelector((state) => state.userGame);
 
@@ -40,14 +41,15 @@ function ListEditorTemp({
     private: selectedPrivate,
   } = userGame;
 
+  const { showRemoveConfirm, contextRemoveModal } = useRemoveModalHook();
+
   const { contextHolder, info, warning } = useNotification();
 
   const userState = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
 
-  const { handleAddGameHook, handleRemoveGameHook } =
-    useAddRemoveGameCustomHook();
   const { editUserGame } = useEditUserGame();
+  const { addLike, removeLike } = useAddRemoveLike();
 
   const statusOptions: DropDownOption[] = [
     { label: 'Playing', value: 'Playing' },
@@ -56,36 +58,16 @@ function ListEditorTemp({
     { label: 'Dropped', value: 'Dropped' },
     { label: 'Planning', value: 'Planning' },
   ];
-  const scoreOptions: DropDownOption[] = Array.from(
-    { length: 10 },
-    (_, index) => index + 1
-  ).map((score) => ({
-    label: score,
-    value: score,
-  }));
+  const scoreOptions: DropDownOption[] = useMemo(() => {
+    return Array.from({ length: 10 }, (_, index) => index + 1).map((score) => ({
+      label: score,
+      value: score,
+    }));
+  }, []);
 
   if (userGameLoading) {
     return <div>Loading...</div>;
   }
-
-  const { confirm } = Modal;
-
-  const showDeleteConfirm = () => {
-    confirm({
-      title: `Are you sure to remove ${game.name} from your list?`,
-      icon: <ExclamationCircleFilled />,
-      content: 'Click Yes would remove all data of this game as well.',
-      okText: 'Yes',
-      okType: 'danger',
-      cancelText: 'No',
-      onOk: async () => {
-        await handleRemoveGameHook(game);
-        warning(`Game ${game.name} has been removed from your list.`);
-        setOpen(false);
-      },
-      zIndex: 1041,
-    });
-  };
 
   return (
     <Modal
@@ -119,15 +101,48 @@ function ListEditorTemp({
                   warning('Please login to add or edit your GameList');
                   return;
                 }
-                if (!isGameAdded) {
-                  await handleAddGameHook(game);
-                  info(`Game ${game?.name} added to your GameList`);
+                if (!game?.isGameLiked) {
+                  const response = await addLike(
+                    game.id,
+                    game.__typename as string
+                  );
+                  setSelectedGame(response.like?.likeable as GameType);
+
+                  info(`You added ${game?.name} in your favorites list. `);
                 } else {
-                  info(`Game ${game?.name} already added to your GameList`);
+                  const tempGame = apolloClient.readFragment({
+                    id: `Game:${game.id}`,
+                    fragment: gql`
+                      fragment GetAllGames on Game {
+                        id
+                        name
+                        description
+                        bannerURL
+                        imageURL
+                        releaseDate
+                        avgScore
+                        totalRating
+                        genres
+                        tags
+                        platforms
+                        isGameAdded
+                        isGameLiked
+                      }
+                    `,
+                  });
+
+                  const response = await removeLike(
+                    game?.id,
+                    game.__typename as string
+                  );
+
+                  setSelectedGame(response.like?.likeable as GameType);
+
+                  warning(`You removed ${game?.name} in your favorites list. `);
                 }
               }}
               icon={
-                isGameAdded ? (
+                game?.isGameLiked ? (
                   <HeartFilled style={{ color: 'hotpink' }} />
                 ) : (
                   <HeartOutlined />
@@ -269,10 +284,16 @@ function ListEditorTemp({
             Private
           </Checkbox>
           {isGameAdded && (
-            <Button type="dashed" onClick={showDeleteConfirm}>
+            <Button
+              type="dashed"
+              onClick={() => {
+                showRemoveConfirm(game, 'game', setOpen);
+              }}
+            >
               Delete
             </Button>
           )}
+          {contextRemoveModal}
         </div>
       </div>
       {contextHolder}
