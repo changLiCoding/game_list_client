@@ -42,6 +42,7 @@ function GameDetail(): JSX.Element {
               tags
               platforms
               isGameAdded
+              isGameLiked
             }
           `,
         });

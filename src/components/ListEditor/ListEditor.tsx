@@ -1,3 +1,4 @@
+import { gql } from '@apollo/client';
 import { Modal, Button, Checkbox, Select } from 'antd';
 import {
   HeartOutlined,
@@ -6,6 +7,7 @@ import {
 } from '@ant-design/icons';
 import React from 'react';
 
+import { apolloClient } from '@/graphql';
 import useEditUserGame from '@/services/userGames/useEditUserGame';
 import useNotification from '@/hooks/useNotification';
 import type {
@@ -22,6 +24,7 @@ import DatePickerField from '../DatePickerField';
 import TextAreaInput from '../TextAreaInput';
 import type { ListEditorType } from '@/components/ListEditor/types';
 import useAddRemoveLike from '@/services/like/useAddRemoveLike';
+import type { Game as GameType } from '@/graphql/__generated__/graphql';
 
 function ListEditorTemp({
   isGameAdded,
@@ -29,6 +32,7 @@ function ListEditorTemp({
   open,
   setOpen,
   game,
+  setSelectedGame,
 }: ListEditorType) {
   const userGame = useAppSelector((state) => state.userGame);
 
@@ -46,8 +50,7 @@ function ListEditorTemp({
   const userState = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
 
-  const { handleAddGameHook, handleRemoveGameHook } =
-    useAddRemoveGameCustomHook();
+  const { handleRemoveGameHook } = useAddRemoveGameCustomHook();
   const { editUserGame } = useEditUserGame();
   const { addLike, removeLike } = useAddRemoveLike();
 
@@ -121,15 +124,70 @@ function ListEditorTemp({
                   warning('Please login to add or edit your GameList');
                   return;
                 }
-                if (!isGameAdded) {
-                  await handleAddGameHook(game);
+                if (!game?.isGameLiked) {
+                  const tempGame = apolloClient.readFragment({
+                    id: `Game:${game.id}`,
+                    fragment: gql`
+                      fragment GetAllGames on Game {
+                        id
+                        name
+                        description
+                        bannerURL
+                        imageURL
+                        releaseDate
+                        avgScore
+                        totalRating
+                        genres
+                        tags
+                        platforms
+                        isGameAdded
+                        isGameLiked
+                      }
+                    `,
+                  });
+                  console.log('game before change', game);
+
+                  const response = await addLike(
+                    game.id,
+                    game.__typename as string
+                  );
+                  setSelectedGame(response.like?.likeable as GameType);
+
                   info(`Game ${game?.name} added to your GameList`);
                 } else {
+                  const tempGame = apolloClient.readFragment({
+                    id: `Game:${game.id}`,
+                    fragment: gql`
+                      fragment GetAllGames on Game {
+                        id
+                        name
+                        description
+                        bannerURL
+                        imageURL
+                        releaseDate
+                        avgScore
+                        totalRating
+                        genres
+                        tags
+                        platforms
+                        isGameAdded
+                        isGameLiked
+                      }
+                    `,
+                  });
+
+                  const response = await removeLike(
+                    game?.id,
+                    game.__typename as string
+                  );
+
+                  setSelectedGame(response.like?.likeable as GameType);
+
                   info(`Game ${game?.name} already added to your GameList`);
                 }
               }}
               icon={
-                isGameAdded ? (
+                game?.isGameLiked ? (
                   <HeartFilled style={{ color: 'hotpink' }} />
                 ) : (
                   <HeartOutlined />

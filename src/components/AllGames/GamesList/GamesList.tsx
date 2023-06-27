@@ -64,6 +64,8 @@ export default function GamesList() {
 
   const memorizedOpenGameListEditor = useCallback(
     async (game: GameDataType) => {
+      console.log('game', game);
+
       setSelectedGame(game);
       await fetchUserGame({ variables: { gameId: game.id } });
       setOpen(true);
@@ -174,6 +176,7 @@ export default function GamesList() {
         setOpen={setOpen}
         game={selectedGame as GameDataType}
         isGameAdded={addedList.includes(selectedGame?.id as string)}
+        setSelectedGame={setSelectedGame}
       />
     </Content>
   );
