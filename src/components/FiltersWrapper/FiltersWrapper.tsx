@@ -294,7 +294,9 @@ export default function FiltersWrapper() {
               mode="multiple"
               value={gameFilters.genres || []}
               options={data?.getGameFilters.genres || []}
-              onChange={(value) => dispatch(toggleItem({ genres: value }))}
+              onChange={(value) =>
+                dispatch(toggleItem({ category: 'genres', entry: 'Puzzle' }))
+              }
             />
           </div>
           {/* <div>

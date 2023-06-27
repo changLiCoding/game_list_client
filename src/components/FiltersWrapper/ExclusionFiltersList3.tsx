@@ -77,8 +77,6 @@ export default function ExclusionFiltersList3({
                 payload: {
                   category: 'genres',
                   entry: 'Puzzle',
-                  test: 'd',
-                  ds: '',
                 },
               })
             );

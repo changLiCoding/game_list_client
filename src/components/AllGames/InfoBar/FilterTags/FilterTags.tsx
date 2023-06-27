@@ -2,16 +2,112 @@ import { TagsTwoTone } from '@ant-design/icons';
 import { Tag } from 'antd';
 import { useDispatch } from 'react-redux';
 import { useMemo } from 'react';
+import { StringChain } from 'lodash';
+import { useMachine } from '@xstate/react';
 import styles from '@/components/AllGames/InfoBar/FilterTags/FilterTags.module.scss';
 
 import { useAppSelector } from '@/app/hooks';
 import { remove } from '@/utils/utils';
-import { resetGameFilter, resetGameFilters, setGameFilters } from '@/app/store';
+import {
+  clearAll,
+  clearCategory,
+  resetGameFilter,
+  resetGameFilters,
+  setGameFilters,
+} from '@/app/store';
 import { HomeGameFilters } from '@/types/global';
+import { stateMachine } from '@/components/FiltersWrapper/ExclusionStateMachine';
+
+// PayloadAction<keyof HomeGameFilters>
+
+// const defaultGameFilters: HomeGameFilters = {
+//   genres: {
+//     included: [],
+//     excluded: [],
+//   },
+//   platforms: {
+//     included: [],
+//     excluded: [],
+//   },
+//   tags: {
+//     included: [],
+//     excluded: [],
+//   },
+//   year: undefined,
+//   search: '',
+//   sortBy: 'name',
+//   state: 'off',
+// };
+
+// setFilters: (state: Draft<T>, action: PayloadAction<Partial<T>>) => {
+//   return { ...state, ...action.payload };
+// },
+
+// resetFilter: (state: Draft<T>, action: PayloadAction<keyof T>) => {
+//   const filterKey = action.payload;
+//   return { ...state, [filterKey]: initialState[filterKey] };
+// },
+
+// const mm = createMap();
+// mm.set('sortBy', (d) => '');
+// mm.set('state', (d) => '');
+// mm.set('excludedGenres', (d) => '');
+
+// type TT<
+//   K extends keyof HomeGameFilters,
+//   R extends TransformerFunction<HomeGameFilters[K]>
+// > = {};
+
+// const newMap = new Map<K, V>();
+
+// const t = createMap('sortBy', (d) => '');
+
+// const t = createTransformerMap<keyof HomeGameFilters>();
+// t.set('excludedGenres', '');
+// t.set('excludedGenres', 2);
+// Don't render sortBy
+// [
+//   'sortBy',
+//   () => {
+//     return '';
+//   },
+// ],
+// // TODO: Remove state
+// [
+//   'state',
+//   (value) => {
+//     return '';
+//   },
+// ],
+// // All of these filters are nested objects - loop through those object arrays and render them
+// [
+//   'genres',
+//   (value) => {
+//     return '';
+//   },
+// ],
+// [
+//   'platforms',
+//   (value) => {
+//     return '';
+//   },
+// ],
+// [
+//   'tags',
+//   (value) => {
+//     return '';
+//   },
+// ],
+
+// transfomers.set('genres', (value: Value) => ({
+//   included: value.included || [],
+//   excluded: value.excluded || [],
+// }));
 
 function FilterTags() {
   const dispatch = useDispatch();
   const gameFilters = useAppSelector((state) => state.gameFilters);
+  const [state, send] = useMachine(stateMachine, { devTools: true });
 
   // TODO: Use a 'transformer' function to handle sortBy, excludedPlatforms, excludedTags and excludedGenres
 
@@ -67,11 +163,26 @@ function FilterTags() {
 
           <Tag
             closable
-            onClose={() => dispatch(resetGameFilters())}
+            onClose={() => dispatch(clearAll())}
             className={styles.clearAll}
           >
             Clear all
           </Tag>
+
+          <Tag
+            closable
+            onClose={() => dispatch(clearCategory('genres'))}
+            color="blue"
+          >
+            Clear Genres
+          </Tag>
+          {/* <Tag
+            closable
+            onClose={() => dispatch(resetGameFilters())}
+            className={styles.clearAll}
+          >
+            Clear all
+          </Tag> */}
         </>
       );
 

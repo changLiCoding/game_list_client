@@ -1,6 +1,6 @@
 import { createMachine, interpret } from 'xstate';
 
-const stateMachine = createMachine({
+export const stateMachine = createMachine({
   id: 'includeExcludeMachine',
   initial: 'off',
   states: {

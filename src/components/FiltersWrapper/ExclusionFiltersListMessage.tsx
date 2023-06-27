@@ -46,8 +46,7 @@ ExclusionFiltersListMessageProps) {
             dispatch(
               incrementItem({
                 category: 'genres',
-                entry,
-                test: 'd',
+                entry: 'Puzzle',
               })
             );
           }}

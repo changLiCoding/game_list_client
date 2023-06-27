@@ -12,7 +12,7 @@ import addedGamesReducer from '@/features/addedGamesSlice';
 import homeSearchSlice from '@/features/homeSearchSlice';
 import { createGameFiltersSlice } from '@/features/gameFiltersSlice';
 import { HomeGameFilters, UserGameFilters } from '@/types/global';
-import { createBigTest } from '@/features/bigTest';
+import { bigTest } from '@/features/bigTest';
 
 const defaultGameFilters: HomeGameFilters = {
   genres: [],
@@ -37,22 +37,22 @@ const defaultUserGameFilters: UserGameFilters = {
   selectedList: 'all',
 };
 
-const gameFiltersSlice = createGameFiltersSlice<HomeGameFilters>({
+const gameFiltersSlice = createGameFiltersSlice({
   name: 'gameFiltersSlice',
   initialState: defaultGameFilters,
   reducers: {},
 });
 
-const userGameFiltersSlice = createGameFiltersSlice<UserGameFilters>({
+const userGameFiltersSlice = createGameFiltersSlice({
   name: 'userGameFiltersSlice',
   initialState: defaultUserGameFilters,
   reducers: {},
 });
 
+const bigTestTest = bigTest();
+
 // TODO: Remove everything involving listeners - we don't need them anymore
 export const listenerMiddleware = createListenerMiddleware();
-
-const bigTest = createBigTest();
 const rootReducer = combineReducers({
   user: userReducer,
   userGames: userGamesListReducer,
@@ -60,7 +60,7 @@ const rootReducer = combineReducers({
   homeSearch: homeSearchSlice,
 
   gameFilters: gameFiltersSlice.reducer,
-  bigTest: bigTest.reducer,
+  bigTest: bigTestTest.reducer,
   userGameFilters: userGameFiltersSlice.reducer,
 
   addedGames: addedGamesReducer,
@@ -84,12 +84,14 @@ export type RootState = ReturnType<typeof rootReducer>;
 export type AppStore = ReturnType<typeof setupStore>;
 
 export const {
-  toggleItem,
   incrementItem,
+  toggleItem,
+  clearAll,
+  clearCategory,
   setFilters: setTestFilter,
   resetFilter: resetTestFilter,
   reset: resetTestFilters,
-} = bigTest.actions;
+} = bigTestTest.actions;
 
 export const {
   setFilters: setGameFilters,
