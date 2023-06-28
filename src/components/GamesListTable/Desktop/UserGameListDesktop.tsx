@@ -7,6 +7,7 @@ import type {
   GameDataType,
   UserGameListDataType,
 } from '@/components/GamesListTable/types';
+import { Game } from '@/graphql/__generated__/graphql';
 import ListEditor from '@/components/ListEditor';
 import useUserGameById from '@/services/userGames/useUserGameById';
 import { useAppSelector } from '@/app/hooks';
@@ -15,7 +16,9 @@ function UserGameListDesktop({ data }: UserGameListDataType) {
   const [open, setOpen] = useState<boolean>(false);
   const { userGameLoading, fetchUserGame } = useUserGameById();
 
-  const [chosenGame, setChosenGame] = useState<GameDataType>();
+  const [chosenGame, setChosenGame] = useState<
+    GameDataType | GameDataType | undefined | Game | null
+  >();
 
   const handleClick = async (game: GameDataType) => {
     setChosenGame(game);

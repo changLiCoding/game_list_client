@@ -21,15 +21,18 @@ describe('ListEditor Component', () => {
       avgScore: 5,
       bannerURL: 'https://example.com/banner.jpg',
       isGameAdded: false,
+      isGameLiked: false,
     };
 
     const setOpenMock = vi.fn();
+    const setSelectedGameMock = vi.fn();
 
     const { queryByText, queryByAltText, queryByTestId, queryAllByRole } =
       render(
         <ContextWrapper>
           <ListEditor
             userGameLoading={false}
+            setSelectedGame={setSelectedGameMock}
             game={game}
             open
             setOpen={setOpenMock}
@@ -98,13 +101,16 @@ describe('ListEditor Component', () => {
       avgScore: 5,
       bannerURL: 'https://example.com/banner.jpg',
       isGameAdded: false,
+      isGameLiked: false,
     };
 
     const setOpenMock = vi.fn();
+    const setSelectedGameMock = vi.fn();
 
     const { queryByText, queryByTestId } = render(
       <ContextWrapper>
         <ListEditor
+          setSelectedGame={setSelectedGameMock}
           userGameLoading={false}
           game={game}
           open={false}

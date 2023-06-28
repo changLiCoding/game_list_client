@@ -26,6 +26,7 @@ vi.mock('../../services/games/useAllGames', async () => {
           tags: ['3D', 'Fantasy'],
           releaseDate: '2021-01-01 00:00:00',
           avgScore: 5,
+          isGameLiked: false,
         },
         {
           __typename: 'Game',
@@ -37,6 +38,7 @@ vi.mock('../../services/games/useAllGames', async () => {
           tags: ['4D', 'Soullike'],
           releaseDate: '2021-01-02 00:00:00',
           avgScore: 10,
+          isGameLiked: false,
         },
         {
           __typename: 'Game',
@@ -48,6 +50,7 @@ vi.mock('../../services/games/useAllGames', async () => {
           tags: ['2D', 'Action'],
           releaseDate: '2021-01-03 00:00:00',
           avgScore: 8,
+          isGameLiked: false,
         },
       ],
     }),

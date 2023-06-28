@@ -20,6 +20,7 @@ describe('GameDetailHeaderBanner', () => {
       avgScore: 5,
       bannerURL: 'https://example.com/banner.jpg',
       isGameAdded: false,
+      isGameLiked: false,
     };
     render(
       <ContextWrapper>
