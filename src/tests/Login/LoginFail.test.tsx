@@ -73,7 +73,7 @@ describe('Login', () => {
   });
 
   it('Fail to login due to credential', async () => {
-    render(
+    const { debug } = render(
       <ContextWrapper>
         <Login />
       </ContextWrapper>
@@ -89,7 +89,9 @@ describe('Login', () => {
 
     // Check if the icon inside the error message appeared
     const allImg = screen.queryAllByRole('img');
-    const node = allImg[allImg.length - 1];
+    debug(allImg);
+    const node = allImg[2];
+    debug(node);
 
     expect(node?.classList[1]).toBe('anticon-info-circle');
   });
