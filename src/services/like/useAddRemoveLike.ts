@@ -5,10 +5,13 @@ import {
   GET_ALL_LIKED_GAMES,
   REMOVE_LIKE_FROM_LIKEABLE,
 } from '@/services/like/queries';
+import { GET_ALL_GAMES } from '@/services/games/queries';
+import { GET_GAME_BY_ID } from '@/services/game/queries';
 import { getTokenFromLocalStorage } from '@/constants';
 import type {
   AddLikeToLikeablePayload,
   Like,
+  Game,
   RemoveLikeFromLikeablePayload,
 } from '@/graphql/__generated__/graphql';
 
@@ -16,8 +19,11 @@ const useAddRemoveLike = () => {
   const [addLikeRequest] = useMutation(ADD_LIKE_TO_LIKEABLE);
   const [removeLikeRequest] = useMutation(REMOVE_LIKE_FROM_LIKEABLE);
 
-  type QueryResult = {
+  type QueryResultAllLikedGames = {
     getAllLikedGames: Like[];
+  };
+  type QueryResultGame = {
+    getGameById: Game;
   };
 
   const addLike = async (
@@ -29,7 +35,7 @@ const useAddRemoveLike = () => {
         variables: { likeableId, likeableType },
         context: getTokenFromLocalStorage(),
         update: (cache, { data }) => {
-          const queryResult: QueryResult | null = cache.readQuery({
+          const queryResult: QueryResultAllLikedGames | null = cache.readQuery({
             query: GET_ALL_LIKED_GAMES,
           });
           if (queryResult && queryResult.getAllLikedGames) {
@@ -43,6 +49,16 @@ const useAddRemoveLike = () => {
               },
             });
           }
+          const queryResultFromGameID = cache.readQuery({
+            query: GET_ALL_GAMES,
+          });
+          if (queryResultFromGameID) {
+            console.log(queryResultFromGameID);
+            console.log(data.addLikeToLikeable.like.likeable);
+          }
+          console.log(queryResult);
+          console.log(queryResultFromGameID);
+          console.log(data.addLikeToLikeable.like.likeable);
         },
       });
       if (
@@ -72,7 +88,7 @@ const useAddRemoveLike = () => {
         variables: { likeableId, likeableType },
         context: getTokenFromLocalStorage(),
         update: (cache, { data }) => {
-          const queryResult: QueryResult | null = cache.readQuery({
+          const queryResult: QueryResultAllLikedGames | null = cache.readQuery({
             query: GET_ALL_LIKED_GAMES,
           });
 

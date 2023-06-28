@@ -1,12 +1,10 @@
 import { useQuery, QueryResult, OperationVariables } from '@apollo/client';
 import { getTokenFromLocalStorage } from '@/constants';
-import { GET_ALL_LIKED_GAMES } from './queries';
+import { GET_ALL_LIKED_GAMES } from '@/services/like/queries';
 
 import type {
   Like,
-  Likeable,
   GetAllLikedGamesQuery,
-  Game,
 } from '@/graphql/__generated__/graphql';
 
 export default function useGetLikedGames() {

@@ -74,7 +74,7 @@ function GameDetailHeaderInfoTemp({ game }: GameDetailsType) {
       };
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open, userGameLoading, game, addedList]);
+  }, [open, userGameLoading, game.isGameLiked, addedList]);
   return (
     <Layout className={styles.infoContainer}>
       <Content className={styles.infoContent}>
@@ -115,7 +115,6 @@ function GameDetailHeaderInfoTemp({ game }: GameDetailsType) {
                   danger={game.isGameLiked}
                   icon={<HeartOutlined />}
                   onClick={async () => {
-                    // await handleAddGameHook(game as GameType);
                     if (!game.isGameLiked) {
                       await addLike(game.id as string, 'Game');
                       info(`Game ${game.name} added to your liked list`);
@@ -146,6 +145,6 @@ function GameDetailHeaderInfoTemp({ game }: GameDetailsType) {
   );
 }
 
-const GameDetailHeaderInfo = React.memo(GameDetailHeaderInfoTemp);
+// const GameDetailHeaderInfo = React.memo(GameDetailHeaderInfoTemp);
 
-export default GameDetailHeaderInfo;
+export default GameDetailHeaderInfoTemp;
