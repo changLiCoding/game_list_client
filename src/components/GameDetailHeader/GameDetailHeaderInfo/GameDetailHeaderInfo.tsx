@@ -10,11 +10,15 @@ import useUserGameById from '@/services/userGames/useUserGameById';
 import { useAppSelector } from '@/app/hooks';
 import type { Game as GameType } from '@/graphql/__generated__/graphql';
 import useAddRemoveGameCustomHook from '@/hooks/useAddRemoveGameCustomHook';
+import useAddRemoveLike from '@/services/like/useAddRemoveLike';
+import type { GameDataType } from '@/components/GamesListTable/types';
 
 function GameDetailHeaderInfoTemp({ game }: GameDetailsType) {
   const [open, setOpen] = useState(false);
+  const [selectedGame, setSelectedGame] = useState<GameDataType>();
 
   const { userGameLoading, fetchUserGame } = useUserGameById();
+  const { addLike, removeLike } = useAddRemoveLike();
 
   const { addedList } = useAppSelector((state) => state.addedGames);
 
@@ -22,6 +26,7 @@ function GameDetailHeaderInfoTemp({ game }: GameDetailsType) {
     handleAddGameHook,
     contextHolder: handGameContextHolder,
     handleEditUserGameStatus,
+    info,
   } = useAddRemoveGameCustomHook();
 
   const items: MenuProps['items'] = useMemo(() => {
@@ -46,7 +51,8 @@ function GameDetailHeaderInfoTemp({ game }: GameDetailsType) {
                 userGameLoading={userGameLoading}
                 open={open}
                 setOpen={setOpen}
-                game={game}
+                game={game as GameDataType}
+                setSelectedGame={setSelectedGame}
               />
             </>
           ),
@@ -106,10 +112,17 @@ function GameDetailHeaderInfoTemp({ game }: GameDetailsType) {
               <div>
                 <Button
                   type="primary"
-                  danger
+                  danger={game.isGameLiked}
                   icon={<HeartOutlined />}
                   onClick={async () => {
-                    await handleAddGameHook(game as GameType);
+                    // await handleAddGameHook(game as GameType);
+                    if (!game.isGameLiked) {
+                      await addLike(game.id as string, 'Game');
+                      info(`Game ${game.name} added to your liked list`);
+                    } else {
+                      await removeLike(game.id as string, 'Game');
+                      info(`Game ${game.name} removed from your liked list`);
+                    }
                   }}
                 />
               </div>

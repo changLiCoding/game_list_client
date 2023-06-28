@@ -50,6 +50,7 @@ const useAddRemoveGameCustomHook = () => {
     handleRemoveGameHook,
     handleEditUserGameStatus,
     contextHolder,
+    info,
   };
 };
 

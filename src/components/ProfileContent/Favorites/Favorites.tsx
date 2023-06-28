@@ -73,7 +73,7 @@ function Favorites() {
             </div>
           </div>
           <div className={styles.favorites}>
-            <h2>Game </h2>
+            <h2>Game Series</h2>
             <div className={styles.favoritesContainer}>
               {likedGames.map((like) => (
                 <div key={like.id} />

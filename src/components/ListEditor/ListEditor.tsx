@@ -1,9 +1,7 @@
-import { gql } from '@apollo/client';
 import { Modal, Button, Checkbox, Select } from 'antd';
 import { HeartOutlined, HeartFilled } from '@ant-design/icons';
 import React, { useMemo } from 'react';
 
-import { apolloClient } from '@/graphql';
 import useEditUserGame from '@/services/userGames/useEditUserGame';
 import useNotification from '@/hooks/useNotification';
 import type {
@@ -110,27 +108,6 @@ function ListEditorTemp({
 
                   info(`You added ${game?.name} in your favorites list. `);
                 } else {
-                  const tempGame = apolloClient.readFragment({
-                    id: `Game:${game.id}`,
-                    fragment: gql`
-                      fragment GetAllGames on Game {
-                        id
-                        name
-                        description
-                        bannerURL
-                        imageURL
-                        releaseDate
-                        avgScore
-                        totalRating
-                        genres
-                        tags
-                        platforms
-                        isGameAdded
-                        isGameLiked
-                      }
-                    `,
-                  });
-
                   const response = await removeLike(
                     game?.id,
                     game.__typename as string
