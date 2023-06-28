@@ -18,6 +18,7 @@ import {
 import { setGameFilters } from '@/app/store';
 import { range } from '@/utils/utils';
 import type { SelectFilterFieldType } from '@/components/FiltersWrapper/types';
+import useNotification from '@/hooks/useNotification';
 
 const { Search } = Input;
 const { useBreakpoint } = Grid;
@@ -52,6 +53,7 @@ function SelectFilterField<T>({
 }
 export default function FiltersWrapper() {
   const [collapsed, setCollapsed] = useState(false);
+  const { warning, contextHolder } = useNotification();
 
   const dispatch = useDispatch();
   const gameFilters = useAppSelector((state) => state.gameFilters);
@@ -74,7 +76,7 @@ export default function FiltersWrapper() {
 
   if (!data || loading) return null;
   if (data.getGameFilters.errors.length > 0) {
-    console.log('Errors:', data.getGameFilters.errors);
+    warning(`Errors: ${data.getGameFilters.errors}`);
     return (
       <div>
         <p>Errors while fetching filters: {data.getGameFilters.errors[0]}</p>
@@ -170,6 +172,7 @@ export default function FiltersWrapper() {
           </Button>
         </Space>
       )}
+      {contextHolder}
     </Layout>
   );
 }
