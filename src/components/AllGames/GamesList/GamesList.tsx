@@ -12,6 +12,7 @@ import ListEditor from '@/components/ListEditor';
 import type { GameDataType } from '@/components/GamesListTable/types';
 import { store } from '@/app/store';
 import useAllGames from '@/services/games/useAllGames';
+import { Game } from '@/graphql/__generated__/graphql';
 
 export default function GamesList() {
   const homeSearchState = useAppSelector((state) => state.homeSearch);
@@ -20,7 +21,9 @@ export default function GamesList() {
   // States for modal to edit list
   const { userGameLoading, fetchUserGame } = useUserGameById();
   const [open, setOpen] = useState(false);
-  const [selectedGame, setSelectedGame] = useState<GameDataType>();
+  const [selectedGame, setSelectedGame] = useState<
+    GameDataType | null | Game
+  >();
 
   const { games, loading, fetchMore, tempSearch, setTempSearch } =
     useAllGames();
