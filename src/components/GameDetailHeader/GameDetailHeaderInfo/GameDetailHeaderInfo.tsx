@@ -13,9 +13,8 @@ import useAddRemoveGameCustomHook from '@/hooks/useAddRemoveGameCustomHook';
 import useAddRemoveLike from '@/services/like/useAddRemoveLike';
 import type { GameDataType } from '@/components/GamesListTable/types';
 
-function GameDetailHeaderInfoTemp({ game }: GameDetailsType) {
+function GameDetailHeaderInfoTemp({ game, setGame }: GameDetailsType) {
   const [open, setOpen] = useState(false);
-  const [selectedGame, setSelectedGame] = useState<GameDataType>();
 
   const { userGameLoading, fetchUserGame } = useUserGameById();
   const { addLike, removeLike } = useAddRemoveLike();
@@ -52,7 +51,7 @@ function GameDetailHeaderInfoTemp({ game }: GameDetailsType) {
                 open={open}
                 setOpen={setOpen}
                 game={game as GameDataType}
-                setSelectedGame={setSelectedGame}
+                setSelectedGame={setGame}
               />
             </>
           ),
@@ -116,10 +115,18 @@ function GameDetailHeaderInfoTemp({ game }: GameDetailsType) {
                   icon={<HeartOutlined />}
                   onClick={async () => {
                     if (!game.isGameLiked) {
-                      await addLike(game.id as string, 'Game');
+                      const response = await addLike(game.id as string, 'Game');
+                      setGame({ ...(response.like?.likeable as GameType) });
+
                       info(`Game ${game.name} added to your liked list`);
                     } else {
-                      await removeLike(game.id as string, 'Game');
+                      const response = await removeLike(
+                        game.id as string,
+                        'Game'
+                      );
+
+                      setGame({ ...(response.like?.likeable as GameType) });
+
                       info(`Game ${game.name} removed from your liked list`);
                     }
                   }}

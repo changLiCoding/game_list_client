@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import useNotification from '@/hooks/useNotification';
 import useGetGameById from '@/services/game/useGetGameById';
 import type { Game as GameType } from '@/graphql/__generated__/graphql';
+import type { GameDataType } from '@/components/GamesListTable/types';
 import GameDetailHeader from '@/components/GameDetailHeader';
 
 function GameDetail(): JSX.Element {
@@ -15,9 +16,10 @@ function GameDetail(): JSX.Element {
     getGame,
     error: errorFromHook,
     getGameFromFragment,
-    writeGameToFragment,
   } = useGetGameById();
-  const [game, setGame] = useState<GameType | null>(null);
+  const [game, setGame] = useState<GameType | null | undefined | GameDataType>(
+    null
+  );
 
   useEffect(() => {
     const tempGame: GameType | null = getGameFromFragment(id as string);
@@ -38,7 +40,8 @@ function GameDetail(): JSX.Element {
     if (id) {
       fetchGame();
     }
-  }, [id, getGame, warning, getGameFromFragment]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
 
   if (!game && !gameFromHook) {
     return (
@@ -50,15 +53,10 @@ function GameDetail(): JSX.Element {
     );
   }
 
-  console.log('game', game);
-
   return (
     <Layout>
       <Content>
-        <GameDetailHeader
-          game={game || gameFromHook}
-          writeGameToFragment={writeGameToFragment}
-        />
+        <GameDetailHeader game={game || gameFromHook} setGame={setGame} />
       </Content>
       {contextHolder}
     </Layout>
