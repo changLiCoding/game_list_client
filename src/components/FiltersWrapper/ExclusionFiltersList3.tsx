@@ -49,8 +49,8 @@ export default function ExclusionFiltersList3({
   included,
   excluded,
   onChange,
-  setFunc,
-}: ExclusionFiltersList2Props) {
+}: // setFunc,
+ExclusionFiltersList2Props) {
   const dispatch = useDispatch();
   const bigTest = useAppSelector((state) => state.bigTest);
   const t = useStore();
@@ -74,10 +74,8 @@ export default function ExclusionFiltersList3({
           onClick={() => {
             dispatch(
               toggleItem({
-                payload: {
-                  category: 'genres',
-                  entry: 'Puzzle',
-                },
+                category: 'genres',
+                entry: 'Puzzle',
               })
             );
           }}

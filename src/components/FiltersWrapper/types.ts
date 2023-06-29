@@ -1,3 +1,4 @@
+import { DefaultOptionType } from 'antd/es/select';
 import type { DropDownOption, OnChangeCascaderType } from '@/types/global';
 
 export interface FilterFieldProps {
@@ -35,11 +36,13 @@ export type SelectFilterFieldType<T> =
       mode: 'multiple';
       value: ArrayOnly<T> | undefined;
       options: string[] | number[];
-      onChange: (value: T) => void;
+      onChange: (value: T, option: T) => void;
+      // onSelect: (value: ) => void;
     }
   | {
       mode: undefined;
       value: T | undefined;
       options: string[] | number[];
-      onChange: (value: T) => void;
+      onChange: (value: T, option: T) => void;
+      // onSelect: () => void;
     };
