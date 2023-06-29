@@ -4,7 +4,6 @@ import { InitialStateUserGameType } from '@/features/types';
 
 const initialState: InitialStateUserGameType = INITIAL_USER_GAME_BY_ID_STATE;
 
-// TODO: Add types to refector the reducer
 export const userGameSlice = createSlice({
   name: 'userGame',
   initialState,

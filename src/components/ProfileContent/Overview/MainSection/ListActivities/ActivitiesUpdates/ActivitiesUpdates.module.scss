@@ -86,9 +86,18 @@
 
         .liked {
           color: variables.$color-red;
+
+          &:hover {
+            transform: scale(1.07);
+            color: variables.$color-peach;
+          }
         }
         .notLiked {
           color: variables.$color-blue-dim;
+          &:hover {
+            transform: scale(1.07);
+            color: variables.$color-peach;
+          }
         }
         .likeCount {
           color: variables.$color-red;

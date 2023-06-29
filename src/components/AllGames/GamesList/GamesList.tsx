@@ -40,15 +40,16 @@ export default function GamesList() {
     []
   );
 
+  // TODO: NEED TO REFACTORY APOLLO GET DATA FROM CACHE FIRST
   useEffect(() => {
     const unsubscribe = store.subscribe(() => {
       const { search } = store.getState().gameFilters;
-
+      // Make sure when new search is the same as the old one, we don't fetch nor reset the tempSearch
       if (search === tempSearch) {
         debouncedFilter.cancel();
         return;
       }
-
+      // If search is empty, reset the tempSearch
       if (!search) {
         setTempSearch(undefined);
         debouncedFilter.cancel();
@@ -125,6 +126,8 @@ export default function GamesList() {
                   );
                 })
               : null}
+
+            {/* TODO: SEARCH BAR MAY TRIGGER SECOND FETCH */}
             {games.length > 0 ? (
               <InView
                 style={{ visibility: 'hidden' }}

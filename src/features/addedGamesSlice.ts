@@ -5,6 +5,7 @@ const initialState: { addedList: string[]; isUserGameEdited: boolean } = {
   isUserGameEdited: false,
 };
 
+// TODO: REMOVE THIS SLICE, LEAVE ADDGAME STATE MANAGMENT TO APOLLO CACHE
 export const addedGamesSlice = createSlice({
   name: 'addedGames',
   initialState,
