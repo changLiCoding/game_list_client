@@ -42,20 +42,22 @@ export default function useAllGames() {
       const { allGames: allGamesData } = data;
 
       if (allGamesData) {
-        allGamesData.forEach((game) => {
-          if (
-            userState.user.id &&
-            game.isGameAdded &&
-            !addedList.includes(game.id)
-          ) {
-            dispatch(
-              setAddedGames({
-                type: 'add',
-                gameId: game.id,
-              })
-            );
-          }
-        });
+        const gamesIdToAdd = allGamesData
+          .filter(
+            (game) =>
+              userState.user.id &&
+              game.isGameAdded &&
+              !addedList.includes(game.id)
+          )
+          .map((game) => game.id);
+        if (gamesIdToAdd.length > 0) {
+          dispatch(
+            setAddedGames({
+              type: 'renew',
+              gamesId: addedList.concat(gamesIdToAdd),
+            })
+          );
+        }
       }
     },
   });

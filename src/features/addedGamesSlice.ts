@@ -20,6 +20,8 @@ export const addedGamesSlice = createSlice({
         state.addedList = state.addedList.filter(
           (id) => id !== action.payload.gameId
         );
+      } else if (action.payload.type === 'renew') {
+        state.addedList = action.payload.gamesId;
       }
     },
     setIsUserGameEdited: (state, action) => {
