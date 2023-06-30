@@ -67,7 +67,6 @@ describe.skip('Game Detail Page', () => {
         <GameDetail />
       </ContextWrapper>
     );
-    debug();
     expect(queryByText('Game 2')).toBeInTheDocument();
     expect(queryByText('Description 2')).toBeInTheDocument();
     const downCircleButton = queryByLabelText('down-circle') as HTMLElement;

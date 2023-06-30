@@ -1,4 +1,4 @@
-import { describe, it } from 'vitest';
+import { describe, it, vi } from 'vitest';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { GET_ALL_GAMES } from '@/services/games/queries';
@@ -19,6 +19,7 @@ const mocks = [
         year: undefined,
         sortBy: 'name',
         search: '',
+        offset: 0,
       },
     },
     result: {
@@ -40,6 +41,7 @@ const mocks = [
             avgScore: 5,
             totalRating: 5,
             isGameAdded: false,
+            isGameLiked: false,
           },
           {
             __typename: 'Game',
@@ -57,6 +59,7 @@ const mocks = [
             avgScore: 10,
             totalRating: 5,
             isGameAdded: false,
+            isGameLiked: false,
           },
           {
             __typename: 'Game',
@@ -74,6 +77,7 @@ const mocks = [
             avgScore: 8,
             totalRating: 5,
             isGameAdded: false,
+            isGameLiked: false,
           },
         ],
       },
@@ -97,9 +101,18 @@ const mocks = [
   },
 ];
 
-describe.skip('Games List Component', () => {
+const IntersectionObserverMock = vi.fn(() => ({
+  disconnect: vi.fn(),
+  observe: vi.fn(),
+  takeRecords: vi.fn(),
+  unobserve: vi.fn(),
+}));
+
+vi.stubGlobal('IntersectionObserver', IntersectionObserverMock);
+
+describe('Games List Component', () => {
   it('should render the games list as a grid and show hovered cards', async () => {
-    const { queryByText, queryByLabelText } = renderVite(
+    const { queryByText, queryByLabelText, debug } = renderVite(
       <DefaultMockedProvider mocks={mocks}>
         <GamesList />
       </DefaultMockedProvider>,
@@ -153,7 +166,7 @@ describe.skip('Games List Component', () => {
 
   // aria-label="home-filter-mobile-view"
 
-  it('should render the games list as a list', async () => {
+  it.skip('should render the games list as a list', async () => {
     renderVite(
       <DefaultMockedProvider mocks={mocks}>
         <GamesList />

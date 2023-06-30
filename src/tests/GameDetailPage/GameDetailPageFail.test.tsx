@@ -40,7 +40,6 @@ describe('Game Detail Page', () => {
       </ContextWrapper>
     );
 
-    debug();
     expect(queryByText('Game not found')).toBeInTheDocument();
   });
 });

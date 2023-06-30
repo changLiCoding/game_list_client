@@ -18,8 +18,6 @@ function GameDetail(): JSX.Element {
     getGameFromFragment,
   } = useGetGameById();
 
-  console.log('getGameFromFragment', getGameFromFragment('2'));
-
   // THIS SETGAME IS NOT THE SAME AS THE ONE IN THE HOOK. INSTEAD IT IS FOR RETRIEVING THE GAME FROM THE FRAGMENT
   // ALSO TRIGGER RE-RENDERING OF THE COMPONENT WHEN LISTEDITOR IS SET OPEN
   const [game, setGame] = useState<GameType | null | undefined | GameDataType>(
@@ -30,11 +28,6 @@ function GameDetail(): JSX.Element {
     const tempGame: GameType | null = getGameFromFragment(id as string);
 
     const fetchGame = async () => {
-      console.log('id', id);
-
-      console.log('gameFromFragment', getGameFromFragment('2'));
-
-      console.log('tempGame', tempGame);
       try {
         if (tempGame) {
           setGame(tempGame);
@@ -53,9 +46,6 @@ function GameDetail(): JSX.Element {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
-
-  console.log('game', game);
-  console.log('gameFromHook', gameFromHook);
 
   if (!game && !gameFromHook) {
     return (

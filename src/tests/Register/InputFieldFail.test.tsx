@@ -114,7 +114,7 @@ describe('Register Input Fields', () => {
   });
 
   it('Fail to register a new user with existing email in database', async () => {
-    render(
+    const { debug } = render(
       <ContextWrapper>
         <Register />
       </ContextWrapper>
@@ -123,6 +123,8 @@ describe('Register Input Fields', () => {
     const username = screen.getByTestId('user-test');
     await userEvent.type(username, 'Vv');
     const email = screen.getByTestId('email-test');
+    debug(email);
+
     await userEvent.type(email, import.meta.env.VITE_USER_EMAIL_TEST);
     const password = screen.getByTestId('password-test');
     await userEvent.type(password, 'password2');
