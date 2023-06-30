@@ -3,28 +3,8 @@
 import { StateValue, createMachine, interpret } from 'xstate';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { createGameFiltersSlice } from './gameFiltersSlice';
-import { GameFiltersSortType } from '@/types/global';
 import { remove } from '@/utils/utils';
-
-// TODO: Move this to global types
-export type HomeGameFilters = {
-  search: string | undefined;
-  genres: {
-    included: string[];
-    excluded: string[];
-  };
-  platforms: {
-    included: string[];
-    excluded: string[];
-  };
-  tags: {
-    included: string[];
-    excluded: string[];
-  };
-  year: number | undefined;
-  sortBy: GameFiltersSortType | undefined;
-  state: string;
-};
+import { HomeGameFilters } from './types';
 
 // TODO: Rename this
 export type CorrectFilters = Pick<
@@ -59,11 +39,7 @@ const defaultGameFilters: HomeGameFilters = {
   year: undefined,
   search: '',
   sortBy: 'name',
-  state: 'off',
 };
-
-// TODO: Remove this
-type State = string;
 
 const stateMachine = createMachine(
   {
@@ -78,7 +54,8 @@ const stateMachine = createMachine(
       },
       events: {} as
         | { type: 'TOGGLE'; payload: StatePayloadType }
-        | { type: 'INCREMENT'; payload: StatePayloadType },
+        | { type: 'INCREMENT'; payload: StatePayloadType }
+        | { type: 'REMOVE_ITEM'; payload: StatePayloadType },
     },
     context: {
       entryCache: new Map<string, string>(),
@@ -95,11 +72,7 @@ const stateMachine = createMachine(
         on: {
           TOGGLE: {
             target: 'included',
-            actions: [
-              'included',
-              // (context) => console.log(`Before: ${context.count}`), // "Before: 0"
-              // // assign({ count: (context) => context.count + 1 }), // count === 2
-            ],
+            actions: ['included'],
           },
           INCREMENT: {
             target: 'included',
@@ -118,6 +91,9 @@ const stateMachine = createMachine(
             target: 'excluded',
             actions: ['includedToExcluded'],
           },
+          REMOVE_ITEM: {
+            actions: ['removeIncluded'],
+          },
         },
       },
 
@@ -130,6 +106,9 @@ const stateMachine = createMachine(
           INCREMENT: {
             target: 'off',
             actions: ['removeExcluded'],
+          },
+          REMOVE_ITEM: {
+            actions: ['removeIncluded'],
           },
         },
       },
@@ -173,9 +152,6 @@ const stateMachine = createMachine(
         state[category].included.push(entry);
         state[category].excluded = remove(state[category].excluded, entry);
       },
-      // excluded: (context, event) => {
-      //   console.log('excluded');
-      // },
       // included: assign({
       //   count: (context, payload) => {
       //     console.log('this payload: ', payload);
@@ -200,43 +176,9 @@ const stateMachine = createMachine(
       //     };
       //   },
       // }),
-      // removeIncluded: assign({
-      //   count: (context) => {
-      //     return context.count + 1;
-      //   },
-      // }),
-
-      // included: (context, event) => {
-      //   console.log('included context', context);
-      //   const { category, entry } = event.payload;
-      //   // assign({ count: (context) => context });
-      //   // Off -> Included
-      //   // context.stateMap.set(entry, 'included');
-
-      //   // const { state } = event.payload;
-      //   // state.genres.included?.push(event.payload.entry);
-      //   // entryCache.set(event.payload.entry, 'included');
-      //   // const { category, entry } = event.payload;
-      //   // const thing = { copy: [...context.filters[category].included] };
-      //   // console.log('thing ', thing);
-      //   // console.log('category, entry ', category, entry);
-      //   // console.log('t', thing);
-      //   // thing.copy.push('dd');
-
-      //   // assign({ count: (context) => context.count + 1 }); // count === 1
-      //   // return assign({ count: (context) => context.count + 1 }); // count === 2
-
-      //   // console.log(`After: ${JSON.stringify(context.genres)}`);
-      // },
     },
   }
 );
-
-const filters1 = {
-  genres: { ...defaultGameFilters.genres },
-  platforms: { ...defaultGameFilters.platforms },
-  tags: { ...defaultGameFilters.tags },
-};
 
 export const bigTest = () => {
   const entryCache = new Map();
@@ -248,14 +190,14 @@ export const bigTest = () => {
   //   }
   // >();
 
-  const test = new Map<
-    CorrectFiltersKeys,
-    | {
-        states: Map<string, State>;
-        allEntries: [];
-      }
-    | undefined
-  >();
+  // const test = new Map<
+  //   CorrectFiltersKeys,
+  //   | {
+  //       states: Map<string, State>;
+  //       allEntries: [];
+  //     }
+  //   | undefined
+  // >();
 
   const again = interpret(stateMachine);
 
@@ -269,16 +211,6 @@ export const bigTest = () => {
         const existingItem =
           stateMachine.context.entryCache.get(entry) ||
           stateMachine.initialState;
-
-        // const testAgain = interpret(stateMachine).start(existingItem);
-
-        // const send = testAgain.send('TOGGLE', {
-        //   payload: {
-        //     category,
-        //     entry,
-        //     state,
-        //   },
-        // });
         const service = stateMachine.transition(existingItem, {
           type: 'TOGGLE',
           payload: {
@@ -289,34 +221,9 @@ export const bigTest = () => {
         });
         again.execute(service);
 
-        console.log('after - send', service.context);
-        console.log('filters test 13 - ', filters1);
+        // console.log('after - send', service.context);
+        // console.log('filters test 13 - ', filters1);
         stateMachine.context.entryCache.set(entry, service.value);
-        // const service = interpret(stateMachine)
-        //   .start(existingItem)
-        //   .send('TOGGLE', {
-        // payload: {
-        //   category,
-        //   entry,
-        //   state,
-        // },
-        //   });
-        // console.log('existingItem', existingItem);
-
-        // stateMachine.context.entryCache.set(entry, service);
-
-        // const next = service.start(existingItem).send('TOGGLE', {
-        //   payload: {
-        //     category,
-        //     entry,
-        //     state,
-        //   },
-        // });
-        // stateMachine.context.stateMap.set(entry, next.value);
-
-        // entryCache.set(entry, next);
-        //
-        //
       },
 
       incrementItem: (state, action: PayloadAction<PayloadType>) => {
@@ -336,6 +243,22 @@ export const bigTest = () => {
         stateMachine.context.entryCache.set(entry, service.value);
       },
 
+      removeItem: (state, action: PayloadAction<PayloadType>) => {
+        const { category, entry } = action.payload;
+        const existingItem =
+          stateMachine.context.entryCache.get(entry) ||
+          stateMachine.initialState;
+        const service = stateMachine.transition(existingItem, {
+          type: 'REMOVE_ITEM',
+          payload: {
+            category,
+            entry,
+            state,
+          },
+        });
+        again.execute(service);
+      },
+
       clearCategory: (state, action: PayloadAction<keyof CorrectFilters>) => {
         // TODO: Actually select correct category
         // TODO: Update the cache
@@ -343,6 +266,7 @@ export const bigTest = () => {
         // TODO: Just use reset() ?
         stateMachine.context.entryCache.clear();
         const filterKey = action.payload;
+        // eslint-disable-next-line no-param-reassign
         state[filterKey] = defaultGameFilters[filterKey];
 
         // return { ...state, [filterKey]: defaultGameFilters[filterKey] };

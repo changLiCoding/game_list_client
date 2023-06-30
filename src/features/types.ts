@@ -1,9 +1,28 @@
 import { SliceCaseReducers, ValidateSliceCaseReducers } from '@reduxjs/toolkit';
+import { GameFiltersSortType } from '@/types/global';
 
 export type GenericGameFilterOptions<T> = {
   name: string;
   initialState: T;
   reducers: ValidateSliceCaseReducers<T, SliceCaseReducers<T>>;
+};
+
+export type HomeGameFilters = {
+  search: string | undefined;
+  genres: {
+    included: string[];
+    excluded: string[];
+  };
+  platforms: {
+    included: string[];
+    excluded: string[];
+  };
+  tags: {
+    included: string[];
+    excluded: string[];
+  };
+  year: number | undefined;
+  sortBy: GameFiltersSortType | undefined;
 };
 
 export type InitialStateType = {
