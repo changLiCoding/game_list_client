@@ -13,19 +13,11 @@ vi.mock('../../services/game/useGetGameById', async () => {
   return {
     ...actual,
     default: () => ({
-      getGame: [
-        {
-          __typename: 'Game',
-          id: '1',
-          name: 'Game 1',
-          description: 'Description 1',
-          imageURL:
-            'https://images.igdb.com/igdb/image/upload/t_cover_big/co4a7a.png',
-          tags: ['3D', 'Fantasy'],
-          releaseDate: '2021-01-01 00:00:00',
-          avgScore: 5,
-        },
-      ],
+      getGame: vi.fn(),
+      game: null,
+      getGameFromFragment: vi.fn(() => {
+        return null;
+      }),
     }),
   };
 });
@@ -41,6 +33,7 @@ describe('Game Detail Page', () => {
         useParams: vi.fn(() => ({ id: '4' })),
       };
     });
+
     const { queryByText, debug } = render(
       <ContextWrapper>
         <GameDetail />
