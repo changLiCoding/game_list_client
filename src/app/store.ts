@@ -2,9 +2,7 @@ import {
   PreloadedState,
   combineReducers,
   configureStore,
-  createListenerMiddleware,
 } from '@reduxjs/toolkit';
-import { setupListeners } from '@reduxjs/toolkit/query';
 import userReducer from '@/features/userSlice';
 import userGamesListReducer from '@/features/userGamesListSlice';
 import userGameReducer from '@/features/userGameSlice';
@@ -51,8 +49,6 @@ const userGameFiltersSlice = createGameFiltersSlice({
 
 const bigTestTest = bigTest();
 
-// TODO: Remove everything involving listeners - we don't need them anymore
-export const listenerMiddleware = createListenerMiddleware();
 const rootReducer = combineReducers({
   user: userReducer,
   userGames: userGamesListReducer,
@@ -68,8 +64,6 @@ const rootReducer = combineReducers({
 
 export const store = configureStore({
   reducer: rootReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().prepend(listenerMiddleware.middleware),
 });
 
 export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
@@ -86,7 +80,8 @@ export type AppStore = ReturnType<typeof setupStore>;
 export const {
   incrementItem,
   toggleItem,
-  clearAll,
+  removeItem,
+  // clearAll,
   clearCategory,
   setFilters: setTestFilter,
   resetFilter: resetTestFilter,
@@ -103,5 +98,3 @@ export const {
   resetFilter: resetUserGameFilter,
   reset: resetUserGameFilters,
 } = userGameFiltersSlice.actions;
-
-setupListeners(store.dispatch);
