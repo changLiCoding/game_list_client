@@ -42,6 +42,8 @@ const mocks = [
               tags: ['Fantasy'],
               __typename: 'Game',
               releaseDate: '2021-01-02 00:00:00',
+              isGameLiked: false,
+              isGameAdded: false,
             },
           ],
           playing: [
@@ -60,6 +62,8 @@ const mocks = [
               tags: ['3D', 'Multiplayer'],
               __typename: 'Game',
               releaseDate: '2021-01-02 00:00:00',
+              isGameLiked: false,
+              isGameAdded: false,
             },
             {
               description: 'Description 2',
@@ -76,6 +80,8 @@ const mocks = [
               tags: ['Indie', 'Adventure'],
               __typename: 'Game',
               releaseDate: '2021-01-02 00:00:00',
+              isGameLiked: false,
+              isGameAdded: false,
             },
           ],
         },

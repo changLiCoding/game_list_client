@@ -17,12 +17,16 @@ function GameDetail(): JSX.Element {
     error: errorFromHook,
     getGameFromFragment,
   } = useGetGameById();
+
+  // THIS SETGAME IS NOT THE SAME AS THE ONE IN THE HOOK. INSTEAD IT IS FOR RETRIEVING THE GAME FROM THE FRAGMENT
+  // ALSO TRIGGER RE-RENDERING OF THE COMPONENT WHEN LISTEDITOR IS SET OPEN
   const [game, setGame] = useState<GameType | null | undefined | GameDataType>(
     null
   );
 
   useEffect(() => {
     const tempGame: GameType | null = getGameFromFragment(id as string);
+
     const fetchGame = async () => {
       try {
         if (tempGame) {
@@ -48,6 +52,7 @@ function GameDetail(): JSX.Element {
       <Layout>
         <Content>
           <div>{errorFromHook?.message}</div>
+          <div>Game not found</div>
         </Content>
       </Layout>
     );

@@ -5,6 +5,7 @@ const initialState: { addedList: string[]; isUserGameEdited: boolean } = {
   isUserGameEdited: false,
 };
 
+// TODO: REMOVE THIS SLICE, LEAVE ADDGAME STATE MANAGMENT TO APOLLO CACHE
 export const addedGamesSlice = createSlice({
   name: 'addedGames',
   initialState,
@@ -19,6 +20,8 @@ export const addedGamesSlice = createSlice({
         state.addedList = state.addedList.filter(
           (id) => id !== action.payload.gameId
         );
+      } else if (action.payload.type === 'renew') {
+        state.addedList = action.payload.gamesId;
       }
     },
     setIsUserGameEdited: (state, action) => {

@@ -15,7 +15,6 @@ export default function useAllGames() {
   const errors: string[] = [];
 
   const [tempSearch, setTempSearch] = useState<string | undefined>('');
-  const userState = useAppSelector((state) => state.user);
 
   const tokenContext = getTokenFromLocalStorage();
   const { genres, tags, platforms, sortBy, year } = useAppSelector(
@@ -42,20 +41,17 @@ export default function useAllGames() {
       const { allGames: allGamesData } = data;
 
       if (allGamesData) {
-        allGamesData.forEach((game) => {
-          if (
-            userState.user.id &&
-            game.isGameAdded &&
-            !addedList.includes(game.id)
-          ) {
-            dispatch(
-              setAddedGames({
-                type: 'add',
-                gameId: game.id,
-              })
-            );
-          }
-        });
+        const gamesIdToAdd = allGamesData
+          .filter((game) => game.isGameAdded && !addedList.includes(game.id))
+          .map((game) => game.id);
+        if (gamesIdToAdd.length > 0) {
+          dispatch(
+            setAddedGames({
+              type: 'renew',
+              gamesId: addedList.concat(gamesIdToAdd),
+            })
+          );
+        }
       }
     },
   });

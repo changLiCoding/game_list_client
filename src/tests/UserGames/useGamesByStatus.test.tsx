@@ -33,6 +33,8 @@ const gamesByStatusForAUser = {
       tags: ['3D', 'Multiplayer'],
       __typename: 'Game',
       releaseDate: '2021-01-02 00:00:00',
+      isGameLiked: false,
+      isGameAdded: false,
     },
     {
       avgScore: 5.6,
@@ -45,6 +47,8 @@ const gamesByStatusForAUser = {
       tags: ['Indie', 'Adventure'],
       __typename: 'Game',
       releaseDate: '2021-01-02 00:00:00',
+      isGameLiked: false,
+      isGameAdded: false,
     },
   ],
 };

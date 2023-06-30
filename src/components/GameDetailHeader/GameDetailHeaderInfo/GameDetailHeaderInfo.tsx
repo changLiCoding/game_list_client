@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Button, Layout, Dropdown, Space } from 'antd';
 import type { MenuProps } from 'antd';
 import { HeartOutlined, DownCircleOutlined } from '@ant-design/icons';
@@ -15,6 +15,7 @@ import type { GameDataType } from '@/components/GamesListTable/types';
 
 function GameDetailHeaderInfoTemp({ game, setGame }: GameDetailsType) {
   const [open, setOpen] = useState(false);
+  const { user } = useAppSelector((state) => state.user);
 
   const { userGameLoading, fetchUserGame } = useUserGameById();
   const { addLike, removeLike } = useAddRemoveLike();
@@ -114,6 +115,10 @@ function GameDetailHeaderInfoTemp({ game, setGame }: GameDetailsType) {
                   danger={game.isGameLiked}
                   icon={<HeartOutlined />}
                   onClick={async () => {
+                    if (user.id === '') {
+                      info(`Please login to add this game to your liked list`);
+                      return;
+                    }
                     if (!game.isGameLiked) {
                       const response = await addLike(game.id as string, 'Game');
                       setGame({ ...(response.like?.likeable as GameType) });
