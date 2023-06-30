@@ -99,14 +99,13 @@ const mocks = [
 
 describe.skip('Games List Component', () => {
   it('should render the games list as a grid and show hovered cards', async () => {
-    const { queryByText, queryByLabelText, debug } = renderVite(
+    const { queryByText, queryByLabelText } = renderVite(
       <DefaultMockedProvider mocks={mocks}>
         <GamesList />
       </DefaultMockedProvider>,
       { store }
     );
 
-    debug();
     expect(await screen.findByText('Game 1')).toBeInTheDocument();
     expect(await screen.findByText('Game 2')).toBeInTheDocument();
     expect(await screen.findByText('Game 3')).toBeInTheDocument();

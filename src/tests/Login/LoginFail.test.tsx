@@ -89,9 +89,7 @@ describe('Login', () => {
 
     // Check if the icon inside the error message appeared
     const allImg = screen.queryAllByRole('img');
-    debug(allImg);
     const node = allImg[2];
-    debug(node);
 
     expect(node?.classList[1]).toBe('anticon-info-circle');
   });
