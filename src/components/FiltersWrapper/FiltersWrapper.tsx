@@ -25,12 +25,14 @@ import {
   FIRST_VIDEO_GAME_RELEASED_YEAR,
   getTokenFromLocalStorage,
 } from '@/constants';
-import { clearCategory, setGameFilters, toggleItem } from '@/app/store';
+import { clearCategory, setTestFilter, toggleItem } from '@/app/store';
 import { range } from '@/utils/utils';
-import type { SelectFilterFieldType } from '@/components/FiltersWrapper/types';
+import type {
+  ArrayElementType,
+  SelectFilterFieldType,
+} from '@/components/FiltersWrapper/types';
 
 import ExclusionFiltersListMessage from './ExclusionFiltersListMessage';
-import ExclusionFiltersList3 from './ExclusionFiltersList3';
 
 const { Search } = Input;
 const { useBreakpoint } = Grid;
@@ -39,10 +41,10 @@ function SelectFilterField<T>({
   mode,
   value,
   options,
-  onChange,
+  onClear,
   onSelect,
   onDeselect,
-  onClear,
+  onChange,
 }: SelectFilterFieldType<T>) {
   const optionsMemo = useMemo(() => {
     return options.map((s) => {
@@ -59,20 +61,18 @@ function SelectFilterField<T>({
       mode={mode}
       style={{ width: 200 }}
       className={styles.cascaderStyle}
-      value={value}
+      value={value as T}
       allowClear
-      // onChange={(v, d) => {
-      //   console.log('v = ', v);
-      //   console.log('d = ', d);
-      //   onChange(v);
-      // }}
       onClear={onClear}
-      onDeselect={(d) => {
-        onDeselect(d);
+      onDeselect={(deselectedValue) =>
+        onDeselect?.(deselectedValue as ArrayElementType<T> & T)
+      }
+      onSelect={(selectedValue) => {
+        onSelect?.(selectedValue as ArrayElementType<T> & T);
       }}
-      onSelect={(d) => {
-        onSelect(d);
-      }}
+      onChange={(changeValue) =>
+        onChange?.(changeValue as ArrayElementType<T> & T)
+      }
     >
       {optionsMemo}
     </Select>
@@ -82,7 +82,7 @@ export default function FiltersWrapper() {
   const [open, setOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
   const dispatch = useDispatch();
-  const gameFilters = useAppSelector((state) => state.gameFilters);
+  // const gameFilters = useAppSelector((state) => state.gameFilters);
   const bigTest = useAppSelector((state) => state.bigTest);
 
   const { data, loading } = useQuery(
@@ -103,7 +103,7 @@ export default function FiltersWrapper() {
   const screens = useBreakpoint();
 
   const content = (
-    <>
+    <div>
       {loading ? (
         <div className={styles.advancedSearchPopoverLoading}>
           <Skeleton paragraph={{ rows: 3, width: 600 }} active />
@@ -112,25 +112,6 @@ export default function FiltersWrapper() {
         </div>
       ) : (
         <>
-          <ExclusionFiltersList3
-            title="Genres"
-            entries={data?.getGameFilters.genres ?? []}
-            included={gameFilters.genres || []}
-            excluded={gameFilters.excludedGenres || []}
-            states={[
-              {
-                id: 'included',
-                color: 'green',
-                values: gameFilters.genres || [],
-              },
-              {
-                id: 'excluded',
-                color: 'red',
-                values: gameFilters.excludedGenres || [],
-              },
-            ]}
-          />
-
           <ExclusionFiltersListMessage
             title="Genres"
             entries={data?.getGameFilters.genres ?? []}
@@ -148,66 +129,42 @@ export default function FiltersWrapper() {
             ]}
           />
 
-          {/* <ExclusionFiltersList
-          title="Genres"
-          entries={data.getGameFilters.genres}
-          onChange={(included, excluded) => {
-            console.log('ExclusionFiltersList included: ', included);
-            console.log('ExclusionFiltersList excluded: ', excluded);
-            dispatch(
-              setGameFilters({ excludedGenres: excluded, genres: included })
-            );
-          }}
-        />
+          <ExclusionFiltersListMessage
+            title="Platforms"
+            entries={data?.getGameFilters.platforms ?? []}
+            states={[
+              {
+                id: 'included',
+                color: 'green',
+                values: bigTest.platforms.included || [],
+              },
+              {
+                id: 'excluded',
+                color: 'red',
+                values: bigTest.platforms.excluded || [],
+              },
+            ]}
+          />
 
-        <ExclusionFiltersList
-          title="Platforms"
-          entries={data.getGameFilters.platforms}
-          onChange={(excluded, included) => {
-            dispatch(
-              setGameFilters({
-                excludedPlatforms: excluded,
-                platforms: included,
-              })
-            );
-          }}
-        />
-
-        <ExclusionFiltersList
-          title="Tags"
-          entries={data.getGameFilters.tags}
-          onChange={(excluded, included) => {
-            // dispatch(setGameFilters({ excludedTags: excluded, tags: included }));
-          }}
-        /> */}
+          <ExclusionFiltersListMessage
+            title="Tags"
+            entries={data?.getGameFilters.tags ?? []}
+            states={[
+              {
+                id: 'included',
+                color: 'green',
+                values: bigTest.tags.included || [],
+              },
+              {
+                id: 'excluded',
+                color: 'red',
+                values: bigTest.tags.excluded || [],
+              },
+            ]}
+          />
         </>
       )}
-
-      {/* 
-     // onChange={(state, entry) => {
-      //   batch(() => {
-      //     // dispatch()
-      //     if (state === 'not_added') {
-      //       const removedEntry = remove(gameFilters.genres, entry);
-      //       dispatch(setGameFilters({ genres: removedEntry }));
-      //     } else if (state === 'included') {
-      //       dispatch(setGameFilters({ genres: [] }));
-      //     } else if (state === 'excluded') {
-      //       dispatch(setGameFilters({ genres: [] }));
-      //     }
-      //   });
-      // }}
-    
-    <h3 className={filterFieldStyles.h3FilterFieldTitle}>excludedGenres</h3>
-    <SelectFilterField<string[]>
-      mode="multiple"
-      value={gameFilters.excludedGenres || []}
-      options={data?.getGameFilters.genres || []}
-      onChange={(value) =>
-        dispatch(setGameFilters({ excludedGenres: value }))
-      }
-    /> */}
-    </>
+    </div>
   );
 
   if (!data || loading) return null;
@@ -228,31 +185,6 @@ export default function FiltersWrapper() {
           className={filterFieldStyles.layoutFilterFieldContainer}
         >
           <div>
-            <h3 className={filterFieldStyles.h3FilterFieldTitle}>
-              Genres (Test)
-            </h3>
-            <SelectFilterField<string[]>
-              mode="multiple"
-              value={bigTest.genres.included || []}
-              options={data?.getGameFilters.genres || []}
-              onSelect={(v) => {
-                console.log('onSelect', v);
-                dispatch(toggleItem({ category: 'genres', entry: v }));
-              }}
-              onDeselect={(v) => {
-                console.log('onDeselect', v);
-                dispatch(toggleItem({ category: 'genres', entry: v }));
-              }}
-              onClear={() => {
-                dispatch(clearCategory('genres'));
-              }}
-              // onChange={
-              //   (value, option) => console.log('value-option', value, option)
-              //   // dispatch(toggleItem({ category: 'genres', entry: 'Puzzle' }))
-              // }
-            />
-          </div>
-          {/* <div>
             <h3 className={filterFieldStyles.h3FilterFieldTitle}>Search</h3>
             <Input
               allowClear
@@ -260,20 +192,28 @@ export default function FiltersWrapper() {
               style={{ width: 300 }}
               size="middle"
               prefix={<SearchOutlined />}
-              value={gameFilters.search}
+              value={bigTest.search}
               onChange={(e) => {
-                dispatch(setGameFilters({ search: e.target.value }));
+                dispatch(setTestFilter({ search: e.target.value }));
               }}
             />
-          </div> */}
+          </div>
 
-          {/* <div>
+          <div>
             <h3 className={filterFieldStyles.h3FilterFieldTitle}>Genres</h3>
             <SelectFilterField<string[]>
               mode="multiple"
-              value={gameFilters.genres || []}
+              value={bigTest.genres.included || []}
               options={data?.getGameFilters.genres || []}
-              onChange={(value) => dispatch(setGameFilters({ genres: value }))}
+              onSelect={(v) => {
+                dispatch(toggleItem({ category: 'genres', entry: v }));
+              }}
+              onDeselect={(v) => {
+                dispatch(toggleItem({ category: 'genres', entry: v }));
+              }}
+              onClear={() => {
+                dispatch(clearCategory('genres'));
+              }}
             />
           </div>
 
@@ -281,11 +221,17 @@ export default function FiltersWrapper() {
             <h3 className={filterFieldStyles.h3FilterFieldTitle}>Platforms</h3>
             <SelectFilterField<string[]>
               mode="multiple"
-              value={gameFilters.platforms || []}
+              value={bigTest.platforms.included || []}
               options={data?.getGameFilters.platforms || []}
-              onChange={(value) =>
-                dispatch(setGameFilters({ platforms: value }))
-              }
+              onSelect={(v) => {
+                dispatch(toggleItem({ category: 'platforms', entry: v }));
+              }}
+              onDeselect={(v) => {
+                dispatch(toggleItem({ category: 'platforms', entry: v }));
+              }}
+              onClear={() => {
+                dispatch(clearCategory('genres'));
+              }}
             />
           </div>
 
@@ -293,11 +239,16 @@ export default function FiltersWrapper() {
             <h3 className={filterFieldStyles.h3FilterFieldTitle}>Tags</h3>
             <SelectFilterField<string[]>
               mode="multiple"
-              value={gameFilters.tags || []}
+              value={bigTest.tags.included || []}
               options={data?.getGameFilters.tags || []}
-              onChange={(value) => {
-                dispatch(setGameFilters({ tags: value }));
-                console.log('value-option', value);
+              onSelect={(v) => {
+                dispatch(toggleItem({ category: 'tags', entry: v }));
+              }}
+              onDeselect={(v) => {
+                dispatch(toggleItem({ category: 'tags', entry: v }));
+              }}
+              onClear={() => {
+                dispatch(clearCategory('tags'));
               }}
             />
           </div>
@@ -306,15 +257,14 @@ export default function FiltersWrapper() {
             <h3 className={filterFieldStyles.h3FilterFieldTitle}>Year</h3>
             <SelectFilterField<number>
               mode={undefined}
-              value={gameFilters.year}
+              value={bigTest.year}
               options={yearOptions}
-              onChange={
-                (value, option) => console.log('value-option', value, option)
-                // dispatch(toggleItem({ category: 'genres', entry: 'Puzzle' }))
-              }
+              onChange={(value) => {
+                dispatch(setTestFilter({ year: value }));
+              }}
             />
           </div>
-*/}
+
           <div>
             <Popover
               placement="bottomRight"

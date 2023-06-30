@@ -3,6 +3,8 @@ import type { Dayjs } from 'dayjs';
 
 import React from 'react';
 
+export declare type ArrayElementType<T> = T extends (infer E)[] ? E : T;
+
 export interface DropDownOption {
   value: string | number;
   label: string | number;
