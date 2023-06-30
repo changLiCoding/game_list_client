@@ -17,7 +17,7 @@ import { setAddedGames } from '@/features/addedGamesSlice';
 
 export default function GamesList() {
   const homeSearchState = useAppSelector((state) => state.homeSearch);
-  const gameFilters = useAppSelector((state) => state.bigTest);
+  const homeGameFilters = useAppSelector((state) => state.homeGameFilters);
   const { addedList } = useAppSelector((state) => state.addedGames);
 
   const [tempSearch, setTempSearch] = useState<string | undefined>('');
@@ -31,14 +31,14 @@ export default function GamesList() {
 
   const { data, loading } = useQuery(GET_ALL_GAMES, {
     variables: {
-      genre: gameFilters.genres.included,
-      tag: gameFilters.tags.included,
-      platform: gameFilters.platforms.included,
-      year: gameFilters.year,
-      excludedGenres: gameFilters.genres.excluded,
-      excludedTags: gameFilters.tags.excluded,
-      excludedPlatforms: gameFilters.platforms.excluded,
-      sortBy: gameFilters.sortBy,
+      genre: homeGameFilters.genres.included,
+      tag: homeGameFilters.tags.included,
+      platform: homeGameFilters.platforms.included,
+      year: homeGameFilters.year,
+      excludedGenres: homeGameFilters.genres.excluded,
+      excludedTags: homeGameFilters.tags.excluded,
+      excludedPlatforms: homeGameFilters.platforms.excluded,
+      sortBy: homeGameFilters.sortBy,
       search: tempSearch,
     },
     ...getTokenFromLocalStorage,
@@ -73,7 +73,7 @@ export default function GamesList() {
 
   useEffect(() => {
     const unsubscribe = store.subscribe(() => {
-      const { search } = store.getState().bigTest;
+      const { search } = store.getState().homeGameFilters;
 
       if (search === tempSearch) {
         return;

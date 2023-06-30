@@ -10,7 +10,7 @@ import addedGamesReducer from '@/features/addedGamesSlice';
 import homeSearchSlice from '@/features/homeSearchSlice';
 import { createGameFiltersSlice } from '@/features/gameFiltersSlice';
 import { HomeGameFilters, UserGameFilters } from '@/types/global';
-import { bigTest } from '@/features/bigTest';
+import { createHomeGameFiltersSlice } from '@/features/homeGameFiltersSlice';
 
 const defaultGameFilters: HomeGameFilters = {
   genres: [],
@@ -47,7 +47,7 @@ const userGameFiltersSlice = createGameFiltersSlice({
   reducers: {},
 });
 
-const bigTestTest = bigTest();
+const homeGameFiltersSlice = createHomeGameFiltersSlice();
 
 const rootReducer = combineReducers({
   user: userReducer,
@@ -56,7 +56,7 @@ const rootReducer = combineReducers({
   homeSearch: homeSearchSlice,
 
   gameFilters: gameFiltersSlice.reducer,
-  bigTest: bigTestTest.reducer,
+  homeGameFilters: homeGameFiltersSlice.reducer,
   userGameFilters: userGameFiltersSlice.reducer,
 
   addedGames: addedGamesReducer,
@@ -81,12 +81,11 @@ export const {
   incrementItem,
   toggleItem,
   removeItem,
-  // clearAll,
   clearCategory,
-  setFilters: setTestFilter,
-  resetFilter: resetTestFilter,
-  reset: resetTestFilters,
-} = bigTestTest.actions;
+  setFilters: setHomeFilter,
+  resetFilter: resetHomeFilter,
+  reset: resetHomeFilters,
+} = homeGameFiltersSlice.actions;
 
 export const {
   setFilters: setGameFilters,

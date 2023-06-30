@@ -180,7 +180,7 @@ const stateMachine = createMachine(
   }
 );
 
-export const bigTest = () => {
+export const createHomeGameFiltersSlice = () => {
   const entryCache = new Map();
   // const test = new Map<
   //   Category,
@@ -202,7 +202,7 @@ export const bigTest = () => {
   const again = interpret(stateMachine);
 
   return createGameFiltersSlice({
-    name: 'test',
+    name: 'homeGameFilters',
     initialState: defaultGameFilters,
     reducers: {
       // This is a user selecting an item from the dropdown menu, can only be in the 'off' or 'included' state

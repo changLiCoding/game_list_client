@@ -7,7 +7,6 @@ import filterFieldStyles from '@/components/FiltersWrapper/FilterField/FilterFie
 import { incrementItem } from '@/app/store';
 import { useAppSelector } from '@/app/hooks';
 import useArrayMemo from './useArrayMemo';
-import useTestHook from './useTestHook';
 
 export type ExclusionFiltersListMessageProps = {
   title: string;
@@ -36,7 +35,7 @@ export default function ExclusionFiltersListMessage({
 // predicate,
 ExclusionFiltersListMessageProps) {
   const dispatch = useDispatch();
-  const bigTest = useAppSelector((state) => state.bigTest);
+  const homeGameFilters = useAppSelector((state) => state.homeGameFilters);
 
   // Checks if the states array has changed
   const statesArrayMemo = useArrayMemo<
@@ -60,6 +59,7 @@ ExclusionFiltersListMessageProps) {
   const entriesMemo = useMemo(() => {
     console.log('running');
     return entries.map((entry) => {
+      console.log('is everyone running?');
       let color;
       if (states[0].values.includes(entry)) {
         color = 'green';
@@ -87,28 +87,6 @@ ExclusionFiltersListMessageProps) {
       );
     });
   }, [dispatch, entries, states]);
-
-  // const entriesMemo = useMemo(() => {
-  //   return entries.map((entry) => {
-  //     return (
-  //       <Tag
-  //         key={entry}
-  //         style={{ userSelect: 'none' }}
-  //         color="default"
-  //         onClick={() => {
-  //           dispatch(
-  //             incrementItem({
-  //               category: 'genres',
-  //               entry,
-  //             })
-  //           );
-  //         }}
-  //       >
-  //         {entry}
-  //       </Tag>
-  //     );
-  //   });
-  // }, [dispatch, entries]);
 
   return (
     <div>

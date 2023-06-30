@@ -6,14 +6,9 @@ import styles from '@/components/AllGames/InfoBar/FilterTags/FilterTags.module.s
 
 import { useAppSelector } from '@/app/hooks';
 import { remove } from '@/utils/utils';
-import {
-  clearAll,
-  clearCategory,
-  resetGameFilter,
-  setGameFilters,
-} from '@/app/store';
+import { clearCategory, resetGameFilter, setGameFilters } from '@/app/store';
 
-import { HomeGameFilters as BigTestFilters } from '@/features/bigTest';
+import { HomeGameFilters as BigTestFilters } from '@/features/types';
 import { HomeGameFilters } from '@/types/global';
 
 // type TT<
@@ -153,8 +148,8 @@ const example = entriesOf({ a: 'foo', b: 'bar', c: 12 } as const);
 
 function FilterTags() {
   const dispatch = useDispatch();
-  const gameFilters = useAppSelector((state) => state.gameFilters);
-  const bigTestFilters = useAppSelector((state) => state.bigTest);
+  // const gameFilters = useAppSelector((state) => state.gameFilters);
+  const homeGameFilters = useAppSelector((state) => state.homeGameFilters);
 
   // const filterTags2 = useMemo(() => {
   //   const testObj = {
@@ -186,21 +181,21 @@ function FilterTags() {
   // }, []);
   const filterTags = useMemo(() => {
     // Loop through all the keys and values of gameFilters and filter out the non null and undefined values
-    const entries = Object.entries(bigTestFilters).filter((e) => {
-      if (e && (e[0] === 'sortBy' || e[0] === 'state')) return false; // Don't show sortBy in the filter tags - Kind of a hack, but were only filtering out 1 key
+    const entries = Object.entries(homeGameFilters).filter((e) => {
+      if (e && e[0] === 'sortBy') return false; // Don't show sortBy in the filter tags - Kind of a hack, but were only filtering out 1 key
       if (Array.isArray(e[1])) return e[1].length > 0;
       return e[1];
     });
 
     if (
-      bigTestFilters.genres.included.length > 0 ||
-      bigTestFilters.genres.excluded.length > 0
+      homeGameFilters.genres.included.length > 0 ||
+      homeGameFilters.genres.excluded.length > 0
     )
       return (
         <>
           <TagsTwoTone className={styles.tagsIcon} />
 
-          {bigTestFilters.genres.included.map((value) => {
+          {homeGameFilters.genres.included.map((value) => {
             return (
               <Tag
                 id={`tag-${value}`}
@@ -217,7 +212,7 @@ function FilterTags() {
             );
           })}
 
-          {bigTestFilters.genres.excluded.map((value) => {
+          {homeGameFilters.genres.excluded.map((value) => {
             return (
               <Tag
                 id={`tag-${value}`}
@@ -243,7 +238,8 @@ function FilterTags() {
           </Tag>
         </>
       );
-  }, [bigTestFilters, dispatch]);
+    return <div />;
+  }, [homeGameFilters, dispatch]);
 
   // const filterTags = useMemo(() => {
   //   // Loop through all the keys and values of gameFilters and filter out the non null and undefined values

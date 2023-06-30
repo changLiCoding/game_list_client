@@ -25,14 +25,12 @@ import {
   FIRST_VIDEO_GAME_RELEASED_YEAR,
   getTokenFromLocalStorage,
 } from '@/constants';
-import { clearCategory, setTestFilter, toggleItem } from '@/app/store';
+import { clearCategory, setHomeFilter, toggleItem } from '@/app/store';
 import { range } from '@/utils/utils';
-import type {
-  ArrayElementType,
-  SelectFilterFieldType,
-} from '@/components/FiltersWrapper/types';
+import type { SelectFilterFieldType } from '@/components/FiltersWrapper/types';
 
 import ExclusionFiltersListMessage from './ExclusionFiltersListMessage';
+import { ArrayElementType } from '@/types/global';
 
 const { Search } = Input;
 const { useBreakpoint } = Grid;
@@ -83,7 +81,7 @@ export default function FiltersWrapper() {
   const [collapsed, setCollapsed] = useState(false);
   const dispatch = useDispatch();
   // const gameFilters = useAppSelector((state) => state.gameFilters);
-  const bigTest = useAppSelector((state) => state.bigTest);
+  const homeGameFilters = useAppSelector((state) => state.homeGameFilters);
 
   const { data, loading } = useQuery(
     GET_GAME_FILTERS,
@@ -119,12 +117,12 @@ export default function FiltersWrapper() {
               {
                 id: 'included',
                 color: 'green',
-                values: bigTest.genres.included || [],
+                values: homeGameFilters.genres.included || [],
               },
               {
                 id: 'excluded',
                 color: 'red',
-                values: bigTest.genres.excluded || [],
+                values: homeGameFilters.genres.excluded || [],
               },
             ]}
           />
@@ -136,12 +134,12 @@ export default function FiltersWrapper() {
               {
                 id: 'included',
                 color: 'green',
-                values: bigTest.platforms.included || [],
+                values: homeGameFilters.platforms.included || [],
               },
               {
                 id: 'excluded',
                 color: 'red',
-                values: bigTest.platforms.excluded || [],
+                values: homeGameFilters.platforms.excluded || [],
               },
             ]}
           />
@@ -153,12 +151,12 @@ export default function FiltersWrapper() {
               {
                 id: 'included',
                 color: 'green',
-                values: bigTest.tags.included || [],
+                values: homeGameFilters.tags.included || [],
               },
               {
                 id: 'excluded',
                 color: 'red',
-                values: bigTest.tags.excluded || [],
+                values: homeGameFilters.tags.excluded || [],
               },
             ]}
           />
@@ -169,6 +167,7 @@ export default function FiltersWrapper() {
 
   if (!data || loading) return null;
   if (data.getGameFilters.errors.length > 0) {
+    // eslint-disable-next-line no-console
     console.log('Errors:', data.getGameFilters.errors);
     return (
       <div>
@@ -192,9 +191,9 @@ export default function FiltersWrapper() {
               style={{ width: 300 }}
               size="middle"
               prefix={<SearchOutlined />}
-              value={bigTest.search}
+              value={homeGameFilters.search}
               onChange={(e) => {
-                dispatch(setTestFilter({ search: e.target.value }));
+                dispatch(setHomeFilter({ search: e.target.value }));
               }}
             />
           </div>
@@ -203,7 +202,7 @@ export default function FiltersWrapper() {
             <h3 className={filterFieldStyles.h3FilterFieldTitle}>Genres</h3>
             <SelectFilterField<string[]>
               mode="multiple"
-              value={bigTest.genres.included || []}
+              value={homeGameFilters.genres.included || []}
               options={data?.getGameFilters.genres || []}
               onSelect={(v) => {
                 dispatch(toggleItem({ category: 'genres', entry: v }));
@@ -221,7 +220,7 @@ export default function FiltersWrapper() {
             <h3 className={filterFieldStyles.h3FilterFieldTitle}>Platforms</h3>
             <SelectFilterField<string[]>
               mode="multiple"
-              value={bigTest.platforms.included || []}
+              value={homeGameFilters.platforms.included || []}
               options={data?.getGameFilters.platforms || []}
               onSelect={(v) => {
                 dispatch(toggleItem({ category: 'platforms', entry: v }));
@@ -239,7 +238,7 @@ export default function FiltersWrapper() {
             <h3 className={filterFieldStyles.h3FilterFieldTitle}>Tags</h3>
             <SelectFilterField<string[]>
               mode="multiple"
-              value={bigTest.tags.included || []}
+              value={homeGameFilters.tags.included || []}
               options={data?.getGameFilters.tags || []}
               onSelect={(v) => {
                 dispatch(toggleItem({ category: 'tags', entry: v }));
@@ -257,10 +256,10 @@ export default function FiltersWrapper() {
             <h3 className={filterFieldStyles.h3FilterFieldTitle}>Year</h3>
             <SelectFilterField<number>
               mode={undefined}
-              value={bigTest.year}
+              value={homeGameFilters.year}
               options={yearOptions}
               onChange={(value) => {
-                dispatch(setTestFilter({ year: value }));
+                dispatch(setHomeFilter({ year: value }));
               }}
             />
           </div>
