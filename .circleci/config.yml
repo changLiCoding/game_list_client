@@ -22,5 +22,5 @@ jobs:
           name: Lint codebase
           command: npm run lint
       - run:
-        name: Lint fix
-        command: npm run lint:fix
+          name: Lint fix
+          command: npm run lint:fix
