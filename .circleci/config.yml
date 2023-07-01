@@ -1,4 +1,5 @@
 version: 2.1
+
 jobs:
   build:
     docker:
@@ -18,6 +19,25 @@ jobs:
       - run:
           name: Run build
           command: npm run build
+      - store_artifacts:
+          path: coverage
+          destination: coverage
+
+  test:
+    docker:
+      - image: circleci/node:12
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - dependency-cache-{{ checksum "package-lock.json" }}
+      - run:
+          name: Install dependencies
+          command: npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+          paths:
+            - node_modules
       - run:
           name: Run tests
           command: npm test
@@ -32,3 +52,10 @@ jobs:
           destination: coverage
       - store_test_results:
           path: test-results
+
+workflows:
+  version: 2
+  build-and-test:
+    jobs:
+      - build
+      - test
