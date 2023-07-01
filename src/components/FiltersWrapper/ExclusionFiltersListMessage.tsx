@@ -7,11 +7,13 @@ import filterFieldStyles from '@/components/FiltersWrapper/FilterField/FilterFie
 import { incrementItem } from '@/app/store';
 import { useAppSelector } from '@/app/hooks';
 import useArrayMemo from './useArrayMemo';
+import { CorrectFiltersKeys } from '@/features/homeGameFiltersSlice';
 
 export type ExclusionFiltersListMessageProps = {
   title: string;
   entries: string[];
   states: StateObject2<string[]>[];
+  category: CorrectFiltersKeys;
 };
 
 export type EntryProps2 = {
@@ -31,6 +33,7 @@ export default function ExclusionFiltersListMessage({
   title,
   entries,
   states,
+  category,
 }: // filterValue,
 // predicate,
 ExclusionFiltersListMessageProps) {
@@ -76,7 +79,7 @@ ExclusionFiltersListMessageProps) {
           onClick={() => {
             dispatch(
               incrementItem({
-                category: 'genres',
+                category,
                 entry,
               })
             );
@@ -86,7 +89,7 @@ ExclusionFiltersListMessageProps) {
         </Tag>
       );
     });
-  }, [dispatch, entries, states]);
+  }, [category, dispatch, entries, states]);
 
   return (
     <div>

@@ -182,10 +182,14 @@ function FilterTags() {
   const filterTags = useMemo(() => {
     // Loop through all the keys and values of gameFilters and filter out the non null and undefined values
     const entries = Object.entries(homeGameFilters).filter((e) => {
-      if (e && e[0] === 'sortBy') return false; // Don't show sortBy in the filter tags - Kind of a hack, but were only filtering out 1 key
+      if (!e || !e[1]) return false;
+      if (e[0] === 'sortBy') return false; // Don't show sortBy in the filter tags - Kind of a hack, but were only filtering out 1 key
       if (Array.isArray(e[1])) return e[1].length > 0;
+      if (typeof e[1] === 'object' && formatter[e[1]]) return true;
       return e[1];
     });
+
+    // console.log('Entries:', entries);
 
     if (
       homeGameFilters.genres.included.length > 0 ||

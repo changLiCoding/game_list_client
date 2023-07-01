@@ -125,6 +125,7 @@ export default function FiltersWrapper() {
                 values: homeGameFilters.genres.excluded || [],
               },
             ]}
+            category="genres"
           />
 
           <ExclusionFiltersListMessage
@@ -142,6 +143,7 @@ export default function FiltersWrapper() {
                 values: homeGameFilters.platforms.excluded || [],
               },
             ]}
+            category="platforms"
           />
 
           <ExclusionFiltersListMessage
@@ -159,6 +161,7 @@ export default function FiltersWrapper() {
                 values: homeGameFilters.tags.excluded || [],
               },
             ]}
+            category="tags"
           />
         </>
       )}
