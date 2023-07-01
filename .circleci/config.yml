@@ -24,9 +24,3 @@ jobs:
       - run:
           name: Lint fix
           command: npm run lint:fix
-      - run:
-          name: Run build
-          command: npm run build
-      - store_artifacts:
-          path: coverage
-          destination: coverage
