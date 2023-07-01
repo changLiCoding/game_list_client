@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 // TODO: Remove this ^
-import { StateValue, createMachine, interpret } from 'xstate';
+import { StateValue, assign, createMachine, interpret } from 'xstate';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { createGameFiltersSlice } from './gameFiltersSlice';
 import { remove } from '@/utils/utils';
@@ -12,7 +12,7 @@ export type CorrectFilters = Pick<
   'genres' | 'platforms' | 'tags'
 >;
 
-type CorrectFiltersKeys = keyof CorrectFilters;
+export type CorrectFiltersKeys = keyof CorrectFilters;
 
 export type PayloadType = {
   category: CorrectFiltersKeys;
@@ -72,11 +72,11 @@ const stateMachine = createMachine(
         on: {
           TOGGLE: {
             target: 'included',
-            actions: ['included'],
+            actions: ['included1'],
           },
           INCREMENT: {
             target: 'included',
-            actions: ['included'],
+            actions: ['included1'],
           },
         },
       },
@@ -85,7 +85,7 @@ const stateMachine = createMachine(
         on: {
           TOGGLE: {
             target: 'off',
-            actions: ['removeIncluded'],
+            actions: ['included1'],
           },
           INCREMENT: {
             target: 'excluded',
@@ -115,14 +115,17 @@ const stateMachine = createMachine(
     },
   },
 
+  // Look into creating shallow copies instead of updating the state directly? - https://developer.mozilla.org/en-US/docs/Glossary/Shallow_copy
   {
     actions: {
+      // Actually works?
+      // included1: assign({
+      //   count: (context, payload) => context.count + 1,
+      // }),
       included: (context, event) => {
         console.log('included context', context);
         const { category, entry, state } = event.payload;
         state[category].included.push(entry);
-        // context.filters.genres.excluded.push('');
-        // const value = thisOne.get(category);
       },
       removeIncluded: (context, event) => {
         console.log('removeIncluded');
@@ -180,6 +183,61 @@ const stateMachine = createMachine(
   }
 );
 
+const counterMachine = createMachine({
+  id: 'counter',
+  predictableActionArguments: true,
+  schema: {
+    context: {} as {
+      filters: {
+        genres: string[];
+        platforms: string[];
+        tags: string[];
+      };
+      count: number;
+    },
+  },
+  context: {
+    count: 0,
+    filters: {
+      genres: [],
+      platforms: [],
+      tags: [],
+    },
+  },
+  initial: 'active',
+
+  states: {
+    active: {
+      on: {
+        INC_TWICE: {
+          actions: [
+            (context) => console.log(`Before: ${context.count}`), // "Before: 2"
+            assign({
+              filters: (context) => {
+                const test = Array.from(context.filters.genres);
+                test.push('test entry');
+                return {
+                  genres: test,
+                  platforms: [],
+                  tags: [],
+                };
+              },
+            }), // count === 1
+            assign({ count: (context) => context.count + 1 }), // count === 2
+            (context) => console.log(`After: ${context.count}`), // "After: 2"
+          ],
+          // actions: [
+          //   (context) => console.log(`Before: ${context.count}`), // "Before: 2"
+          //   assign({ count: (context) => context.count + 1 }), // count === 1
+          //   assign({ count: (context) => context.count + 1 }), // count === 2
+          //   (context) => console.log(`After: ${context.count}`), // "After: 2"
+          // ],
+        },
+      },
+    },
+  },
+});
+
 export const createHomeGameFiltersSlice = () => {
   const entryCache = new Map();
   // const test = new Map<
@@ -200,6 +258,17 @@ export const createHomeGameFiltersSlice = () => {
   // >();
 
   const again = interpret(stateMachine);
+  // const again2 = interpret(counterMachine).start();
+
+  const service = interpret(counterMachine);
+
+  service.onTransition((state) => {
+    // execute actions on next animation frame
+    // instead of immediately
+    service.execute(state);
+  });
+
+  service.start();
 
   return createGameFiltersSlice({
     name: 'homeGameFilters',
@@ -208,22 +277,58 @@ export const createHomeGameFiltersSlice = () => {
       // This is a user selecting an item from the dropdown menu, can only be in the 'off' or 'included' state
       toggleItem: (state, action: PayloadAction<PayloadType>) => {
         const { category, entry } = action.payload;
-        const existingItem =
-          stateMachine.context.entryCache.get(entry) ||
-          stateMachine.initialState;
-        const service = stateMachine.transition(existingItem, {
-          type: 'TOGGLE',
-          payload: {
-            category,
-            entry,
-            state,
-          },
-        });
-        again.execute(service);
+        // const nextState = glassMachine.transition(glassMachine.initialState, {
+        //   type: 'FILL',
+        // });
+        // glassMachine.execute(nextState);
+
+        // service.send('FILL');
+        console.log('Before', counterMachine.context);
+
+        const t = service.send({ type: 'INC_TWICE' });
+        // const t = glassMachine.transition(glassMachine.initialState, {
+        //   type: 'FILL',
+        // });
+        // again2.execute(t);
+        // console.log('After: ', counterMachine.context);
+        console.log('After: ', t.context);
+
+        // const existingItem =
+        //   stateMachine.context.entryCache.get(entry) ||
+        //   stateMachine.initialState;
+
+        // interpret(stateMachine).start().send({
+        //   type: 'TOGGLE',
+        //   payload: {
+        //     category,
+        //     entry,
+        //     state,
+        //   },
+        // });
+        // const service = stateMachine.transition(existingItem, {
+        //   type: 'TOGGLE',
+        //   payload: {
+        //     category,
+        //     entry,
+        //     state,
+        //   },
+        // });
+        // again.execute(service);
+        //
+        //
+        // const service = interpret(stateMachine).start().send({
+        //   type: 'TOGGLE',
+        //   payload: {
+        //     category,
+        //     entry,
+        //     state,
+        //   },
+        // });
+        // console.log('end context: ', stateMachine.context);
 
         // console.log('after - send', service.context);
         // console.log('filters test 13 - ', filters1);
-        stateMachine.context.entryCache.set(entry, service.value);
+        //  stateMachine.context.entryCache.set(entry, service.value);
       },
 
       incrementItem: (state, action: PayloadAction<PayloadType>) => {
