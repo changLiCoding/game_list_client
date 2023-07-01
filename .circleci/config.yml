@@ -16,6 +16,9 @@ jobs:
           paths:
             - node_modules
       - run:
+          name: Run build
+          command: npm run build
+      - run:
           name: Run tests
           command: npm test
       - run:
@@ -24,3 +27,8 @@ jobs:
       - run:
           name: Lint fix
           command: npm run lint:fix
+      - store_artifacts:
+          path: coverage
+          destination: coverage
+      - store_test_results:
+          path: test-results
