@@ -2,7 +2,6 @@ import { Modal, Button, Checkbox, Select } from 'antd';
 import { HeartOutlined, HeartFilled } from '@ant-design/icons';
 import React, { useMemo } from 'react';
 
-import { set } from 'lodash';
 import useEditUserGame from '@/services/userGames/useEditUserGame';
 import useNotification from '@/hooks/useNotification';
 import type {
