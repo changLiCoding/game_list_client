@@ -4,7 +4,7 @@ import {
   EDIT_USER_GAME_BY_GAME_ID,
   GET_USER_GAME_BY_GAME_ID,
 } from '@/services/userGames/queries';
-import { setAddedGames, setIsUserGameEdited } from '@/features/addedGamesSlice';
+import { setIsUserGameEdited } from '@/features/addedGamesSlice';
 import { useAppSelector } from '@/app/hooks';
 import { getTokenFromLocalStorage } from '@/constants';
 import type {
@@ -42,12 +42,6 @@ const useEditUserGame = () => {
             !addedList.includes(data.editUserGames.userGame.game.id)
           ) {
             dispatch(setIsUserGameEdited({ type: 'edit' }));
-            // dispatch(
-            //   setAddedGames({
-            //     type: 'add',
-            //     gameId: data.editUserGames.userGame.game.id,
-            //   })
-            // );
           }
         },
       });
