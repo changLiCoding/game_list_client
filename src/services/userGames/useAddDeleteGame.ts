@@ -20,7 +20,9 @@ type GetGamesByStatusQuery = {
   gamesByStatusForAUser: UserGamesByStatus | null;
 };
 
-const useAddDeleteGame = () => {
+type StatusType = 'completed' | 'playing' | 'planning' | 'dropped' | 'paused';
+
+const useAddDeleteGame = (status?: StatusType | null) => {
   const [addUserGamesRequest] = useMutation(ADD_USER_GAMES);
   const [deleteUserGamesRequest] = useMutation(DELETE_USER_GAMES);
   const dispatch = useDispatch();
@@ -62,39 +64,6 @@ const useAddDeleteGame = () => {
         context: getTokenFromLocalStorage(),
 
         update: (cache, { data }) => {
-          const previousUserGame = cache.readFragment({
-            id: `UserGame:${data.deleteUserGames.userGame.id}`,
-            fragment: gql`
-              fragment PreviousUserGame on UserGame {
-                id
-                gameNote
-                gameStatus
-                startDate
-                completedDate
-                rating
-                private
-                createdAt
-                updatedAt
-                game {
-                  id
-                  name
-                  description
-                  bannerURL
-                  imageURL
-                  releaseDate
-                  avgScore
-                  totalRating
-                  genres
-                  tags
-                  platforms
-                  isGameAdded
-                  isGameLiked
-                }
-              }
-            `,
-          });
-          console.log('previousUserGame', previousUserGame);
-
           cache.modify({
             fields: {
               userGames() {
@@ -112,18 +81,45 @@ const useAddDeleteGame = () => {
           console.log('deletedUserGame', deletedUserGame);
 
           if (gamesByStatusQuery && gamesByStatusQuery.gamesByStatusForAUser) {
+            console.log(status);
+
             cache.writeQuery({
               query: GET_GAMES_BY_STATUS,
               data: {
                 gamesByStatusForAUser: {
                   ...gamesByStatusQuery.gamesByStatusForAUser,
-                  [deletedUserGame.status]: [
-                    ...gamesByStatusQuery.gamesByStatusForAUser[
-                      deletedUserGame.status
-                    ].filter(
-                      (game: Game) => game.id !== deletedUserGame.game.id
-                    ),
-                  ],
+                  ...(status === null
+                    ? {
+                        justAdded:
+                          gamesByStatusQuery.gamesByStatusForAUser.justAdded?.filter(
+                            (game: Game) => game.id !== deletedUserGame.game.id
+                          ),
+                        justAddedCount: gamesByStatusQuery.gamesByStatusForAUser
+                          .justAddedCount
+                          ? gamesByStatusQuery.gamesByStatusForAUser
+                              .justAddedCount - 1
+                          : 0,
+                        totalCount: gamesByStatusQuery.gamesByStatusForAUser
+                          .totalCount
+                          ? gamesByStatusQuery.gamesByStatusForAUser
+                              .totalCount - 1
+                          : 0,
+                      }
+                    : {
+                        [status?.toLocaleLowerCase() as StatusType]:
+                          gamesByStatusQuery.gamesByStatusForAUser[
+                            status?.toLocaleLowerCase() as StatusType
+                          ]?.filter(
+                            (game: Game) => game.id !== deletedUserGame.game.id
+                          ),
+                        [`${status?.toLocaleLowerCase() as StatusType}Count`]:
+                          gamesByStatusQuery.gamesByStatusForAUser[
+                            `${status?.toLocaleLowerCase() as StatusType}Count`
+                          ] ?? 0 - 1,
+                        totalCount:
+                          gamesByStatusQuery.gamesByStatusForAUser.totalCount ??
+                          0 - 1,
+                      }),
                 },
               },
             });

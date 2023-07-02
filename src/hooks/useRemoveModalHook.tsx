@@ -9,12 +9,12 @@ import type {
 import useAddRemoveGameCustomHook from '@/hooks/useAddRemoveGameCustomHook';
 import useAddRemoveLike from '@/services/like/useAddRemoveLike';
 
-const useRemoveModalHook = () => {
+const useRemoveModalHook = (status?: string) => {
   const { warning, contextHolder } = useNotification();
 
   const { confirm } = Modal;
 
-  const { handleRemoveGameHook } = useAddRemoveGameCustomHook();
+  const { handleRemoveGameHook } = useAddRemoveGameCustomHook(status);
 
   const { removeLike } = useAddRemoveLike();
 

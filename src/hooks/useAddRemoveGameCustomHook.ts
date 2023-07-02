@@ -4,8 +4,8 @@ import useAddDeleteGame from '@/services/userGames/useAddDeleteGame';
 import useNotification from '@/hooks/useNotification';
 import useEditUserGame from '@/services/userGames/useEditUserGame';
 
-const useAddRemoveGameCustomHook = () => {
-  const { addUserGames, deleteUserGames } = useAddDeleteGame();
+const useAddRemoveGameCustomHook = (status?: string) => {
+  const { addUserGames, deleteUserGames } = useAddDeleteGame(status);
   const { editUserGame } = useEditUserGame();
   const { addedList } = useAppSelector((state) => state.addedGames);
   const userState = useAppSelector((state) => state.user);

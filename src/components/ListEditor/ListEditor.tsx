@@ -39,7 +39,8 @@ function ListEditorTemp({
     private: selectedPrivate,
   } = userGame;
 
-  const { showRemoveConfirm, contextRemoveModal } = useRemoveModalHook();
+  const { showRemoveConfirm, contextRemoveModal } =
+    useRemoveModalHook(selectedStatus);
 
   const { contextHolder, info, warning } = useNotification();
 
