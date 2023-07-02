@@ -2,6 +2,7 @@ import { Modal, Button, Checkbox, Select } from 'antd';
 import { HeartOutlined, HeartFilled } from '@ant-design/icons';
 import React, { useMemo } from 'react';
 
+import { set } from 'lodash';
 import useEditUserGame from '@/services/userGames/useEditUserGame';
 import useNotification from '@/hooks/useNotification';
 import type {
@@ -136,7 +137,12 @@ function ListEditorTemp({
                   return;
                 }
                 const { id, ...newUserGame } = userGame;
-                await editUserGame({ ...newUserGame, gameId: game.id });
+                const response = await editUserGame({
+                  ...newUserGame,
+                  gameId: game.id,
+                });
+
+                setSelectedGame(response.userGame?.game as GameType);
 
                 info(`Edit game ${game.name} successfully`);
                 setOpen(false);
@@ -265,6 +271,7 @@ function ListEditorTemp({
               type="dashed"
               onClick={() => {
                 showRemoveConfirm(game, 'game', setOpen);
+                setSelectedGame({ ...game, isGameAdded: false });
               }}
             >
               Delete

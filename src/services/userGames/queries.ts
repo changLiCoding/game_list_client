@@ -201,6 +201,16 @@ export const EDIT_USER_GAME_BY_GAME_ID = gql`
         game {
           id
           name
+          description
+          imageURL
+          bannerURL
+          releaseDate
+          avgScore
+          genres
+          platforms
+          tags
+          isGameAdded
+          isGameLiked
         }
       }
       errors

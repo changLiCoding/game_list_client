@@ -34,14 +34,8 @@ const useEditUserGame = () => {
         ],
         awaitRefetchQueries: true,
 
-        update: (cache, { data }) => {
-          const newGame = data;
-          console.log('newGame', newGame);
-        },
-
         onCompleted: (data) => {
           // ADD GAME IN REDUX STORE
-          console.log('data', data);
 
           if (
             data.editUserGames.userGame.game.id &&
