@@ -33,19 +33,27 @@ const useEditUserGame = () => {
           },
         ],
         awaitRefetchQueries: true,
+
+        update: (cache, { data }) => {
+          const newGame = data;
+          console.log('newGame', newGame);
+        },
+
         onCompleted: (data) => {
           // ADD GAME IN REDUX STORE
+          console.log('data', data);
+
           if (
             data.editUserGames.userGame.game.id &&
             !addedList.includes(data.editUserGames.userGame.game.id)
           ) {
             dispatch(setIsUserGameEdited({ type: 'edit' }));
-            dispatch(
-              setAddedGames({
-                type: 'add',
-                gameId: data.editUserGames.userGame.game.id,
-              })
-            );
+            // dispatch(
+            //   setAddedGames({
+            //     type: 'add',
+            //     gameId: data.editUserGames.userGame.game.id,
+            //   })
+            // );
           }
         },
       });

@@ -117,7 +117,7 @@ export default function GamesList() {
               ? games.map((game) => {
                   return (
                     <GameCard
-                      isAdded={addedList.includes(game.id)}
+                      isAdded={game.isGameAdded}
                       key={`grid-${game.id}`}
                       game={game}
                       colorBgContainer={colorBgContainer}
@@ -179,7 +179,7 @@ export default function GamesList() {
         open={open}
         setOpen={setOpen}
         game={selectedGame as GameDataType}
-        isGameAdded={addedList.includes(selectedGame?.id as string)}
+        isGameAdded={selectedGame?.isGameAdded}
         setSelectedGame={setSelectedGame}
       />
     </Content>

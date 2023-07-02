@@ -24,21 +24,24 @@ const useAddDeleteGame = () => {
       const response = await addUserGamesRequest({
         variables: { gameId },
         context: getTokenFromLocalStorage(),
-
-        onCompleted: (data) => {
-          // ADD GAME IN REDUX STORE
-          if (
-            data.addUserGames.userGame.game.id &&
-            !addedList.includes(data.addUserGames.userGame.game.id)
-          ) {
-            dispatch(
-              setAddedGames({
-                type: 'add',
-                gameId: data.addUserGames.userGame.game.id,
-              })
-            );
-          }
+        update: (cache, { data }) => {
+          const newGame = data.userGame;
+          console.log('newGame', newGame);
         },
+        // onCompleted: (data) => {
+        //   // ADD GAME IN REDUX STORE
+        //   if (
+        //     data.addUserGames.userGame.game.id &&
+        //     !addedList.includes(data.addUserGames.userGame.game.id)
+        //   ) {
+        //     dispatch(
+        //       setAddedGames({
+        //         type: 'add',
+        //         gameId: data.addUserGames.userGame.game.id,
+        //       })
+        //     );
+        //   }
+        // },
       });
       if (
         !response ||

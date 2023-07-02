@@ -47,7 +47,7 @@ function GameDetailHeaderInfoTemp({ game, setGame }: GameDetailsType) {
                 Open List Editor
               </Button>
               <ListEditor
-                isGameAdded={addedList.includes(game.id as string)}
+                isGameAdded={game.isGameAdded}
                 userGameLoading={userGameLoading}
                 open={open}
                 setOpen={setOpen}
