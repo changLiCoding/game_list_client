@@ -85,6 +85,7 @@ const mocks = [
             },
           ],
         },
+        gamesByStatusForAUserLoading: false,
       },
     },
   },
@@ -111,11 +112,13 @@ window.getComputedStyle = (elt) => getComputedStyle(elt);
 
 describe('Get games according to list types for a user', () => {
   it('should render all games for a user', async () => {
-    renderVite(
+    const { debug } = renderVite(
       <DefaultMockedProvider mocks={mocks}>
         <UserGameList />
       </DefaultMockedProvider>
     );
+
+    debug();
 
     await waitFor(() => {
       const gameElements = screen.queryAllByText('Pokemon Alpha Sapphire');
@@ -128,11 +131,13 @@ describe('Get games according to list types for a user', () => {
   });
 
   it('should render filter column for user', async () => {
-    renderVite(
+    const { debug } = renderVite(
       <DefaultMockedProvider mocks={mocks}>
         <UserGameList />
       </DefaultMockedProvider>
     );
+
+    debug();
 
     await waitFor(async () => {
       const downArrow = screen.getByTestId('down-arrow');
