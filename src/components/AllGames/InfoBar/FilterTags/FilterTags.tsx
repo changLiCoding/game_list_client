@@ -1,15 +1,19 @@
 import { TagsTwoTone } from '@ant-design/icons';
 import { Tag } from 'antd';
 import { useDispatch } from 'react-redux';
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import styles from '@/components/AllGames/InfoBar/FilterTags/FilterTags.module.scss';
 
 import { useAppSelector } from '@/app/hooks';
-import { remove } from '@/utils/utils';
-import { clearCategory, resetGameFilter, setGameFilters } from '@/app/store';
 
-import { HomeGameFilters as BigTestFilters } from '@/features/types';
-import { HomeGameFilters } from '@/types/global';
+import {
+  resetGameFilter,
+  resetHomeFilter,
+  resetHomeFilters,
+  setHomeFilter,
+} from '@/app/store';
+
+import { HomeGameFilters } from '@/features/types';
 
 // type TT<
 //   K extends keyof HomeGameFilters,
@@ -41,18 +45,17 @@ const val: Formatter<Pick<HomeGameFilters, 'excludedGenres'>> = {
 */
 
 // THIS WORKS
-interface CustomMap<T> extends Map<keyof T, T[keyof T]> {
-  get<Key extends keyof T>(key: Key): T[Key];
-  set<Key extends keyof T>(key: Key, value: T[Key]): this;
-  // you also can override types of other methods
-}
-const response = new Map() as CustomMap<HomeGameFilters>;
+// interface CustomMap<T> extends Map<keyof T, T[keyof T]> {
+//   get<Key extends keyof T>(key: Key): T[Key];
+//   set<Key extends keyof T>(key: Key, value: T[Key]): this;
+//   // you also can override types of other methods
+// }
 
-response.set('excludedGenres', []);
-const t = response.get('excludedGenres');
-if (t) {
-  t.push('');
-}
+// response.set('excludedGenres', []);
+// const t = response.get('excludedGenres');
+// if (t) {
+//   t.push('');
+// }
 // Original right above ^^^
 
 // Not the one below
@@ -105,7 +108,7 @@ type Formatter<T> = {
   [Key in keyof T]: (value: T[Key]) => string | string[] | undefined;
 };
 const formatter: Formatter<
-  Pick<BigTestFilters, 'genres' | 'platforms' | 'tags'>
+  Pick<HomeGameFilters, 'genres' | 'platforms' | 'tags'>
 > = {
   genres: (v) =>
     (v.excluded
@@ -122,6 +125,157 @@ const formatter: Formatter<
       ? v.excluded.concat(v.included || [])
       : v.included || []
     ).toString(),
+};
+
+type Formatter2<T> = {
+  [Key in keyof T]: {
+    shouldRender: (value: T[Key]) => boolean;
+    render: (value: NonNullable<T[Key]>) => string[] | string;
+  };
+};
+
+// THIS WORKS
+// interface CustomMap<T> extends Map<keyof T, T[keyof T]> {
+//   get<Key extends keyof T>(key: Key): T[Key];
+//   set<Key extends keyof T>(key: Key, value: T[Key]): this;
+//   // you also can override types of other methods
+// }
+
+// interface CustomMap<T> extends Map<keyof T, T[keyof T]> {
+//   get<Key extends keyof T>(key: Key): {
+//     shouldRender: (value: T[Key]) => boolean;
+//   };
+//   set<Key extends keyof T>(
+//     key: Key,
+//     value: {
+//       shouldRender: (value: T[Key]) => boolean;
+//     }
+//   ): this;
+//   // you also can override types of other methods
+// }
+interface CustomMap<T> extends Map<keyof T, T[keyof T]> {
+  get<Key extends keyof T>(
+    key: Key
+  ):
+    | {
+        shouldRender: (value: T[Key]) => boolean;
+        render: (value: NonNullable<T[Key]>) => string;
+      }
+    | undefined;
+  set<Key extends keyof T>(
+    key: Key,
+    value: {
+      shouldRender: (value: T[Key]) => boolean;
+      render: (value: NonNullable<T[Key]>) => string;
+    }
+  ): this;
+}
+
+// Co pilot
+// interface CustomMap<T> extends Map<keyof T, T[keyof T] | { shouldRender: (value: T[keyof T]) => boolean }> {
+//   get<Key extends keyof T>(key: Key): T[Key] | { shouldRender: (value: T[Key]) => boolean } | undefined;
+//   set<Key extends keyof T>(key: Key, value: T[Key] | { shouldRender: (value: T[Key]) => boolean }): this;
+// }
+
+const response = new Map() as CustomMap<HomeGameFilters>;
+// response.set('genres', {
+//   shouldRender(value) {
+//     return value.excluded.length + value.included.length > 0;
+//   },
+//   render(value) {
+//     return '';
+//   },
+// });
+
+response.set('year', {
+  shouldRender(value) {
+    return value !== undefined;
+  },
+  render(value) {
+    return 'year here';
+  },
+});
+
+type IncludeExcludeFiltersType = {
+  included: string[];
+  excluded: string[];
+};
+
+function renderTag(tag: string, value: string) {
+  return (
+    <Tag
+      id={`${tag}-${value}`}
+      closable
+      onClose={() => {
+        // const removedFilter = remove(value, filterValue);
+        // dispatch(setGameFilters({ [key]: removedFilter }));
+        // dispatch(
+        //   removeItem({
+        //     category: 'genres',
+        //     entry: value,
+        //   })
+        // );
+      }}
+      key={`-${value}`}
+      className={styles.tagsText}
+    >
+      {value}
+    </Tag>
+  );
+}
+
+// JSX.Element
+function renderIncludeExclude() {
+  return {
+    shouldRender(value: IncludeExcludeFiltersType) {
+      return value.excluded.length + value.included.length > 0;
+    },
+    render(value: IncludeExcludeFiltersType) {
+      const includedMap = value.included.map((e) => {
+        return e;
+      });
+      return '';
+    },
+  };
+}
+
+// function renderSingle
+
+type Formatter3<T> = {
+  [Key in keyof T]: {
+    shouldRender: (value: T[Key]) => boolean;
+    render: (value: NonNullable<T[Key]>) => string;
+  };
+};
+
+const hehe: Formatter3<HomeGameFilters> = {
+  genres: renderIncludeExclude(),
+  platforms: renderIncludeExclude(),
+  tags: renderIncludeExclude(),
+  search: {
+    shouldRender(value) {
+      return value !== undefined && value.length > 0;
+    },
+    render(value) {
+      return value;
+    },
+  },
+  year: {
+    shouldRender(value) {
+      return value !== undefined;
+    },
+    render(value) {
+      return value.toString();
+    },
+  },
+  sortBy: {
+    shouldRender(value) {
+      return false;
+    },
+    render(_value) {
+      return _value;
+    },
+  },
 };
 
 export type EntryOf<O> = {
@@ -146,50 +300,234 @@ const example = entriesOf({ a: 'foo', b: 'bar', c: 12 } as const);
 //   return accumulator;
 // }, []);
 
+function create<T>() {
+  const map = new Map<keyof T, T[keyof T]>();
+  return map;
+}
+
+create<HomeGameFilters>().set('year', '');
+
+type ValueOf<T> = T[keyof T];
+export type ValueOf2<T> = T[keyof T];
+type Formatter4<T> = {
+  value: keyof T;
+  shouldRender: (value: keyof Formatter4<T>['value']) => boolean;
+  // render: (value: typeof value) => string;
+};
+
+const v2: Formatter4<HomeGameFilters> = {
+  value: 'year',
+  shouldRender(value) {
+    return true;
+  },
+};
+
 function FilterTags() {
   const dispatch = useDispatch();
   // const gameFilters = useAppSelector((state) => state.gameFilters);
   const homeGameFilters = useAppSelector((state) => state.homeGameFilters);
 
-  // const filterTags2 = useMemo(() => {
-  //   const testObj = {
-  //     sortBy: 'name',
-  //     genres: {
-  //       included: ['includegen1', 'includedgen2'],
-  //       excluded: [],
-  //     },
-  //     tags: {
-  //       included: ['includetag1', ''],
-  //       excluded: ['excludedgen2'],
-  //     },
-  //   };
-  //   const example1 = entriesOf(testObj)
-  //     .filter((e) => {
-  //       return e[1] && e[0] !== 'sortBy';
-  //     })
-  //     .reduce((accumulator, currentValue) => {
-  //       accumulator.push('e');
-  //       return accumulator;
-  //     }, [] as string[]);
+  const arrTest3 = useMemo(() => {
+    console.log('arrTest3 memo is running');
+    const arrTest = [
+      {
+        value: homeGameFilters.year,
+        shouldRender() {
+          return homeGameFilters.year !== undefined;
+        },
+        render() {
+          return (
+            <Tag
+              id="filter-year"
+              closable
+              onClose={() => {
+                // const removedFilter = remove(value, filterValue);
+                dispatch(resetHomeFilter('year'));
+                // dispatch(
+                //   removeItem({
+                //     category: 'genres',
+                //     entry: value,
+                //   })
+                // );
+              }}
+              key="filter-year"
+              className={styles.tagsText}
+            >
+              {homeGameFilters.year}
+            </Tag>
+          );
+        },
+      },
+      // {
+      //   value: homeGameFilters.search,
+      //   shouldRender(value) {
+      //     return (
+      //       homeGameFilters.search !== undefined &&
+      //       homeGameFilters.search.length > 0
+      //     );
+      //   },
+      //   render(value) {
+      //     return '';
+      //   },
+      // },
+    ];
 
-  //   // const sumWithInitial = array1.reduce(
-  //   //   (accumulator, currentValue) => accumulator + currentValue,
-  //   //   initialValue
-  //   // );
+    const filter = arrTest.filter((e) => e.shouldRender());
+    if (filter.length > 0)
+      return (
+        <>
+          <TagsTwoTone className={styles.tagsIcon} />
 
-  //   console.log('filter tags example:', example1);
-  // }, []);
+          {filter.map((e) => e.render())}
+          <Tag
+            closable
+            onClose={() => dispatch(resetHomeFilters())}
+            className={styles.clearAll}
+          >
+            Clear All
+          </Tag>
+        </>
+      );
+    return <div />;
+  }, [homeGameFilters, dispatch]);
+
+  const reduce2 = useMemo(() => {
+    Object.entries(homeGameFilters).reduce((accumulator, currentValue) => {
+      const [key, value] = currentValue;
+      const h = key as keyof HomeGameFilters;
+      const hv = hehe[h];
+      if (hv && hv.shouldRender(value)) {
+        console.log('');
+      }
+      return accumulator;
+    }, []);
+    if (
+      homeGameFilters.genres.included.length > 0 ||
+      homeGameFilters.genres.excluded.length > 0
+    )
+      return (
+        <>
+          <TagsTwoTone className={styles.tagsIcon} />
+
+          <Tag
+            closable
+            onClose={() => dispatch(resetHomeFilters())}
+            className={styles.clearAll}
+          >
+            Clear All
+          </Tag>
+        </>
+      );
+    return <div />;
+  }, [homeGameFilters, dispatch]);
+
+  const reduce = useMemo(() => {
+    // const entries = Object.entries(homeGameFilters).filter((e) => {
+    //   const [key, value] = e;
+    //   const h = e[0] as keyof HomeGameFilters;
+    //   const res = response.get(h);
+    //   if (res && res.shouldRender(value))
+    //     return value !== undefined && res.shouldRender(value);
+    //   return false;
+    // });
+
+    const en = Object.entries(homeGameFilters).reduce(
+      (accumulator, currentValue) => {
+        const [key, value] = currentValue;
+        const h = key as keyof HomeGameFilters;
+        const res = response.get(h);
+        if (value && res && res.shouldRender(value)) {
+          accumulator.push(res.render(value));
+          console.log('');
+        }
+        return accumulator;
+      },
+      [] as string[]
+    );
+    console.log('REDUCE = ', en);
+    if (
+      homeGameFilters.genres.included.length > 0 ||
+      homeGameFilters.genres.excluded.length > 0
+    )
+      return (
+        <>
+          <TagsTwoTone className={styles.tagsIcon} />
+
+          <Tag
+            closable
+            onClose={() => dispatch(resetHomeFilters())}
+            className={styles.clearAll}
+          >
+            Clear All
+          </Tag>
+        </>
+      );
+    return <div />;
+  }, [homeGameFilters, dispatch]);
+
+  const filterTags22 = useMemo(() => {
+    const newObj = [
+      {
+        value: homeGameFilters.year,
+        shouldRender: () => {
+          const res = homeGameFilters.year !== undefined;
+          // console.log('value year ', homeGameFilters.year);
+          // console.log('res = ', res);
+          console.log('1 shouldRender');
+          return true;
+        },
+        render: () => {
+          console.log('1 render');
+        },
+      },
+      {
+        value: homeGameFilters.year,
+        shouldRender: () => {
+          console.log('2 shouldRender');
+          return true;
+        },
+        render: () => {
+          console.log('2 render');
+        },
+      },
+    ];
+
+    const filterd = newObj
+      .filter((e) => e.shouldRender())
+      .map((e) => e.render());
+    console.log('filtered ', filterd);
+    if (
+      homeGameFilters.genres.included.length > 0 ||
+      homeGameFilters.genres.excluded.length > 0
+    )
+      return (
+        <>
+          <TagsTwoTone className={styles.tagsIcon} />
+
+          <Tag
+            closable
+            onClose={() => dispatch(resetHomeFilters())}
+            className={styles.clearAll}
+          >
+            Clear All
+          </Tag>
+        </>
+      );
+    return <div />;
+  }, [homeGameFilters, dispatch]);
+
   const filterTags = useMemo(() => {
     // Loop through all the keys and values of gameFilters and filter out the non null and undefined values
     const entries = Object.entries(homeGameFilters).filter((e) => {
-      if (!e || !e[1]) return false;
-      if (e[0] === 'sortBy') return false; // Don't show sortBy in the filter tags - Kind of a hack, but were only filtering out 1 key
-      if (Array.isArray(e[1])) return e[1].length > 0;
-      if (typeof e[1] === 'object' && formatter[e[1]]) return true;
-      return e[1];
+      const [key, value] = e;
+      const h = e[0] as keyof HomeGameFilters;
+      const res = response.get(h);
+      if (res && res.shouldRender(value))
+        return value !== undefined && res.shouldRender(value);
+      return false;
     });
 
-    // console.log('Entries:', entries);
+    console.log('Entries:', entries);
 
     if (
       homeGameFilters.genres.included.length > 0 ||
@@ -199,46 +537,12 @@ function FilterTags() {
         <>
           <TagsTwoTone className={styles.tagsIcon} />
 
-          {homeGameFilters.genres.included.map((value) => {
-            return (
-              <Tag
-                id={`tag-${value}`}
-                closable
-                onClose={() => {
-                  // const removedFilter = remove(value, filterValue);
-                  // dispatch(setGameFilters({ [key]: removedFilter }));
-                }}
-                key={`-${value}`}
-                className={styles.tagsText}
-              >
-                {value}
-              </Tag>
-            );
-          })}
-
-          {homeGameFilters.genres.excluded.map((value) => {
-            return (
-              <Tag
-                id={`tag-${value}`}
-                closable
-                onClose={() => {
-                  // const removedFilter = remove(value, filterValue);
-                  // dispatch(setGameFilters({ [key]: removedFilter }));
-                }}
-                key={`-${value}`}
-                className={styles.tagsText}
-              >
-                -{value}
-              </Tag>
-            );
-          })}
-
           <Tag
             closable
-            onClose={() => dispatch(clearCategory('genres'))}
-            color="blue"
+            onClose={() => dispatch(resetHomeFilters())}
+            className={styles.clearAll}
           >
-            Clear Genres
+            Clear All
           </Tag>
         </>
       );
@@ -323,7 +627,7 @@ function FilterTags() {
   //   return <div />;
   // }, [dispatch, gameFilters]);
 
-  return <div className={styles.tagsContainer}>{filterTags}</div>;
+  return <div className={styles.tagsContainer}>{arrTest3}</div>;
 }
 
 export default FilterTags;
