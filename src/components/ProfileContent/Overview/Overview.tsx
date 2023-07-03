@@ -21,9 +21,9 @@ function Overview() {
     }
   }, [getGamesByStatusForAUser]);
 
-  useEffect(() => {
-    refetch();
-  }, [addedList, refetch]);
+  // useEffect(() => {
+  //   refetch();
+  // }, [addedList, refetch]);
 
   if (gamesByStatusForAUserLoading || !gamesByStatusForAUser) {
     return <div>Loading...</div>;

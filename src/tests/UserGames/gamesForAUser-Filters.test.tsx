@@ -135,18 +135,14 @@ describe('Get games according to list types for a user', () => {
       </DefaultMockedProvider>
     );
 
-    // await waitFor(async () => {
-    debug();
     const downArrow = await screen.findByTestId(
       'down-arrow',
       {},
       { timeout: 5000 }
     );
-    debug(downArrow);
     await userEvent.click(downArrow);
 
     const planningElement = await screen.findByText('Dropped');
     expect(planningElement).toBeInTheDocument();
   });
-  // }, 40000);
 });

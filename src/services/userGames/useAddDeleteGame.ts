@@ -34,7 +34,38 @@ const useAddDeleteGame = (status?: StatusType | null) => {
         variables: { gameId },
         context: getTokenFromLocalStorage(),
         update: (cache, { data }) => {
-          const newGame = data.userGame;
+          const newGame = data.addUserGames.userGame;
+          console.log('newGame', newGame);
+          const gamesByStatusQuery: GetGamesByStatusQuery | null =
+            cache.readQuery({
+              query: GET_GAMES_BY_STATUS,
+            });
+          console.log('gamesByStatusQuery', gamesByStatusQuery);
+
+          if (
+            gamesByStatusQuery &&
+            gamesByStatusQuery.gamesByStatusForAUser &&
+            newGame
+          ) {
+            cache.writeQuery({
+              query: GET_GAMES_BY_STATUS,
+              data: {
+                gamesByStatusForAUser: {
+                  ...gamesByStatusQuery.gamesByStatusForAUser,
+                  justAdded: [
+                    newGame.game,
+                    ...(gamesByStatusQuery.gamesByStatusForAUser.justAdded ||
+                      []),
+                  ],
+                  justAddedCount: gamesByStatusQuery.gamesByStatusForAUser
+                    .justAddedCount
+                    ? gamesByStatusQuery.gamesByStatusForAUser.justAddedCount +
+                      1
+                    : 1,
+                },
+              },
+            });
+          }
         },
       });
       if (
@@ -71,18 +102,15 @@ const useAddDeleteGame = (status?: StatusType | null) => {
               },
             },
           });
+          // UPDATE GETGAMESBYSTATUS QUERY WHEN REMOVE GAME FROM LIST
           const gamesByStatusQuery: GetGamesByStatusQuery | null =
             cache.readQuery({
               query: GET_GAMES_BY_STATUS,
             });
 
-          console.log('gamesByStatusQuery', gamesByStatusQuery);
           const deletedUserGame = data.deleteUserGames.userGame;
-          console.log('deletedUserGame', deletedUserGame);
 
           if (gamesByStatusQuery && gamesByStatusQuery.gamesByStatusForAUser) {
-            console.log(status);
-
             cache.writeQuery({
               query: GET_GAMES_BY_STATUS,
               data: {
