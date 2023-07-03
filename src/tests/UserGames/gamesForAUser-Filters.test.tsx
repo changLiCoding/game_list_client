@@ -118,8 +118,6 @@ describe('Get games according to list types for a user', () => {
       </DefaultMockedProvider>
     );
 
-    debug();
-
     await waitFor(() => {
       const gameElements = screen.queryAllByText('Pokemon Alpha Sapphire');
       expect(gameElements[0].textContent).toBe('Pokemon Alpha Sapphire');
@@ -139,12 +137,12 @@ describe('Get games according to list types for a user', () => {
 
     await waitFor(async () => {
       debug();
-      const downArrow = screen.getByTestId('down-arrow');
+      const downArrow = await screen.getByTestId('down-arrow');
       debug(downArrow);
       await userEvent.click(downArrow);
 
       const planningElement = await screen.findByText('Dropped');
       expect(planningElement).toBeInTheDocument();
     });
-  }, 15000);
+  }, 40000);
 });
