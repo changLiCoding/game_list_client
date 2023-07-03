@@ -9,41 +9,39 @@ import { useAppSelector } from '@/app/hooks';
 import useArrayMemo from './useArrayMemo';
 import { CorrectFiltersKeys } from '@/features/homeGameFiltersSlice';
 
-export type ExclusionFiltersListMessageProps = {
-  title: string;
-  entries: string[];
-  states: StateObject2<string[]>[];
-  category: CorrectFiltersKeys;
-};
-
-export type EntryProps2 = {
-  title: string;
-  // states: StateObject2<string[]>[];
-  state: StateObject2<string[]>;
-  onChange: () => void;
-};
-
-export type StateObject2<ValueType> = {
-  id: string;
+export type StateObject<ValueType> = {
   values: ValueType;
   color: string;
 };
 
-export default function ExclusionFiltersListMessage({
+export type ExclusionFiltersListProps = {
+  title: string;
+  entries: string[];
+  states: StateObject<string[]>[];
+  category: CorrectFiltersKeys;
+};
+
+export type EntryProps = {
+  title: string;
+  state: StateObject<string[]>;
+  onChange: () => void;
+};
+
+function Entry({ title, state, onChange }: EntryProps) {}
+
+export default function ExclusionFiltersList({
   title,
   entries,
   states,
   category,
 }: // filterValue,
 // predicate,
-ExclusionFiltersListMessageProps) {
+ExclusionFiltersListProps) {
   const dispatch = useDispatch();
   const homeGameFilters = useAppSelector((state) => state.homeGameFilters);
 
   // Checks if the states array has changed
-  const statesArrayMemo = useArrayMemo<
-    ExclusionFiltersListMessageProps['states']
-  >(
+  const statesArrayMemo = useArrayMemo<ExclusionFiltersListProps['states']>(
     () => states,
     states,
     (prev, next) => {

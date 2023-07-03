@@ -29,8 +29,8 @@ import { clearCategory, setHomeFilter, toggleItem } from '@/app/store';
 import { range } from '@/utils/utils';
 import type { SelectFilterFieldType } from '@/components/FiltersWrapper/types';
 
-import ExclusionFiltersListMessage from './ExclusionFiltersListMessage';
 import { ArrayElementType } from '@/types/global';
+import ExclusionFiltersList from './ExclusionFiltersList';
 
 const { Search } = Input;
 const { useBreakpoint } = Grid;
@@ -110,17 +110,15 @@ export default function FiltersWrapper() {
         </div>
       ) : (
         <>
-          <ExclusionFiltersListMessage
+          <ExclusionFiltersList
             title="Genres"
             entries={data?.getGameFilters.genres ?? []}
             states={[
               {
-                id: 'included',
                 color: 'green',
                 values: homeGameFilters.genres.included || [],
               },
               {
-                id: 'excluded',
                 color: 'red',
                 values: homeGameFilters.genres.excluded || [],
               },
@@ -128,17 +126,15 @@ export default function FiltersWrapper() {
             category="genres"
           />
 
-          <ExclusionFiltersListMessage
+          <ExclusionFiltersList
             title="Platforms"
             entries={data?.getGameFilters.platforms ?? []}
             states={[
               {
-                id: 'included',
                 color: 'green',
                 values: homeGameFilters.platforms.included || [],
               },
               {
-                id: 'excluded',
                 color: 'red',
                 values: homeGameFilters.platforms.excluded || [],
               },
@@ -146,17 +142,15 @@ export default function FiltersWrapper() {
             category="platforms"
           />
 
-          <ExclusionFiltersListMessage
+          <ExclusionFiltersList
             title="Tags"
             entries={data?.getGameFilters.tags ?? []}
             states={[
               {
-                id: 'included',
                 color: 'green',
                 values: homeGameFilters.tags.included || [],
               },
               {
-                id: 'excluded',
                 color: 'red',
                 values: homeGameFilters.tags.excluded || [],
               },
