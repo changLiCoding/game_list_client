@@ -137,9 +137,8 @@ describe('Get games according to list types for a user', () => {
       </DefaultMockedProvider>
     );
 
-    debug();
-
     await waitFor(async () => {
+      debug();
       const downArrow = screen.getByTestId('down-arrow');
       await userEvent.click(downArrow);
 
