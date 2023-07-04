@@ -15,13 +15,14 @@ export const DELETE_USER_GAMES = gql`
           id
           name
           description
-          imageURL
           bannerURL
+          imageURL
           releaseDate
           avgScore
+          totalRating
           genres
-          platforms
           tags
+          platforms
           isGameAdded
           isGameLiked
         }
@@ -46,13 +47,14 @@ export const ADD_USER_GAMES = gql`
           id
           name
           description
-          imageURL
           bannerURL
+          imageURL
           releaseDate
           avgScore
+          totalRating
           genres
-          platforms
           tags
+          platforms
           isGameAdded
           isGameLiked
         }
@@ -68,13 +70,14 @@ export const GAMES_FOR_A_USER = gql`
       id
       name
       description
-      imageURL
       bannerURL
+      imageURL
       releaseDate
       avgScore
+      totalRating
       genres
-      platforms
       tags
+      platforms
       isGameAdded
       isGameLiked
     }
@@ -103,72 +106,90 @@ export const GET_GAMES_BY_STATUS = gql`
       playing {
         id
         name
+        description
+        bannerURL
         imageURL
-        avgScore
-        platforms
-        tags
-        genres
         releaseDate
+        avgScore
+        totalRating
+        genres
+        tags
+        platforms
         isGameAdded
         isGameLiked
       }
       planning {
         id
         name
+        description
+        bannerURL
         imageURL
-        avgScore
-        platforms
-        tags
-        genres
         releaseDate
+        avgScore
+        totalRating
+        genres
+        tags
+        platforms
         isGameAdded
         isGameLiked
       }
       completed {
         id
         name
+        description
+        bannerURL
         imageURL
-        avgScore
-        platforms
-        tags
-        genres
         releaseDate
+        avgScore
+        totalRating
+        genres
+        tags
+        platforms
         isGameAdded
         isGameLiked
       }
       paused {
         id
         name
+        description
+        bannerURL
         imageURL
-        avgScore
-        platforms
-        tags
-        genres
         releaseDate
+        avgScore
+        totalRating
+        genres
+        tags
+        platforms
         isGameAdded
         isGameLiked
       }
       dropped {
         id
         name
+        description
+        bannerURL
         imageURL
-        avgScore
-        platforms
-        tags
-        genres
         releaseDate
+        avgScore
+        totalRating
+        genres
+        tags
+        platforms
         isGameAdded
         isGameLiked
       }
       justAdded {
         id
         name
+        description
+        bannerURL
         imageURL
-        avgScore
-        platforms
-        tags
-        genres
         releaseDate
+        avgScore
+        totalRating
+        genres
+        tags
+        platforms
         isGameAdded
         isGameLiked
       }
@@ -201,6 +222,17 @@ export const EDIT_USER_GAME_BY_GAME_ID = gql`
         game {
           id
           name
+          description
+          bannerURL
+          imageURL
+          releaseDate
+          avgScore
+          totalRating
+          genres
+          tags
+          platforms
+          isGameAdded
+          isGameLiked
         }
       }
       errors

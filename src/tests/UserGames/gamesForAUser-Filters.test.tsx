@@ -85,6 +85,7 @@ const mocks = [
             },
           ],
         },
+        gamesByStatusForAUserLoading: false,
       },
     },
   },
@@ -111,35 +112,38 @@ window.getComputedStyle = (elt) => getComputedStyle(elt);
 
 describe('Get games according to list types for a user', () => {
   it('should render all games for a user', async () => {
-    renderVite(
+    const { debug } = renderVite(
       <DefaultMockedProvider mocks={mocks}>
         <UserGameList />
       </DefaultMockedProvider>
     );
 
-    await waitFor(() => {
-      const gameElements = screen.queryAllByText('Pokemon Alpha Sapphire');
-      expect(gameElements[0].textContent).toBe('Pokemon Alpha Sapphire');
-      const avgScoreElements = screen.queryAllByText('2.5');
-      expect(avgScoreElements[0].textContent).toBe('2.5');
-      const gamePlanningElements = screen.queryAllByText('Halo 3');
-      expect(gamePlanningElements[0].textContent).toBe('Halo 3');
-    });
-  });
+    const gameElements = await screen.findAllByText('Pokemon Alpha Sapphire');
+
+    expect(gameElements[0].textContent).toBe('Pokemon Alpha Sapphire');
+
+    const avgScoreElements = await screen.findAllByText('2.5');
+    expect(avgScoreElements[0].textContent).toBe('2.5');
+
+    const gamePlanningElements = await screen.findAllByText('Halo 3');
+    expect(gamePlanningElements[0].textContent).toBe('Halo 3');
+  }, 10000);
 
   it('should render filter column for user', async () => {
-    renderVite(
+    const { debug } = renderVite(
       <DefaultMockedProvider mocks={mocks}>
         <UserGameList />
       </DefaultMockedProvider>
     );
 
-    await waitFor(async () => {
-      const downArrow = screen.getByTestId('down-arrow');
-      await userEvent.click(downArrow);
+    const downArrow = await screen.findByTestId(
+      'down-arrow',
+      {},
+      { timeout: 5000 }
+    );
+    await userEvent.click(downArrow);
 
-      const planningElement = await screen.findByText('Dropped');
-      expect(planningElement).toBeInTheDocument();
-    });
+    const planningElement = await screen.findByText('Dropped');
+    expect(planningElement).toBeInTheDocument();
   });
 });

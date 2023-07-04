@@ -1,16 +1,12 @@
 import { useQuery } from '@apollo/client';
-import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 
-import { setAddedGames } from '@/features/addedGamesSlice';
 import { getTokenFromLocalStorage } from '@/constants';
 import { GET_ALL_GAMES } from './queries';
 import type { Game as GameType } from '@/graphql/__generated__/graphql';
 import { useAppSelector } from '@/app/hooks';
 
 export default function useAllGames() {
-  const dispatch = useDispatch();
-  const { addedList } = useAppSelector((state) => state.addedGames);
   let games: GameType[] = [];
   const errors: string[] = [];
 
@@ -37,23 +33,6 @@ export default function useAllGames() {
       offset: 0,
     },
     context: tokenContext,
-    onCompleted: (data) => {
-      const { allGames: allGamesData } = data;
-
-      if (allGamesData) {
-        const gamesIdToAdd = allGamesData
-          .filter((game) => game.isGameAdded && !addedList.includes(game.id))
-          .map((game) => game.id);
-        if (gamesIdToAdd.length > 0) {
-          dispatch(
-            setAddedGames({
-              type: 'renew',
-              gamesId: addedList.concat(gamesIdToAdd),
-            })
-          );
-        }
-      }
-    },
   });
 
   try {

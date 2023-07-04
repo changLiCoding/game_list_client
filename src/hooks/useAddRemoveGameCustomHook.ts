@@ -1,11 +1,13 @@
 import type { Game as GameType } from '@/graphql/__generated__/graphql';
 import { useAppSelector } from '@/app/hooks';
-import useAddDeleteGame from '@/services/userGames/useAddDeleteGame';
+import useAddDeleteGame, {
+  StatusType,
+} from '@/services/userGames/useAddDeleteGame';
 import useNotification from '@/hooks/useNotification';
 import useEditUserGame from '@/services/userGames/useEditUserGame';
 
-const useAddRemoveGameCustomHook = () => {
-  const { addUserGames, deleteUserGames } = useAddDeleteGame();
+const useAddRemoveGameCustomHook = (status?: StatusType) => {
+  const { addUserGames, deleteUserGames } = useAddDeleteGame(status);
   const { editUserGame } = useEditUserGame();
   const { addedList } = useAppSelector((state) => state.addedGames);
   const userState = useAppSelector((state) => state.user);

@@ -106,15 +106,6 @@ function UserGameListDesktop({ data }: UserGameListDataType) {
     },
   ];
 
-  // const onChange: TableProps<DataType>['onChange'] = (
-  //   pagination,
-  //   filters,
-  //   sorter,
-  //   extra
-  // ) => {
-
-  // };
-
   return (
     <>
       <Table
@@ -124,7 +115,7 @@ function UserGameListDesktop({ data }: UserGameListDataType) {
         // onChange={onChange}
       />
       <ListEditor
-        isGameAdded={addedList.includes(chosenGame?.id as string)}
+        isGameAdded={chosenGame?.isGameAdded}
         userGameLoading={userGameLoading}
         open={open}
         setOpen={setOpen}

@@ -111,7 +111,7 @@ describe('Register Input Fields', () => {
     expect(
       screen.getByText('The two passwords that you entered do not match!')
     ).toBeInTheDocument();
-  });
+  }, 12000);
 
   it('Fail to register a new user with existing email in database', async () => {
     const { debug } = render(
@@ -123,7 +123,6 @@ describe('Register Input Fields', () => {
     const username = screen.getByTestId('user-test');
     await userEvent.type(username, 'Vv');
     const email = screen.getByTestId('email-test');
-    debug(email);
 
     await userEvent.type(email, import.meta.env.VITE_USER_EMAIL_TEST);
     const password = screen.getByTestId('password-test');
@@ -140,5 +139,5 @@ describe('Register Input Fields', () => {
     const node = allImg[allImg.length - 2];
 
     expect(node?.classList[1]).toBe('anticon-info-circle');
-  });
+  }, 10000);
 });

@@ -8,13 +8,14 @@ import type {
 } from '@/graphql/__generated__/graphql';
 import useAddRemoveGameCustomHook from '@/hooks/useAddRemoveGameCustomHook';
 import useAddRemoveLike from '@/services/like/useAddRemoveLike';
+import { StatusType } from '@/services/userGames/useAddDeleteGame';
 
-const useRemoveModalHook = () => {
+const useRemoveModalHook = (status?: StatusType) => {
   const { warning, contextHolder } = useNotification();
 
   const { confirm } = Modal;
 
-  const { handleRemoveGameHook } = useAddRemoveGameCustomHook();
+  const { handleRemoveGameHook } = useAddRemoveGameCustomHook(status);
 
   const { removeLike } = useAddRemoveLike();
 

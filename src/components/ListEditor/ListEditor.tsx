@@ -19,6 +19,7 @@ import type { ListEditorType } from '@/components/ListEditor/types';
 import useAddRemoveLike from '@/services/like/useAddRemoveLike';
 import type { Game as GameType } from '@/graphql/__generated__/graphql';
 import useRemoveModalHook from '@/hooks/useRemoveModalHook';
+import { StatusType } from '@/services/userGames/useAddDeleteGame';
 
 function ListEditorTemp({
   isGameAdded,
@@ -39,7 +40,9 @@ function ListEditorTemp({
     private: selectedPrivate,
   } = userGame;
 
-  const { showRemoveConfirm, contextRemoveModal } = useRemoveModalHook();
+  const { showRemoveConfirm, contextRemoveModal } = useRemoveModalHook(
+    selectedStatus as StatusType
+  );
 
   const { contextHolder, info, warning } = useNotification();
 
@@ -136,7 +139,12 @@ function ListEditorTemp({
                   return;
                 }
                 const { id, ...newUserGame } = userGame;
-                await editUserGame({ ...newUserGame, gameId: game.id });
+                const response = await editUserGame({
+                  ...newUserGame,
+                  gameId: game.id,
+                });
+
+                setSelectedGame(response.userGame?.game as GameType);
 
                 info(`Edit game ${game.name} successfully`);
                 setOpen(false);
@@ -265,6 +273,7 @@ function ListEditorTemp({
               type="dashed"
               onClick={() => {
                 showRemoveConfirm(game, 'game', setOpen);
+                setSelectedGame({ ...game, isGameAdded: false });
               }}
             >
               Delete
