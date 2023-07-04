@@ -12,8 +12,6 @@ function ListStatistic({
 }) {
   const screens = useBreakpoint();
 
-  console.log('gamesByStatus in ListStatistic', gamesByStatus);
-
   const gameStatusExtractor = (gamesObjData: UserGamesByStatus) => {
     const result: JSX.Element[] = [];
 

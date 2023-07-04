@@ -60,14 +60,10 @@ const useEditUserGame = () => {
 
           const userGameAfterEdit = data.editUserGames.userGame;
 
-          console.log('usergame input', input);
-
-          console.log('userGameAfterEdit', userGameAfterEdit);
-
-          console.log('gamesByStatusQuery', gamesByStatusQuery);
           if (gamesByStatusQuery?.gamesByStatusForAUser && userGameAfterEdit) {
             const gameStatusAfterEdit: StatusType | null =
               userGameAfterEdit.gameStatus?.toLowerCase();
+
             if (gameStatusAfterEdit) {
               cache.writeQuery({
                 query: GET_GAMES_BY_STATUS,
@@ -90,7 +86,7 @@ const useEditUserGame = () => {
                   },
                 },
               });
-            } else if (gameStatusAfterEdit === null) {
+            } else if (gameStatusAfterEdit === undefined) {
               cache.writeQuery({
                 query: GET_GAMES_BY_STATUS,
                 data: {
@@ -112,6 +108,11 @@ const useEditUserGame = () => {
               });
             }
 
+            const newGamesByStatusQuery: GetGamesByStatusQuery | null =
+              cache.readQuery({
+                query: GET_GAMES_BY_STATUS,
+              });
+
             const statusKeys: StatusType[] = [
               'completed',
               'playing',
@@ -122,49 +123,43 @@ const useEditUserGame = () => {
             ];
 
             statusKeys.forEach((gamesStatusKey) => {
-              if (gamesByStatusQuery?.gamesByStatusForAUser) {
+              if (
+                newGamesByStatusQuery?.gamesByStatusForAUser &&
+                gamesByStatusQuery?.gamesByStatusForAUser
+              ) {
                 const updatedGamesByStatusForAUser = {
                   ...gamesByStatusQuery.gamesByStatusForAUser,
-                  [gamesStatusKey]: gamesByStatusQuery.gamesByStatusForAUser[
+                  [gamesStatusKey]: newGamesByStatusQuery.gamesByStatusForAUser[
                     gamesStatusKey
                   ]?.filter(
                     (game: GameType) => game.id !== userGameAfterEdit.game.id
                   ),
                 };
                 if (
-                  updatedGamesByStatusForAUser[gamesStatusKey].length <
-                  gamesByStatusQuery.gamesByStatusForAUser[gamesStatusKey]
-                    .length
+                  (updatedGamesByStatusForAUser[gamesStatusKey] ?? []).length <
+                  (
+                    gamesByStatusQuery?.gamesByStatusForAUser[gamesStatusKey] ??
+                    []
+                  ).length
                 ) {
-                  console.log(
-                    'updatedGamesByStatusForAUser',
-                    updatedGamesByStatusForAUser,
-                    'for status:',
-                    gamesStatusKey
-                  );
                   cache.writeQuery({
                     query: GET_GAMES_BY_STATUS,
                     data: {
                       gamesByStatusForAUser: {
-                        ...updatedGamesByStatusForAUser,
+                        ...newGamesByStatusQuery.gamesByStatusForAUser,
+                        [gamesStatusKey]:
+                          updatedGamesByStatusForAUser[gamesStatusKey],
                         [`${gamesStatusKey}Count`]:
-                          (gamesByStatusQuery?.gamesByStatusForAUser[
+                          (newGamesByStatusQuery?.gamesByStatusForAUser[
                             `${gamesStatusKey}Count`
                           ] as number) - 1,
                         totalCount:
-                          (gamesByStatusQuery.gamesByStatusForAUser
+                          (newGamesByStatusQuery.gamesByStatusForAUser
                             .totalCount as number) - 1,
                       },
                     },
                   });
                 }
-
-                // Perform additional operations here based on the updatedGamesByStatusForAUser
-
-                // cache.writeQuery({
-                //   query: GET_GAMES_BY_STATUS,
-                //   data: {},
-                // });
               }
             });
           }

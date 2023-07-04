@@ -36,12 +36,10 @@ const useAddDeleteGame = (status?: StatusType | null) => {
         context: getTokenFromLocalStorage(),
         update: (cache, { data }) => {
           const newGame = data.addUserGames.userGame;
-          console.log('newGame', newGame);
           const gamesByStatusQuery: GetGamesByStatusQuery | null =
             cache.readQuery({
               query: GET_GAMES_BY_STATUS,
             });
-          console.log('gamesByStatusQuery', gamesByStatusQuery);
 
           if (
             gamesByStatusQuery &&
