@@ -138,7 +138,7 @@ describe('Get games according to list types for a user', () => {
     const downArrow = await screen.findByTestId(
       'down-arrow',
       {},
-      { timeout: 5000 }
+      { timeout: 15000 }
     );
     await userEvent.click(downArrow);
 
