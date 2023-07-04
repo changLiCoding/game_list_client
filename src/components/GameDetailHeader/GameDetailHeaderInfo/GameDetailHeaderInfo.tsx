@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Button, Layout, Dropdown, Space } from 'antd';
 import type { MenuProps } from 'antd';
 import { HeartOutlined, DownCircleOutlined } from '@ant-design/icons';
@@ -157,6 +157,5 @@ function GameDetailHeaderInfoTemp({ game, setGame }: GameDetailsType) {
   );
 }
 
-// const GameDetailHeaderInfo = React.memo(GameDetailHeaderInfoTemp);
-
-export default GameDetailHeaderInfoTemp;
+const GameDetailHeaderInfo = React.memo(GameDetailHeaderInfoTemp);
+export default GameDetailHeaderInfo;

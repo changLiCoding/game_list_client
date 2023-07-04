@@ -22,7 +22,8 @@ export type StatusType =
   | 'playing'
   | 'planning'
   | 'dropped'
-  | 'paused';
+  | 'paused'
+  | 'justAdded';
 
 const useAddDeleteGame = (status?: StatusType | null) => {
   const [addUserGamesRequest] = useMutation(ADD_USER_GAMES);
