@@ -118,14 +118,12 @@ describe('Get games according to list types for a user', () => {
       </DefaultMockedProvider>
     );
 
-    await waitFor(() => {
-      const gameElements = screen.queryAllByText('Pokemon Alpha Sapphire');
-      expect(gameElements[0].textContent).toBe('Pokemon Alpha Sapphire');
-      const avgScoreElements = screen.queryAllByText('2.5');
-      expect(avgScoreElements[0].textContent).toBe('2.5');
-      const gamePlanningElements = screen.queryAllByText('Halo 3');
-      expect(gamePlanningElements[0].textContent).toBe('Halo 3');
-    });
+    const gameElements = screen.queryAllByText('Pokemon Alpha Sapphire');
+    expect(gameElements[0].textContent).toBe('Pokemon Alpha Sapphire');
+    const avgScoreElements = screen.queryAllByText('2.5');
+    expect(avgScoreElements[0].textContent).toBe('2.5');
+    const gamePlanningElements = screen.queryAllByText('Halo 3');
+    expect(gamePlanningElements[0].textContent).toBe('Halo 3');
   });
 
   it('should render filter column for user', async () => {
@@ -138,7 +136,7 @@ describe('Get games according to list types for a user', () => {
     const downArrow = await screen.findByTestId(
       'down-arrow',
       {},
-      { timeout: 15000 }
+      { timeout: 5000 }
     );
     await userEvent.click(downArrow);
 
