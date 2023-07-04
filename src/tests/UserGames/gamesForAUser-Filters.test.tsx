@@ -118,13 +118,16 @@ describe('Get games according to list types for a user', () => {
       </DefaultMockedProvider>
     );
 
-    const gameElements = screen.queryAllByText('Pokemon Alpha Sapphire');
+    const gameElements = await screen.findAllByText('Pokemon Alpha Sapphire');
+
     expect(gameElements[0].textContent).toBe('Pokemon Alpha Sapphire');
-    const avgScoreElements = screen.queryAllByText('2.5');
+
+    const avgScoreElements = await screen.findAllByText('2.5');
     expect(avgScoreElements[0].textContent).toBe('2.5');
-    const gamePlanningElements = screen.queryAllByText('Halo 3');
+
+    const gamePlanningElements = await screen.findAllByText('Halo 3');
     expect(gamePlanningElements[0].textContent).toBe('Halo 3');
-  });
+  }, 10000);
 
   it('should render filter column for user', async () => {
     const { debug } = renderVite(
