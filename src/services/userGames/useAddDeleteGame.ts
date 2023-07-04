@@ -63,6 +63,10 @@ const useAddDeleteGame = (status?: StatusType | null) => {
                     ? gamesByStatusQuery.gamesByStatusForAUser.justAddedCount +
                       1
                     : 1,
+                  totalCount: gamesByStatusQuery.gamesByStatusForAUser
+                    .totalCount
+                    ? gamesByStatusQuery.gamesByStatusForAUser.totalCount + 1
+                    : 1,
                 },
               },
             });
