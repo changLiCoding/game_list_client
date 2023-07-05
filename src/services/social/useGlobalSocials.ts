@@ -4,7 +4,14 @@ import { GET_GLOBAL_SOCIALS } from './queries';
 import { getTokenFromLocalStorage } from '@/constants';
 import { Social as SocialType } from '@/graphql/__generated__/graphql';
 
-type UseGlobalSocialsType = {};
+type UseGlobalSocialsType = {
+  socials: SocialType[];
+  loading: boolean;
+  refetch: () => Promise<ApolloQueryResult<{ getGlobalSocials: SocialType[] }>>;
+  fetchMore: () => Promise<
+    ApolloQueryResult<{ getGlobalSocials: SocialType[] }>
+  >;
+};
 
 const useGlobalSocials = (): UseGlobalSocialsType => {
   const { data, loading, refetch, fetchMore } = useQuery(GET_GLOBAL_SOCIALS, {
@@ -24,6 +31,7 @@ const useGlobalSocials = (): UseGlobalSocialsType => {
       socials,
       loading,
       refetch,
+      fetchMore,
     };
   } catch (error: unknown) {
     if (error instanceof Error) {

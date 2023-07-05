@@ -10,11 +10,9 @@ import { useAppSelector } from '@/app/hooks';
 import getTimeElapsed from '@/utils/getTimeElapsed';
 
 function ActivitiesUpdates({
-  statusUpdates,
-  posts,
+  socials,
 }: {
-  statusUpdates: StatusUpdateType[];
-  posts: PostType[];
+  socials: (StatusUpdateType | PostType)[];
 }) {
   const { addLike, removeLike } = useAddRemoveLike();
   const userState = useAppSelector((state) => state.user.user);
@@ -22,35 +20,29 @@ function ActivitiesUpdates({
   const { id: currentUserId } = userState;
 
   const memoizedActivities = useMemo(() => {
-    return [...statusUpdates, ...posts]
-      .sort((a, b) => {
-        return Date.parse(b.updatedAt) - Date.parse(a.updatedAt);
-      })
-      .map((activity) => {
-        const { daysElapsed, hoursElapsed } = getTimeElapsed(
-          activity.updatedAt
-        );
-        const isCurrentLiked = activity.likedUsers.some(
-          (user) => user.id === currentUserId
-        );
-        return (
-          <ActivityCard
-            isCurrentLiked={isCurrentLiked}
-            key={`${activity.__typename}:${activity.id}`}
-            activity={activity}
-            daysElapsed={daysElapsed}
-            hoursElapsed={hoursElapsed}
-            currentUserId={currentUserId}
-            addLike={addLike}
-            removeLike={removeLike}
-          />
-        );
-      });
-  }, [statusUpdates, posts, currentUserId, addLike, removeLike]);
+    return [...socials].map((activity) => {
+      const { daysElapsed, hoursElapsed } = getTimeElapsed(activity.updatedAt);
+      const isCurrentLiked = activity.likedUsers.some(
+        (user) => user.id === currentUserId
+      );
+      return (
+        <ActivityCard
+          isCurrentLiked={isCurrentLiked}
+          key={`${activity.__typename}:${activity.id}`}
+          activity={activity}
+          daysElapsed={daysElapsed}
+          hoursElapsed={hoursElapsed}
+          currentUserId={currentUserId}
+          addLike={addLike}
+          removeLike={removeLike}
+        />
+      );
+    });
+  }, [socials, currentUserId, addLike, removeLike]);
 
   return (
     <div className={styles.activitiesUpdatesContainer}>
-      {(statusUpdates.length > 0 || posts.length > 0) && memoizedActivities}
+      {socials.length > 0 && memoizedActivities}
     </div>
   );
 }

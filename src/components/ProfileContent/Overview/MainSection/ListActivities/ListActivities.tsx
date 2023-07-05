@@ -9,6 +9,7 @@ import PostInput from '@/components/ProfileContent/Overview/MainSection/ListActi
 import ActivitiesUpdates from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivitiesUpdates';
 import { useAppSelector, useAppDispatch } from '@/app/hooks';
 import { setIsUserGameEdited } from '@/features/addedGamesSlice';
+import useGlobalSocials from '@/services/social/useGlobalSocials';
 
 function ListActivities() {
   const dispatch = useAppDispatch();
@@ -16,28 +17,35 @@ function ListActivities() {
   const { isUserGameEdited, addedList } = useAppSelector(
     (state) => state.addedGames
   );
-  const { getGlobalStatusUpdates, refetch, statusUpdates, loading } =
-    useGlobalStatusUpdates();
+  // const { getGlobalStatusUpdates, refetch, statusUpdates, loading } =
+  //   useGlobalStatusUpdates();
 
-  const { getGlobalPosts, posts } = useGlobalPosts();
+  // const { getGlobalPosts, posts } = useGlobalPosts();
 
-  useEffect(() => {
-    if (getGlobalStatusUpdates) {
-      getGlobalStatusUpdates();
-    }
-  }, [getGlobalStatusUpdates]);
+  const {
+    socials,
+    loading: loadingSocials,
+    refetch,
+    fetchMore,
+  } = useGlobalSocials();
 
-  useEffect(() => {
-    if (getGlobalPosts) {
-      getGlobalPosts();
-    }
-  }, [getGlobalPosts]);
+  // useEffect(() => {
+  //   if (getGlobalStatusUpdates) {
+  //     getGlobalStatusUpdates();
+  //   }
+  // }, [getGlobalStatusUpdates]);
 
-  useEffect(() => {
-    if (addedList.length > 0) {
-      refetch();
-    }
-  }, [addedList, refetch]);
+  // useEffect(() => {
+  //   if (getGlobalPosts) {
+  //     getGlobalPosts();
+  //   }
+  // }, [getGlobalPosts]);
+
+  // useEffect(() => {
+  //   if (addedList.length > 0) {
+  //     refetch();
+  //   }
+  // }, [addedList, refetch]);
 
   useEffect(() => {
     if (isUserGameEdited) {
@@ -60,8 +68,9 @@ function ListActivities() {
       key: '3',
     },
   ];
+  console.log(socials);
 
-  if (loading) {
+  if (loadingSocials) {
     return (
       <div className={styles.listActivitiesContainer}>
         <h2 className={styles.title}>Activities</h2>
@@ -89,7 +98,11 @@ function ListActivities() {
         </Dropdown>
       </h2>
       <PostInput type="post" />
-      <ActivitiesUpdates statusUpdates={statusUpdates} posts={posts} />
+      <ActivitiesUpdates
+        // statusUpdates={statusUpdates}
+        // posts={posts}
+        socials={socials}
+      />
     </div>
   );
 }
