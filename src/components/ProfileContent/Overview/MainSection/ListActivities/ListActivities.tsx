@@ -14,9 +14,7 @@ import useGlobalSocials from '@/services/social/useGlobalSocials';
 function ListActivities() {
   const dispatch = useAppDispatch();
 
-  const { isUserGameEdited, addedList } = useAppSelector(
-    (state) => state.addedGames
-  );
+  const { isUserGameEdited } = useAppSelector((state) => state.addedGames);
   // const { getGlobalStatusUpdates, refetch, statusUpdates, loading } =
   //   useGlobalStatusUpdates();
 
