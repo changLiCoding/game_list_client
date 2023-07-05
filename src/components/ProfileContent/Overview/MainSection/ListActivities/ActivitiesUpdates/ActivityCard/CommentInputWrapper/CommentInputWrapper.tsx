@@ -15,7 +15,6 @@ function CommentInputWrapper({
       <PostInput
         comment={comment}
         setComment={setComment}
-        type="comment"
         commentType={commentType}
         commentId={commentId}
       />

@@ -49,7 +49,7 @@ function ActivitiesUpdates({
   const onFetchMore = async (socialsLength: number) => {
     await fetchMore({
       variables: {
-        limit: 20 + socialsLength,
+        limit: 5 + socialsLength,
         offset: socialsLength,
       },
       updateQuery: (prev, { fetchMoreResult }) => {
@@ -90,6 +90,7 @@ function ActivitiesUpdates({
     <div className={styles.activitiesUpdatesContainer}>
       {socials.length > 0 && memoizedActivities}
       <InView
+        style={{ height: '10px' }}
         as="div"
         onChange={async (inView) => {
           const socialsLength = socials.length;

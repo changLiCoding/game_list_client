@@ -37,7 +37,7 @@ type UseGlobalSocialsType = {
 const useGlobalSocials = (): UseGlobalSocialsType => {
   const { data, loading, refetch, fetchMore } = useQuery(GET_GLOBAL_SOCIALS, {
     variables: {
-      limit: 20,
+      limit: 5,
       offset: 0,
     },
     context: getTokenFromLocalStorage(),

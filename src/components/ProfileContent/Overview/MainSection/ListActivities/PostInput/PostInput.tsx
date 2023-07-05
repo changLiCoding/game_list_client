@@ -26,10 +26,6 @@ function PostInput({
   commentId,
 }: PostInputProps) {
   const postRef = useRef<HTMLTextAreaElement>(null);
-  const countRef = useRef<number>(0);
-
-  countRef.current += 1;
-  console.log('PostInput rendered: ', countRef.current);
 
   const { createPost } = usePosts();
   const { addComment } = useAddRemoveComment();
@@ -45,7 +41,6 @@ function PostInput({
   return (
     <div className={styles.postInputContainer}>
       <textarea
-        ref={postRef}
         value={setPost ? post : comment}
         autoComplete="off"
         placeholder={`${setPost ? 'Post' : 'Comment'} something...`}

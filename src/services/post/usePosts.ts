@@ -8,7 +8,6 @@ import type {
   Social as SocialType,
 } from '@/graphql/__generated__/graphql';
 import { GET_GLOBAL_SOCIALS } from '@/services/social/queries';
-import { GET_GAMES_BY_STATUS } from '../userGames/queries';
 
 const usePosts = () => {
   type QueryResult = {
@@ -26,12 +25,12 @@ const usePosts = () => {
           const newPost = data?.createPost.post as PostType;
           const existingSocials = cache.readQuery<QueryResult>({
             query: GET_GLOBAL_SOCIALS,
-            variables: { limit: 10, offset: 0 },
+            variables: { limit: 5, offset: 0 },
           });
           if (existingSocials) {
             cache.writeQuery<QueryResult>({
               query: GET_GLOBAL_SOCIALS,
-              variables: { limit: 20, offset: 0 },
+              variables: { limit: 5, offset: 0 },
               data: {
                 getGlobalSocials: [
                   newPost,
