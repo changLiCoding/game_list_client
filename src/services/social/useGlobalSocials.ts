@@ -1,4 +1,9 @@
-import { useQuery, ApolloQueryResult } from '@apollo/client';
+import {
+  useQuery,
+  ApolloQueryResult,
+  OperationVariables,
+  FetchMoreQueryOptions,
+} from '@apollo/client';
 
 import { GET_GLOBAL_SOCIALS } from './queries';
 import { getTokenFromLocalStorage } from '@/constants';
@@ -8,9 +13,12 @@ type UseGlobalSocialsType = {
   socials: SocialType[];
   loading: boolean;
   refetch: () => Promise<ApolloQueryResult<{ getGlobalSocials: SocialType[] }>>;
-  fetchMore: () => Promise<
-    ApolloQueryResult<{ getGlobalSocials: SocialType[] }>
-  >;
+  fetchMore: (
+    fetchMoreOptions: FetchMoreQueryOptions<
+      { getGlobalSocials: SocialType[] },
+      { limit: number; offset: number }
+    >
+  ) => Promise<ApolloQueryResult<{ getGlobalSocials: SocialType[] }>>;
 };
 
 const useGlobalSocials = (): UseGlobalSocialsType => {
@@ -31,7 +39,7 @@ const useGlobalSocials = (): UseGlobalSocialsType => {
       socials,
       loading,
       refetch,
-      fetchMore,
+      fetchMore: fetchMore as UseGlobalSocialsType['fetchMore'], // Type assertion
     };
   } catch (error: unknown) {
     if (error instanceof Error) {
@@ -41,7 +49,7 @@ const useGlobalSocials = (): UseGlobalSocialsType => {
         socials,
         loading,
         refetch,
-        fetchMore,
+        fetchMore: fetchMore as UseGlobalSocialsType['fetchMore'], // Type assertion
       };
     }
     data.getGlobalSocials.errors = ['Unknown error'];
@@ -51,7 +59,7 @@ const useGlobalSocials = (): UseGlobalSocialsType => {
         : [],
       loading,
       refetch,
-      fetchMore,
+      fetchMore: fetchMore as UseGlobalSocialsType['fetchMore'], // Type assertion
     };
   }
 };
