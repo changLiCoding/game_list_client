@@ -15,7 +15,6 @@ type UseGlobalPostsType = {
     variables?: Partial<OperationVariables> | undefined
   ) => Promise<ApolloQueryResult<{ getGlobalPosts: PostType[] }>>;
   getGlobalPosts: () => Promise<QueryResult<PostType[], OperationVariables>>;
-  fetchMore?: () => Promise<ApolloQueryResult<{ getGlobalPosts: PostType[] }>>;
 };
 
 const useGlobalPosts = (): UseGlobalPostsType => {
@@ -46,7 +45,6 @@ const useGlobalPosts = (): UseGlobalPostsType => {
         posts,
         loading,
         refetch,
-        fetchMore,
       };
     }
     data.getGlobalPosts.errors = ['Unknown error'];
@@ -55,7 +53,6 @@ const useGlobalPosts = (): UseGlobalPostsType => {
       posts: data.getGlobalPosts ? (data.getGlobalPosts as PostType[]) : [],
       loading,
       refetch,
-      fetchMore,
     };
   }
 };
