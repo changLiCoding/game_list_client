@@ -1,7 +1,14 @@
 import { useMemo } from 'react';
+import { InView } from 'react-intersection-observer';
+import {
+  FetchMoreQueryOptions,
+  ApolloQueryResult,
+  OperationVariables,
+} from '@apollo/client';
 import type {
   StatusUpdate as StatusUpdateType,
   Post as PostType,
+  Social as SocialType,
 } from '@/graphql/__generated__/graphql';
 import styles from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivitiesUpdates.module.scss';
 import useAddRemoveLike from '@/services/like/useAddRemoveLike';
@@ -10,14 +17,53 @@ import { useAppSelector } from '@/app/hooks';
 import getTimeElapsed from '@/utils/getTimeElapsed';
 
 function ActivitiesUpdates({
+  fetchMore,
   socials,
 }: {
   socials: (StatusUpdateType | PostType)[];
+  fetchMore: <
+    TFetchData = {
+      getGlobalSocials: SocialType[];
+    },
+    TFetchVars extends OperationVariables = {
+      limit: number;
+      offset: number;
+    }
+  >(
+    fetchMoreOptions: FetchMoreQueryOptions<TFetchVars, TFetchData> & {
+      updateQuery: (
+        previousQueryResult: TFetchData,
+        options: {
+          fetchMoreResult?: TFetchData;
+          variables?: TFetchVars | undefined;
+        }
+      ) => TFetchData;
+    }
+  ) => Promise<ApolloQueryResult<TFetchData>>;
 }) {
   const { addLike, removeLike } = useAddRemoveLike();
   const userState = useAppSelector((state) => state.user.user);
 
   const { id: currentUserId } = userState;
+
+  const onFetchMore = async (socialsLength: number) => {
+    await fetchMore({
+      variables: {
+        limit: 20 + socialsLength,
+        offset: socialsLength,
+      },
+      updateQuery: (prev, { fetchMoreResult }) => {
+        if (!fetchMoreResult) return prev;
+        return {
+          ...prev,
+          getGlobalSocials: [
+            ...prev.getGlobalSocials,
+            ...fetchMoreResult.getGlobalSocials,
+          ],
+        };
+      },
+    });
+  };
 
   const memoizedActivities = useMemo(() => {
     return [...socials].map((activity) => {
@@ -43,6 +89,15 @@ function ActivitiesUpdates({
   return (
     <div className={styles.activitiesUpdatesContainer}>
       {socials.length > 0 && memoizedActivities}
+      <InView
+        as="div"
+        onChange={async (inView) => {
+          const socialsLength = socials.length;
+          if (inView) {
+            await onFetchMore(socialsLength);
+          }
+        }}
+      />
     </div>
   );
 }

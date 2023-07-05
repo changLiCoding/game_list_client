@@ -1,8 +1,8 @@
 import {
   useQuery,
   ApolloQueryResult,
-  OperationVariables,
   FetchMoreQueryOptions,
+  OperationVariables,
 } from '@apollo/client';
 
 import { GET_GLOBAL_SOCIALS } from './queries';
@@ -13,12 +13,25 @@ type UseGlobalSocialsType = {
   socials: SocialType[];
   loading: boolean;
   refetch: () => Promise<ApolloQueryResult<{ getGlobalSocials: SocialType[] }>>;
-  fetchMore: (
-    fetchMoreOptions: FetchMoreQueryOptions<
-      { getGlobalSocials: SocialType[] },
-      { limit: number; offset: number }
-    >
-  ) => Promise<ApolloQueryResult<{ getGlobalSocials: SocialType[] }>>;
+  fetchMore: <
+    TFetchData = {
+      getGlobalSocials: SocialType[];
+    },
+    TFetchVars extends OperationVariables = {
+      limit: number;
+      offset: number;
+    }
+  >(
+    fetchMoreOptions: FetchMoreQueryOptions<TFetchVars, TFetchData> & {
+      updateQuery: (
+        previousQueryResult: TFetchData,
+        options: {
+          fetchMoreResult?: TFetchData;
+          variables?: TFetchVars | undefined;
+        }
+      ) => TFetchData;
+    }
+  ) => Promise<ApolloQueryResult<TFetchData>>;
 };
 
 const useGlobalSocials = (): UseGlobalSocialsType => {

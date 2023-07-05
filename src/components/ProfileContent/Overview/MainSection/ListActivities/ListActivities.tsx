@@ -72,10 +72,14 @@ function ListActivities() {
     return (
       <div className={styles.listActivitiesContainer}>
         <h2 className={styles.title}>Activities</h2>
-        <Skeleton avatar active style={{ margin: '25px auto 25px auto' }} />
-        <Skeleton active avatar style={{ marginBottom: '25px' }} />
-        <Skeleton active avatar style={{ marginBottom: '25px' }} />
-        <Skeleton active avatar style={{ marginBottom: '25px' }} />
+        {Array.from({ length: 10 }, (_, index) => (
+          <Skeleton
+            avatar
+            active
+            key={index}
+            style={{ margin: '25px auto 25px auto' }}
+          />
+        ))}
       </div>
     );
   }
@@ -100,6 +104,7 @@ function ListActivities() {
         // statusUpdates={statusUpdates}
         // posts={posts}
         socials={socials}
+        fetchMore={fetchMore}
       />
     </div>
   );
