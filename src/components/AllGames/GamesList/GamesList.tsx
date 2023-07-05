@@ -16,7 +16,6 @@ import { Game } from '@/graphql/__generated__/graphql';
 
 export default function GamesList() {
   const homeSearchState = useAppSelector((state) => state.homeSearch);
-  const { addedList } = useAppSelector((state) => state.addedGames);
 
   // States for modal to edit list
   const { userGameLoading, fetchUserGame } = useUserGameById();

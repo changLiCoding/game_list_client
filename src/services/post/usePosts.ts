@@ -1,13 +1,17 @@
 import { useMutation } from '@apollo/client';
 
-import { CREATE_POST, GET_GLOBAL_POSTS } from '@/services/post/queries';
+import { CREATE_POST } from '@/services/post/queries';
 import { getTokenFromLocalStorage } from '@/constants';
 import { CreatePostPayload } from '@/graphql/__generated__/graphql';
-import type { Post as PostType } from '@/graphql/__generated__/graphql';
+import type {
+  Post as PostType,
+  Social as SocialType,
+} from '@/graphql/__generated__/graphql';
+import { GET_GLOBAL_SOCIALS } from '@/services/social/queries';
 
 const usePosts = () => {
   type QueryResult = {
-    getGlobalPosts: PostType[];
+    getGlobalSocials: SocialType[];
   };
   const [createPostRequest] = useMutation(CREATE_POST);
 
@@ -18,18 +22,21 @@ const usePosts = () => {
         context: getTokenFromLocalStorage(),
 
         update: (cache, { data }) => {
-          const queryResult: QueryResult | null = cache.readQuery({
-            query: GET_GLOBAL_POSTS,
+          const newPost = data?.createPost.post as PostType;
+          const existingSocials = cache.readQuery<QueryResult>({
+            query: GET_GLOBAL_SOCIALS,
+            variables: { limit: 5, offset: 0 },
           });
-          // Make sure the query exists and getGlobalPosts is not null
-          if (queryResult && queryResult.getGlobalPosts) {
-            const { getGlobalPosts } = queryResult;
-
-            const newGetGlobalPosts = [data.createPost.post, ...getGlobalPosts];
-
-            cache.writeQuery({
-              query: GET_GLOBAL_POSTS,
-              data: { getGlobalPosts: newGetGlobalPosts },
+          if (existingSocials) {
+            cache.writeQuery<QueryResult>({
+              query: GET_GLOBAL_SOCIALS,
+              variables: { limit: 5, offset: 0 },
+              data: {
+                getGlobalSocials: [
+                  newPost,
+                  ...existingSocials.getGlobalSocials,
+                ],
+              },
             });
           }
         },
