@@ -1,5 +1,5 @@
 import { Button } from 'antd';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, memo } from 'react';
 
 import styles from '@/components/ProfileContent/Overview/MainSection/ListActivities/PostInput/PostInput.module.scss';
 import { useAppSelector, useAppDispatch } from '@/app/hooks';
@@ -25,6 +25,11 @@ function PostInput({
 }: PostInputProps) {
   const dispatch = useAppDispatch();
   const postRef = useRef<HTMLTextAreaElement>(null);
+  const countRef = useRef<number>(0);
+
+  countRef.current += 1;
+  console.log('PostInput rendered: ', countRef.current);
+
   const { post } = useAppSelector((state) => state.userPost);
 
   const { createPost } = usePosts();
@@ -106,4 +111,6 @@ function PostInput({
   );
 }
 
-export default PostInput;
+const MemoizedPostInput = memo(PostInput);
+
+export default MemoizedPostInput;

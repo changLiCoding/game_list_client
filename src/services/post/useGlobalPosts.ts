@@ -15,10 +15,11 @@ type UseGlobalPostsType = {
     variables?: Partial<OperationVariables> | undefined
   ) => Promise<ApolloQueryResult<{ getGlobalPosts: PostType[] }>>;
   getGlobalPosts: () => Promise<QueryResult<PostType[], OperationVariables>>;
+  fetchMore?: () => Promise<ApolloQueryResult<{ getGlobalPosts: PostType[] }>>;
 };
 
 const useGlobalPosts = (): UseGlobalPostsType => {
-  const [getGlobalPosts, { data, loading, refetch }] = useLazyQuery(
+  const [getGlobalPosts, { data, loading, refetch, fetchMore }] = useLazyQuery(
     GET_GLOBAL_POSTS,
     {
       context: getTokenFromLocalStorage(),
@@ -45,6 +46,7 @@ const useGlobalPosts = (): UseGlobalPostsType => {
         posts,
         loading,
         refetch,
+        fetchMore,
       };
     }
     data.getGlobalPosts.errors = ['Unknown error'];
@@ -53,6 +55,7 @@ const useGlobalPosts = (): UseGlobalPostsType => {
       posts: data.getGlobalPosts ? (data.getGlobalPosts as PostType[]) : [],
       loading,
       refetch,
+      fetchMore,
     };
   }
 };
