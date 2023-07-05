@@ -1,10 +1,8 @@
 import { DownOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Dropdown, Space, Skeleton } from 'antd';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import styles from '@/components/ProfileContent/Overview/MainSection/ListActivities/ListActivities.module.scss';
-import useGlobalStatusUpdates from '@/services/statusUpdate/useGlobalStatusUpdates';
-import useGlobalPosts from '@/services/post/useGlobalPosts';
 import PostInput from '@/components/ProfileContent/Overview/MainSection/ListActivities/PostInput/PostInput';
 import ActivitiesUpdates from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivitiesUpdates';
 import { useAppSelector, useAppDispatch } from '@/app/hooks';
@@ -15,10 +13,8 @@ function ListActivities() {
   const dispatch = useAppDispatch();
 
   const { isUserGameEdited } = useAppSelector((state) => state.addedGames);
-  // const { getGlobalStatusUpdates, refetch, statusUpdates, loading } =
-  //   useGlobalStatusUpdates();
 
-  // const { getGlobalPosts, posts } = useGlobalPosts();
+  const [post, setPost] = useState<string>('');
 
   const {
     socials,
@@ -26,24 +22,6 @@ function ListActivities() {
     refetch,
     fetchMore,
   } = useGlobalSocials();
-
-  // useEffect(() => {
-  //   if (getGlobalStatusUpdates) {
-  //     getGlobalStatusUpdates();
-  //   }
-  // }, [getGlobalStatusUpdates]);
-
-  // useEffect(() => {
-  //   if (getGlobalPosts) {
-  //     getGlobalPosts();
-  //   }
-  // }, [getGlobalPosts]);
-
-  // useEffect(() => {
-  //   if (addedList.length > 0) {
-  //     refetch();
-  //   }
-  // }, [addedList, refetch]);
 
   useEffect(() => {
     if (isUserGameEdited) {
@@ -66,7 +44,6 @@ function ListActivities() {
       key: '3',
     },
   ];
-  console.log(socials);
 
   if (loadingSocials) {
     return (
@@ -99,13 +76,8 @@ function ListActivities() {
           </Space>
         </Dropdown>
       </h2>
-      <PostInput type="post" />
-      <ActivitiesUpdates
-        // statusUpdates={statusUpdates}
-        // posts={posts}
-        socials={socials}
-        fetchMore={fetchMore}
-      />
+      <PostInput post={post} setPost={setPost} />
+      <ActivitiesUpdates socials={socials} fetchMore={fetchMore} />
     </div>
   );
 }
