@@ -143,12 +143,25 @@ const stateMachine = createMachine(
 const interpreter = interpret(stateMachine);
 
 export const createHomeGameFiltersSlice = () => {
-  const entryCache = new Map();
-  const test = new Map<CorrectFiltersKeys, Map<string, StateValue>>([
-    ['genres', new Map<string, StateValue>()],
-    ['platforms', new Map<string, StateValue>()],
-    ['tags', new Map<string, StateValue>()],
+  const entryCache = new Map([
+    [
+      'genres',
+      { entries: new Map<string, StateValue>(), included: [], excluded: [] },
+    ],
+    [
+      'platforms',
+      { entries: new Map<string, StateValue>(), included: [], excluded: [] },
+    ],
+    [
+      'tags',
+      { entries: new Map<string, StateValue>(), included: [], excluded: [] },
+    ],
   ]);
+  // const test = new Map<CorrectFiltersKeys, Map<string, StateValue>>([
+  //   ['genres', new Map<string, StateValue>()],
+  //   ['platforms', new Map<string, StateValue>()],
+  //   ['tags', new Map<string, StateValue>()],
+  // ]);
 
   return createGameFiltersSlice({
     name: 'homeGameFilters',
@@ -157,9 +170,29 @@ export const createHomeGameFiltersSlice = () => {
       // This is a user selecting an item from the dropdown menu, can only be in the 'off' or 'included' state
       toggleItem: (state, action: PayloadAction<PayloadType>) => {
         const { category, entry } = action.payload;
-        const get = test.get(category);
-        const existingItem = get?.get(entry) || stateMachine.initialState;
 
+        /*
+          1. Lookup category from cache
+          2. Lookup entry from cache
+            - Create default object if not found
+          3. Send through machine
+            - Add to included/excluded
+            - Set key where it should be (included/excluded)
+          4. Update the cache with the new state
+
+          
+          categoryCache: {
+            entries: new Map<string, StateValue>(),
+            included: [],
+            excluded: []
+          }
+        */
+
+        const categoryCache = entryCache.get(category);
+        const existingItem =
+          categoryCache.entries.get(entry) ?? stateMachine.initialState;
+
+        // stateMachine.initialState;
         const transition = stateMachine.transition(existingItem, {
           type: 'TOGGLE',
           payload: {
@@ -169,15 +202,18 @@ export const createHomeGameFiltersSlice = () => {
           },
         });
         interpreter.execute(transition);
-        get?.set(entry, transition.value);
-        // stateMachine.context.entryCache.set(entry, transition.value);
+
+        categoryCache.entries.set(entry, transition.value);
+        console.log('entryCahe', entryCache);
       },
 
       incrementItem: (state, action: PayloadAction<PayloadType>) => {
         const { category, entry } = action.payload;
-        const get = test.get(category);
-        const existingItem = get?.get(entry) || stateMachine.initialState;
-        const service = stateMachine.transition(existingItem, {
+
+        const categoryCache = entryCache.get(category);
+        const existingItem =
+          categoryCache.entries.get(entry) ?? stateMachine.initialState;
+        const transition = stateMachine.transition(existingItem, {
           type: 'INCREMENT',
           payload: {
             category,
@@ -185,16 +221,17 @@ export const createHomeGameFiltersSlice = () => {
             state,
           },
         });
-        interpreter.execute(service);
-        stateMachine.context.entryCache.set(entry, service.value);
-        get?.set(entry, service.value);
+        interpreter.execute(transition);
+        categoryCache.entries.set(entry, transition.value);
       },
 
       removeItem: (state, action: PayloadAction<PayloadType>) => {
         const { category, entry } = action.payload;
-        const existingItem =
-          stateMachine.context.entryCache.get(entry) ||
-          stateMachine.initialState;
+        const categoryCache = entryCache.get(category);
+        const existingItem = categoryCache?.entries.get(entry);
+        if (!existingItem) {
+          return state;
+        }
         const service = stateMachine.transition(existingItem, {
           type: 'REMOVE_ITEM',
           payload: {
@@ -205,19 +242,21 @@ export const createHomeGameFiltersSlice = () => {
         });
         interpreter.execute(service);
 
-        test.get(category)?.delete(entry);
+        categoryCache?.entries.delete(entry);
       },
 
       clearCategory: (state, action: PayloadAction<keyof CorrectFilters>) => {
-        // TODO: Actually select correct category
-        // TODO: Update the cache
         const category = action.payload;
-        // TODO: Just use reset() ?
-        stateMachine.context.entryCache.clear();
-        const filterKey = action.payload;
+        const categoryCache = entryCache.get(category);
+
+        categoryCache?.entries.forEach((value, key, map) => {
+          if (value === 'included') categoryCache?.entries.delete(key);
+        });
+
+        categoryCache?.included.clear();
+
         // eslint-disable-next-line no-param-reassign
-        state[filterKey] = defaultGameFilters[filterKey];
-        test.get(category)?.clear();
+        state[category].included = [];
         // return { ...state, [filterKey]: defaultGameFilters[filterKey] };
       },
 
@@ -226,7 +265,7 @@ export const createHomeGameFiltersSlice = () => {
         entryCache.clear();
 
         // TODO: Loop through every entry in test map and clear THAT hashmap
-        test.forEach((e) => e.clear());
+        entryCache.forEach((e) => e.entries.clear());
         const oldState = state;
         return {
           ...defaultGameFilters,

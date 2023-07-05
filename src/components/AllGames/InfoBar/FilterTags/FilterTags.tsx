@@ -7,6 +7,7 @@ import styles from '@/components/AllGames/InfoBar/FilterTags/FilterTags.module.s
 import { useAppSelector } from '@/app/hooks';
 
 import {
+  removeItem,
   resetGameFilter,
   resetHomeFilter,
   resetHomeFilters,
@@ -438,13 +439,12 @@ function FilterTags() {
         const res = response.get(h);
         if (value && res && res.shouldRender(value)) {
           accumulator.push(res.render(value));
-          console.log('');
         }
         return accumulator;
       },
       [] as string[]
     );
-    console.log('REDUCE = ', en);
+
     if (
       homeGameFilters.genres.included.length > 0 ||
       homeGameFilters.genres.excluded.length > 0
@@ -453,6 +453,7 @@ function FilterTags() {
         <>
           <TagsTwoTone className={styles.tagsIcon} />
 
+          {en}
           <Tag
             closable
             onClose={() => dispatch(resetHomeFilters())}
@@ -466,36 +467,6 @@ function FilterTags() {
   }, [homeGameFilters, dispatch]);
 
   const filterTags22 = useMemo(() => {
-    const newObj = [
-      {
-        value: homeGameFilters.year,
-        shouldRender: () => {
-          const res = homeGameFilters.year !== undefined;
-          // console.log('value year ', homeGameFilters.year);
-          // console.log('res = ', res);
-          console.log('1 shouldRender');
-          return true;
-        },
-        render: () => {
-          console.log('1 render');
-        },
-      },
-      {
-        value: homeGameFilters.year,
-        shouldRender: () => {
-          console.log('2 shouldRender');
-          return true;
-        },
-        render: () => {
-          console.log('2 render');
-        },
-      },
-    ];
-
-    const filterd = newObj
-      .filter((e) => e.shouldRender())
-      .map((e) => e.render());
-    console.log('filtered ', filterd);
     if (
       homeGameFilters.genres.included.length > 0 ||
       homeGameFilters.genres.excluded.length > 0
@@ -503,6 +474,46 @@ function FilterTags() {
       return (
         <>
           <TagsTwoTone className={styles.tagsIcon} />
+
+          {homeGameFilters.genres.included.map((e) => {
+            return (
+              <Tag
+                key={e}
+                closable
+                onClose={() =>
+                  dispatch(
+                    removeItem({
+                      category: 'genres',
+                      entry: e,
+                    })
+                  )
+                }
+                className={styles.clearAll}
+              >
+                {e}
+              </Tag>
+            );
+          })}
+
+          {homeGameFilters.genres.excluded.map((e) => {
+            return (
+              <Tag
+                key={e}
+                closable
+                onClose={() =>
+                  dispatch(
+                    removeItem({
+                      category: 'genres',
+                      entry: e,
+                    })
+                  )
+                }
+                className={styles.clearAll}
+              >
+                Clear All
+              </Tag>
+            );
+          })}
 
           <Tag
             closable
@@ -526,8 +537,6 @@ function FilterTags() {
         return value !== undefined && res.shouldRender(value);
       return false;
     });
-
-    console.log('Entries:', entries);
 
     if (
       homeGameFilters.genres.included.length > 0 ||
@@ -627,7 +636,7 @@ function FilterTags() {
   //   return <div />;
   // }, [dispatch, gameFilters]);
 
-  return <div className={styles.tagsContainer}>{arrTest3}</div>;
+  return <div className={styles.tagsContainer}>{filterTags22}</div>;
 }
 
 export default FilterTags;
