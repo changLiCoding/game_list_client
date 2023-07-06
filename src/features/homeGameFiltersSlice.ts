@@ -5,6 +5,7 @@ import { PayloadAction } from '@reduxjs/toolkit';
 import { createGameFiltersSlice } from './gameFiltersSlice';
 import { remove } from '@/utils/utils';
 import { HomeGameFilters } from './types';
+import { publish } from '@/utils/events';
 
 // TODO: Rename this
 export type CorrectFilters = Pick<
@@ -100,7 +101,7 @@ const stateMachine = createMachine(
             actions: ['removeExcluded'],
           },
           REMOVE_ITEM: {
-            actions: ['removeIncluded'],
+            actions: ['removeExcluded'],
           },
         },
       },
@@ -189,6 +190,7 @@ export const createHomeGameFiltersSlice = () => {
         */
 
         const categoryCache = entryCache.get(category);
+        console.log('cat cache ', categoryCache);
         const existingItem =
           categoryCache.entries.get(entry) ?? stateMachine.initialState;
 
@@ -204,7 +206,6 @@ export const createHomeGameFiltersSlice = () => {
         interpreter.execute(transition);
 
         categoryCache.entries.set(entry, transition.value);
-        console.log('entryCahe', entryCache);
       },
 
       incrementItem: (state, action: PayloadAction<PayloadType>) => {
@@ -213,6 +214,7 @@ export const createHomeGameFiltersSlice = () => {
         const categoryCache = entryCache.get(category);
         const existingItem =
           categoryCache.entries.get(entry) ?? stateMachine.initialState;
+
         const transition = stateMachine.transition(existingItem, {
           type: 'INCREMENT',
           payload: {
@@ -222,6 +224,7 @@ export const createHomeGameFiltersSlice = () => {
           },
         });
         interpreter.execute(transition);
+
         categoryCache.entries.set(entry, transition.value);
       },
 
@@ -229,9 +232,7 @@ export const createHomeGameFiltersSlice = () => {
         const { category, entry } = action.payload;
         const categoryCache = entryCache.get(category);
         const existingItem = categoryCache?.entries.get(entry);
-        if (!existingItem) {
-          return state;
-        }
+
         const service = stateMachine.transition(existingItem, {
           type: 'REMOVE_ITEM',
           payload: {
@@ -262,11 +263,10 @@ export const createHomeGameFiltersSlice = () => {
 
       // Overridden from base game filters reducer. We wan't to reset all variables excluding the sortBy filter.
       reset: (state) => {
-        entryCache.clear();
-
         // TODO: Loop through every entry in test map and clear THAT hashmap
         entryCache.forEach((e) => e.entries.clear());
         const oldState = state;
+        publish('clearAll', {});
         return {
           ...defaultGameFilters,
           sortBy: oldState.sortBy,

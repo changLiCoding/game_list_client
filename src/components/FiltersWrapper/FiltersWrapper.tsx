@@ -30,7 +30,9 @@ import { range } from '@/utils/utils';
 import type { SelectFilterFieldType } from '@/components/FiltersWrapper/types';
 
 import { ArrayElementType } from '@/types/global';
-import ExclusionFiltersList from './ExclusionFiltersList';
+import ExclusionFiltersList, {
+  MemoizedExclusionFiltersList,
+} from './ExclusionFiltersList';
 
 const { Search } = Input;
 const { useBreakpoint } = Grid;
@@ -110,7 +112,7 @@ export default function FiltersWrapper() {
         </div>
       ) : (
         <>
-          <ExclusionFiltersList
+          <MemoizedExclusionFiltersList
             title="Genres"
             entries={data?.getGameFilters.genres ?? []}
             states={[
@@ -126,7 +128,7 @@ export default function FiltersWrapper() {
             category="genres"
           />
 
-          <ExclusionFiltersList
+          <MemoizedExclusionFiltersList
             title="Platforms"
             entries={data?.getGameFilters.platforms ?? []}
             states={[
@@ -142,7 +144,7 @@ export default function FiltersWrapper() {
             category="platforms"
           />
 
-          <ExclusionFiltersList
+          <MemoizedExclusionFiltersList
             title="Tags"
             entries={data?.getGameFilters.tags ?? []}
             states={[
