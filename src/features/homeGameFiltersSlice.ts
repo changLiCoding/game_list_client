@@ -3,7 +3,6 @@ import { PayloadAction } from '@reduxjs/toolkit';
 import { createGameFiltersSlice } from './gameFiltersSlice';
 import { remove } from '@/utils/utils';
 import { HomeGameFilters } from './types';
-import { publish } from '@/utils/events';
 
 export type CorrectFilters = Pick<
   HomeGameFilters,
@@ -248,7 +247,6 @@ export const createHomeGameFiltersSlice = () => {
       reset: (state) => {
         entryCache.forEach((e) => e.entries.clear());
         const oldState = state;
-        publish('clearAll', {});
         return {
           ...defaultGameFilters,
           sortBy: oldState.sortBy,

@@ -9,21 +9,8 @@ import userGameReducer from '@/features/userGameSlice';
 import addedGamesReducer from '@/features/addedGamesSlice';
 import homeSearchSlice from '@/features/homeSearchSlice';
 import { createGameFiltersSlice } from '@/features/gameFiltersSlice';
-import { HomeGameFilters, UserGameFilters } from '@/types/global';
+import { UserGameFilters } from '@/types/global';
 import { createHomeGameFiltersSlice } from '@/features/homeGameFiltersSlice';
-
-const defaultGameFilters: HomeGameFilters = {
-  genres: [],
-  platforms: [],
-  tags: [],
-  excludedPlatforms: [],
-  excludedGenres: [],
-  excludedTags: [],
-  year: undefined,
-  search: '',
-  sortBy: 'name',
-  state: 'off',
-};
 
 const defaultUserGameFilters: UserGameFilters = {
   genres: undefined,
@@ -34,12 +21,6 @@ const defaultUserGameFilters: UserGameFilters = {
   sortBy: undefined,
   selectedList: 'all',
 };
-
-const gameFiltersSlice = createGameFiltersSlice({
-  name: 'gameFiltersSlice',
-  initialState: defaultGameFilters,
-  reducers: {},
-});
 
 const userGameFiltersSlice = createGameFiltersSlice({
   name: 'userGameFiltersSlice',
@@ -55,7 +36,6 @@ const rootReducer = combineReducers({
   userGame: userGameReducer,
   homeSearch: homeSearchSlice,
 
-  gameFilters: gameFiltersSlice.reducer,
   homeGameFilters: homeGameFiltersSlice.reducer,
   userGameFilters: userGameFiltersSlice.reducer,
 
@@ -87,11 +67,6 @@ export const {
   reset: resetHomeFilters,
 } = homeGameFiltersSlice.actions;
 
-export const {
-  setFilters: setGameFilters,
-  resetFilter: resetGameFilter,
-  reset: resetGameFilters,
-} = gameFiltersSlice.actions;
 export const {
   setFilters: setUserGameFilters,
   resetFilter: resetUserGameFilter,
