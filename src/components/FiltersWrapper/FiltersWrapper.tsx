@@ -6,15 +6,11 @@ import {
 } from '@ant-design/icons';
 import { useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useQuery } from '@apollo/client';
 import styles from '@/components/FiltersWrapper/FiltersWrapper.module.scss';
 import filterFieldStyles from '@/components/FiltersWrapper/FilterField/FilterField.module.scss';
 import { useAppSelector } from '@/app/hooks';
-import { GET_GAME_FILTERS } from '@/services/game/queries';
-import {
-  FIRST_VIDEO_GAME_RELEASED_YEAR,
-  getTokenFromLocalStorage,
-} from '@/constants';
+import useGetFilters from '@/services/game/useGetFilters';
+import { FIRST_VIDEO_GAME_RELEASED_YEAR } from '@/constants';
 import { setGameFilters } from '@/app/store';
 import { range } from '@/utils/utils';
 import type { SelectFilterFieldType } from '@/components/FiltersWrapper/types';
@@ -54,32 +50,28 @@ function SelectFilterField<T>({
 export default function FiltersWrapper() {
   const [collapsed, setCollapsed] = useState(false);
   const { warning, contextHolder } = useNotification();
+  const { genres, platforms, tags, year, errors } = useGetFilters();
 
   const dispatch = useDispatch();
   const gameFilters = useAppSelector((state) => state.gameFilters);
 
-  const { data, loading } = useQuery(GET_GAME_FILTERS, {
-    context: getTokenFromLocalStorage(),
-  });
-
   const yearOptions = useMemo(() => {
     const currentYear = Math.max(
-      data?.getGameFilters.year ?? new Date().getFullYear(),
+      year ?? new Date().getFullYear(),
       FIRST_VIDEO_GAME_RELEASED_YEAR
     );
 
     const years = range(currentYear, FIRST_VIDEO_GAME_RELEASED_YEAR);
     return years;
-  }, [data?.getGameFilters.year]);
+  }, [year]);
 
   const screens = useBreakpoint();
 
-  if (!data || loading) return null;
-  if (data.getGameFilters.errors.length > 0) {
-    warning(`Errors: ${data.getGameFilters.errors}`);
+  if (errors.length > 0) {
+    warning(`Errors: ${errors}`);
     return (
       <div>
-        <p>Errors while fetching filters: {data.getGameFilters.errors[0]}</p>
+        <p>Errors while fetching filters: {errors[0]}</p>
       </div>
     );
   }
@@ -109,7 +101,7 @@ export default function FiltersWrapper() {
             <SelectFilterField<string[]>
               mode="multiple"
               value={gameFilters.genres || []}
-              options={data?.getGameFilters.genres || []}
+              options={genres || []}
               onChange={(value) => dispatch(setGameFilters({ genres: value }))}
             />
           </div>
@@ -119,7 +111,7 @@ export default function FiltersWrapper() {
             <SelectFilterField<string[]>
               mode="multiple"
               value={gameFilters.platforms || []}
-              options={data?.getGameFilters.platforms || []}
+              options={platforms || []}
               onChange={(value) =>
                 dispatch(setGameFilters({ platforms: value }))
               }
@@ -131,7 +123,7 @@ export default function FiltersWrapper() {
             <SelectFilterField<string[]>
               mode="multiple"
               value={gameFilters.tags || []}
-              options={data?.getGameFilters.tags || []}
+              options={tags || []}
               onChange={(value) => dispatch(setGameFilters({ tags: value }))}
             />
           </div>
