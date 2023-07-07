@@ -254,8 +254,6 @@ export const createHomeGameFiltersSlice = () => {
           if (value === 'included') categoryCache?.entries.delete(key);
         });
 
-        categoryCache?.included.clear();
-
         // eslint-disable-next-line no-param-reassign
         state[category].included = [];
         // return { ...state, [filterKey]: defaultGameFilters[filterKey] };
