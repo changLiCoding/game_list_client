@@ -1,7 +1,25 @@
-import React from 'react';
+import useGlobalSocials from '@/services/social/useGlobalSocials';
+import ListActivities from '@/components/ProfileContent/Overview/MainSection/ListActivities/ListActivities';
 
 function Activities() {
-  return <div>Activities</div>;
+  const {
+    socials,
+    loading: loadingSocials,
+    refetch,
+    fetchMore,
+  } = useGlobalSocials();
+
+  return (
+    <div>
+      <ListActivities
+        socials={socials}
+        loading={loadingSocials}
+        refetch={refetch}
+        fetchMore={fetchMore}
+        fetchLimitation={15}
+      />
+    </div>
+  );
 }
 
 export default Activities;

@@ -1,6 +1,6 @@
 import React from 'react';
-import { Layout } from 'antd';
 import styles from '@/pages/Forum/Forum.module.scss';
+
 import Activities from '@/components/Activities';
 import Trend from '@/components/Trend';
 
