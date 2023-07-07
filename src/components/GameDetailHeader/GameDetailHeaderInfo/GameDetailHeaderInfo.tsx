@@ -20,8 +20,6 @@ function GameDetailHeaderInfoTemp({ game, setGame }: GameDetailsType) {
   const { userGameLoading, fetchUserGame } = useUserGameById();
   const { addLike, removeLike } = useAddRemoveLike();
 
-  const { addedList } = useAppSelector((state) => state.addedGames);
-
   const {
     handleAddGameHook,
     contextHolder: handGameContextHolder,
@@ -74,7 +72,7 @@ function GameDetailHeaderInfoTemp({ game, setGame }: GameDetailsType) {
       };
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open, userGameLoading, game.isGameLiked, addedList]);
+  }, [open, userGameLoading, game.isGameLiked]);
   return (
     <Layout className={styles.infoContainer}>
       <Content className={styles.infoContent}>

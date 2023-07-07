@@ -6,7 +6,6 @@ import {
   GET_GAMES_BY_STATUS,
 } from '@/services/userGames/queries';
 import { setIsUserGameEdited } from '@/features/addedGamesSlice';
-import { useAppSelector } from '@/app/hooks';
 import { getTokenFromLocalStorage } from '@/constants';
 import type {
   EditUserGamesPayload,
@@ -22,7 +21,6 @@ type GetGamesByStatusQuery = {
 
 const useEditUserGame = () => {
   const dispatch = useDispatch();
-  const { addedList } = useAppSelector((state) => state.addedGames);
 
   const [editUserGameRequest] = useMutation(EDIT_USER_GAME_BY_GAME_ID);
 
@@ -44,11 +42,8 @@ const useEditUserGame = () => {
 
         onCompleted: (data) => {
           // ADD GAME IN REDUX STORE
-
-          if (
-            data.editUserGames.userGame.game.id &&
-            !addedList.includes(data.editUserGames.userGame.game.id)
-          ) {
+          // WHEN DATA RETURN A GAME ID, SET ISUSERGAMEEDITED TO TRUE
+          if (data.editUserGames.userGame.game.id) {
             dispatch(setIsUserGameEdited({ type: 'edit' }));
           }
         },

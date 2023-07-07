@@ -9,7 +9,6 @@ function Overview() {
     getGamesByStatusForAUser,
     gamesByStatusForAUserLoading,
     gamesByStatusForAUser,
-    refetch,
   } = useGamesByStatus();
 
   useEffect(() => {
@@ -17,10 +16,6 @@ function Overview() {
       getGamesByStatusForAUser();
     }
   }, [getGamesByStatusForAUser]);
-
-  // useEffect(() => {
-  //   refetch();
-  // }, [addedList, refetch]);
 
   if (gamesByStatusForAUserLoading || !gamesByStatusForAUser) {
     return <div>Loading...</div>;

@@ -9,13 +9,12 @@ import useEditUserGame from '@/services/userGames/useEditUserGame';
 const useAddRemoveGameCustomHook = (status?: StatusType) => {
   const { addUserGames, deleteUserGames } = useAddDeleteGame(status);
   const { editUserGame } = useEditUserGame();
-  const { addedList } = useAppSelector((state) => state.addedGames);
   const userState = useAppSelector((state) => state.user);
   const { info, success, warning, contextHolder } =
     useNotification('userGames');
 
   const handleAddGameHook = async (gameInput: GameType) => {
-    if (!addedList.includes(gameInput.id as string)) {
+    if (!gameInput.isGameAdded) {
       if (userState?.user.id === '' || !userState?.user.id) {
         info('Please login to add game to your GameList');
         return;

@@ -10,7 +10,6 @@ import type {
 import { Game } from '@/graphql/__generated__/graphql';
 import ListEditor from '@/components/ListEditor';
 import useUserGameById from '@/services/userGames/useUserGameById';
-import { useAppSelector } from '@/app/hooks';
 
 function UserGameListDesktop({ data }: UserGameListDataType) {
   const [open, setOpen] = useState<boolean>(false);
@@ -25,8 +24,6 @@ function UserGameListDesktop({ data }: UserGameListDataType) {
     await fetchUserGame({ variables: { gameId: game.id } });
     setOpen(true);
   };
-
-  const { addedList } = useAppSelector((state) => state.addedGames);
 
   const columns: ColumnsType<GameDataType> = [
     {
