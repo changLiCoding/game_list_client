@@ -5,6 +5,7 @@ import GameDetail from '@/pages/GameDetail/GameDetail';
 import Login from '@/pages/Login';
 import Register from '@/pages/Register';
 import UserProfile from '@/pages/UserProfile';
+import Forum from './pages/Forum';
 
 function Router() {
   const { loading, userState } = useTokenAuth();
@@ -43,6 +44,8 @@ function Router() {
       <Route path="/home" element={<Home />} />
       <Route path="/" element={<Navigate to="/home" />} />
       <Route path="/game-detail/:id/:name" element={<GameDetail />} />
+
+      <Route path="/forum" element={<Forum />} />
       <Route
         path="*"
         element={
