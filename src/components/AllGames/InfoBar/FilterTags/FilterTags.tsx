@@ -13,14 +13,8 @@ type FilterType = {
   render: () => JSX.Element;
 };
 
-// type IncludeExcludeFiltersType = {
-//   included: string[];
-//   excluded: string[];
-// };
-
 function FilterTags() {
   const dispatch = useDispatch();
-  // const gameFilters = useAppSelector((state) => state.gameFilters);
   const homeGameFilters = useAppSelector((state) => state.homeGameFilters);
 
   function renderTag(tag: string, value: any, onClose: () => void) {
@@ -36,45 +30,6 @@ function FilterTags() {
       </Tag>
     );
   }
-
-  // // JSX.Element
-  // function renderIncludeExclude(
-  //   tag: string,
-  //   // value: IncludeExcludeFiltersType,
-  //   keyValue: CorrectFiltersKeys,
-  //   dispatch
-  // ): FilterType {
-  //   const onClose = (e) => {
-  //     dispatch(
-  //       removeItem({
-  //         category: keyValue,
-  //         entry: e,
-  //       })
-  //     );
-  //   };
-
-  //   const value = homeGameFilters[keyValue];
-
-  //   return {
-  //     shouldRender() {
-  //       return value.excluded.length + value.included.length > 0;
-  //     },
-  //     render() {
-  //       return (
-  //         <>
-  //           {value.included.length > 0 &&
-  //             value.included.map((e) =>
-  //               renderTag(`included-${e}`, e, () => onClose(e))
-  //             )}
-  //           {value.excluded.length > 0 &&
-  //             value.excluded.map((e) =>
-  //               renderTag(`excluded-${e}`, e, () => onClose(e))
-  //             )}
-  //         </>
-  //       );
-  //     },
-  //   };
-  // }
 
   const neverChange = useMemo(() => {
     const arrTest: FilterType[] = [
@@ -261,88 +216,3 @@ function FilterTags() {
 }
 
 export default FilterTags;
-
-// interface CustomMap<T> extends Map<keyof T, T[keyof T]> {
-//   get<Key extends keyof T>(
-//     key: Key
-//   ):
-//     | {
-//         shouldRender: (value: T[Key]) => boolean;
-//         render: (value: NonNullable<T[Key]>) => JSX.Element;
-//       }
-//     | undefined;
-//   set<Key extends keyof T>(
-//     key: Key,
-//     value: {
-//       shouldRender: (value: T[Key]) => boolean;
-//       render: (value: NonNullable<T[Key]>) => JSX.Element;
-//     }
-//   ): this;
-// }
-// const response = new Map() as CustomMap<HomeGameFilters>;
-// response.set('year', {
-//   shouldRender(value) {
-//     return value !== undefined;
-//   },
-//   render(value) {
-//     return renderTag('filter-year', value);
-//   },
-// });
-
-// response.set('search', {
-//   shouldRender(value) {
-//     return value !== undefined && value.length > 0;
-//   },
-//   render(value) {
-//     return renderTag('tag-search', value);
-//   },
-// });
-
-// return (
-//   <Tag
-//     id="filter-year"
-//     closable
-//     onClose={() => {
-//       dispatch(resetHomeFilter('year'));
-//     }}
-//     key="filter-year"
-//     className={styles.tagsText}
-//   >
-//     {homeGameFilters.year}
-//   </Tag>
-// );
-// V1
-// const reduce = useMemo(() => {
-//   const en = Object.entries(homeGameFilters).reduce(
-//     (accumulator, currentValue) => {
-//       const [key, value] = currentValue;
-//       const h = key as keyof HomeGameFilters;
-//       const res = response.get(h);
-//       if (value && res && res.shouldRender(value)) {
-//         accumulator.push(res.render(value));
-//         // console.log('');
-//       }
-//       return accumulator;
-//     },
-//     [] as JSX.Element[]
-//   );
-//   // console.log('REDUCE = ', en);
-
-//   if (en.length > 0)
-//     return (
-//       <>
-//         <TagsTwoTone className={styles.tagsIcon} />
-
-//         {en}
-
-//         <Tag
-//           closable
-//           onClose={() => dispatch(resetHomeFilters())}
-//           className={styles.clearAll}
-//         >
-//           Clear All
-//         </Tag>
-//       </>
-//     );
-//   return <div />;
-// }, [dispatch, homeGameFilters]);

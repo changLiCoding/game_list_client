@@ -30,9 +30,7 @@ import { range } from '@/utils/utils';
 import type { SelectFilterFieldType } from '@/components/FiltersWrapper/types';
 
 import { ArrayElementType } from '@/types/global';
-import ExclusionFiltersList, {
-  MemoizedExclusionFiltersList,
-} from './ExclusionFiltersList';
+import { MemoizedExclusionFiltersList } from './ExclusionFiltersList';
 
 const { Search } = Input;
 const { useBreakpoint } = Grid;
@@ -82,7 +80,6 @@ export default function FiltersWrapper() {
   const [open, setOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
   const dispatch = useDispatch();
-  // const gameFilters = useAppSelector((state) => state.gameFilters);
   const homeGameFilters = useAppSelector((state) => state.homeGameFilters);
 
   const { data, loading } = useQuery(

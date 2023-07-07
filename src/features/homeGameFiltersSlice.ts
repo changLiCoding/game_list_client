@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-// TODO: Remove this ^
 import { StateValue, createMachine, interpret } from 'xstate';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { createGameFiltersSlice } from './gameFiltersSlice';
@@ -7,7 +5,6 @@ import { remove } from '@/utils/utils';
 import { HomeGameFilters } from './types';
 import { publish } from '@/utils/events';
 
-// TODO: Rename this
 export type CorrectFilters = Pick<
   HomeGameFilters,
   'genres' | 'platforms' | 'tags'
@@ -108,7 +105,6 @@ const stateMachine = createMachine(
     },
   },
 
-  // Look into creating shallow copies instead of updating the state directly? - https://developer.mozilla.org/en-US/docs/Glossary/Shallow_copy
   {
     actions: {
       included: (_context, event) => {
@@ -116,23 +112,19 @@ const stateMachine = createMachine(
         state[category].included.push(entry);
       },
       removeIncluded: (_context, event) => {
-        console.log('removeIncluded');
         const { category, entry, state } = event.payload;
         state[category].included = remove(state[category].included, entry);
       },
       removeExcluded: (_context, event) => {
-        console.log('removeExcluded');
         const { category, entry, state } = event.payload;
         state[category].excluded = remove(state[category].excluded, entry);
       },
       includedToExcluded: (_context, event) => {
-        console.log('removeIncluded');
         const { category, entry, state } = event.payload;
         state[category].excluded.push(entry);
         state[category].included = remove(state[category].included, entry);
       },
       excludedToIncluded: (_context, event) => {
-        console.log('removeIncluded');
         const { category, entry, state } = event.payload;
         state[category].included.push(entry);
         state[category].excluded = remove(state[category].excluded, entry);
@@ -158,11 +150,6 @@ export const createHomeGameFiltersSlice = () => {
       { entries: new Map<string, StateValue>(), included: [], excluded: [] },
     ],
   ]);
-  // const test = new Map<CorrectFiltersKeys, Map<string, StateValue>>([
-  //   ['genres', new Map<string, StateValue>()],
-  //   ['platforms', new Map<string, StateValue>()],
-  //   ['tags', new Map<string, StateValue>()],
-  // ]);
 
   return createGameFiltersSlice({
     name: 'homeGameFilters',
@@ -190,7 +177,6 @@ export const createHomeGameFiltersSlice = () => {
         */
 
         const categoryCache = entryCache.get(category);
-        console.log('cat cache ', categoryCache);
         const existingItem =
           categoryCache.entries.get(entry) ?? stateMachine.initialState;
 
@@ -250,18 +236,16 @@ export const createHomeGameFiltersSlice = () => {
         const category = action.payload;
         const categoryCache = entryCache.get(category);
 
-        categoryCache?.entries.forEach((value, key, map) => {
+        categoryCache?.entries.forEach((value, key) => {
           if (value === 'included') categoryCache?.entries.delete(key);
         });
 
         // eslint-disable-next-line no-param-reassign
         state[category].included = [];
-        // return { ...state, [filterKey]: defaultGameFilters[filterKey] };
       },
 
       // Overridden from base game filters reducer. We wan't to reset all variables excluding the sortBy filter.
       reset: (state) => {
-        // TODO: Loop through every entry in test map and clear THAT hashmap
         entryCache.forEach((e) => e.entries.clear());
         const oldState = state;
         publish('clearAll', {});
