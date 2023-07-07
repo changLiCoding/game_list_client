@@ -225,7 +225,7 @@ export default function FiltersWrapper() {
                 dispatch(toggleItem({ category: 'platforms', entry: v }));
               }}
               onClear={() => {
-                dispatch(clearCategory('genres'));
+                dispatch(clearCategory('platforms'));
               }}
             />
           </div>
