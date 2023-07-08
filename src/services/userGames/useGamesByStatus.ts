@@ -33,7 +33,7 @@ const useGamesByStatus = (): UseGamesByStatusType => {
       refetch,
     },
   ] = useLazyQuery(GET_GAMES_BY_STATUS, {
-    context: getTokenFromLocalStorage.context,
+    context: getTokenFromLocalStorage(),
   });
 
   try {
@@ -79,7 +79,7 @@ export default useGamesByStatus;
 // const useGamesByStatus = () => {
 //   const { loading: gamesByStatusForAUserLoading, data: gamesByStatusForAUser } =
 //     useQuery(GET_GAMES_BY_STATUS, {
-//       context: getTokenFromLocalStorage.context,
+//       context: getTokenFromLocalStorage(),
 //     });
 
 //   return {

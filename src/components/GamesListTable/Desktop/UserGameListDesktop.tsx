@@ -7,21 +7,23 @@ import type {
   GameDataType,
   UserGameListDataType,
 } from '@/components/GamesListTable/types';
+import { Game } from '@/graphql/__generated__/graphql';
 import ListEditor from '@/components/ListEditor';
 import useUserGameById from '@/services/userGames/useUserGameById';
-import { useAppSelector } from '@/app/hooks';
 
 function UserGameListDesktop({ data }: UserGameListDataType) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState<boolean>(false);
   const { userGameLoading, fetchUserGame } = useUserGameById();
-  const [chosenGame, setChosenGame] = useState<GameDataType>();
+
+  const [chosenGame, setChosenGame] = useState<
+    GameDataType | GameDataType | undefined | Game | null
+  >();
+
   const handleClick = async (game: GameDataType) => {
     setChosenGame(game);
     await fetchUserGame({ variables: { gameId: game.id } });
     setOpen(true);
   };
-
-  const { addedList } = useAppSelector((state) => state.addedGames);
 
   const columns: ColumnsType<GameDataType> = [
     {
@@ -101,15 +103,6 @@ function UserGameListDesktop({ data }: UserGameListDataType) {
     },
   ];
 
-  // const onChange: TableProps<DataType>['onChange'] = (
-  //   pagination,
-  //   filters,
-  //   sorter,
-  //   extra
-  // ) => {
-  //   console.log('params', pagination, filters, sorter, extra);
-  // };
-
   return (
     <>
       <Table
@@ -119,11 +112,12 @@ function UserGameListDesktop({ data }: UserGameListDataType) {
         // onChange={onChange}
       />
       <ListEditor
-        isGameAdded={addedList.includes(chosenGame?.id as string)}
+        isGameAdded={chosenGame?.isGameAdded}
         userGameLoading={userGameLoading}
         open={open}
         setOpen={setOpen}
         game={chosenGame as GameDataType}
+        setSelectedGame={setChosenGame}
       />
     </>
   );

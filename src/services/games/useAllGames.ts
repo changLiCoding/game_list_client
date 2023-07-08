@@ -1,50 +1,38 @@
 import { useQuery } from '@apollo/client';
-import { useDispatch } from 'react-redux';
-import { setAddedGames } from '@/features/addedGamesSlice';
+import { useState } from 'react';
 
 import { getTokenFromLocalStorage } from '@/constants';
 import { GET_ALL_GAMES } from './queries';
 import type { Game as GameType } from '@/graphql/__generated__/graphql';
 import { useAppSelector } from '@/app/hooks';
 
-export default function useAllGames(
-  genre: string[] = [],
-  tag: string[] = [],
-  platform: string[] = [],
-  year = -1
-) {
-  const dispatch = useDispatch();
-  const { addedList } = useAppSelector((state) => state.addedGames);
+export default function useAllGames() {
   let games: GameType[] = [];
   const errors: string[] = [];
+
+  const [tempSearch, setTempSearch] = useState<string | undefined>('');
+
+  const tokenContext = getTokenFromLocalStorage();
+  const { genres, tags, platforms, sortBy, year } = useAppSelector(
+    (state) => state.gameFilters
+  );
   const {
     data: allGames,
     loading,
     refetch,
+    fetchMore,
   } = useQuery(GET_ALL_GAMES, {
     variables: {
-      genre,
-      tag,
-      platform,
-      year: year === -1 ? null : year,
+      genre: genres,
+      tag: tags,
+      platform: platforms,
+      year,
+      sortBy,
+      search: tempSearch,
+      limit: 20,
+      offset: 0,
     },
-    ...getTokenFromLocalStorage,
-    onCompleted: (data) => {
-      const { allGames: allGamesData } = data;
-
-      if (allGamesData) {
-        allGamesData.forEach((game) => {
-          if (game.isGameAdded && !addedList.includes(game.id)) {
-            dispatch(
-              setAddedGames({
-                type: 'add',
-                gameId: game.id,
-              })
-            );
-          }
-        });
-      }
-    },
+    context: tokenContext,
   });
 
   try {
@@ -53,11 +41,37 @@ export default function useAllGames(
     }
     games = allGames?.allGames;
 
-    return { games, loading, errors, refetch };
+    return {
+      games,
+      loading,
+      errors,
+      refetch,
+      fetchMore,
+      setTempSearch,
+      tempSearch,
+    };
   } catch (error: unknown) {
     if (error instanceof Error) {
-      return error && { games, loading, errors: [error.message] };
+      return (
+        error && {
+          games,
+          loading,
+          errors: [error.message],
+          refetch,
+          fetchMore,
+          setTempSearch,
+          tempSearch,
+        }
+      );
     }
-    return { games, loading, errors: ['Unknown'], refetch };
+    return {
+      games,
+      loading,
+      errors: ['Unknown'],
+      refetch,
+      fetchMore,
+      setTempSearch,
+      tempSearch,
+    };
   }
 }

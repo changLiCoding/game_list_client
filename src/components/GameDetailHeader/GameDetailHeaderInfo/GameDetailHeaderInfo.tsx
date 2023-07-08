@@ -1,6 +1,6 @@
+import React, { useMemo, useState } from 'react';
 import { Button, Layout, Dropdown, Space } from 'antd';
 import type { MenuProps } from 'antd';
-import { useState } from 'react';
 import { HeartOutlined, DownCircleOutlined } from '@ant-design/icons';
 import { Content } from 'antd/es/layout/layout';
 import ListEditor from '@/components/ListEditor';
@@ -8,52 +8,71 @@ import styles from '@/components/GameDetailHeader/GameDetailHeaderInfo/GameDetai
 import type { GameDetailsType } from '@/components/GameDetailHeader/types';
 import useUserGameById from '@/services/userGames/useUserGameById';
 import { useAppSelector } from '@/app/hooks';
+import type { Game as GameType } from '@/graphql/__generated__/graphql';
+import useAddRemoveGameCustomHook from '@/hooks/useAddRemoveGameCustomHook';
+import useAddRemoveLike from '@/services/like/useAddRemoveLike';
+import type { GameDataType } from '@/components/GamesListTable/types';
 
-function GameDetailHeaderInfo({ game }: GameDetailsType) {
+function GameDetailHeaderInfoTemp({ game, setGame }: GameDetailsType) {
   const [open, setOpen] = useState(false);
+  const { user } = useAppSelector((state) => state.user);
 
   const { userGameLoading, fetchUserGame } = useUserGameById();
+  const { addLike, removeLike } = useAddRemoveLike();
 
-  const { addedList } = useAppSelector((state) => state.addedGames);
+  const {
+    handleAddGameHook,
+    contextHolder: handGameContextHolder,
+    handleEditUserGameStatus,
+    info,
+  } = useAddRemoveGameCustomHook();
 
-  const items: MenuProps['items'] = [
-    {
-      key: '1',
-      label: <Button type="text"> Set as Planning</Button>,
-    },
-    {
-      key: '2',
-      label: <Button type="text">Set as Playing</Button>,
-    },
-    {
-      type: 'divider',
-    },
-    {
-      key: '3',
-      label: (
-        <>
+  const items: MenuProps['items'] = useMemo(() => {
+    return ['Planning', 'Playing', 'Open List Editor'].map((item) => {
+      if (item === 'Open List Editor') {
+        return {
+          key: item,
+          label: (
+            <>
+              <Button
+                type="text"
+                onClick={(e) => {
+                  e.preventDefault();
+                  fetchUserGame({ variables: { gameId: game.id } });
+                  setOpen(!open);
+                }}
+              >
+                Open List Editor
+              </Button>
+              <ListEditor
+                isGameAdded={game.isGameAdded}
+                userGameLoading={userGameLoading}
+                open={open}
+                setOpen={setOpen}
+                game={game as GameDataType}
+                setSelectedGame={setGame}
+              />
+            </>
+          ),
+        };
+      }
+      return {
+        key: item,
+        label: (
           <Button
             type="text"
-            onClick={(e) => {
-              e.preventDefault();
-              fetchUserGame({ variables: { gameId: game.id } });
-              setOpen(!open);
+            onClick={async () => {
+              await handleEditUserGameStatus(item, game as GameType);
             }}
           >
-            Open List Editor
+            {' '}
+            Set as {item}
           </Button>
-          <ListEditor
-            isGameAdded={addedList.includes(game.id as string)}
-            userGameLoading={userGameLoading}
-            open={open}
-            setOpen={setOpen}
-            game={game}
-          />
-        </>
-      ),
-    },
-  ];
-
+        ),
+      };
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open, userGameLoading, game.isGameLiked]);
   return (
     <Layout className={styles.infoContainer}>
       <Content className={styles.infoContent}>
@@ -68,7 +87,13 @@ function GameDetailHeaderInfo({ game }: GameDetailsType) {
             )}
             <div className={styles.infoActions}>
               <Space.Compact className={styles.listActions}>
-                <Button type="primary" className={styles.add}>
+                <Button
+                  type="primary"
+                  className={styles.add}
+                  onClick={async () => {
+                    await handleAddGameHook(game as GameType);
+                  }}
+                >
                   Add to List
                 </Button>
 
@@ -83,7 +108,32 @@ function GameDetailHeaderInfo({ game }: GameDetailsType) {
                 </Dropdown>
               </Space.Compact>
               <div>
-                <Button type="primary" danger icon={<HeartOutlined />} />
+                <Button
+                  type="primary"
+                  danger={game.isGameLiked}
+                  icon={<HeartOutlined />}
+                  onClick={async () => {
+                    if (user.id === '') {
+                      info(`Please login to add this game to your liked list`);
+                      return;
+                    }
+                    if (!game.isGameLiked) {
+                      const response = await addLike(game.id as string, 'Game');
+                      setGame({ ...(response.like?.likeable as GameType) });
+
+                      info(`Game ${game.name} added to your liked list`);
+                    } else {
+                      const response = await removeLike(
+                        game.id as string,
+                        'Game'
+                      );
+
+                      setGame({ ...(response.like?.likeable as GameType) });
+
+                      info(`Game ${game.name} removed from your liked list`);
+                    }
+                  }}
+                />
               </div>
             </div>
           </div>
@@ -100,8 +150,10 @@ function GameDetailHeaderInfo({ game }: GameDetailsType) {
           </div>
         </div>
       </Content>
+      {handGameContextHolder}
     </Layout>
   );
 }
 
+const GameDetailHeaderInfo = React.memo(GameDetailHeaderInfoTemp);
 export default GameDetailHeaderInfo;

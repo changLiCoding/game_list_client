@@ -3,8 +3,8 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const config: CodegenConfig = {
-  // schema: import.meta.env.VITE_BACKEND,
   schema: process.env.VITE_BACKEND,
+
   documents: ['src/**/*.tsx', 'src/**/*.ts'],
   generates: {
     './src/graphql/__generated__/': {

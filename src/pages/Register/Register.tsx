@@ -1,14 +1,17 @@
 import { Button, Form, Input } from 'antd';
+import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './Register.module.scss';
 import WelcomeImage from '@/assets/images/register_welcome.webp';
 
 import useAuth from '@/services/authentication/useAuth';
+import { setUser } from '@/features/userSlice';
 import type { RegisterType } from './types';
 
 function Register() {
   const navigate = useNavigate();
   const { register, contextHolder, info } = useAuth();
+  const dispatch = useDispatch();
 
   const onFinish = async (values: RegisterType) => {
     const registerData = await register(
@@ -19,6 +22,7 @@ function Register() {
 
     if (registerData.token) {
       localStorage.setItem('token', registerData.token);
+      dispatch(setUser(registerData.user));
       navigate('/user-profile/overview');
     } else {
       info(registerData.errors[0]);

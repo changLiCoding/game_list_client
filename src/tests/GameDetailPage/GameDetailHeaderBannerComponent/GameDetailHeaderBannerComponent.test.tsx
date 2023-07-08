@@ -19,6 +19,8 @@ describe('GameDetailHeaderBanner', () => {
       releaseDate: '2021-01-01 00:00:00',
       avgScore: 5,
       bannerURL: 'https://example.com/banner.jpg',
+      isGameAdded: false,
+      isGameLiked: false,
     };
     render(
       <ContextWrapper>

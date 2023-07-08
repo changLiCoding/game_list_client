@@ -9,8 +9,12 @@ import userGameReducer from '@/features/userGameSlice';
 import addedGamesReducer from '@/features/addedGamesSlice';
 import homeSearchSlice from '@/features/homeSearchSlice';
 import { createGameFiltersSlice } from '@/features/gameFiltersSlice';
-import { UserGameFilters } from '@/types/global';
+
 import { createHomeGameFiltersSlice } from '@/features/homeGameFiltersSlice';
+
+import userPostSlice from '@/features/userPostSlice';
+import { UserGameFilters } from '@/types/global';
+// import gameFiltersSlice from '@/features/gameFiltersSlice';
 
 const defaultUserGameFilters: UserGameFilters = {
   genres: undefined,
@@ -40,6 +44,7 @@ const rootReducer = combineReducers({
   userGameFilters: userGameFiltersSlice.reducer,
 
   addedGames: addedGamesReducer,
+  userPost: userPostSlice,
 });
 
 export const store = configureStore({

@@ -16,18 +16,18 @@ import {
 } from '@ant-design/icons';
 import { useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useQuery } from '@apollo/client';
 import styles from '@/components/FiltersWrapper/FiltersWrapper.module.scss';
 import filterFieldStyles from '@/components/FiltersWrapper/FilterField/FilterField.module.scss';
 import { useAppSelector } from '@/app/hooks';
-import { GET_GAME_FILTERS } from '@/services/game/queries';
-import {
-  FIRST_VIDEO_GAME_RELEASED_YEAR,
-  getTokenFromLocalStorage,
-} from '@/constants';
+
+import { FIRST_VIDEO_GAME_RELEASED_YEAR } from '@/constants';
 import { clearCategory, setHomeFilter, toggleItem } from '@/app/store';
+
+import useGetFilters from '@/services/game/useGetFilters';
+
 import { range } from '@/utils/utils';
 import type { SelectFilterFieldType } from '@/components/FiltersWrapper/types';
+import useNotification from '@/hooks/useNotification';
 
 import { ArrayElementType } from '@/types/global';
 import { MemoizedExclusionFiltersList } from './ExclusionFiltersList';
@@ -57,7 +57,6 @@ function SelectFilterField<T>({
   return (
     <Select
       mode={mode}
-      style={{ width: 200 }}
       className={styles.cascaderStyle}
       value={value as T}
       allowClear
@@ -79,23 +78,21 @@ function SelectFilterField<T>({
 export default function FiltersWrapper() {
   const [open, setOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
+  const { warning, contextHolder } = useNotification();
+  const { genres, platforms, tags, year, errors, loading } = useGetFilters();
+
   const dispatch = useDispatch();
   const homeGameFilters = useAppSelector((state) => state.homeGameFilters);
 
-  const { data, loading } = useQuery(
-    GET_GAME_FILTERS,
-    getTokenFromLocalStorage
-  );
-
   const yearOptions = useMemo(() => {
     const currentYear = Math.max(
-      data?.getGameFilters.year ?? new Date().getFullYear(),
+      year ?? new Date().getFullYear(),
       FIRST_VIDEO_GAME_RELEASED_YEAR
     );
 
     const years = range(currentYear, FIRST_VIDEO_GAME_RELEASED_YEAR);
     return years;
-  }, [data?.getGameFilters.year]);
+  }, [year]);
 
   const screens = useBreakpoint();
 
@@ -111,7 +108,7 @@ export default function FiltersWrapper() {
         <>
           <MemoizedExclusionFiltersList
             title="Genres"
-            entries={data?.getGameFilters.genres ?? []}
+            entries={genres}
             states={[
               {
                 color: 'green',
@@ -127,7 +124,7 @@ export default function FiltersWrapper() {
 
           <MemoizedExclusionFiltersList
             title="Platforms"
-            entries={data?.getGameFilters.platforms ?? []}
+            entries={platforms}
             states={[
               {
                 color: 'green',
@@ -143,7 +140,7 @@ export default function FiltersWrapper() {
 
           <MemoizedExclusionFiltersList
             title="Tags"
-            entries={data?.getGameFilters.tags ?? []}
+            entries={tags}
             states={[
               {
                 color: 'green',
@@ -160,14 +157,11 @@ export default function FiltersWrapper() {
       )}
     </div>
   );
-
-  if (!data || loading) return null;
-  if (data.getGameFilters.errors.length > 0) {
-    // eslint-disable-next-line no-console
-    console.log('Errors:', data.getGameFilters.errors);
+  if (errors.length > 0) {
+    warning(`Errors: ${errors}`);
     return (
       <div>
-        <p>Errors while fetching filters: {data.getGameFilters.errors[0]}</p>
+        <p>Errors while fetching filters: {errors[0]}</p>
       </div>
     );
   }
@@ -184,7 +178,6 @@ export default function FiltersWrapper() {
             <Input
               allowClear
               className={styles.cascaderStyle}
-              style={{ width: 300 }}
               size="middle"
               prefix={<SearchOutlined />}
               value={homeGameFilters.search}
@@ -199,7 +192,7 @@ export default function FiltersWrapper() {
             <SelectFilterField<string[]>
               mode="multiple"
               value={homeGameFilters.genres.included || []}
-              options={data?.getGameFilters.genres || []}
+              options={genres}
               onSelect={(v) => {
                 dispatch(toggleItem({ category: 'genres', entry: v }));
               }}
@@ -217,7 +210,7 @@ export default function FiltersWrapper() {
             <SelectFilterField<string[]>
               mode="multiple"
               value={homeGameFilters.platforms.included || []}
-              options={data?.getGameFilters.platforms || []}
+              options={platforms}
               onSelect={(v) => {
                 dispatch(toggleItem({ category: 'platforms', entry: v }));
               }}
@@ -235,7 +228,7 @@ export default function FiltersWrapper() {
             <SelectFilterField<string[]>
               mode="multiple"
               value={homeGameFilters.tags.included || []}
-              options={data?.getGameFilters.tags || []}
+              options={tags}
               onSelect={(v) => {
                 dispatch(toggleItem({ category: 'tags', entry: v }));
               }}
@@ -299,6 +292,7 @@ export default function FiltersWrapper() {
           </Button>
         </Space>
       )}
+      {contextHolder}
     </Layout>
   );
 }

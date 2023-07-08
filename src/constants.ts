@@ -1,11 +1,20 @@
 export const FIRST_VIDEO_GAME_RELEASED_YEAR = 1958;
 
-export const getTokenFromLocalStorage = {
-  context: {
+// export const getTokenFromLocalStorage = {
+//   context: {
+//     headers: {
+//       Authorization: `Bearer ${localStorage.getItem('token')}`,
+//     },
+//   },
+// };
+
+export const getTokenFromLocalStorage = () => {
+  const authToken = localStorage.getItem('token');
+  return {
     headers: {
-      Authorization: `Bearer ${localStorage.getItem('token')}`,
+      Authorization: authToken ? `Bearer ${authToken}` : '',
     },
-  },
+  };
 };
 
 export const INITIAL_USER_STATE = {

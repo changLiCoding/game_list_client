@@ -5,8 +5,10 @@ function FollowLinks({
   selectedFilter,
   setSelectedFilter,
 }: {
-  selectedFilter: string;
-  setSelectedFilter: React.Dispatch<React.SetStateAction<string>>;
+  selectedFilter: 'Followings' | 'Followers';
+  setSelectedFilter: React.Dispatch<
+    React.SetStateAction<'Followings' | 'Followers'>
+  >;
 }) {
   return (
     <div>

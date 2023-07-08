@@ -1,4 +1,4 @@
-import { describe, it } from 'vitest';
+import { describe, it, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 
 import ContextWrapper from '@/ContextWrapper';
@@ -20,11 +20,15 @@ describe('GameDetailHeader', () => {
       releaseDate: '2021-01-01 00:00:00',
       avgScore: 5,
       bannerURL: 'https://example.com/banner.jpg',
+      isGameAdded: false,
+      isGameLiked: false,
     };
+
+    const setGameMock = vi.fn();
     render(
       <ContextWrapper>
         <GameDetailHeaderBanner game={game} />
-        <GameDetailHeaderInfo game={game} />
+        <GameDetailHeaderInfo game={game} setGame={setGameMock} />
       </ContextWrapper>
     );
 
