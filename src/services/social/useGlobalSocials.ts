@@ -52,7 +52,7 @@ const useGlobalSocials = (): UseGlobalSocialsType => {
       socials,
       loading,
       refetch,
-      fetchMore: fetchMore as UseGlobalSocialsType['fetchMore'], // Type assertion
+      fetchMore: fetchMore as UseGlobalSocialsType['fetchMore'],
     };
   } catch (error: unknown) {
     if (error instanceof Error) {
@@ -62,7 +62,7 @@ const useGlobalSocials = (): UseGlobalSocialsType => {
         socials,
         loading,
         refetch,
-        fetchMore: fetchMore as UseGlobalSocialsType['fetchMore'], // Type assertion
+        fetchMore: fetchMore as UseGlobalSocialsType['fetchMore'],
       };
     }
     data.getGlobalSocials.errors = ['Unknown error'];
@@ -72,7 +72,7 @@ const useGlobalSocials = (): UseGlobalSocialsType => {
         : [],
       loading,
       refetch,
-      fetchMore: fetchMore as UseGlobalSocialsType['fetchMore'], // Type assertion
+      fetchMore: fetchMore as UseGlobalSocialsType['fetchMore'],
     };
   }
 };

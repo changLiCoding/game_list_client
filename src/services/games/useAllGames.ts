@@ -6,7 +6,16 @@ import { GET_ALL_GAMES } from './queries';
 import type { Game as GameType } from '@/graphql/__generated__/graphql';
 import { useAppSelector } from '@/app/hooks';
 
-export default function useAllGames() {
+export default function useAllGames(
+  genresParam?: string[],
+  tagsParam?: string[],
+  platformsParam?: string[],
+  yearParam?: number,
+  sortByParam?: string,
+  searchParam?: string,
+  limitParam?: number,
+  offsetParam?: number
+) {
   let games: GameType[] = [];
   const errors: string[] = [];
 
@@ -23,14 +32,14 @@ export default function useAllGames() {
     fetchMore,
   } = useQuery(GET_ALL_GAMES, {
     variables: {
-      genre: genres,
-      tag: tags,
-      platform: platforms,
-      year,
-      sortBy,
-      search: tempSearch,
-      limit: 20,
-      offset: 0,
+      genre: genresParam?.length ? genresParam : genres,
+      tag: tagsParam || tags,
+      platform: platformsParam || platforms,
+      year: yearParam || year,
+      sortBy: sortByParam || sortBy,
+      search: searchParam || tempSearch,
+      limit: limitParam || 10,
+      offset: offsetParam || 0,
     },
     context: tokenContext,
   });
