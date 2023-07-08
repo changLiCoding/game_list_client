@@ -10,15 +10,13 @@ function Activities() {
   } = useGlobalSocials();
 
   return (
-    <div>
-      <ListActivities
-        socials={socials}
-        loading={loadingSocials}
-        refetch={refetch}
-        fetchMore={fetchMore}
-        fetchLimitation={15}
-      />
-    </div>
+    <ListActivities
+      socials={socials}
+      loading={loadingSocials}
+      refetch={refetch}
+      fetchMore={fetchMore}
+      fetchLimitation={15}
+    />
   );
 }
 

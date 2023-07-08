@@ -1,19 +1,23 @@
 import React from 'react';
+import { Layout } from 'antd';
 import styles from '@/pages/Forum/Forum.module.scss';
 
 import Activities from '@/components/Activities';
 import Trend from '@/components/Trend';
 
 function Forum() {
+  const { Content } = Layout;
   return (
-    <div className={styles.pageContainer}>
-      <div className={styles.forumContainer}>
-        <div className={styles.forum}>
-          <Activities />
-          <Trend />
+    <Layout>
+      <Content>
+        <div className={styles.forumContainer}>
+          <div className={styles.forum}>
+            <Activities />
+            <Trend />
+          </div>
         </div>
-      </div>
-    </div>
+      </Content>
+    </Layout>
   );
 }
 
