@@ -14,7 +14,7 @@ export default function useAllGames() {
 
   const tokenContext = getTokenFromLocalStorage();
   const { genres, tags, platforms, sortBy, year } = useAppSelector(
-    (state) => state.gameFilters
+    (state) => state.homeGameFilters
   );
   const {
     data: allGames,
