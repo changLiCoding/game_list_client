@@ -21,6 +21,7 @@ export type ListActivitiesProps = {
     TFetchVars extends OperationVariables = {
       limit: number;
       offset: number;
+      type?: string | undefined;
     }
   >(
     fetchMoreOptions: FetchMoreQueryOptions<TFetchVars, TFetchData> & {

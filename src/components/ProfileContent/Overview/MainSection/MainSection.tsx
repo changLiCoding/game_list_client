@@ -16,7 +16,7 @@ function MainSection({
     loading: loadingSocials,
     refetch,
     fetchMore,
-  } = useGlobalSocials();
+  } = useGlobalSocials('private');
 
   if (gamesByStatusForAUserLoading) return <div>Loading...</div>;
 

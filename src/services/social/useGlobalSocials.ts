@@ -20,6 +20,7 @@ type UseGlobalSocialsType = {
     TFetchVars extends OperationVariables = {
       limit: number;
       offset: number;
+      type?: string | undefined;
     }
   >(
     fetchMoreOptions: FetchMoreQueryOptions<TFetchVars, TFetchData> & {
@@ -34,11 +35,12 @@ type UseGlobalSocialsType = {
   ) => Promise<ApolloQueryResult<TFetchData>>;
 };
 
-const useGlobalSocials = (): UseGlobalSocialsType => {
+const useGlobalSocials = (typeParam?: string): UseGlobalSocialsType => {
   const { data, loading, refetch, fetchMore } = useQuery(GET_GLOBAL_SOCIALS, {
     variables: {
       limit: 5,
       offset: 0,
+      type: typeParam || undefined,
     },
     context: getTokenFromLocalStorage(),
   });
