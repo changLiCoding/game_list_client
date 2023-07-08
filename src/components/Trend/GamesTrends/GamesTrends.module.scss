@@ -1,0 +1,53 @@
+@use '../../../styles/variables.scss' as variables;
+@use '../../../styles/mixin.scss' as mixin;
+
+.trendHeader {
+  margin-bottom: 10px;
+  padding-left: 12px;
+  transition: 0.2s;
+}
+
+.trendBody {
+  background: variables.$color-foreground;
+  border-radius: 4px;
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: repeat(auto-fill, 85px);
+  grid-template-rows: repeat(auto-fill, 115px);
+  margin-bottom: 25px;
+  min-width: 0;
+  padding: 20px;
+  width: 100%;
+
+  @include mixin.loginTablet {
+    -webkit-overflow-scrolling: touch;
+    overflow-x: auto;
+    white-space: nowrap;
+    display: block;
+    background: 0 0;
+    padding: 0;
+  }
+
+  .trendGameCard {
+    background: variables.$color-foreground;
+    border-radius: 3px;
+    display: inline-grid;
+    grid-template-columns: 85px auto;
+    height: 115px;
+    max-height: 115px;
+    margin-right: 0;
+    margin-bottom: 0;
+    @include mixin.loginTablet {
+      margin-right: 25px;
+      max-width: 400px;
+      min-width: 250px;
+      white-space: normal;
+      width: 255px;
+    }
+
+    @include mixin.desktop {
+      position: relative;
+      width: 85px;
+    }
+  }
+}

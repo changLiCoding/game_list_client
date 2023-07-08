@@ -1,5 +1,4 @@
 import React from 'react';
-import styles from '@/components/Trend/Trend.module.scss';
 
 import useAllGames from '@/services/games/useAllGames';
 import GamesTrends from '@/components/Trend/GamesTrends/GamesTrends';
@@ -31,13 +30,17 @@ function Trend() {
   console.log(mostPlayedGames);
   return (
     <div>
-      <div className={styles.trend}>
-        {bestsLoading ? <div>Loading</div> : <GamesTrends games={bestGames} />}
+      <div>
+        {bestsLoading ? (
+          <div>Loading</div>
+        ) : (
+          <GamesTrends title="Highest Rating" games={bestGames} />
+        )}
 
         {mostPlayedLoading ? (
           <div>Loading</div>
         ) : (
-          <GamesTrends games={mostPlayedGames} />
+          <GamesTrends title="Mosted Played" games={mostPlayedGames} />
         )}
       </div>
     </div>
