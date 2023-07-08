@@ -29,6 +29,7 @@ function MainSection({
         loading={loadingSocials}
         refetch={refetch}
         fetchMore={fetchMore}
+        type="private"
       />
     </div>
   );

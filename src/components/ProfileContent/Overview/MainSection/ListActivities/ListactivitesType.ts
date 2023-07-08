@@ -35,4 +35,5 @@ export type ListActivitiesProps = {
     }
   ) => Promise<ApolloQueryResult<TFetchData>>;
   fetchLimitation: number;
+  type?: string;
 };

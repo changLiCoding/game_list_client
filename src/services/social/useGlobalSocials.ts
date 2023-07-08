@@ -45,6 +45,8 @@ const useGlobalSocials = (typeParam?: string): UseGlobalSocialsType => {
     context: getTokenFromLocalStorage(),
   });
 
+  console.log(typeParam);
+
   try {
     if (!data || !data.getGlobalSocials) {
       throw new Error('Error getting socials');

@@ -15,6 +15,7 @@ function ListActivities({
   refetch,
   fetchMore,
   fetchLimitation,
+  type,
 }: ListActivitiesProps) {
   const dispatch = useAppDispatch();
 
@@ -80,6 +81,7 @@ function ListActivities({
         fetchLimitation={fetchLimitation}
         socials={socials}
         fetchMore={fetchMore}
+        type={type}
       />
     </div>
   );

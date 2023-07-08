@@ -20,6 +20,7 @@ function ActivitiesUpdates({
   fetchMore,
   socials,
   fetchLimitation,
+  type,
 }: {
   socials: (StatusUpdateType | PostType)[];
   fetchMore: <
@@ -42,6 +43,7 @@ function ActivitiesUpdates({
     }
   ) => Promise<ApolloQueryResult<TFetchData>>;
   fetchLimitation: number;
+  type?: string | undefined;
 }) {
   const { addLike, removeLike } = useAddRemoveLike();
   const userState = useAppSelector((state) => state.user.user);
@@ -53,6 +55,7 @@ function ActivitiesUpdates({
       variables: {
         limit: fetchLimitation + socialsLength,
         offset: socialsLength,
+        type,
       },
       updateQuery: (prev, { fetchMoreResult }) => {
         if (!fetchMoreResult) return prev;
