@@ -11,12 +11,10 @@ function GamesTrends({ games, title }: { games: GameType[]; title: string }) {
       <div className={styles.trendBody}>
         {games.map((game) => (
           <div className={styles.trendGameCard} key={game.id}>
-            <a
-              href={`/game-detail/${game.id}/${game.name}`}
+            <Link
+              to={`/game-detail/${game.id}/${game.name}`}
               style={{ backgroundImage: `url(${game.imageURL})` }}
-            >
-              <Link to={`/game-detail/${game.id}/${game.name}`} />
-            </a>
+            />
             <div className={styles.trendContent}>
               <a href={`/game-detail/${game.id}/${game.name}`}>{game.name}</a>
               <div className={styles.trendInfo}>

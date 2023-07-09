@@ -26,8 +26,6 @@ function Trend() {
     0
   );
 
-  console.log(bestGames);
-  console.log(mostPlayedGames);
   return (
     <div>
       <div>

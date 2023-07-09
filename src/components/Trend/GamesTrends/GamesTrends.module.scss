@@ -5,6 +5,11 @@
   margin-bottom: 10px;
   padding-left: 12px;
   transition: 0.2s;
+  h2 {
+    color: variables.$color-text;
+    font-size: 18px;
+    font-weight: 500;
+  }
 }
 
 .trendBody {

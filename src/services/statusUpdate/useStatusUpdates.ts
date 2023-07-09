@@ -25,7 +25,7 @@ type StatusUpdateReturnType = {
 };
 
 const useStatusUpdates = (): StatusUpdateReturnType => {
-  const [getAllStatusUpdatesForAUser, { data, loading, refetch, fetchMore }] =
+  const [getAllStatusUpdatesForAUser, { data, loading, refetch }] =
     useLazyQuery(GET_ALL_STATUS_UPDATES_FOR_A_USER, {
       context: getTokenFromLocalStorage(),
     });
@@ -40,7 +40,6 @@ const useStatusUpdates = (): StatusUpdateReturnType => {
       statusUpdates,
       loading,
       refetch,
-      fetchMore,
     };
   } catch (error: unknown) {
     if (error instanceof Error) {
@@ -53,7 +52,6 @@ const useStatusUpdates = (): StatusUpdateReturnType => {
         statusUpdates,
         loading,
         refetch,
-        fetchMore,
       };
     }
     data.getAllStatusUpdatesForAUser.errors = ['Unknown error'];
@@ -64,7 +62,6 @@ const useStatusUpdates = (): StatusUpdateReturnType => {
         : [],
       loading,
       refetch,
-      fetchMore,
     };
   }
 };
