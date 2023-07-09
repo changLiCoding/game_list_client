@@ -38,7 +38,7 @@ export default function useAllGames(
       year: yearParam || year,
       sortBy: sortByParam || sortBy,
       search: searchParam || tempSearch,
-      limit: limitParam || 10,
+      limit: limitParam || 20,
       offset: offsetParam || 0,
     },
     context: tokenContext,
