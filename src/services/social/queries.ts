@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
 export const GET_GLOBAL_SOCIALS = gql`
-  query GetGlobalSocials($limit: Int, $offset: Int) {
-    getGlobalSocials(limit: $limit, offset: $offset) {
+  query GetGlobalSocials($limit: Int, $offset: Int, $type: String) {
+    getGlobalSocials(limit: $limit, offset: $offset, type: $type) {
       ... on Post {
         id
         userId

@@ -175,6 +175,10 @@ export default function Navbar() {
                     <li className={styles['desktop-nav__nav-item']}>
                       <Link to="/user-profile/game-list">Game List</Link>
                     </li>
+
+                    <li className={styles['desktop-nav__nav-item']}>
+                      <Link to="/forum">Forum</Link>
+                    </li>
                   </ul>
 
                   <ul className={styles['desktop-nav__nav-section']}>
