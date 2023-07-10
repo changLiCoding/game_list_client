@@ -1,7 +1,7 @@
 import { TagsTwoTone } from '@ant-design/icons';
 import { Tag } from 'antd';
 import { useDispatch } from 'react-redux';
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 import styles from '@/components/AllGames/InfoBar/FilterTags/FilterTags.module.scss';
 
 import { useAppSelector } from '@/app/hooks';
@@ -13,23 +13,23 @@ type FilterType = {
   render: () => JSX.Element;
 };
 
+function renderTag(tag: string, value: any, onClose: () => void) {
+  return (
+    <Tag
+      key={`${tag}-${value}`}
+      id={tag}
+      closable
+      onClose={onClose}
+      className={styles.tagsText}
+    >
+      {value}
+    </Tag>
+  );
+}
+
 function FilterTags() {
   const dispatch = useDispatch();
   const homeGameFilters = useAppSelector((state) => state.homeGameFilters);
-
-  function renderTag(tag: string, value: any, onClose: () => void) {
-    return (
-      <Tag
-        id={tag}
-        closable
-        onClose={onClose}
-        key={tag}
-        className={styles.tagsText}
-      >
-        {value}
-      </Tag>
-    );
-  }
 
   const neverChange = useMemo(() => {
     const arrTest: FilterType[] = [
@@ -48,7 +48,6 @@ function FilterTags() {
         },
       },
       // Genres
-      // renderIncludeExclude('filter-genres', 'genres', dispatch),
       {
         shouldRender() {
           return (
@@ -59,30 +58,29 @@ function FilterTags() {
         },
         render() {
           return (
-            <>
-              {homeGameFilters.genres.included.length > 0 &&
-                homeGameFilters.genres.included.map((e) =>
-                  renderTag(`included-${e}`, e, () => {
-                    dispatch(
-                      removeItem({
-                        category: 'genres',
-                        entry: e,
-                      })
-                    );
-                  })
-                )}
-              {homeGameFilters.genres.excluded.length > 0 &&
-                homeGameFilters.genres.excluded.map((e) =>
-                  renderTag(`excluded-${e}`, `-${e}`, () => {
-                    dispatch(
-                      removeItem({
-                        category: 'genres',
-                        entry: e,
-                      })
-                    );
-                  })
-                )}
-            </>
+            <React.Fragment key="filter-genres">
+              {homeGameFilters.genres.included.map((e) =>
+                renderTag(`genres-included`, e, () => {
+                  dispatch(
+                    removeItem({
+                      category: 'genres',
+                      entry: e,
+                    })
+                  );
+                })
+              )}
+
+              {homeGameFilters.genres.excluded.map((e) =>
+                renderTag(`genres-excluded`, `-${e}`, () => {
+                  dispatch(
+                    removeItem({
+                      category: 'genres',
+                      entry: e,
+                    })
+                  );
+                })
+              )}
+            </React.Fragment>
           );
         },
       },
@@ -98,7 +96,7 @@ function FilterTags() {
         },
         render() {
           return (
-            <>
+            <React.Fragment key="filter-platforms">
               {homeGameFilters.platforms.included.length > 0 &&
                 homeGameFilters.platforms.included.map((e) =>
                   renderTag(`included-${e}`, e, () => {
@@ -112,7 +110,7 @@ function FilterTags() {
                 )}
               {homeGameFilters.platforms.excluded.length > 0 &&
                 homeGameFilters.platforms.excluded.map((e) =>
-                  renderTag(`excluded-${e}`, `-${e}`, () => {
+                  renderTag(`platforms-excluded`, `-${e}`, () => {
                     dispatch(
                       removeItem({
                         category: 'platforms',
@@ -121,11 +119,11 @@ function FilterTags() {
                     );
                   })
                 )}
-            </>
+            </React.Fragment>
           );
         },
       },
-
+      // Tags
       {
         shouldRender() {
           return (
@@ -136,10 +134,10 @@ function FilterTags() {
         },
         render() {
           return (
-            <>
+            <React.Fragment key="filter-tags">
               {homeGameFilters.tags.included.length > 0 &&
                 homeGameFilters.tags.included.map((e) =>
-                  renderTag(`included-${e}`, e, () => {
+                  renderTag(`tags-included`, e, () => {
                     dispatch(
                       removeItem({
                         category: 'tags',
@@ -150,7 +148,7 @@ function FilterTags() {
                 )}
               {homeGameFilters.tags.excluded.length > 0 &&
                 homeGameFilters.tags.excluded.map((e) =>
-                  renderTag(`excluded-${e}`, `-${e}`, () => {
+                  renderTag(`tags-excluded`, `-${e}`, () => {
                     dispatch(
                       removeItem({
                         category: 'tags',
@@ -159,11 +157,10 @@ function FilterTags() {
                     );
                   })
                 )}
-            </>
+            </React.Fragment>
           );
         },
       },
-
       // Year
       {
         shouldRender() {
@@ -190,7 +187,9 @@ function FilterTags() {
   // V2
   const reduce = useMemo(() => {
     const elements = neverChange
-      .filter((e) => e.shouldRender())
+      .filter((e) => {
+        return e.shouldRender();
+      })
       .map((e) => e.render());
 
     if (elements.length > 0)
@@ -201,6 +200,7 @@ function FilterTags() {
           {elements}
 
           <Tag
+            key="literally something else?"
             closable
             onClose={() => dispatch(resetHomeFilters())}
             className={styles.clearAll}
