@@ -15,16 +15,13 @@ export const DELETE_USER_GAMES = gql`
           id
           name
           description
-          bannerURL
           imageURL
+          bannerURL
           releaseDate
           avgScore
-          totalRating
           genres
-          tags
           platforms
-          isGameAdded
-          isGameLiked
+          tags
         }
       }
       errors
@@ -47,16 +44,13 @@ export const ADD_USER_GAMES = gql`
           id
           name
           description
-          bannerURL
           imageURL
+          bannerURL
           releaseDate
           avgScore
-          totalRating
           genres
-          tags
           platforms
-          isGameAdded
-          isGameLiked
+          tags
         }
       }
       errors
@@ -70,16 +64,13 @@ export const GAMES_FOR_A_USER = gql`
       id
       name
       description
-      bannerURL
       imageURL
+      bannerURL
       releaseDate
       avgScore
-      totalRating
       genres
-      tags
       platforms
-      isGameAdded
-      isGameLiked
+      tags
     }
   }
 `;
@@ -106,92 +97,61 @@ export const GET_GAMES_BY_STATUS = gql`
       playing {
         id
         name
-        description
-        bannerURL
         imageURL
-        releaseDate
         avgScore
-        totalRating
-        genres
-        tags
         platforms
-        isGameAdded
-        isGameLiked
+        tags
+        genres
+        releaseDate
       }
       planning {
         id
         name
-        description
-        bannerURL
         imageURL
-        releaseDate
         avgScore
-        totalRating
-        genres
-        tags
         platforms
-        isGameAdded
-        isGameLiked
+        tags
+        genres
+        releaseDate
       }
       completed {
         id
         name
-        description
-        bannerURL
         imageURL
-        releaseDate
         avgScore
-        totalRating
-        genres
-        tags
         platforms
-        isGameAdded
-        isGameLiked
+        tags
+        genres
+        releaseDate
       }
       paused {
         id
         name
-        description
-        bannerURL
         imageURL
-        releaseDate
         avgScore
-        totalRating
-        genres
-        tags
         platforms
-        isGameAdded
-        isGameLiked
+        tags
+        genres
+        releaseDate
       }
       dropped {
         id
         name
-        description
-        bannerURL
         imageURL
-        releaseDate
         avgScore
-        totalRating
-        genres
-        tags
         platforms
-        isGameAdded
-        isGameLiked
+        tags
+        genres
+        releaseDate
       }
       justAdded {
         id
         name
-        description
-        bannerURL
         imageURL
-        releaseDate
         avgScore
-        totalRating
-        genres
-        tags
         platforms
-        isGameAdded
-        isGameLiked
+        tags
+        genres
       }
       playingCount
       planningCount
@@ -222,17 +182,6 @@ export const EDIT_USER_GAME_BY_GAME_ID = gql`
         game {
           id
           name
-          description
-          bannerURL
-          imageURL
-          releaseDate
-          avgScore
-          totalRating
-          genres
-          tags
-          platforms
-          isGameAdded
-          isGameLiked
         }
       }
       errors

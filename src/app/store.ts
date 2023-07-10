@@ -3,25 +3,14 @@ import {
   combineReducers,
   configureStore,
 } from '@reduxjs/toolkit';
-import { setupListeners } from '@reduxjs/toolkit/query';
 import userReducer from '@/features/userSlice';
 import userGamesListReducer from '@/features/userGamesListSlice';
 import userGameReducer from '@/features/userGameSlice';
 import addedGamesReducer from '@/features/addedGamesSlice';
 import homeSearchSlice from '@/features/homeSearchSlice';
 import { createGameFiltersSlice } from '@/features/gameFiltersSlice';
-import userPostSlice from '@/features/userPostSlice';
-import { HomeGameFilters, UserGameFilters } from '@/types/global';
-// import gameFiltersSlice from '@/features/gameFiltersSlice';
-
-const defaultGameFilters: HomeGameFilters = {
-  genres: [],
-  platforms: [],
-  tags: [],
-  year: undefined,
-  search: '',
-  sortBy: 'name',
-};
+import { UserGameFilters } from '@/types/global';
+import { createHomeGameFiltersSlice } from '@/features/homeGameFiltersSlice';
 
 const defaultUserGameFilters: UserGameFilters = {
   genres: undefined,
@@ -33,14 +22,13 @@ const defaultUserGameFilters: UserGameFilters = {
   selectedList: 'all',
 };
 
-const gameFiltersSlice = createGameFiltersSlice<HomeGameFilters>(
-  'gameFiltersSlice',
-  defaultGameFilters
-);
-const userGameFiltersSlice = createGameFiltersSlice<UserGameFilters>(
-  'userGameFiltersSlice',
-  defaultUserGameFilters
-);
+const userGameFiltersSlice = createGameFiltersSlice({
+  name: 'userGameFiltersSlice',
+  initialState: defaultUserGameFilters,
+  reducers: {},
+});
+
+const homeGameFiltersSlice = createHomeGameFiltersSlice();
 
 const rootReducer = combineReducers({
   user: userReducer,
@@ -48,12 +36,10 @@ const rootReducer = combineReducers({
   userGame: userGameReducer,
   homeSearch: homeSearchSlice,
 
-  // gameFilters: gameFiltersSlice,
-  gameFilters: gameFiltersSlice.reducer,
+  homeGameFilters: homeGameFiltersSlice.reducer,
   userGameFilters: userGameFiltersSlice.reducer,
 
   addedGames: addedGamesReducer,
-  userPost: userPostSlice,
 });
 
 export const store = configureStore({
@@ -72,14 +58,17 @@ export type RootState = ReturnType<typeof rootReducer>;
 export type AppStore = ReturnType<typeof setupStore>;
 
 export const {
-  setFilters: setGameFilters,
-  resetFilter: resetGameFilter,
-  reset: resetGameFilters,
-} = gameFiltersSlice.actions;
+  incrementItem,
+  toggleItem,
+  removeItem,
+  clearCategory,
+  setFilters: setHomeFilter,
+  resetFilter: resetHomeFilter,
+  reset: resetHomeFilters,
+} = homeGameFiltersSlice.actions;
+
 export const {
   setFilters: setUserGameFilters,
   resetFilter: resetUserGameFilter,
   reset: resetUserGameFilters,
 } = userGameFiltersSlice.actions;
-
-setupListeners(store.dispatch);

@@ -61,7 +61,7 @@ describe('Navbar on Desktop', () => {
     expect(getByText('Profile')).toBeDefined();
     expect(getByText('Game List')).toBeDefined();
     expect(userProfile.getAttribute('src')).toEqual(
-      'https://loremflickr.com/300/300/game'
+      'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
     );
 
     await userEvent.hover(userProfile);

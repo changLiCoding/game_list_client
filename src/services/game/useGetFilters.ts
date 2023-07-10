@@ -3,7 +3,7 @@ import { getTokenFromLocalStorage } from '@/constants';
 import { GET_GAME_FILTERS } from './queries';
 
 export default function useGetFilters() {
-  const { data } = useQuery(GET_GAME_FILTERS, {
+  const { data, loading } = useQuery(GET_GAME_FILTERS, {
     context: getTokenFromLocalStorage(),
   });
 
@@ -23,5 +23,5 @@ export default function useGetFilters() {
     ? data.getGameFilters.errors
     : [];
 
-  return { genres, platforms, tags, year, errors };
+  return { genres, platforms, tags, year, errors, loading };
 }

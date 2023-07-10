@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
+import { useDispatch } from 'react-redux';
 import { StrictModeDroppable } from './StrictModeDroppable';
 import type {
   StatusContentType,
@@ -7,7 +8,7 @@ import type {
 } from '@/components/UserListFilterColumn/types';
 import StatusItem from '@/components/UserListFilterColumn/Desktop/StatusItem';
 import { setLocalListOrder } from '@/features/userGamesListSlice';
-import { useAppSelector, useAppDispatch } from '@/app/hooks';
+import { useAppSelector } from '@/app/hooks';
 
 const reorder = (
   list: StatusListType,
@@ -22,7 +23,7 @@ const reorder = (
 };
 
 function ReorderLists() {
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
   const listState = useAppSelector((state) => state.userGames.localListOrder);
 
   const formattedListState = listState.map((item) => ({

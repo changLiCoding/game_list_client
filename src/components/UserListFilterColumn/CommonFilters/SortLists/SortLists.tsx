@@ -1,9 +1,10 @@
 import { useMemo } from 'react';
 import { Select } from 'antd';
+import { useDispatch } from 'react-redux';
 import styles from './SortListsStyle.module.scss';
 import type { UserGameFiltersSortType } from '@/types/global';
 import { setUserGameFilters } from '@/app/store';
-import { useAppSelector, useAppDispatch } from '@/app/hooks';
+import { useAppSelector } from '@/app/hooks';
 
 type SortItemsListType = {
   label: string;
@@ -12,7 +13,7 @@ type SortItemsListType = {
 
 function SortLists() {
   const gameFilters = useAppSelector((state) => state.userGameFilters);
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
 
   const sortItemsList: SortItemsListType[] = useMemo(() => {
     return [

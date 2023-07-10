@@ -7,21 +7,23 @@ export const GET_ALL_GAMES: TypedDocumentNode<{ allGames: Game[] }, void> = gql`
     $genre: [String!]
     $tag: [String!]
     $platform: [String!]
+    $excludedPlatforms: [String!]
+    $excludedGenres: [String!]
+    $excludedTags: [String!]
     $year: Int
     $search: String
     $sortBy: String
-    $limit: Int
-    $offset: Int
   ) {
     allGames(
       genre: $genre
       tag: $tag
       platform: $platform
+      excludedPlatforms: $excludedPlatforms
+      excludedGenres: $excludedGenres
+      excludedTags: $excludedTags
       year: $year
       search: $search
       sortBy: $sortBy
-      limit: $limit
-      offset: $offset
     ) {
       id
       name
@@ -35,7 +37,6 @@ export const GET_ALL_GAMES: TypedDocumentNode<{ allGames: Game[] }, void> = gql`
       tags
       platforms
       isGameAdded
-      isGameLiked
     }
   }
 `;

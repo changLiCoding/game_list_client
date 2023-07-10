@@ -1,69 +1,32 @@
 import { useParams } from 'react-router-dom';
 import { Layout } from 'antd';
 import { Content } from 'antd/es/layout/layout';
-import { useEffect, useState } from 'react';
-import useNotification from '@/hooks/useNotification';
-import useGetGameById from '@/services/game/useGetGameById';
 import type { Game as GameType } from '@/graphql/__generated__/graphql';
-import type { GameDataType } from '@/components/GamesListTable/types';
+import useAllGames from '@/services/games/useAllGames';
 import GameDetailHeader from '@/components/GameDetailHeader';
 
-function GameDetail(): JSX.Element {
-  const { warning, contextHolder } = useNotification();
+function GameDetail() {
   const { id } = useParams();
   const {
-    game: gameFromHook,
-    getGame,
-    error: errorFromHook,
-    getGameFromFragment,
-  } = useGetGameById();
+    games: gamesState,
+    loading,
+  }: { games: GameType[]; loading: boolean } = useAllGames();
 
-  // THIS SETGAME IS NOT THE SAME AS THE ONE IN THE HOOK. INSTEAD IT IS FOR RETRIEVING THE GAME FROM THE FRAGMENT
-  // ALSO TRIGGER RE-RENDERING OF THE COMPONENT WHEN LISTEDITOR IS SET OPEN
-  const [game, setGame] = useState<GameType | null | undefined | GameDataType>(
-    null
-  );
+  if (loading) return <div>Loading...</div>;
 
-  useEffect(() => {
-    const tempGame: GameType | null = getGameFromFragment(id as string);
+  const game = gamesState.find((gameEle: GameType) => gameEle.id === id);
 
-    const fetchGame = async () => {
-      try {
-        if (tempGame) {
-          setGame(tempGame);
-        } else {
-          await getGame(id as string);
-        }
-      } catch (error) {
-        if (error instanceof Error) {
-          warning(error.message as string);
-        }
-      }
-    };
-
-    if (id) {
-      fetchGame();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
-
-  if (!game && !gameFromHook) {
-    return (
-      <Layout>
-        <Content>
-          <div>{errorFromHook?.message}</div>
-          <div>Game not found</div>
-        </Content>
-      </Layout>
-    );
-  }
-
-  return (
+  return game !== undefined ? (
     <Layout>
       <Content>
-        <GameDetailHeader game={game || gameFromHook} setGame={setGame} />
+        <GameDetailHeader game={game} />
       </Content>
-      {contextHolder}
+    </Layout>
+  ) : (
+    <Layout>
+      <Content>
+        <div>Game not found</div>
+      </Content>
     </Layout>
   );
 }

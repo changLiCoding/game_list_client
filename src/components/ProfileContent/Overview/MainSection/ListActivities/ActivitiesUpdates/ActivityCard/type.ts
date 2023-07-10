@@ -1,16 +1,15 @@
 import {
   StatusUpdate as StatusUpdateType,
-  Post as PostType,
   AddLikeToLikeablePayload,
   RemoveLikeFromLikeablePayload,
 } from '@/graphql/__generated__/graphql';
 
 export type ActivityCardProps = {
   isCurrentLiked: boolean;
-  activity: PostType | StatusUpdateType;
+  statusUpdate: StatusUpdateType;
   daysElapsed: number;
   hoursElapsed: number;
-  currentUserId: string;
+  updateText: JSX.Element;
   addLike: (
     likeableId: string,
     likeableType: string

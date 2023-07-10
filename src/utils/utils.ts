@@ -1,4 +1,5 @@
-export function remove<T>(array: T[], item: T): T[] {
+export function remove<T>(array: T[] | undefined, item: T): T[] {
+  if (!array) return [];
   return array.filter((element) => element !== item);
 }
 

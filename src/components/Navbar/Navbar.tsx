@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback } from 'react';
+import { useState } from 'react';
 import { Drawer, Popover, Grid } from 'antd';
 import {
   EnterOutlined,
@@ -6,40 +6,28 @@ import {
   SettingOutlined,
   UserOutlined,
 } from '@ant-design/icons';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { useAppDispatch } from '@/app/hooks';
+import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 import useTokenAuth from '@/hooks/useTokenAuth';
 import { setUser } from '@/features/userSlice';
-import { setUserGameReducer } from '@/features/userGameSlice';
 import { INITIAL_USER_STATE } from '@/constants';
 import styles from './Navbar.module.scss';
-import { apolloClient } from '@/graphql';
 
 const { useBreakpoint } = Grid;
 
 export default function Navbar() {
-  const [open, setOpen] = useState<boolean>(false);
+  const [open, setOpen] = useState(false);
   const { loading, userState } = useTokenAuth();
   const navigate = useNavigate();
-  const { pathname } = useLocation();
-
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
   const screens = useBreakpoint();
 
-  const logout = useCallback(async () => {
+  const logout = () => {
     localStorage.removeItem('token');
-
-    await apolloClient.resetStore();
-    dispatch(setUser(INITIAL_USER_STATE.user));
-    dispatch(
-      setUserGameReducer({
-        type: 'reset',
-      })
-    );
-    navigate('/home');
-
     setOpen(false);
-  }, [dispatch, navigate]);
+    dispatch(setUser(INITIAL_USER_STATE.user));
+    navigate('/home');
+  };
 
   const showDrawer = () => {
     setOpen(true);
@@ -49,42 +37,40 @@ export default function Navbar() {
     setOpen(false);
   };
 
-  const memoizedContent = useMemo(() => {
-    return (
-      <div aria-label="testt">
-        <ul className={styles['desktop-nav__popover-dropdown']}>
-          <li>
-            <Link
-              className={styles['desktop-nav__popover-dropdown-item']}
-              to="/user-profile"
-            >
-              <UserOutlined className="desktop-nav__header-popover-icon" />
-              Profile
-            </Link>
-          </li>
-          <li>
-            <Link
-              className={styles['desktop-nav__popover-dropdown-item']}
-              to="/settings"
-            >
-              <SettingOutlined className="desktop-nav__header-popover-icon" />
-              Settings
-            </Link>
-          </li>
-          <li>
-            <button
-              className={styles['desktop-nav__popover-dropdown-item']}
-              type="button"
-              onClick={logout}
-            >
-              <EnterOutlined className="desktop-nav__header-popover-icon" />
-              Logout
-            </button>
-          </li>
-        </ul>
-      </div>
-    );
-  }, [logout]);
+  const content = (
+    <div aria-label="testt">
+      <ul className={styles['desktop-nav__popover-dropdown']}>
+        <li>
+          <Link
+            className={styles['desktop-nav__popover-dropdown-item']}
+            to="/user-profile"
+          >
+            <UserOutlined className="desktop-nav__header-popover-icon" />
+            Profile
+          </Link>
+        </li>
+        <li>
+          <Link
+            className={styles['desktop-nav__popover-dropdown-item']}
+            to="/settings"
+          >
+            <SettingOutlined className="desktop-nav__header-popover-icon" />
+            Settings
+          </Link>
+        </li>
+        <li>
+          <button
+            className={styles['desktop-nav__popover-dropdown-item']}
+            type="button"
+            onClick={logout}
+          >
+            <EnterOutlined className="desktop-nav__header-popover-icon" />
+            Logout
+          </button>
+        </li>
+      </ul>
+    </div>
+  );
 
   return (
     <div style={{ display: 'flex', height: '5rem' }}>
@@ -143,19 +129,11 @@ export default function Navbar() {
                           </button>
                         </li>
                       ) : (
-                        <>
-                          <li
-                            className={styles['mobile-nav__header-drawer-item']}
-                          >
-                            <Link to="/login">Log In</Link>
-                          </li>
-
-                          <li
-                            className={styles['mobile-nav__header-drawer-item']}
-                          >
-                            <Link to="/register">Register</Link>
-                          </li>
-                        </>
+                        <li
+                          className={styles['mobile-nav__header-drawer-item']}
+                        >
+                          <Link to="/login">Log In</Link>
+                        </li>
                       )}
                     </ul>
                   </Drawer>
@@ -179,30 +157,20 @@ export default function Navbar() {
 
                   <ul className={styles['desktop-nav__nav-section']}>
                     {!loading && userState?.user?.username ? (
-                      <Popover content={memoizedContent}>
+                      <Popover content={content}>
                         <img
                           className={styles['desktop-nav__profile-image']}
                           data-testid="profile-image"
                           width={38}
                           height={38}
                           alt="profile"
-                          src={userState?.user?.userPicture}
+                          src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
                         />
                       </Popover>
                     ) : (
-                      <>
-                        {pathname !== '/login' && (
-                          <li className={styles['desktop-nav__nav-item']}>
-                            <Link to="/login">Sign In</Link>
-                          </li>
-                        )}
-
-                        {pathname !== '/register' && (
-                          <li className={styles['desktop-nav__nav-item']}>
-                            <Link to="/register">Register</Link>
-                          </li>
-                        )}
-                      </>
+                      <li className={styles['desktop-nav__nav-item']}>
+                        <Link to="/login">Sign In</Link>
+                      </li>
                     )}
                   </ul>
                 </nav>

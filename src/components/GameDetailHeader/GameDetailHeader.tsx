@@ -3,11 +3,11 @@ import GameDetailHeaderBanner from '@/components/GameDetailHeader/GameDetailHead
 import GameDetailHeaderInfo from '@/components/GameDetailHeader/GameDetailHeaderInfo';
 import type { GameDetailsType } from '@/components/GameDetailHeader/types';
 
-function GameDetailHeader({ game, setGame }: GameDetailsType) {
+function GameDetailHeader({ game }: GameDetailsType) {
   return (
     <Layout>
       <GameDetailHeaderBanner game={game} />
-      <GameDetailHeaderInfo game={game} setGame={setGame} />
+      <GameDetailHeaderInfo game={game} />
     </Layout>
   );
 }

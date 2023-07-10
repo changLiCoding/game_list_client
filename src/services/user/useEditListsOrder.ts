@@ -4,6 +4,7 @@ import type { UpdateUserPayload } from '@/graphql/__generated__/graphql';
 import { getTokenFromLocalStorage } from '@/constants';
 
 const useEditListsOrder = () => {
+  // const { contextHolder, info } = useNotification();
   const [editListsOrder] = useMutation(EDIT_LISTS_ORDER);
 
   const editNewListsOrder = async (
@@ -13,7 +14,7 @@ const useEditListsOrder = () => {
     try {
       const response = await editListsOrder({
         variables: { payload, action },
-        context: getTokenFromLocalStorage(),
+        context: getTokenFromLocalStorage.context,
       });
 
       if (

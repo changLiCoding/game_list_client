@@ -1,6 +1,5 @@
 import { useMutation } from '@apollo/client';
-
-import { LOGIN, REGISTER } from '@/services/authentication/queries';
+import { LOGIN, REGISTER } from './queries';
 import useNotification from '@/hooks/useNotification';
 import type {
   LoginUserPayload,
@@ -8,10 +7,9 @@ import type {
 } from '@/graphql/__generated__/graphql';
 
 const useAuth = () => {
-  const { contextHolder, info } = useNotification('auth');
-  const [loginRequest, { client: afterLoginClient }] = useMutation(LOGIN);
-  const [registerRequest, { client: afterRegisterClient }] =
-    useMutation(REGISTER);
+  const { contextHolder, info } = useNotification();
+  const [loginRequest] = useMutation(LOGIN);
+  const [registerRequest] = useMutation(REGISTER);
 
   const login = async (
     email: string,
@@ -20,10 +18,6 @@ const useAuth = () => {
     try {
       const response = await loginRequest({
         variables: { email, password },
-
-        onCompleted: () => {
-          afterLoginClient.resetStore();
-        },
       });
       if (
         !response ||
@@ -51,9 +45,6 @@ const useAuth = () => {
     try {
       const response = await registerRequest({
         variables: { username, email, password },
-        onCompleted: () => {
-          afterRegisterClient.resetStore();
-        },
       });
 
       if (

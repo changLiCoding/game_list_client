@@ -1,14 +1,15 @@
 import { Badge, List } from 'antd';
+import { useDispatch } from 'react-redux';
 import { useEffect, useMemo } from 'react';
 import styles from './AvailableListsStyle.module.scss';
-import { useAppSelector, useAppDispatch } from '@/app/hooks';
+import { useAppSelector } from '@/app/hooks';
 import useGamesByStatus from '@/services/userGames/useGamesByStatus';
 import { setUserGameFilters } from '@/app/store';
 import { SelectedListTypes } from '@/types/global';
 import { DataList } from './types';
 
 function AvailableLists() {
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
   const gameFilters = useAppSelector((state) => state.userGameFilters);
   const listOrder = useAppSelector((state) => state.userGames);
 

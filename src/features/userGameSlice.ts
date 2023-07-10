@@ -4,6 +4,7 @@ import { InitialStateUserGameType } from '@/features/types';
 
 const initialState: InitialStateUserGameType = INITIAL_USER_GAME_BY_ID_STATE;
 
+// TODO: Add types to refector the reducer
 export const userGameSlice = createSlice({
   name: 'userGame',
   initialState,
@@ -61,8 +62,6 @@ export const userGameSlice = createSlice({
           state.completedDate = completedDate === '' ? null : completedDate;
           state.startDate = startDate === '' ? null : startDate;
         }
-      } else if (type === 'reset') {
-        Object.assign(state, INITIAL_USER_GAME_BY_ID_STATE);
       }
     },
   },

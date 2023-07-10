@@ -1,8 +1,7 @@
-import React from 'react';
 import { Tag } from 'antd';
 import Color from 'color-thief-react';
 import styles from '@/components/AllGames/GamesList/List/List.module.scss';
-import getRatingIcon from '@/utils/getRatingIcon';
+import { getRatingIcon } from '@/components/AllGames/GamesList/GameCard/GameCard';
 import type { GameCardType } from '@/components/AllGames/GamesList/types';
 
 function List({ game, colorBgContainer }: GameCardType): JSX.Element {
@@ -29,13 +28,13 @@ function List({ game, colorBgContainer }: GameCardType): JSX.Element {
             href={`/game-detail/${game.id}/${game.name}`}
             className={styles.gameLink}
           >
-            {game.imageURL ? (
+            {game.imageURL && (
               <img
                 src={game?.imageURL}
                 className={styles.gameImage}
                 alt={game.name}
               />
-            ) : null}
+            )}
           </a>
           <div className={styles.gameContent}>
             <div className={styles.gameTitle}>
@@ -57,15 +56,10 @@ function List({ game, colorBgContainer }: GameCardType): JSX.Element {
                     {genre}
                   </Tag>
                 ))}
-                {game.tags.map((tag: string) => (
-                  <Tag bordered={false} color={data} key={`${game.id} ${tag}`}>
-                    {tag}
-                  </Tag>
-                ))}
               </div>
             </div>
             <div className={styles.gameRating}>
-              {game.avgScore ? getRatingIcon(game.avgScore, `${data}`) : null}
+              {game.avgScore && getRatingIcon(game.avgScore, `${data}`)}
               <div style={{ color: `${data}` }}>
                 Rating: {game.avgScore}
                 <div>Based on: {game.totalRating} Users</div>
@@ -99,6 +93,4 @@ function List({ game, colorBgContainer }: GameCardType): JSX.Element {
   );
 }
 
-const MemoizedList = React.memo(List);
-
-export default MemoizedList;
+export default List;

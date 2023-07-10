@@ -1,73 +1,49 @@
 import { useMutation } from '@apollo/client';
+import { useDispatch } from 'react-redux';
 
 import {
   ADD_USER_GAMES,
   DELETE_USER_GAMES,
-  GET_GAMES_BY_STATUS,
 } from '@/services/userGames/queries';
+import { useAppSelector } from '@/app/hooks';
+import { setAddedGames } from '@/features/addedGamesSlice';
 import { getTokenFromLocalStorage } from '@/constants';
 import type {
   AddUserGamesPayload,
   DeleteUserGamesPayload,
-  Game,
-  UserGamesByStatus,
 } from '@/graphql/__generated__/graphql';
 
-type GetGamesByStatusQuery = {
-  gamesByStatusForAUser: UserGamesByStatus | null;
-};
-
-export type StatusType =
-  | 'completed'
-  | 'playing'
-  | 'planning'
-  | 'dropped'
-  | 'paused'
-  | 'justAdded';
-
-const useAddDeleteGame = (status?: StatusType | null) => {
+const useAddDeleteGame = () => {
   const [addUserGamesRequest] = useMutation(ADD_USER_GAMES);
   const [deleteUserGamesRequest] = useMutation(DELETE_USER_GAMES);
+  const dispatch = useDispatch();
+  const { addedList } = useAppSelector((state) => state.addedGames);
 
   const addUserGames = async (gameId: string): Promise<AddUserGamesPayload> => {
     try {
       const response = await addUserGamesRequest({
         variables: { gameId },
-        context: getTokenFromLocalStorage(),
-        update: (cache, { data }) => {
-          const newGame = data.addUserGames.userGame;
-          const gamesByStatusQuery: GetGamesByStatusQuery | null =
-            cache.readQuery({
-              query: GET_GAMES_BY_STATUS,
-            });
-
+        context: getTokenFromLocalStorage.context,
+        // refetchQueries: [
+        //   {
+        //     query: GET_USER_GAME_BY_GAME_ID,
+        //     variables: { gameId },
+        //     context: getTokenFromLocalStorage.context,
+        //   },
+        // ],
+        // awaitRefetchQueries: true,
+        onCompleted: (data) => {
+          // ADD GAME IN REDUX STORE
           if (
-            gamesByStatusQuery &&
-            gamesByStatusQuery.gamesByStatusForAUser &&
-            newGame
+            data.addUserGames.userGame.game.id &&
+            !addedList.includes(data.addUserGames.userGame.game.id)
           ) {
-            cache.writeQuery({
-              query: GET_GAMES_BY_STATUS,
-              data: {
-                gamesByStatusForAUser: {
-                  ...gamesByStatusQuery.gamesByStatusForAUser,
-                  justAdded: [
-                    newGame.game,
-                    ...(gamesByStatusQuery.gamesByStatusForAUser.justAdded ||
-                      []),
-                  ],
-                  justAddedCount: gamesByStatusQuery.gamesByStatusForAUser
-                    .justAddedCount
-                    ? gamesByStatusQuery.gamesByStatusForAUser.justAddedCount +
-                      1
-                    : 1,
-                  totalCount: gamesByStatusQuery.gamesByStatusForAUser
-                    .totalCount
-                    ? gamesByStatusQuery.gamesByStatusForAUser.totalCount + 1
-                    : 1,
-                },
-              },
-            });
+            dispatch(
+              setAddedGames({
+                type: 'add',
+                gameId: data.addUserGames.userGame.game.id,
+              })
+            );
           }
         },
       });
@@ -95,7 +71,15 @@ const useAddDeleteGame = (status?: StatusType | null) => {
     try {
       const response = await deleteUserGamesRequest({
         variables: { gameId },
-        context: getTokenFromLocalStorage(),
+        context: getTokenFromLocalStorage.context,
+        // refetchQueries: [
+        //   {
+        //     query: GET_USER_GAME_BY_GAME_ID,
+        //     variables: { gameId },
+        //     context: getTokenFromLocalStorage.context,
+        //   },
+        // ],
+        // awaitRefetchQueries: true,
 
         update: (cache, { data }) => {
           cache.modify({
@@ -105,55 +89,20 @@ const useAddDeleteGame = (status?: StatusType | null) => {
               },
             },
           });
-          // UPDATE GETGAMESBYSTATUS QUERY WHEN REMOVE GAME FROM LIST
-          const gamesByStatusQuery: GetGamesByStatusQuery | null =
-            cache.readQuery({
-              query: GET_GAMES_BY_STATUS,
-            });
+        },
 
-          const deletedUserGame = data.deleteUserGames.userGame;
-
-          if (gamesByStatusQuery && gamesByStatusQuery.gamesByStatusForAUser) {
-            cache.writeQuery({
-              query: GET_GAMES_BY_STATUS,
-              data: {
-                gamesByStatusForAUser: {
-                  ...gamesByStatusQuery.gamesByStatusForAUser,
-                  ...(status === null
-                    ? {
-                        justAdded:
-                          gamesByStatusQuery.gamesByStatusForAUser.justAdded?.filter(
-                            (game: Game) => game.id !== deletedUserGame.game.id
-                          ),
-                        justAddedCount: gamesByStatusQuery.gamesByStatusForAUser
-                          .justAddedCount
-                          ? gamesByStatusQuery.gamesByStatusForAUser
-                              .justAddedCount - 1
-                          : 0,
-                        totalCount: gamesByStatusQuery.gamesByStatusForAUser
-                          .totalCount
-                          ? gamesByStatusQuery.gamesByStatusForAUser
-                              .totalCount - 1
-                          : 0,
-                      }
-                    : {
-                        [status?.toLocaleLowerCase() as StatusType]:
-                          gamesByStatusQuery.gamesByStatusForAUser[
-                            status?.toLocaleLowerCase() as StatusType
-                          ]?.filter(
-                            (game: Game) => game.id !== deletedUserGame.game.id
-                          ),
-                        [`${status?.toLocaleLowerCase() as StatusType}Count`]:
-                          gamesByStatusQuery.gamesByStatusForAUser[
-                            `${status?.toLocaleLowerCase() as StatusType}Count`
-                          ] ?? 0 - 1,
-                        totalCount:
-                          gamesByStatusQuery.gamesByStatusForAUser.totalCount ??
-                          0 - 1,
-                      }),
-                },
-              },
-            });
+        onCompleted: (data) => {
+          // REMOVE GAME IN REDUX STORE
+          if (
+            data.deleteUserGames.userGame.game.id &&
+            addedList.includes(data.deleteUserGames.userGame.game.id)
+          ) {
+            dispatch(
+              setAddedGames({
+                type: 'remove',
+                gameId: data.deleteUserGames.userGame.game.id,
+              })
+            );
           }
         },
       });

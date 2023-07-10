@@ -5,8 +5,6 @@ export const LOGIN = gql`
     login(input: { email: $email, password: $password }) {
       user {
         username
-        userPicture
-        bannerPicture
       }
       token
       errors
@@ -21,8 +19,6 @@ export const REGISTER = gql`
     ) {
       user {
         username
-        userPicture
-        bannerPicture
       }
       token
       errors

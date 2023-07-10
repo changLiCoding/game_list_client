@@ -1,14 +1,23 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState: { isUserGameEdited: boolean } = {
+const initialState: { addedList: string[]; isUserGameEdited: boolean } = {
+  addedList: [],
   isUserGameEdited: false,
 };
 
-// TODO: REMOVE THIS SLICE, LEAVE ADDGAME STATE MANAGMENT TO APOLLO CACHE
 export const addedGamesSlice = createSlice({
   name: 'addedGames',
   initialState,
   reducers: {
+    setAddedGames: (state, action) => {
+      if (action.payload.type === 'add') {
+        state.addedList.push(action.payload.gameId);
+      } else if (action.payload.type === 'remove') {
+        state.addedList = state.addedList.filter(
+          (id) => id !== action.payload.gameId
+        );
+      }
+    },
     setIsUserGameEdited: (state, action) => {
       if (action.payload.type === 'edit') {
         state.isUserGameEdited = true;
@@ -19,6 +28,6 @@ export const addedGamesSlice = createSlice({
   },
 });
 
-export const { setIsUserGameEdited } = addedGamesSlice.actions;
+export const { setAddedGames, setIsUserGameEdited } = addedGamesSlice.actions;
 
 export default addedGamesSlice.reducer;

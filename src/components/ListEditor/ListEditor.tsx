@@ -1,7 +1,13 @@
 import { Modal, Button, Checkbox, Select } from 'antd';
-import { HeartOutlined, HeartFilled } from '@ant-design/icons';
-import React, { useMemo } from 'react';
+import {
+  HeartOutlined,
+  ExclamationCircleFilled,
+  HeartFilled,
+} from '@ant-design/icons';
+import { useDispatch } from 'react-redux';
+import React from 'react';
 
+import useAddDeleteGame from '@/services/userGames/useAddDeleteGame';
 import useEditUserGame from '@/services/userGames/useEditUserGame';
 import useNotification from '@/hooks/useNotification';
 import type {
@@ -11,15 +17,11 @@ import type {
   OnChangeTextAreaType,
 } from '@/types/global';
 import { setUserGameReducer } from '@/features/userGameSlice';
-import { useAppSelector, useAppDispatch } from '@/app/hooks';
+import { useAppSelector } from '@/app/hooks';
 import styles from '@/components/ListEditor/ListEditor.module.scss';
 import DatePickerField from '../DatePickerField';
 import TextAreaInput from '../TextAreaInput';
 import type { ListEditorType } from '@/components/ListEditor/types';
-import useAddRemoveLike from '@/services/like/useAddRemoveLike';
-import type { Game as GameType } from '@/graphql/__generated__/graphql';
-import useRemoveModalHook from '@/hooks/useRemoveModalHook';
-import { StatusType } from '@/services/userGames/useAddDeleteGame';
 
 function ListEditorTemp({
   isGameAdded,
@@ -27,8 +29,8 @@ function ListEditorTemp({
   open,
   setOpen,
   game,
-  setSelectedGame,
 }: ListEditorType) {
+  const dispatch = useDispatch();
   const userGame = useAppSelector((state) => state.userGame);
 
   const {
@@ -40,17 +42,29 @@ function ListEditorTemp({
     private: selectedPrivate,
   } = userGame;
 
-  const { showRemoveConfirm, contextRemoveModal } = useRemoveModalHook(
-    selectedStatus as StatusType
-  );
+  const { contextHolder, info, warning, success } = useNotification();
 
-  const { contextHolder, info, warning } = useNotification();
-
-  const userState = useAppSelector((state) => state.user);
-  const dispatch = useAppDispatch();
-
+  const { addUserGames, deleteUserGames } = useAddDeleteGame();
   const { editUserGame } = useEditUserGame();
-  const { addLike, removeLike } = useAddRemoveLike();
+
+  const onAddGameHandler = async (gameId: string) => {
+    await addUserGames(gameId);
+    success(`Game ${game?.name} added to your list`);
+  };
+
+  const onDeleteGameHandler = async (gameId: string) => {
+    await deleteUserGames(gameId);
+
+    // const normalizedId = cache.identify({
+    //   id: userGame.id,
+    //   __typename: 'UserGame',
+    // });
+
+    // cache.evict({ id: normalizedId });
+    // cache.gc();
+
+    warning(`Game ${game?.name} deleted from your list`);
+  };
 
   const statusOptions: DropDownOption[] = [
     { label: 'Playing', value: 'Playing' },
@@ -59,16 +73,35 @@ function ListEditorTemp({
     { label: 'Dropped', value: 'Dropped' },
     { label: 'Planning', value: 'Planning' },
   ];
-  const scoreOptions: DropDownOption[] = useMemo(() => {
-    return Array.from({ length: 10 }, (_, index) => index + 1).map((score) => ({
-      label: score,
-      value: score,
-    }));
-  }, []);
+  const scoreOptions: DropDownOption[] = Array.from(
+    { length: 10 },
+    (_, index) => index + 1
+  ).map((score) => ({
+    label: score,
+    value: score,
+  }));
 
   if (userGameLoading) {
     return <div>Loading...</div>;
   }
+
+  const { confirm } = Modal;
+
+  const showDeleteConfirm = () => {
+    confirm({
+      title: `Are you sure to remove ${game.name} from your list?`,
+      icon: <ExclamationCircleFilled />,
+      content: 'Click Yes would remove all data of this game as well.',
+      okText: 'Yes',
+      okType: 'danger',
+      cancelText: 'No',
+      onOk: async () => {
+        await onDeleteGameHandler(game.id);
+        setOpen(false);
+      },
+      zIndex: 1041,
+    });
+  };
 
   return (
     <Modal
@@ -88,9 +121,7 @@ function ListEditorTemp({
       >
         <div className={styles.headerContent}>
           <div className={styles.contentCover}>
-            {game?.imageURL ? (
-              <img src={game?.imageURL} alt={game?.name} />
-            ) : null}
+            {game?.imageURL && <img src={game?.imageURL} alt={game?.name} />}
           </div>
           <div className={styles.contentTitle}>{game?.name}</div>
           <div className={styles.contentFavourite}>
@@ -98,31 +129,14 @@ function ListEditorTemp({
               className={styles.favouriteButton}
               type="ghost"
               onClick={async () => {
-                if (userState?.user.id === '') {
-                  warning('Please login to add or edit your GameList');
-                  return;
-                }
-                if (!game?.isGameLiked) {
-                  const response = await addLike(
-                    game.id,
-                    game.__typename as string
-                  );
-                  setSelectedGame(response.like?.likeable as GameType);
-
-                  info(`You added ${game?.name} in your favorites list. `);
+                if (!isGameAdded) {
+                  await onAddGameHandler(game?.id);
                 } else {
-                  const response = await removeLike(
-                    game?.id,
-                    game.__typename as string
-                  );
-
-                  setSelectedGame(response.like?.likeable as GameType);
-
-                  warning(`You removed ${game?.name} in your favorites list. `);
+                  info(`Game ${game?.name} already added to your list`);
                 }
               }}
               icon={
-                game?.isGameLiked ? (
+                isGameAdded ? (
                   <HeartFilled style={{ color: 'hotpink' }} />
                 ) : (
                   <HeartOutlined />
@@ -134,17 +148,13 @@ function ListEditorTemp({
             <Button
               type="primary"
               onClick={async () => {
-                if (userState?.user.id === '') {
-                  warning('Please login to add or edit your GameList');
-                  return;
-                }
+                // if (!isGameAdded) {
+                //   await onAddGameHandler(game.id);
+                // }
                 const { id, ...newUserGame } = userGame;
-                const response = await editUserGame({
-                  ...newUserGame,
-                  gameId: game.id,
-                });
-
-                setSelectedGame(response.userGame?.game as GameType);
+                await editUserGame({ ...newUserGame, gameId: game.id });
+                // refetchStatusUpdate();
+                // refetchGamesByStatus();
 
                 info(`Edit game ${game.name} successfully`);
                 setOpen(false);
@@ -187,6 +197,8 @@ function ListEditorTemp({
                       type: 'rating',
                       payload: value,
                     })
+
+                    // Rating(value)
                   );
                 }}
                 options={scoreOptions}
@@ -269,17 +281,10 @@ function ListEditorTemp({
             Private
           </Checkbox>
           {isGameAdded && (
-            <Button
-              type="dashed"
-              onClick={() => {
-                showRemoveConfirm(game, 'game', setOpen);
-                setSelectedGame({ ...game, isGameAdded: false });
-              }}
-            >
+            <Button type="dashed" onClick={showDeleteConfirm}>
               Delete
             </Button>
           )}
-          {contextRemoveModal}
         </div>
       </div>
       {contextHolder}

@@ -1,20 +1,14 @@
 ::-webkit-scrollbar {
-  width: 5px;
-  height: 8px;
-  background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  background: #c8c8c8;
-
-  border-radius: 4px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background-color: #aaa;
 }
 
-::-webkit-scrollbar-corner {
-  background-color: transparent;
+::-webkit-scrollbar-thumb {
+  background-color: rgb(63, 114, 175);
+  border-radius: 8px;
 }
 
 .ant-table-cell {

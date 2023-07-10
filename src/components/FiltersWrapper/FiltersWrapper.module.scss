@@ -31,12 +31,16 @@
 
 .cascaderStyle {
   margin-bottom: 1.5rem;
-  min-width: 130px;
-  width: 15vw;
 }
 
 .buttonFiltersWrapperButton {
   background-color: variables.$color-navbar;
+}
+
+.advancedSearchPopoverLoading {
+  width: '600px';
+  display: grid;
+  gap: 30px;
 }
 
 :global(ul.ant-cascader-menu) {
