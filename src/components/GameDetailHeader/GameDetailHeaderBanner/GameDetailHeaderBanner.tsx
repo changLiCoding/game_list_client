@@ -1,7 +1,9 @@
 import styles from '@/components/GameDetailHeader/GameDetailHeaderBanner/GameDetailHeaderBanner.module.scss';
-import type { GameDetailsType } from '@/components/GameDetailHeader/types';
+import type { GameDetailHeaderBannerType } from '@/components/GameDetailHeader/types';
 
-function GameDetailHeaderBanner({ game }: GameDetailsType): JSX.Element {
+function GameDetailHeaderBanner({
+  game,
+}: GameDetailHeaderBannerType): JSX.Element {
   return (
     <div
       role="banner"

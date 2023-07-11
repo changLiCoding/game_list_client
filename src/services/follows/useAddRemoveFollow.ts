@@ -14,7 +14,7 @@ const useAddRemoveFollow = () => {
     try {
       const response = await addFollowsByIdRequest({
         variables: { followedId },
-        context: getTokenFromLocalStorage.context,
+        context: getTokenFromLocalStorage(),
       });
 
       if (
@@ -29,7 +29,7 @@ const useAddRemoveFollow = () => {
       return response.data.addFollowsById;
     } catch (error: unknown) {
       if (error instanceof Error) {
-        throw new Error(error.message);
+        return error.message;
       }
       throw new Error('Error adding follow');
     }
@@ -39,7 +39,7 @@ const useAddRemoveFollow = () => {
     try {
       const response = await removeFollowsByIdRequest({
         variables: { followedId },
-        context: getTokenFromLocalStorage.context,
+        context: getTokenFromLocalStorage(),
       });
       if (
         !response ||

@@ -1,133 +1,104 @@
-import { StatusUpdate as StatusUpdateType } from '@/graphql/__generated__/graphql';
+import { useMemo } from 'react';
+import { InView } from 'react-intersection-observer';
+import {
+  FetchMoreQueryOptions,
+  ApolloQueryResult,
+  OperationVariables,
+} from '@apollo/client';
+import type {
+  StatusUpdate as StatusUpdateType,
+  Post as PostType,
+  Social as SocialType,
+} from '@/graphql/__generated__/graphql';
 import styles from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivitiesUpdates.module.scss';
 import useAddRemoveLike from '@/services/like/useAddRemoveLike';
 import ActivityCard from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivityCard';
 import { useAppSelector } from '@/app/hooks';
+import getTimeElapsed from '@/utils/getTimeElapsed';
 
 function ActivitiesUpdates({
-  statusUpdates,
+  fetchMore,
+  socials,
 }: {
-  statusUpdates: StatusUpdateType[];
+  socials: (StatusUpdateType | PostType)[];
+  fetchMore: <
+    TFetchData = {
+      getGlobalSocials: SocialType[];
+    },
+    TFetchVars extends OperationVariables = {
+      limit: number;
+      offset: number;
+    }
+  >(
+    fetchMoreOptions: FetchMoreQueryOptions<TFetchVars, TFetchData> & {
+      updateQuery: (
+        previousQueryResult: TFetchData,
+        options: {
+          fetchMoreResult?: TFetchData;
+          variables?: TFetchVars | undefined;
+        }
+      ) => TFetchData;
+    }
+  ) => Promise<ApolloQueryResult<TFetchData>>;
 }) {
-  function getTimeElapsed(timestamp: string) {
-    const currentDate = new Date();
-    const previousDate = new Date(timestamp);
-    const timeDifference = currentDate.getTime() - previousDate.getTime();
-    const millisecondsPerDay = 24 * 60 * 60 * 1000;
-    const daysElapsed = Math.floor(timeDifference / millisecondsPerDay);
-    const hoursElapsed = Math.floor(
-      (timeDifference % millisecondsPerDay) / (60 * 60 * 1000)
-    );
-    return { daysElapsed, hoursElapsed };
-  }
-
   const { addLike, removeLike } = useAddRemoveLike();
   const userState = useAppSelector((state) => state.user.user);
 
   const { id: currentUserId } = userState;
 
-  const activityGenerator = (statusUpdate: StatusUpdateType): JSX.Element => {
-    switch (statusUpdate.status) {
-      case 'Playing':
-        return (
-          <>
-            You are playing{' '}
-            <a
-              href={`/game-detail/${statusUpdate.gameId} / ${statusUpdate.gameName}`}
-            >
-              {statusUpdate.gameName}
-            </a>{' '}
-          </>
-        );
-
-      case 'Completed':
-      case 'Dropped':
-      case 'Paused':
-        return (
-          <>
-            You {statusUpdate.status.toLowerCase()}{' '}
-            <a
-              href={`/game-detail/${statusUpdate.gameId}/${statusUpdate.gameName}`}
-            >
-              {statusUpdate.gameName}
-            </a>{' '}
-          </>
-        );
-
-      case 'Planning':
-        return (
-          <>
-            You are planning to play{' '}
-            <a
-              href={`/game-detail/${statusUpdate.gameId}/${statusUpdate.gameName}`}
-            >
-              {statusUpdate.gameName}
-            </a>{' '}
-          </>
-        );
-
-      case 'Inactive':
-        return (
-          <>
-            You removed{' '}
-            <a
-              href={`/game-detail/${statusUpdate.gameId}/${statusUpdate.gameName}`}
-            >
-              {statusUpdate.gameName}
-            </a>{' '}
-            from your list.
-          </>
-        );
-
-      case null:
-        return (
-          <>
-            You just added{' '}
-            <a
-              href={`/game-detail/${statusUpdate.gameId}/${statusUpdate.gameName}`}
-            >
-              {statusUpdate.gameName}
-            </a>{' '}
-            to your list!
-          </>
-        );
-
-      default:
-        return (
-          <a
-            href={`game-detail/${statusUpdate.gameId}/${statusUpdate.gameName}`}
-          >
-            {`${statusUpdate.gameName}`}{' '}
-          </a>
-        );
-    }
+  const onFetchMore = async (socialsLength: number) => {
+    await fetchMore({
+      variables: {
+        limit: 5 + socialsLength,
+        offset: socialsLength,
+      },
+      updateQuery: (prev, { fetchMoreResult }) => {
+        if (!fetchMoreResult) return prev;
+        return {
+          ...prev,
+          getGlobalSocials: [
+            ...prev.getGlobalSocials,
+            ...fetchMoreResult.getGlobalSocials,
+          ],
+        };
+      },
+    });
   };
+
+  const memoizedActivities = useMemo(() => {
+    return [...socials].map((activity) => {
+      const { daysElapsed, hoursElapsed } = getTimeElapsed(activity.updatedAt);
+      const isCurrentLiked = activity.likedUsers.some(
+        (user) => user.id === currentUserId
+      );
+      return (
+        <ActivityCard
+          isCurrentLiked={isCurrentLiked}
+          key={`${activity.__typename}:${activity.id}`}
+          activity={activity}
+          daysElapsed={daysElapsed}
+          hoursElapsed={hoursElapsed}
+          currentUserId={currentUserId}
+          addLike={addLike}
+          removeLike={removeLike}
+        />
+      );
+    });
+  }, [socials, currentUserId, addLike, removeLike]);
 
   return (
     <div className={styles.activitiesUpdatesContainer}>
-      {statusUpdates.length > 0 &&
-        statusUpdates.map((statusUpdate) => {
-          const { daysElapsed, hoursElapsed } = getTimeElapsed(
-            statusUpdate.updatedAt
-          );
-
-          const isCurrentLiked = statusUpdate.likedUsers.some(
-            (user) => user.id === currentUserId
-          );
-
-          return (
-            <ActivityCard
-              isCurrentLiked={isCurrentLiked}
-              key={statusUpdate.id}
-              statusUpdate={statusUpdate}
-              daysElapsed={daysElapsed}
-              hoursElapsed={hoursElapsed}
-              updateText={activityGenerator(statusUpdate)}
-              addLike={addLike}
-              removeLike={removeLike}
-            />
-          );
-        })}
+      {socials.length > 0 && memoizedActivities}
+      <InView
+        style={{ height: '10px' }}
+        as="div"
+        onChange={async (inView) => {
+          const socialsLength = socials.length;
+          if (inView) {
+            await onFetchMore(socialsLength);
+          }
+        }}
+      />
     </div>
   );
 }

@@ -1,6 +1,7 @@
 .colGameCardContainer {
   position: relative;
   margin-bottom: 8px;
+  min-height: 200px;
 
   animation: showAnimation 0.3s linear;
   @keyframes showAnimation {

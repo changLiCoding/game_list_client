@@ -1,63 +1,31 @@
 import { theme, Card, Row } from 'antd';
+import { InView } from 'react-intersection-observer';
 import { Content } from 'antd/es/layout/layout';
-import { useQuery } from '@apollo/client';
 import { useCallback, useEffect, useState } from 'react';
 import { debounce } from 'lodash';
 import GameCard from '@/components/AllGames/GamesList/GameCard';
 import List from '@/components/AllGames/GamesList/List';
 import styles from '@/components/AllGames/GamesList/GamesList.module.scss';
-import { useAppSelector, useAppDispatch } from '@/app/hooks';
+import { useAppSelector } from '@/app/hooks';
 import useUserGameById from '@/services/userGames/useUserGameById';
 import ListEditor from '@/components/ListEditor';
 import type { GameDataType } from '@/components/GamesListTable/types';
-import { GET_ALL_GAMES } from '@/services/games/queries';
-import { getTokenFromLocalStorage } from '@/constants';
 import { store } from '@/app/store';
-import { setAddedGames } from '@/features/addedGamesSlice';
+import useAllGames from '@/services/games/useAllGames';
+import { Game } from '@/graphql/__generated__/graphql';
 
 export default function GamesList() {
   const homeSearchState = useAppSelector((state) => state.homeSearch);
-  const homeGameFilters = useAppSelector((state) => state.homeGameFilters);
-  const { addedList } = useAppSelector((state) => state.addedGames);
-
-  const [tempSearch, setTempSearch] = useState<string | undefined>('');
 
   // States for modal to edit list
   const { userGameLoading, fetchUserGame } = useUserGameById();
   const [open, setOpen] = useState(false);
-  const [selectedGame, setSelectedGame] = useState<GameDataType>();
+  const [selectedGame, setSelectedGame] = useState<
+    GameDataType | null | Game
+  >();
 
-  const dispatch = useAppDispatch();
-
-  const { data, loading } = useQuery(GET_ALL_GAMES, {
-    variables: {
-      genre: homeGameFilters.genres.included,
-      tag: homeGameFilters.tags.included,
-      platform: homeGameFilters.platforms.included,
-      year: homeGameFilters.year,
-      excludedGenres: homeGameFilters.genres.excluded,
-      excludedTags: homeGameFilters.tags.excluded,
-      excludedPlatforms: homeGameFilters.platforms.excluded,
-      sortBy: homeGameFilters.sortBy,
-      search: tempSearch,
-    },
-    ...getTokenFromLocalStorage,
-    onCompleted: (games) => {
-      const { allGames: allGamesData } = games;
-      if (allGamesData && addedList.length === 0) {
-        allGamesData.forEach((game) => {
-          if (game.isGameAdded && !addedList.includes(game.id)) {
-            dispatch(
-              setAddedGames({
-                type: 'add',
-                gameId: game.id,
-              })
-            );
-          }
-        });
-      }
-    },
-  });
+  const { games, loading, fetchMore, tempSearch, setTempSearch } =
+    useAllGames();
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedFilter = useCallback(
@@ -71,19 +39,23 @@ export default function GamesList() {
     []
   );
 
+  // TODO: NEED TO REFACTORY APOLLO GET DATA FROM CACHE FIRST
   useEffect(() => {
     const unsubscribe = store.subscribe(() => {
       const { search } = store.getState().homeGameFilters;
 
+      // Make sure when new search is the same as the old one, we don't fetch nor reset the tempSearch
       if (search === tempSearch) {
+        debouncedFilter.cancel();
         return;
       }
-
+      // If search is empty, reset the tempSearch
       if (!search) {
         setTempSearch(undefined);
         debouncedFilter.cancel();
         return;
       }
+
       debouncedFilter(search);
     });
 
@@ -91,13 +63,33 @@ export default function GamesList() {
       debouncedFilter.cancel();
       unsubscribe();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedFilter, tempSearch]);
 
-  const openGameListEditor = async (game: GameDataType) => {
-    setSelectedGame(game);
+  const memorizedOpenGameListEditor = useCallback(
+    async (game: GameDataType) => {
+      setSelectedGame(game);
+      await fetchUserGame({ variables: { gameId: game.id } });
+      setOpen(true);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
 
-    await fetchUserGame({ variables: { gameId: game.id } });
-    setOpen(true);
+  const onFetchMore = async (cardsLength: number) => {
+    await fetchMore({
+      variables: {
+        limit: 20,
+        offset: cardsLength,
+      },
+      updateQuery: (prev, { fetchMoreResult }) => {
+        if (!fetchMoreResult) return prev;
+        return {
+          ...prev,
+          allGames: [...prev.allGames, ...fetchMoreResult.allGames],
+        };
+      },
+    });
   };
 
   const {
@@ -105,7 +97,7 @@ export default function GamesList() {
   } = theme.useToken();
 
   // TODO: Add Loading component
-  if (loading || !data) {
+  if (loading || games.length === 0) {
     return null;
   }
 
@@ -121,32 +113,64 @@ export default function GamesList() {
               xl: 32,
             }}
           >
-            {data?.allGames.map((game) => (
-              <GameCard
-                isAdded={addedList.includes(game.id)}
-                key={`grid-${game.id}`}
-                game={game}
-                colorBgContainer={colorBgContainer}
-                openGameListEditor={openGameListEditor}
-              />
-            ))}
+            {games.length > 0
+              ? games.map((game) => {
+                  return (
+                    <GameCard
+                      isAdded={game.isGameAdded}
+                      key={`grid-${game.id}`}
+                      game={game}
+                      colorBgContainer={colorBgContainer}
+                      openGameListEditor={memorizedOpenGameListEditor}
+                    />
+                  );
+                })
+              : null}
+
+            {/* TODO: SEARCH BAR MAY TRIGGER SECOND FETCH */}
+            {games.length > 0 ? (
+              <InView
+                style={{ visibility: 'hidden' }}
+                onChange={async (inView) => {
+                  const currentLength = games.length || 0;
+
+                  if (inView) {
+                    await onFetchMore(currentLength);
+                  }
+                }}
+              >
+                INVIEW
+              </InView>
+            ) : null}
           </Row>
         </Card>
       ) : (
         <div className={styles.allListContainer}>
           <div className={styles.allListTitle}>All Games</div>
           <div className={styles.allListDivider}>
-            {[...data.allGames]
-              .sort((a, b) => {
-                return parseInt(a.id, 10) - parseInt(b.id, 10);
-              })
-              .map((game) => (
-                <List
-                  key={`list-${game.id}`}
-                  game={game}
-                  colorBgContainer={colorBgContainer}
-                />
-              ))}
+            {games.length > 0
+              ? games.map((game) => (
+                  <List
+                    key={`list-${game.id}`}
+                    game={game}
+                    colorBgContainer={colorBgContainer}
+                  />
+                ))
+              : null}
+            {games.length > 0 ? (
+              <InView
+                style={{ visibility: 'hidden' }}
+                onChange={async (inView) => {
+                  const currentLength = games.length || 0;
+
+                  if (inView) {
+                    await onFetchMore(currentLength);
+                  }
+                }}
+              >
+                INVIEW
+              </InView>
+            ) : null}
           </div>
         </div>
       )}
@@ -155,7 +179,8 @@ export default function GamesList() {
         open={open}
         setOpen={setOpen}
         game={selectedGame as GameDataType}
-        isGameAdded={addedList.includes(selectedGame?.id as string)}
+        isGameAdded={selectedGame?.isGameAdded}
+        setSelectedGame={setSelectedGame}
       />
     </Content>
   );

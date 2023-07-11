@@ -11,14 +11,16 @@
 // please read our getting started guide:
 // https://on.cypress.io/introduction-to-cypress
 
+import { CyHttpMessages } from 'cypress/types/net-stubbing';
+
 describe('example to-do app', () => {
   beforeEach(() => {
     // Cypress starts out with a blank slate for each test
     // so we must tell it to visit our website with the `cy.visit()` command.
     // Since we want to visit the same URL at the start of all our tests,
     // we include it in our beforeEach function so that it runs before each test
-    cy.visit('http://localhost:5173/')
-  })
+    cy.visit('http://localhost:5173/');
+  });
 
   it('displays two todo items by default', () => {
     // We use the `cy.get()` command to get all elements that match the selector.
@@ -32,8 +34,8 @@ describe('example to-do app', () => {
     // // and then perform an assertion with `should`.
     // cy.get('.todo-list li').first().should('have.text', 'Pay electric bill')
     // cy.get('.todo-list li').last().should('have.text', 'Walk the dog')
-  cy.viewport('iphone-6') // Set viewport to 375px x 667px
-  })
+    cy.viewport('iphone-6'); // Set viewport to 375px x 667px
+  });
 
   // it('can add new todo items', () => {
   //   // We'll store our item text in a variable so we can reuse it
@@ -141,4 +143,4 @@ describe('example to-do app', () => {
   //     cy.contains('Clear completed').should('not.exist')
   //   })
   // })
-})
+});

@@ -9,6 +9,26 @@ import type {
   QueryGetAllGamesByTagArgs,
 } from '../../graphql/__generated__/graphql';
 
+export const GET_GAME_BY_ID = gql`
+  query GetGameById($id: ID!) {
+    getGameById(id: $id) {
+      id
+      name
+      description
+      bannerURL
+      imageURL
+      releaseDate
+      avgScore
+      totalRating
+      genres
+      tags
+      platforms
+      isGameAdded
+      isGameLiked
+    }
+  }
+`;
+
 export const GET_ALL_GAMES_BY_GENRE: TypedDocumentNode<
   { getAllGamesByGenre: Game[] },
   QueryGetAllGamesByGenreArgs

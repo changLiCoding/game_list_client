@@ -26,7 +26,7 @@ function ListStatistic({
               }}
               title={
                 key === 'justAddedCount'
-                  ? 'Just Added'
+                  ? 'JUST ADDED'
                   : key.replace('Count', '').toUpperCase()
               }
               value={
@@ -49,7 +49,11 @@ function ListStatistic({
   };
 
   return (
-    <Row gutter={16} className={styles.statisticContainer}>
+    <Row
+      gutter={16}
+      className={styles.statisticContainer}
+      style={{ marginLeft: 'auto', marginRight: 'auto' }}
+    >
       {gamesByStatus && gameStatusExtractor(gamesByStatus)}
 
       <Divider

@@ -1,35 +1,27 @@
 import { DownOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
-import { Dropdown, Space } from 'antd';
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { Dropdown, Space, Skeleton } from 'antd';
+import { useEffect, useState } from 'react';
 import styles from '@/components/ProfileContent/Overview/MainSection/ListActivities/ListActivities.module.scss';
-import useStatusUpdates from '@/services/statusUpdate/useStatusUpdates';
 import PostInput from '@/components/ProfileContent/Overview/MainSection/ListActivities/PostInput/PostInput';
 import ActivitiesUpdates from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivitiesUpdates';
-import { useAppSelector } from '@/app/hooks';
+import { useAppSelector, useAppDispatch } from '@/app/hooks';
 import { setIsUserGameEdited } from '@/features/addedGamesSlice';
+import useGlobalSocials from '@/services/social/useGlobalSocials';
 
 function ListActivities() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const { isUserGameEdited, addedList } = useAppSelector(
-    (state) => state.addedGames
-  );
-  const { getAllStatusUpdatesForAUser, refetch, statusUpdates, loading } =
-    useStatusUpdates();
+  const { isUserGameEdited } = useAppSelector((state) => state.addedGames);
 
-  useEffect(() => {
-    if (getAllStatusUpdatesForAUser) {
-      getAllStatusUpdatesForAUser();
-    }
-  }, [getAllStatusUpdatesForAUser]);
+  const [post, setPost] = useState<string>('');
 
-  useEffect(() => {
-    if (addedList.length > 0) {
-      refetch();
-    }
-  }, [addedList, refetch]);
+  const {
+    socials,
+    loading: loadingSocials,
+    refetch,
+    fetchMore,
+  } = useGlobalSocials();
 
   useEffect(() => {
     if (isUserGameEdited) {
@@ -53,9 +45,24 @@ function ListActivities() {
     },
   ];
 
+  if (loadingSocials) {
+    return (
+      <div className={styles.listActivitiesContainer}>
+        <h2 className={styles.title}>Activities</h2>
+        {Array.from({ length: 10 }, (_, index) => (
+          <Skeleton
+            avatar
+            active
+            key={index}
+            style={{ margin: '25px auto 25px auto' }}
+          />
+        ))}
+      </div>
+    );
+  }
+
   return (
     <div className={styles.listActivitiesContainer}>
-      {loading && <div>Loading...</div>}
       <h2 className={styles.title}>
         Activities
         <Dropdown
@@ -69,8 +76,8 @@ function ListActivities() {
           </Space>
         </Dropdown>
       </h2>
-      <PostInput />
-      <ActivitiesUpdates statusUpdates={statusUpdates} />
+      <PostInput post={post} setPost={setPost} />
+      <ActivitiesUpdates socials={socials} fetchMore={fetchMore} />
     </div>
   );
 }

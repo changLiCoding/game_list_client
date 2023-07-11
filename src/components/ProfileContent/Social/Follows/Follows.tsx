@@ -1,10 +1,8 @@
 import { CloseOutlined } from '@ant-design/icons';
-import { Modal } from 'antd';
 
 import styles from '@/components/ProfileContent/Social/Follows/Follows.module.scss';
 import { User as UserType } from '@/graphql/__generated__/graphql';
-import useAddRemoveFollow from '@/services/follows/useAddRemoveFollow';
-import useNotification from '@/hooks/useNotification';
+import useAddRemoveFollowCustomHook from '@/hooks/useAddRemoveFollowCustomHook';
 
 function Follows({
   follows,
@@ -17,27 +15,8 @@ function Follows({
   followers: UserType[];
   selectedFilter: string;
 }) {
-  const { addFollow, removeFollow } = useAddRemoveFollow();
-
-  const { success, contextHolder, warning } = useNotification();
-
-  const handleRemoveFollow = (followedUser: UserType) => {
-    Modal.confirm({
-      title: `Are you sure you want to unfollow ${followedUser.username}?`,
-      content: 'You will no longer see their posts in your feed.',
-      onOk: async () => {
-        const response = await removeFollow(followedUser.id);
-
-        if (response?.follow && response?.errors?.length === 0) {
-          success(`You have unfollowed ${followedUser.username} successfully.`);
-        } else {
-          warning(
-            `There is something wrong when processing unfollow ${followedUser.username}!`
-          );
-        }
-      },
-    });
-  };
+  const { handleRemoveFollow, contextHolder: handleRemoveFollowContextHolder } =
+    useAddRemoveFollowCustomHook();
 
   if (loading) {
     return <div>Loading...</div>;
@@ -62,7 +41,7 @@ function Follows({
           </div>
         ))}
       </div>
-      {contextHolder}
+      {handleRemoveFollowContextHolder}
     </div>
   );
 }

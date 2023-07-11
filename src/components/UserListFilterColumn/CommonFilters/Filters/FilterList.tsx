@@ -47,6 +47,7 @@ function SelectFilterField<T>({
 
   return (
     <Select
+      // eslint-disable-next-line react/jsx-props-no-spreading
       {...rest}
       placeholder={placeholder}
       mode={mode}

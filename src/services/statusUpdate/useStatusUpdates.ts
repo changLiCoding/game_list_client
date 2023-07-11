@@ -27,7 +27,7 @@ type StatusUpdateReturnType = {
 const useStatusUpdates = (): StatusUpdateReturnType => {
   const [getAllStatusUpdatesForAUser, { data, loading, refetch }] =
     useLazyQuery(GET_ALL_STATUS_UPDATES_FOR_A_USER, {
-      context: getTokenFromLocalStorage.context,
+      context: getTokenFromLocalStorage(),
     });
 
   try {

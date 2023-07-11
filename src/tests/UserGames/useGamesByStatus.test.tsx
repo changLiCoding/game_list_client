@@ -24,20 +24,30 @@ const gamesByStatusForAUser = {
   playing: [
     {
       avgScore: 7.9,
+      description: 'Description 1',
       genres: ['Real-time strategy', 'Real-time strategy'],
       id: '40',
+      bannerURL:
+        'https://images.igdb.com/igdb/image/upload/t_cover_big/co4a7a.png',
       imageURL:
         'https://images.igdb.com/igdb/image/upload/t_cover_big/co1r76.png',
       name: 'Halo 2',
+      totalRating: 5,
       platforms: ['SegaDreamcast', 'PlayStation 5'],
       tags: ['3D', 'Multiplayer'],
       __typename: 'Game',
       releaseDate: '2021-01-02 00:00:00',
+      isGameLiked: false,
+      isGameAdded: false,
     },
     {
+      description: 'Description 2',
       avgScore: 5.6,
+      totalRating: 25,
       genres: ['Real-time strategy', 'Turn-based strategy', 'Puzzle'],
       id: '41',
+      bannerURL:
+        'https://images.igdb.com/igdb/image/upload/t_cover_big/co4a7a.png',
       imageURL:
         'https://images.igdb.com/igdb/image/upload/t_cover_big/co3p2d.png',
       name: 'Halo 3',
@@ -45,6 +55,8 @@ const gamesByStatusForAUser = {
       tags: ['Indie', 'Adventure'],
       __typename: 'Game',
       releaseDate: '2021-01-02 00:00:00',
+      isGameLiked: false,
+      isGameAdded: false,
     },
   ],
 };

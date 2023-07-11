@@ -3,6 +3,7 @@ module.exports = {
     browser: true,
     es2021: true,
   },
+
   extends: [
     'airbnb',
     'airbnb-typescript',
@@ -61,5 +62,6 @@ module.exports = {
     'codegen.ts',
     'src/graphql/__generated__/*',
     'cypress.config.ts',
+    'cypress/**/*',
   ],
 };

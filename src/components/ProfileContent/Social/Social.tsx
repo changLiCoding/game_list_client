@@ -7,7 +7,9 @@ import useAllFollows from '@/services/follows/useAllFollows';
 function Social() {
   const { getAllFollows, follows, followers, loading } = useAllFollows();
 
-  const [selectedFilter, setSeletedFilter] = useState('Followings');
+  const [selectedFilter, setSeletedFilter] = useState<
+    'Followings' | 'Followers'
+  >('Followings');
 
   useEffect(() => {
     if (getAllFollows) {
