@@ -17,7 +17,7 @@ export default function useArrayMemo<Value, Condition = any[]>(
 
   if (
     !('value' in cacheRef.current) ||
-    shouldUpdate(cacheRef.current.condition, condition)
+    shouldUpdate(cacheRef.current.condition!, condition)
   ) {
     cacheRef.current.value = getValue();
     cacheRef.current.condition = condition;

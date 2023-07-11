@@ -135,7 +135,14 @@ const stateMachine = createMachine(
 const interpreter = interpret(stateMachine);
 
 export const createHomeGameFiltersSlice = () => {
-  const entryCache = new Map([
+  const entryCache = new Map<
+    string,
+    {
+      entries: Map<string, StateValue>;
+      included: never[];
+      excluded: never[];
+    }
+  >([
     [
       'genres',
       { entries: new Map<string, StateValue>(), included: [], excluded: [] },
@@ -177,7 +184,7 @@ export const createHomeGameFiltersSlice = () => {
 
         const categoryCache = entryCache.get(category);
         const existingItem =
-          categoryCache.entries.get(entry) ?? stateMachine.initialState;
+          categoryCache!.entries.get(entry) ?? stateMachine.initialState;
 
         // stateMachine.initialState;
         const transition = stateMachine.transition(existingItem, {
@@ -190,7 +197,7 @@ export const createHomeGameFiltersSlice = () => {
         });
         interpreter.execute(transition);
 
-        categoryCache.entries.set(entry, transition.value);
+        categoryCache!.entries.set(entry, transition.value);
       },
 
       incrementItem: (state, action: PayloadAction<PayloadType>) => {
@@ -198,7 +205,7 @@ export const createHomeGameFiltersSlice = () => {
 
         const categoryCache = entryCache.get(category);
         const existingItem =
-          categoryCache.entries.get(entry) ?? stateMachine.initialState;
+          categoryCache!.entries.get(entry) ?? stateMachine.initialState;
 
         const transition = stateMachine.transition(existingItem, {
           type: 'INCREMENT',
@@ -210,7 +217,7 @@ export const createHomeGameFiltersSlice = () => {
         });
         interpreter.execute(transition);
 
-        categoryCache.entries.set(entry, transition.value);
+        categoryCache!.entries.set(entry, transition.value);
       },
 
       removeItem: (state, action: PayloadAction<PayloadType>) => {
