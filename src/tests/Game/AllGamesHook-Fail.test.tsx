@@ -91,20 +91,18 @@ const mocks = [
 
 describe('useAllGames', () => {
   it('returns games and loading state', async () => {
-    const wrapper = ({ children }) => {
-      return (
-        <Provider store={store}>
-          <MockedProvider mocks={mocks}>
-            <ConfigProvider>
-              <BrowserRouter>{children}</BrowserRouter>
-            </ConfigProvider>
-          </MockedProvider>
-        </Provider>
-      );
-    };
-
     const { result } = renderHook(() => useAllGames(), {
-      wrapper,
+      wrapper(props) {
+        return (
+          <Provider store={store}>
+            <MockedProvider mocks={mocks}>
+              <ConfigProvider>
+                <BrowserRouter>{props.children}</BrowserRouter>
+              </ConfigProvider>
+            </MockedProvider>
+          </Provider>
+        );
+      },
     });
 
     await waitFor(() => {
