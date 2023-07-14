@@ -19,6 +19,8 @@ import getTimeElapsed from '@/utils/getTimeElapsed';
 function ActivitiesUpdates({
   fetchMore,
   socials,
+  fetchLimitation,
+  type,
 }: {
   socials: (StatusUpdateType | PostType)[];
   fetchMore: <
@@ -40,6 +42,8 @@ function ActivitiesUpdates({
       ) => TFetchData;
     }
   ) => Promise<ApolloQueryResult<TFetchData>>;
+  fetchLimitation: number;
+  type?: string | undefined;
 }) {
   const { addLike, removeLike } = useAddRemoveLike();
   const userState = useAppSelector((state) => state.user.user);
@@ -49,8 +53,9 @@ function ActivitiesUpdates({
   const onFetchMore = async (socialsLength: number) => {
     await fetchMore({
       variables: {
-        limit: 5 + socialsLength,
+        limit: fetchLimitation + socialsLength,
         offset: socialsLength,
+        type,
       },
       updateQuery: (prev, { fetchMoreResult }) => {
         if (!fetchMoreResult) return prev;
@@ -90,7 +95,9 @@ function ActivitiesUpdates({
     <div className={styles.activitiesUpdatesContainer}>
       {socials.length > 0 && memoizedActivities}
       <InView
-        style={{ height: '10px' }}
+        style={{
+          height: '100px',
+        }}
         as="div"
         onChange={async (inView) => {
           const socialsLength = socials.length;

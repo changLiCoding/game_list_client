@@ -7,21 +7,21 @@ import PostInput from '@/components/ProfileContent/Overview/MainSection/ListActi
 import ActivitiesUpdates from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivitiesUpdates';
 import { useAppSelector, useAppDispatch } from '@/app/hooks';
 import { setIsUserGameEdited } from '@/features/addedGamesSlice';
-import useGlobalSocials from '@/services/social/useGlobalSocials';
+import { ListActivitiesProps } from './ListactivitesType';
 
-function ListActivities() {
+function ListActivities({
+  socials,
+  loading: loadingSocials,
+  refetch,
+  fetchMore,
+  fetchLimitation,
+  type,
+}: ListActivitiesProps) {
   const dispatch = useAppDispatch();
 
   const { isUserGameEdited } = useAppSelector((state) => state.addedGames);
 
   const [post, setPost] = useState<string>('');
-
-  const {
-    socials,
-    loading: loadingSocials,
-    refetch,
-    fetchMore,
-  } = useGlobalSocials();
 
   useEffect(() => {
     if (isUserGameEdited) {
@@ -77,7 +77,12 @@ function ListActivities() {
         </Dropdown>
       </h2>
       <PostInput post={post} setPost={setPost} />
-      <ActivitiesUpdates socials={socials} fetchMore={fetchMore} />
+      <ActivitiesUpdates
+        fetchLimitation={fetchLimitation}
+        socials={socials}
+        fetchMore={fetchMore}
+        type={type}
+      />
     </div>
   );
 }
