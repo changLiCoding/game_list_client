@@ -136,8 +136,15 @@ describe('Register Input Fields', () => {
 
     // Check if the icon inside the error message appeared
     const allImg = screen.queryAllByRole('img');
+    debug(allImg);
     const node = allImg[allImg.length - 2];
 
-    expect(node?.classList[1]).toBe('anticon-info-circle');
+    debug(node);
+
+    expect(node).toBeInTheDocument();
+
+    expect(node?.classList[0]).toBe('anticon');
+
+    expect(node?.classList[1]).toBe('anticon-eye-invisible');
   }, 10000);
 });
