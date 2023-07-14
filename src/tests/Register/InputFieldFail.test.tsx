@@ -145,6 +145,6 @@ describe('Register Input Fields', () => {
 
     expect(node?.classList[0]).toBe('anticon');
 
-    expect(node?.classList[1]).toBe('anticon-eye-invisible');
+    expect(node?.classList[1]).toBe('anticon-info-circle');
   }, 10000);
 });
