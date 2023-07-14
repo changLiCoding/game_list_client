@@ -14,8 +14,9 @@ export default function useAllGames() {
 
   const tokenContext = getTokenFromLocalStorage();
   const { genres, tags, platforms, sortBy, year } = useAppSelector(
-    (state) => state.gameFilters
+    (state) => state.homeGameFilters
   );
+
   const {
     data: allGames,
     loading,
@@ -23,10 +24,13 @@ export default function useAllGames() {
     fetchMore,
   } = useQuery(GET_ALL_GAMES, {
     variables: {
-      genre: genres,
-      tag: tags,
-      platform: platforms,
+      genre: genres.included,
+      tag: tags.included,
+      platform: platforms.included,
       year,
+      excludedGenres: genres.excluded,
+      excludedTags: tags.excluded,
+      excludedPlatforms: platforms.excluded,
       sortBy,
       search: tempSearch,
       limit: 20,
