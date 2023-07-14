@@ -122,8 +122,6 @@ describe('Games List Component', () => {
       { store }
     );
 
-    await debug();
-
     expect(await screen.findByText('Game 1')).toBeInTheDocument();
     expect(await screen.findByText('Game 2')).toBeInTheDocument();
     expect(await screen.findByText('Game 3')).toBeInTheDocument();
