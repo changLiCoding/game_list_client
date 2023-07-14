@@ -16,6 +16,9 @@ const mocks = [
         genre: [],
         tag: [],
         platform: [],
+        excludedGenres: [],
+        excludedTags: [],
+        excludedPlatforms: [],
         year: undefined,
         sortBy: 'name',
         search: '',
@@ -112,7 +115,7 @@ vi.stubGlobal('IntersectionObserver', IntersectionObserverMock);
 
 describe('Games List Component', () => {
   it('should render the games list as a grid and show hovered cards', async () => {
-    const { queryByText, queryByLabelText, debug } = renderVite(
+    const { queryByText, queryByLabelText } = renderVite(
       <DefaultMockedProvider mocks={mocks}>
         <GamesList />
       </DefaultMockedProvider>,

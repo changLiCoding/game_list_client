@@ -1,79 +1,217 @@
 import { TagsTwoTone } from '@ant-design/icons';
 import { Tag } from 'antd';
 import { useDispatch } from 'react-redux';
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 import styles from '@/components/AllGames/InfoBar/FilterTags/FilterTags.module.scss';
 
 import { useAppSelector } from '@/app/hooks';
-import { remove } from '@/utils/utils';
-import { resetGameFilter, resetGameFilters, setGameFilters } from '@/app/store';
-import { HomeGameFilters } from '@/types/global';
+
+import { removeItem, resetHomeFilter, resetHomeFilters } from '@/app/store';
+
+type FilterType = {
+  shouldRender: () => boolean;
+  render: () => JSX.Element;
+};
+
+function renderTag(tag: string, value: any, onClose: () => void) {
+  return (
+    <Tag
+      key={`${tag}-${value}`}
+      id={tag}
+      closable
+      onClose={onClose}
+      className={styles.tagsText}
+    >
+      {value}
+    </Tag>
+  );
+}
 
 function FilterTags() {
   const dispatch = useDispatch();
-  const gameFilters = useAppSelector((state) => state.gameFilters);
+  const homeGameFilters = useAppSelector((state) => state.homeGameFilters);
 
-  const filterTags = useMemo(() => {
-    // Loop through all the keys and values of gameFilters and filter out the non null and undefined values
-    const entries = Object.entries(gameFilters).filter((e) => {
-      if (e && e[0] === 'sortBy') return false; // Don't show sortBy in the filter tags - Kind of a hack, but were only filtering out 1 key
-      if (Array.isArray(e[1])) return e[1].length > 0;
-      return e[1];
-    });
+  const neverChange = useMemo(() => {
+    const arrTest: FilterType[] = [
+      // Search
+      {
+        shouldRender() {
+          return (
+            homeGameFilters.search !== undefined &&
+            homeGameFilters.search.length > 0
+          );
+        },
+        render() {
+          return renderTag('filter-search', homeGameFilters.search, () => {
+            dispatch(resetHomeFilter('search'));
+          });
+        },
+      },
+      // Genres
+      {
+        shouldRender() {
+          return (
+            homeGameFilters.genres.included.length +
+              homeGameFilters.genres.excluded.length >
+            0
+          );
+        },
+        render() {
+          return (
+            <React.Fragment key="filter-genres">
+              {homeGameFilters.genres.included.map((e) =>
+                renderTag(`genres-included`, e, () => {
+                  dispatch(
+                    removeItem({
+                      category: 'genres',
+                      entry: e,
+                    })
+                  );
+                })
+              )}
 
-    if (entries.length > 0)
+              {homeGameFilters.genres.excluded.map((e) =>
+                renderTag(`genres-excluded`, `-${e}`, () => {
+                  dispatch(
+                    removeItem({
+                      category: 'genres',
+                      entry: e,
+                    })
+                  );
+                })
+              )}
+            </React.Fragment>
+          );
+        },
+      },
+
+      // Platforms
+      {
+        shouldRender() {
+          return (
+            homeGameFilters.platforms.included.length +
+              homeGameFilters.platforms.excluded.length >
+            0
+          );
+        },
+        render() {
+          return (
+            <React.Fragment key="filter-platforms">
+              {homeGameFilters.platforms.included.length > 0 &&
+                homeGameFilters.platforms.included.map((e) =>
+                  renderTag(`included-${e}`, e, () => {
+                    dispatch(
+                      removeItem({
+                        category: 'platforms',
+                        entry: e,
+                      })
+                    );
+                  })
+                )}
+              {homeGameFilters.platforms.excluded.length > 0 &&
+                homeGameFilters.platforms.excluded.map((e) =>
+                  renderTag(`platforms-excluded`, `-${e}`, () => {
+                    dispatch(
+                      removeItem({
+                        category: 'platforms',
+                        entry: e,
+                      })
+                    );
+                  })
+                )}
+            </React.Fragment>
+          );
+        },
+      },
+      // Tags
+      {
+        shouldRender() {
+          return (
+            homeGameFilters.tags.included.length +
+              homeGameFilters.tags.excluded.length >
+            0
+          );
+        },
+        render() {
+          return (
+            <React.Fragment key="filter-tags">
+              {homeGameFilters.tags.included.length > 0 &&
+                homeGameFilters.tags.included.map((e) =>
+                  renderTag(`tags-included`, e, () => {
+                    dispatch(
+                      removeItem({
+                        category: 'tags',
+                        entry: e,
+                      })
+                    );
+                  })
+                )}
+              {homeGameFilters.tags.excluded.length > 0 &&
+                homeGameFilters.tags.excluded.map((e) =>
+                  renderTag(`tags-excluded`, `-${e}`, () => {
+                    dispatch(
+                      removeItem({
+                        category: 'tags',
+                        entry: e,
+                      })
+                    );
+                  })
+                )}
+            </React.Fragment>
+          );
+        },
+      },
+      // Year
+      {
+        shouldRender() {
+          return homeGameFilters.year !== undefined;
+        },
+        render() {
+          return renderTag('filter-year', homeGameFilters.year, () => {
+            dispatch(resetHomeFilter('year'));
+          });
+        },
+      },
+    ];
+
+    return arrTest;
+  }, [
+    dispatch,
+    homeGameFilters.genres,
+    homeGameFilters.platforms,
+    homeGameFilters.tags,
+    homeGameFilters.search,
+    homeGameFilters.year,
+  ]);
+
+  // V2
+  const reduce = useMemo(() => {
+    const elements = neverChange
+      .filter((e) => {
+        return e.shouldRender();
+      })
+      .map((e) => e.render());
+
+    if (elements.length > 0)
       return (
         <>
           <TagsTwoTone className={styles.tagsIcon} />
 
-          {entries.map(([key, value]) => {
-            if (Array.isArray(value)) {
-              return value.map((filterValue) => {
-                return (
-                  <Tag
-                    id={`tag-${key}`}
-                    closable
-                    onClose={() => {
-                      const removedFilter = remove(value, filterValue);
-                      dispatch(setGameFilters({ [key]: removedFilter }));
-                    }}
-                    key={`${key}-${filterValue}`}
-                    className={styles.tagsText}
-                  >
-                    {filterValue}
-                  </Tag>
-                );
-              });
-            }
-            return (
-              <Tag
-                id={`tag-${key}`}
-                closable
-                onClose={() => {
-                  dispatch(resetGameFilter(key as keyof HomeGameFilters));
-                }}
-                key={value}
-                className={styles.tagsText}
-              >
-                {value}
-              </Tag>
-            );
-          })}
+          {elements}
 
           <Tag
             closable
-            onClose={() => dispatch(resetGameFilters())}
+            onClose={() => dispatch(resetHomeFilters())}
             className={styles.clearAll}
           >
-            Clear all
+            Clear All
           </Tag>
         </>
       );
-
     return <div />;
-  }, [dispatch, gameFilters]);
+  }, [dispatch, neverChange]);
 
-  return <div className={styles.tagsContainer}>{filterTags}</div>;
+  return <div className={styles.tagsContainer}>{reduce}</div>;
 }
 
 export default FilterTags;

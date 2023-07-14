@@ -3,6 +3,8 @@ import type { Dayjs } from 'dayjs';
 
 import React from 'react';
 
+export declare type ArrayElementType<T> = T extends (infer E)[] ? E : T;
+
 export interface DropDownOption {
   value: string | number;
   label: string | number;
@@ -61,8 +63,12 @@ export type HomeGameFilters = {
   genres: string[] | undefined;
   platforms: string[] | undefined;
   tags: string[] | undefined;
+  excludedPlatforms: string[] | undefined;
+  excludedGenres: string[] | undefined;
+  excludedTags: string[] | undefined;
   year: number | undefined;
   sortBy: GameFiltersSortType | undefined;
+  state: string;
 };
 
 export type UserGameFilters = {

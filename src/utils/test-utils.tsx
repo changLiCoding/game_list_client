@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from 'react';
-import { render } from '@testing-library/react';
+import { render, renderHook } from '@testing-library/react';
 import type { RenderOptions } from '@testing-library/react';
 import type { PreloadedState } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
@@ -57,6 +57,23 @@ type MockedProviderType = {
     | undefined;
   addTypename?: boolean;
 };
+
+export function DefaultFullProvider({
+  children,
+  mocks,
+  addTypename,
+}: PropsWithChildren<MockedProviderType>) {
+  const store = setupStore({});
+  return (
+    <Provider store={store}>
+      <MockedProvider mocks={mocks} addTypename={addTypename}>
+        <ConfigProvider>
+          <BrowserRouter>{children}</BrowserRouter>
+        </ConfigProvider>
+      </MockedProvider>
+    </Provider>
+  );
+}
 
 export function DefaultMockedProvider({
   children,

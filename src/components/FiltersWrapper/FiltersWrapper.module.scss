@@ -39,6 +39,12 @@
   background-color: variables.$color-navbar;
 }
 
+.advancedSearchPopoverLoading {
+  width: '600px';
+  display: grid;
+  gap: 30px;
+}
+
 :global(ul.ant-cascader-menu) {
   color: variables.$color-text-title;
   background-color: variables.$color-background;
