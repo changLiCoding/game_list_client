@@ -9,8 +9,8 @@ import {
   Skeleton,
 } from 'antd';
 import {
-  DownloadOutlined,
   MenuFoldOutlined,
+  MenuOutlined,
   MenuUnfoldOutlined,
   SearchOutlined,
 } from '@ant-design/icons';
@@ -59,6 +59,7 @@ function SelectFilterField<T>({
       value={value as T}
       allowClear
       onClear={onClear}
+      maxTagCount={1}
       onDeselect={(deselectedValue) =>
         onDeselect?.(deselectedValue as ArrayElementType<T> & T)
       }
@@ -261,7 +262,12 @@ export default function FiltersWrapper() {
               open={open}
               onOpenChange={(newOpen) => setOpen(newOpen)}
             >
-              <Button type="primary" icon={<DownloadOutlined />} size="large" />
+              <Button
+                className={styles.advancedSearchPopoverButton}
+                type="primary"
+                icon={<MenuOutlined />}
+                size="middle"
+              />
             </Popover>
           </div>
         </div>
