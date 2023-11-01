@@ -45,6 +45,10 @@
   gap: 30px;
 }
 
+.advancedSearchPopoverButton {
+  top: 1rem
+}
+
 :global(ul.ant-cascader-menu) {
   color: variables.$color-text-title;
   background-color: variables.$color-background;
