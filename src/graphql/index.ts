@@ -8,6 +8,7 @@ const httpLink = new HttpLink({
 
 export const apolloClient = new ApolloClient({
   link: httpLink,
+  connectToDevTools: true,
   cache: new InMemoryCache({
     typePolicies: {
       Query: {
